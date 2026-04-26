@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Luma Tech Solutions — Coming soon</title>
+  <meta name="description" content="Luma Tech Solutions — UniFi Wi-Fi, CCTV, websites and mobile apps for businesses and homes across the UK." />
+  <meta name="theme-color" content="#0a0d14" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Luma Tech Solutions" />
+  <meta property="og:description" content="UniFi Wi-Fi, CCTV, websites and mobile apps." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lumatechsolutions.co.uk" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23ffd166'/%3E%3Cstop offset='100%25' stop-color='%23f5a623'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230a0d14'/%3E%3Ccircle cx='32' cy='32' r='14' fill='url(%23g)'/%3E%3C/svg%3E" />
+
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --bg-2: #0f131c;
+      --fg: #f4f5f7;
+      --muted: #9aa3b2;
+      --accent: #ffd166;
+      --accent-2: #f5a623;
+      --border: rgba(255, 255, 255, 0.08);
+      --card: rgba(255, 255, 255, 0.03);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(60rem 40rem at 75% -10%, rgba(255, 209, 102, 0.18), transparent 60%),
+        radial-gradient(50rem 30rem at 10% 110%, rgba(245, 166, 35, 0.10), transparent 60%);
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: radial-gradient(circle at 50% 50%, var(--accent) 0%, var(--accent-2) 70%, transparent 72%);
+      box-shadow: 0 0 24px rgba(255, 209, 102, 0.45);
+    }
+
+    .brand { font-size: 1rem; }
+    .brand .dot { color: var(--accent); }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 8vw, 5rem) 0 clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--card);
+      width: max-content;
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.7);
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.55); }
+      70%  { box-shadow: 0 0 0 10px rgba(255, 209, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 4.75rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 1.25rem;
+      font-weight: 700;
+    }
+
+    h1 .accent {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lede {
+      font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+      color: var(--muted);
+      max-width: 38rem;
+      margin: 0 0 2.5rem;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin: 0 0 2.5rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .services li {
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+
+    .services li:hover {
+      border-color: rgba(255, 209, 102, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .services svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 150ms ease, box-shadow 200ms ease, background 200ms ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #1a1305;
+      box-shadow: 0 8px 24px -8px rgba(255, 209, 102, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -8px rgba(255, 209, 102, 0.6);
+    }
+
+    .btn-ghost {
+      color: var(--fg);
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .btn-ghost:hover { border-color: rgba(255, 255, 255, 0.2); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--fg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .eyebrow .pulse { animation: none; }
+      .services li, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <main>
+    <header>
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand">Luma Tech Solutions<span class="dot">.</span></span>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow"><span class="pulse" aria-hidden="true"></span>Coming soon</span>
+
+      <h1>Networks, cameras<br />and software, <span class="accent">done right.</span></h1>
+
+      <p class="lede">
+        We design and install professional UniFi Wi-Fi and CCTV systems, and build
+        websites and mobile apps for businesses and homes across the UK.
+      </p>
+
+      <ul class="services" aria-label="Our services">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+          UniFi Wi-Fi
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8Z"/></svg>
+          CCTV &amp; cameras
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Websites
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+          Mobile apps
+        </li>
+      </ul>
+
+      <div class="cta">
+        <a class="btn btn-primary" href="mailto:hello@lumatechsolutions.co.uk?subject=Enquiry">
+          Get in touch
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; <span id="year"></span> Luma Tech Solutions Ltd</span>
+      <span>United Kingdom</span>
+    </footer>
+  </main>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
