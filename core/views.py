@@ -128,7 +128,8 @@ CASE_STUDIES = [
         "summary": (
             "A complete residential rebuild: UniFi Wi-Fi 6E across the property, "
             "Protect CCTV, Home Assistant running scenes, climate, lighting and "
-            "access — all on a single, locally-controlled stack."
+            "access — all on a single, locally-controlled stack. Aerial drone "
+            "documentation is included with every project we deliver."
         ),
         "stack": ["UniFi Dream Machine Pro", "UniFi APs & Switches", "UniFi Protect", "Home Assistant", "Zigbee2MQTT"],
         "outcome": "Whole-home coverage, local-first automation, zero cloud lock-in.",
