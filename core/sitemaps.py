@@ -12,6 +12,7 @@ class StaticViewSitemap(Sitemap):
             ("home", 1.0),
             ("services", 0.9),
             ("service_networking", 0.8),
+            ("service_security", 0.8),
             ("service_development", 0.8),
             ("service_automation", 0.8),
             ("service_support", 0.8),

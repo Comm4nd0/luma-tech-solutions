@@ -47,6 +47,7 @@
 
       <ul class="nav-links" data-nav-links>
         <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}">Services</a></li>
+        <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}">Security</a></li>
         <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}">Portfolio</a></li>
         <li><a href="{% url 'pricing' %}" class="{% if active_nav == 'pricing' %}active{% endif %}">Pricing</a></li>
         <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
@@ -77,6 +78,7 @@
           <h5>Services</h5>
           <ul>
             <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
+            <li><a href="{% url 'service_security' %}">Security</a></li>
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
             <li><a href="{% url 'service_automation' %}">Home Automation</a></li>
             <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>

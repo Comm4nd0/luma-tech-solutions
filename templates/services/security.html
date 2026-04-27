@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Security</nav>
+    <span class="eyebrow"><span class="dot"></span>Physical &amp; cyber, one system</span>
+    <h1>Protect what matters, <span class="gradient">end to end.</span></h1>
+    <p class="lede">
+      Physical and cyber security, designed, installed and monitored as
+      one integrated system. CCTV, access control, alarms, smart locks
+      and network hardening — engineered together so they actually work
+      together.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>CCTV &amp; video surveillance</h2>
+        <p>
+          We design and install <strong>UniFi Protect</strong> CCTV — a
+          local-recording system with no monthly cloud subscription. Footage
+          stays on your kit, and you keep full control.
+        </p>
+
+        <h3 class="mt-3">Cameras we typically install</h3>
+        <ul class="bullets">
+          <li><strong>UniFi G5 Bullet</strong> — the workhorse exterior camera. Discreet, weatherproof, sharp.</li>
+          <li><strong>UniFi AI Pro</strong> — 4K with on-device person, vehicle and package detection. Fewer false alerts, smarter notifications.</li>
+          <li><strong>UniFi AI 360</strong> — panoramic ceiling-mount for forecourts, large rooms or open courtyards.</li>
+          <li><strong>UniFi G4 Instant</strong> — small, magnetic interior camera for blind-spots, garages or workshops.</li>
+        </ul>
+
+        <h3 class="mt-3">What you get</h3>
+        <ul class="bullets">
+          <li><strong>Drone-planned camera placement</strong> — coverage angles verified from above before a single hole is drilled.</li>
+          <li><strong>NVR (network video recorder)</strong> — Cloud Key Gen2 Plus for homes, UNVR Pro for larger sites.</li>
+          <li><strong>AI detection</strong> — person / vehicle / package, on-device, no cloud round-trip.</li>
+          <li><strong>Remote viewing</strong> via the Protect app — phone, tablet, or web. Footage stays local.</li>
+        </ul>
+
+        <h2 class="mt-4">Access control</h2>
+        <p>
+          For businesses and shared sites we install <strong>UniFi Access</strong>
+          — door readers, mobile credentials, NFC keycards, all on the same
+          dashboard as your network and CCTV.
+        </p>
+        <ul class="bullets">
+          <li><strong>Gate intercoms</strong> — UniFi G4 Doorbell or commercial intercoms with two-way audio and remote-unlock.</li>
+          <li><strong>Visitor management</strong> — temporary access codes for tradespeople and Airbnb guests, with photo capture and audit log.</li>
+          <li><strong>Time-based rules</strong> — the cleaner gets 8–10am Monday only, automatically.</li>
+          <li><strong>Mobile keys</strong> — phone unlocks, fobs as backup; revoke instantly when staff leave.</li>
+        </ul>
+
+        <h2 class="mt-4">Intruder alarms</h2>
+        <p>
+          Ring Alarm Pro for residential, commercial-grade panels for
+          businesses. Wired into the same Home Assistant or UniFi dashboard
+          your CCTV runs on, so events flow together.
+        </p>
+        <ul class="bullets">
+          <li>Door / window contacts, motion sensors, glass-break sensors.</li>
+          <li><strong>Auto-arm on leave</strong> — when the last phone leaves the geofence, the system arms itself.</li>
+          <li><strong>Notifications with snapshots</strong> — you get a camera still at the moment the alarm fires, so you know whether it's a fox or a foot.</li>
+          <li>Cellular backup keeps it working even if the internet is down.</li>
+        </ul>
+
+        <h2 class="mt-4">Smart locks</h2>
+        <p>
+          Keyless entry done properly, integrated with the rest of the
+          system rather than as a vendor island.
+        </p>
+        <ul class="bullets">
+          <li><strong>Keyless entry</strong> — phone, code, fingerprint or fob. No more "did I lock the door?".</li>
+          <li><strong>Time-limited guest codes</strong> — give the dog-walker a code that only works 9–11am Monday-Friday.</li>
+          <li><strong>Audit trail</strong> — see exactly who unlocked which door, when. Exportable.</li>
+          <li><strong>Auto-lock</strong> on a timeout, optional <strong>auto-unlock</strong> on presence.</li>
+        </ul>
+
+        <h2 class="mt-4">Cyber security</h2>
+        <p>
+          Most "smart home" break-ins don't come through a window — they come
+          through a forgotten IoT device on the same network as your laptop.
+          We design networks that contain those risks by default.
+        </p>
+        <ul class="bullets">
+          <li><strong>VLAN segmentation</strong> — IoT, CCTV, guest Wi-Fi and your computers each live on their own network. A compromised plug can't see your photos.</li>
+          <li><strong>IoT isolation</strong> — outbound traffic from smart devices is whitelisted to only what they actually need.</li>
+          <li><strong>Firewall rules &amp; IDS/IPS</strong> — UniFi Threat Management blocks known-bad traffic at the edge.</li>
+          <li><strong>VPN, not port-forwarding</strong> — WireGuard or UniFi Site Magic so you can reach home services remotely without opening a single port to the internet.</li>
+          <li><strong>802.1X for businesses</strong> — every Ethernet port authenticated; an unknown laptop plugged into an empty socket gets nothing.</li>
+        </ul>
+
+        <h2 class="mt-4">Drone-assisted security design</h2>
+        <p>
+          Cameras are easy to mount, hard to <em>place</em>. Before we drill,
+          we fly an aerial drone survey of your property to map roof lines,
+          tree cover, dead angles and approach routes — so cameras are
+          positioned to actually see what matters and not just the back of
+          a hedge.
+        </p>
+        <ul class="bullets">
+          <li>Coverage zones planned from above with line-of-sight verified.</li>
+          <li>Blind spots identified <em>before</em> the install, not after.</li>
+          <li>Cable runs and PoE distances pre-planned, so install day is faster.</li>
+          <li>Aerial imagery handed over with the runbook.</li>
+        </ul>
+
+        <h2 class="mt-4">Typical pricing</h2>
+        <p class="muted">Starting points for the most common line items. Full quote always written down before any work begins.</p>
+        <ul class="bullets">
+          <li><strong>Security assessment</strong> — <span class="text-strong">£150</span>. 90 minutes on-site, written report with prioritised recommendations.</li>
+          <li><strong>CCTV camera install</strong> — <span class="text-strong">£150 / camera</span> (hardware additional).</li>
+          <li><strong>NVR</strong> — <span class="text-strong">£200</span> install &amp; configuration (Cloud Key Gen2 Plus or UNVR).</li>
+          <li><strong>Access control</strong> — <span class="text-strong">£300–£500 / door</span>, depending on reader type and integration.</li>
+          <li><strong>Gate intercom</strong> — <span class="text-strong">£400–£800</span>, depending on whether new cabling is required.</li>
+          <li><strong>Network security audit</strong> — <span class="text-strong">£200</span>. Full review of your current setup with a written write-up.</li>
+          <li><strong>Cyber hardening</strong> — <span class="text-strong">£300–£500</span>. VLAN re-architecture, IDS/IPS, VPN, firewall rules.</li>
+        </ul>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Start here</h4>
+        <div class="price-line">£150</div>
+        <p>Security assessment — a 90-minute on-site visit, drone-aided where useful, and a written report with prioritised recommendations. Credited against any subsequent install.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+
+        <h4 style="margin-top:1.5rem;">Typical project ranges</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>CCTV (4 cams) — from £1,200</li>
+          <li>Access control / door — £300–£500</li>
+          <li>Gate intercom — £400–£800</li>
+          <li>Cyber hardening — £300–£500</li>
+          <li>Network security audit — £200</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Aerial drone survey</li>
+          <li>Local recording, no cloud lock-in</li>
+          <li>Documented runbook</li>
+          <li>30 days post-install support</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Worried about a specific risk?' cta_copy='Tell us what you are trying to protect — a property, a business, a server room. We will tell you, honestly, what is worth doing and what is theatre.' %}
+{% endblock %}

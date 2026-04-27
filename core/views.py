@@ -22,6 +22,13 @@ PILLARS = [
         "icon": "wifi",
     },
     {
+        "key": "security",
+        "title": "Security",
+        "tagline": "CCTV, access control, alarms, and network hardening — physical and cyber security as one integrated system.",
+        "url_name": "service_security",
+        "icon": "lock",
+    },
+    {
         "key": "development",
         "title": "App & Web Development",
         "tagline": "Custom mobile apps, websites, and web applications.",
@@ -196,8 +203,8 @@ def services_overview(request):
             active="services",
             page_title=f"Services — {settings.SITE_NAME}",
             page_description=(
-                "Four pillars of service: Wi-Fi & networking, app & web "
-                "development, home automation, and ongoing support."
+                "Five pillars of service: Wi-Fi & networking, security, "
+                "app & web development, home automation, and ongoing support."
             ),
         ),
     )
@@ -213,6 +220,23 @@ def service_networking(request):
             page_description=(
                 "Enterprise-grade UniFi Wi-Fi and networking design, "
                 "installation and management. From £800."
+            ),
+        ),
+    )
+
+
+def service_security(request):
+    return render(
+        request,
+        "services/security.html",
+        _base_context(
+            active="security",
+            page_title="Security — Luma Tech Solutions",
+            page_description=(
+                "Physical and cyber security designed, installed and "
+                "monitored as one integrated system. UniFi Protect CCTV, "
+                "access control, intruder alarms, smart locks and "
+                "network hardening."
             ),
         ),
     )
