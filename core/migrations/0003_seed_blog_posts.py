@@ -173,17 +173,17 @@ POST_5_CONTENT = """
 <p>For UniFi Protect CCTV. Cloud Key Gen2 Plus (£200) for a small home camera setup, UNVR Pro (£600) for larger sites or hotels.</p>
 
 <h2>Typical home costs</h2>
-<p>For a 3-bed Berkshire or Bucks home with no special requirements:</p>
+<p>For a small home (1–3 access points):</p>
 <ul>
-  <li>Cloud Gateway, 8-port PoE switch, 2 access points, structured cabling, install and configuration: <strong>£800 – £1,400</strong></li>
+  <li>Cloud Gateway, 8-port PoE switch, 2 access points, structured cabling, install and configuration: <strong>£800 – £1,200</strong></li>
 </ul>
-<p>For a 4 or 5-bed property with garden office:</p>
+<p>For a medium home (4–6 access points), typically a 4 or 5-bed property with garden office:</p>
 <ul>
-  <li>Cloud Gateway, larger switch, 3-4 access points, garden office cable run, install and configuration: <strong>£1,800 – £2,800</strong></li>
+  <li>Cloud Gateway, larger switch, 4 access points, garden office cable run, install and configuration: <strong>£1,500 – £2,500</strong></li>
 </ul>
-<p>For a small business or hospitality site:</p>
+<p>For a large home or small office (7+ access points):</p>
 <ul>
-  <li>Pricing-from £3,000 — depends entirely on number of APs and cable runs.</li>
+  <li>Pricing from <strong>£3,000</strong> — depends on the number of APs, cable runs and structured cabling required (typically £60 per drop).</li>
 </ul>
 
 <h2>Why we recommend it</h2>
@@ -369,7 +369,7 @@ POST_10_CONTENT = """
   <li>It's the front door. Customers Google you, click through, and decide whether to bother in seconds.</li>
   <li>It's accessible everywhere — phone, laptop, tablet, work computer. No download required.</li>
   <li>It's findable. SEO, Google Business, Maps integration — none of which apps get for free.</li>
-  <li>It's cheaper. A polished marketing site for a tradesperson, gym or shop is £2,000 – £6,000. A polished mobile app is £15,000 minimum.</li>
+  <li>It's cheaper. A polished marketing site for a tradesperson, gym or shop is £1,500 – £6,000. A mobile-app MVP starts at £8,000 — a full production app, £20,000+.</li>
 </ul>
 <p>If your problem is "people can't find us, and when they do they can't tell what we do" — you need a website, not an app.</p>
 
@@ -389,11 +389,12 @@ POST_10_CONTENT = """
 
 <h2>Costs in plain numbers (2026 prices)</h2>
 <ul>
-  <li><strong>Marketing website (5–10 pages, CMS, contact form, SEO):</strong> £2,000 – £6,000.</li>
-  <li><strong>E-commerce site (Stripe / Shopify integration):</strong> £4,000 – £15,000.</li>
-  <li><strong>PWA layered on top of a website:</strong> +£1,500 – £4,000.</li>
-  <li><strong>Native iOS + Android app (cross-platform via React Native):</strong> £15,000 – £40,000 for v1.</li>
-  <li><strong>Bespoke iOS or Android-only:</strong> £25,000 – £60,000+.</li>
+  <li><strong>Simple website (5–8 pages, CMS, contact form, SEO):</strong> £1,500 – £3,000.</li>
+  <li><strong>Business website (10–20 pages, more complex CMS / integrations):</strong> £3,000 – £6,000.</li>
+  <li><strong>Web application (e-commerce, customer portal, internal tools):</strong> £5,000 – £25,000+.</li>
+  <li><strong>Mobile app, MVP (iOS + Android, cross-platform via React Native):</strong> £8,000 – £20,000.</li>
+  <li><strong>Mobile app, full production:</strong> £20,000 – £50,000+.</li>
+  <li><strong>SEO audit:</strong> £300 standalone. <strong>Ongoing retainer:</strong> £75/hour.</li>
 </ul>
 <p>Plus ongoing: hosting + support is £30–£100/month for a website, £100–£300/month for an app (App Store accounts, push services, crash monitoring, occasional iOS/Android update releases).</p>
 
