@@ -1,6 +1,8 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
+from .models import BlogPost
+
 
 class StaticViewSitemap(Sitemap):
     changefreq = "weekly"
@@ -30,3 +32,18 @@ class StaticViewSitemap(Sitemap):
     def priority(self, item):
         _name, priority = item
         return priority
+
+
+class BlogPostSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.6
+    protocol = "https"
+
+    def items(self):
+        return BlogPost.published.all()
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+    def location(self, obj):
+        return obj.get_absolute_url()

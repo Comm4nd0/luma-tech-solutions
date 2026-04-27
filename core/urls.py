@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from . import views
+from .feeds import BlogFeed
 
 urlpatterns = [
     path("", views.home, name="home"),
@@ -17,5 +18,7 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("contact/thanks/", views.contact_thanks, name="contact_thanks"),
     path("blog/", views.blog, name="blog"),
+    path("blog/feed/", BlogFeed(), name="blog_feed"),
+    path("blog/<slug:slug>/", views.blog_post, name="blog_post"),
     path("healthz", views.healthz, name="healthz"),
 ]

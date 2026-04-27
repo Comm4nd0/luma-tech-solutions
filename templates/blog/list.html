@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Blog</span>
+    <h1>Notes from the <span class="gradient">workshop.</span></h1>
+    <p class="lede">
+      Practical write-ups on networking, security, smart-home automation
+      and software — written from the loft, the comms cupboard and the
+      occasional aerial drone, with a slant on what works for homes and
+      small businesses across {{ SITE_REGION }}.
+    </p>
+    <div class="cta-row">
+      <a href="{% url 'blog_feed' %}" class="btn btn-ghost btn-sm">RSS feed</a>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    {% if posts %}
+      <div class="post-list">
+        {% for post in posts %}
+          <article class="blog-card fade-in">
+            <a href="{{ post.get_absolute_url }}" class="blog-card-link">
+              {% include 'partials/_post_meta.html' with post=post %}
+              <h2>{{ post.title }}</h2>
+              <p class="muted">{{ post.excerpt }}</p>
+              <span class="card-link">Read more <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></span>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if page_obj.has_other_pages %}
+        <nav class="pagination" aria-label="Blog pagination">
+          {% if page_obj.has_previous %}
+            <a class="btn btn-ghost btn-sm" href="?page={{ page_obj.previous_page_number }}">← Newer</a>
+          {% else %}
+            <span class="btn btn-ghost btn-sm disabled" aria-disabled="true">← Newer</span>
+          {% endif %}
+
+          <span class="muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+          {% if page_obj.has_next %}
+            <a class="btn btn-ghost btn-sm" href="?page={{ page_obj.next_page_number }}">Older →</a>
+          {% else %}
+            <span class="btn btn-ghost btn-sm disabled" aria-disabled="true">Older →</span>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <div class="empty fade-in">
+        <h3>Nothing here yet — but soon.</h3>
+        <p>The first article goes out on Monday. Subscribe via RSS to follow along.</p>
+        <div class="row-actions" style="justify-content:center;">
+          <a href="{% url 'blog_feed' %}" class="btn btn-ghost">RSS feed</a>
+          <a href="{% url 'contact' %}" class="btn btn-primary">Suggest a topic</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

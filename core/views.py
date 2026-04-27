@@ -3,12 +3,14 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .forms import ContactForm
+from .models import BlogPost
 
 log = logging.getLogger(__name__)
 
@@ -397,13 +399,41 @@ def contact_thanks(request):
 
 
 def blog(request):
+    posts = BlogPost.published.all()
+    paginator = Paginator(posts, 10)
+    page_obj = paginator.get_page(request.GET.get("page"))
     return render(
         request,
-        "blog.html",
+        "blog/list.html",
         _base_context(
             active="blog",
             page_title="Blog — Luma Tech Solutions",
-            page_description="Notes from the workshop. Coming soon.",
+            page_description=(
+                "Practical write-ups on networking, security, smart-home "
+                "automation and software, from Luma Tech Solutions in "
+                "Berkshire & Buckinghamshire."
+            ),
+            page_obj=page_obj,
+            posts=page_obj.object_list,
+        ),
+    )
+
+
+def blog_post(request, slug):
+    post = get_object_or_404(BlogPost.published, slug=slug)
+    related = (
+        BlogPost.published.filter(pillar=post.pillar)
+        .exclude(pk=post.pk)[:3]
+    )
+    return render(
+        request,
+        "blog/detail.html",
+        _base_context(
+            active="blog",
+            page_title=f"{post.title} — Luma Tech Solutions",
+            page_description=post.seo_description,
+            post=post,
+            related=related,
         ),
     )
 

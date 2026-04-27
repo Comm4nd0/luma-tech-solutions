@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.seo_description }}{% endblock %}
+
+{% block head_extra %}
+<meta property="article:published_time" content="{{ post.published_at|date:'c' }}" />
+<meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}" />
+<meta property="article:author" content="{{ post.author }}" />
+<meta property="article:section" content="{{ post.get_pillar_display }}" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title|escapejs }}",
+  "datePublished": "{{ post.published_at|date:'c' }}",
+  "dateModified": "{{ post.updated_at|date:'c' }}",
+  "author": { "@type": "Person", "name": "{{ post.author|escapejs }}" },
+  "publisher": { "@type": "Organization", "name": "{{ SITE_NAME|escapejs }}" },
+  "mainEntityOfPage": "{{ SITE_URL }}{{ post.get_absolute_url }}",
+  "description": "{{ post.seo_description|escapejs }}"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article>
+  <section class="post-hero">
+    <div class="container">
+      <nav class="crumbs"><a href="{% url 'blog' %}">Blog</a><span class="sep">/</span> {{ post.get_pillar_display }}</nav>
+      {% include 'partials/_post_meta.html' with post=post %}
+      <h1>{{ post.title }}</h1>
+      <p class="lede">{{ post.excerpt }}</p>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="container post-container">
+      <div class="post-content">
+        {{ post.content|safe }}
+      </div>
+
+      <footer class="post-footer">
+        <div class="post-author">
+          <span class="muted">Written by</span>
+          <strong>{{ post.author }}</strong>
+        </div>
+        <a href="{% url 'blog' %}" class="btn btn-ghost btn-sm">← Back to blog</a>
+      </footer>
+    </div>
+  </section>
+</article>
+
+{% if related %}
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>More on {{ post.get_pillar_display }}</span>
+      <h2>Related reading.</h2>
+    </div>
+    <div class="grid grid-3">
+      {% for r in related %}
+        <a class="card fade-in" href="{{ r.get_absolute_url }}">
+          <span class="pillar-badge pillar-{{ r.pillar }}">{{ r.get_pillar_display }}</span>
+          <h3 class="mt-2">{{ r.title }}</h3>
+          <p>{{ r.excerpt|truncatechars:140 }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Got a question this article raised?' cta_copy='Drop us a line — happy to talk through specifics for your property or business in Berkshire and Buckinghamshire.' %}
+{% endblock %}

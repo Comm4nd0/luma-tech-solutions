@@ -3,9 +3,9 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from core.sitemaps import StaticViewSitemap
+from core.sitemaps import BlogPostSitemap, StaticViewSitemap
 
-sitemaps = {"static": StaticViewSitemap}
+sitemaps = {"static": StaticViewSitemap, "blog": BlogPostSitemap}
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -1,0 +1,8 @@
+{# Post meta line: pillar badge · date · reading time. Pass `post`. #}
+<div class="post-meta">
+  <span class="pillar-badge pillar-{{ post.pillar }}">{{ post.get_pillar_display }}</span>
+  <span class="sep" aria-hidden="true">·</span>
+  <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:'j M Y' }}</time>
+  <span class="sep" aria-hidden="true">·</span>
+  <span>{{ post.reading_time_minutes }} min read</span>
+</div>
