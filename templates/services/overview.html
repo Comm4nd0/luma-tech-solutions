@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Services</span>
+    <h1>Four pillars. <span class="gradient">One trusted partner.</span></h1>
+    <p class="lede">
+      We deliberately keep our service offering tight. Each pillar is something
+      we genuinely engineer end-to-end, not something we sub-contract or resell.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    {% include 'partials/_pillars.html' %}
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>How we work</span>
+      <h2>A consistent process across every pillar.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step fade-in">
+        <span class="step-num" aria-hidden="true"></span>
+        <div>
+          <h4>Discovery call</h4>
+          <p>A 30-minute conversation — usually a video call, sometimes on-site. We listen to what you're trying to achieve, ask the awkward questions, and tell you honestly whether we're the right fit.</p>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <span class="step-num" aria-hidden="true"></span>
+        <div>
+          <h4>Site survey & proposal</h4>
+          <p>For networking and automation jobs we'll come and look at the property. You'll get a fixed-price proposal with the scope, hardware list and timeline written down — no day-rate surprises.</p>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <span class="step-num" aria-hidden="true"></span>
+        <div>
+          <h4>Engineering & install</h4>
+          <p>We build, we configure, we test. We document. You get a runbook describing every cable, every API key, every automation — so you (or anyone) can pick it up later.</p>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <span class="step-num" aria-hidden="true"></span>
+        <div>
+          <h4>Ongoing care</h4>
+          <p>Optional care plans pick up where the install leaves off. Monitoring, updates, tweaks, advice. The same engineer every time you call.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' %}
+{% endblock %}

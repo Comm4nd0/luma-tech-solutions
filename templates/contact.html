@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Contact</span>
+    <h1>Tell us what you're <span class="gradient">trying to achieve.</span></h1>
+    <p class="lede">
+      Send us a few sentences about your project or problem and we'll come
+      back with honest, specific advice. We aim to reply within one working
+      day.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        {% if messages %}
+          {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
+        {% endif %}
+
+        <form method="post" class="form fade-in" novalidate>
+          {% csrf_token %}
+          {{ form.website }}
+
+          {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
+
+          <div class="row two">
+            <div>
+              <label for="{{ form.name.id_for_label }}">Your name</label>
+              {{ form.name }}
+              {{ form.name.errors }}
+            </div>
+            <div>
+              <label for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email }}
+              {{ form.email.errors }}
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="{{ form.phone.id_for_label }}">Phone (optional)</label>
+              {{ form.phone }}
+              {{ form.phone.errors }}
+            </div>
+            <div>
+              <label for="{{ form.service.id_for_label }}">Interested in</label>
+              {{ form.service }}
+              {{ form.service.errors }}
+            </div>
+          </div>
+
+          <div>
+            <label for="{{ form.message.id_for_label }}">What can we help with?</label>
+            {{ form.message }}
+            {{ form.message.errors }}
+          </div>
+
+          <div class="row-actions">
+            <button type="submit" class="btn btn-primary">Send enquiry {% include 'partials/_icons.html' with name='arrow' %}</button>
+            <a href="mailto:{{ SITE_EMAIL }}" class="btn btn-ghost">Or email us directly</a>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-info fade-in">
+        <h2 style="font-size:1.25rem;">Other ways to reach us</h2>
+
+        <span class="label">Email</span>
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
+
+        {% if SITE_PHONE %}
+        <span class="label">Phone</span>
+        <a href="tel:{{ SITE_PHONE }}">{{ SITE_PHONE }}</a>
+        {% endif %}
+
+        <span class="label">Hours</span>
+        <p style="margin:0;">Mon–Fri, 9am–6pm. Care-plan customers get out-of-hours cover according to their tier.</p>
+
+        <span class="label">Service area</span>
+        <div class="map-card mt-1">
+          <svg class="area" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="ring" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="180" cy="110" r="90" fill="url(#ring)"/>
+            <circle cx="180" cy="110" r="62" stroke="#14b8a6" stroke-opacity="0.5" stroke-dasharray="3 4"/>
+            <circle cx="180" cy="110" r="34" stroke="#14b8a6" stroke-opacity="0.7" stroke-dasharray="3 4"/>
+            <circle cx="180" cy="110" r="6" fill="#14b8a6"/>
+            <text x="180" y="80" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter, sans-serif">Berks &amp; Bucks</text>
+          </svg>
+          <div class="label">Coverage</div>
+          <div class="region">{{ SITE_REGION }}</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

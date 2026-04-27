@@ -1,0 +1,15 @@
+{# Bottom-of-page CTA banner. Optional override of title/copy via include with-args. #}
+<section class="tight">
+  <div class="container">
+    <div class="cta-banner fade-in">
+      <div>
+        <h2>{{ cta_title|default:"Ready to upgrade your tech?" }}</h2>
+        <p>{{ cta_copy|default:"Tell us what you're trying to achieve. We'll come back with honest, specific advice — usually within a working day." }}</p>
+      </div>
+      <div class="actions">
+        <a href="{% url 'contact' %}" class="btn btn-primary">Start a conversation {% include 'partials/_icons.html' with name='arrow' %}</a>
+        <a href="{% url 'pricing' %}" class="btn btn-ghost">See pricing</a>
+      </div>
+    </div>
+  </div>
+</section>

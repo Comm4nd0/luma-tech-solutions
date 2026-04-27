@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0b1222"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(80,200)">
+    <rect width="84" height="84" rx="18" fill="url(#mark)"/>
+    <path d="M22 18h12v40h28v12H22z" fill="#042f2e"/>
+  </g>
+  <text x="190" y="262" fill="#f8fafc" font-family="Inter, sans-serif" font-size="56" font-weight="700" letter-spacing="-1">Luma Tech Solutions</text>
+  <text x="80" y="370" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="64" font-weight="800" letter-spacing="-2">Technology that works.</text>
+  <text x="80" y="450" fill="#14b8a6" font-family="Inter, sans-serif" font-size="64" font-weight="800" letter-spacing="-2">Support that lasts.</text>
+  <text x="80" y="530" fill="#94a3b8" font-family="Inter, sans-serif" font-size="28" font-weight="500">Networking · Development · Automation · Support · Berkshire &amp; Bucks</text>
+</svg>

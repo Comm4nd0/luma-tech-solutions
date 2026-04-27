@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Home Automation</nav>
+    <span class="eyebrow"><span class="dot"></span>Local-first smart home</span>
+    <h1>Smart homes that are <span class="gradient">private and stay running.</span></h1>
+    <p class="lede">
+      We build smart homes around <strong>Home Assistant</strong> — local,
+      open-source, fast, and not at the mercy of a vendor changing the API or
+      switching the lights off when their server has a bad afternoon.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Why local-first matters</h2>
+        <p>
+          Most "smart home" platforms send every light switch through someone
+          else's cloud. That's slow, fragile, and a privacy choice you didn't
+          consciously make. With Home Assistant the brain lives in your house
+          — your scenes work even if your internet's out, your data doesn't
+          leak, and you can change anything without asking permission.
+        </p>
+
+        <h3 class="mt-3">What we automate</h3>
+        <ul class="bullets">
+          <li><strong>Lighting</strong> — circadian-tuned, scene-controlled, motion-aware. Hue, Lutron, Shelly or in-wall Zigbee modules.</li>
+          <li><strong>Climate</strong> — thermostats, underfloor zones, and per-room heating logic that actually saves you money.</li>
+          <li><strong>Security</strong> — UniFi Protect cameras, door & window sensors, "leaving the house" routines that arm everything.</li>
+          <li><strong>Energy</strong> — solar / battery / EV monitoring, plus automations that shift loads to cheap-rate windows.</li>
+          <li><strong>Audio & media</strong> — Sonos, Apple TV, room-by-room control via dashboards and voice.</li>
+          <li><strong>Access</strong> — smart locks, intercom integrations, time-bounded access codes for trades.</li>
+        </ul>
+
+        <h3 class="mt-4">Equipment we trust</h3>
+        <div class="grid grid-2">
+          <div class="card fade-in">
+            <h3>The brain</h3>
+            <p>Home Assistant on a dedicated mini-PC or Home Assistant Yellow, with off-site encrypted backups. The thing that runs your house should not be a Raspberry Pi on a sad SD card.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>Radios</h3>
+            <p>Zigbee2MQTT for sensors and lighting, Z-Wave for door/window kit, Matter where it makes sense. We'll mix protocols when it's the right call, not for the sake of it.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>Dashboards</h3>
+            <p>Wall tablets, voice (Apple Home / Alexa / Google), or an Android tablet running a custom Home Assistant dashboard. Whatever fits how you actually live.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>Network</h3>
+            <p>Smart home and IoT live on their own VLAN, segregated from your computers. Done right, you get Wi-Fi reliability your IoT vendors did not promise.</p>
+          </div>
+        </div>
+
+        <h3 class="mt-4">Showroom: Chiltern View</h3>
+        <p>
+          Want to see what's possible before committing? Our reference home,
+          Chiltern View, has a full UniFi network, Protect CCTV, and Home
+          Assistant running scenes, climate, lighting and access. Visit by
+          appointment.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Pricing</h4>
+        <div class="price-line">From £1,500</div>
+        <p>Lighting + climate + security baseline for a typical 3-bed home. Whole-home installs from £5,000 depending on hardware.</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Book a chat</a>
+        <h4 style="margin-top:1.5rem;">Always</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Local control</li>
+          <li>You own the brain</li>
+          <li>Encrypted backups</li>
+          <li>Documented automations</li>
+          <li>No vendor lock-in</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Curious what your home could do?' cta_copy='Tell us what frustrates you most about your current setup. Often a 30-minute call is enough to know exactly what would help — and what to leave alone.' %}
+{% endblock %}

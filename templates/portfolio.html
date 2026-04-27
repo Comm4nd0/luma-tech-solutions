@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Selected work</span>
+    <h1>Things we've built. <span class="gradient">Things we still maintain.</span></h1>
+    <p class="lede">
+      Three short case studies. Each one is still running in production — and
+      every one is something we're happy to talk through with a prospective
+      client.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="grid grid-2">
+      {% for case in case_studies %}
+        <article class="case-card fade-in">
+          <span class="case-tag">
+            {% if case.slug == 'chiltern-view' %}Smart home + networking
+            {% elif case.slug == 'for-sale-by-owner' %}Mobile app
+            {% else %}Marketing site
+            {% endif %}
+          </span>
+          <h3>{{ case.title }}</h3>
+          <p>{{ case.summary }}</p>
+          <div class="stack-row">
+            {% for tech in case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
+          </div>
+          <div class="outcome"><strong>Outcome —</strong>{{ case.outcome }}</div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Got a project of your own in mind?' cta_copy='Whether it is a network, an app, or a smart home — tell us what you are trying to achieve and we will tell you how we would approach it.' %}
+{% endblock %}

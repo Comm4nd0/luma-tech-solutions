@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>About</span>
+    <h1>One engineer, four pillars, <span class="gradient">a single accountable name.</span></h1>
+    <p class="lede">
+      {{ SITE_NAME }} was founded to bring enterprise-grade technology to homes
+      and small businesses across {{ SITE_REGION }} — without the enterprise
+      pricing, the buzzwords, or the "raise a ticket" dance.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-in">
+        <h2>The story</h2>
+        <p>
+          Marco Baldanza founded {{ SITE_NAME }} after a decade engineering
+          infrastructure and software for businesses where things have to
+          actually work. The pattern at home was always the same: friends and
+          neighbours juggling three different "specialists" — a Wi-Fi guy, a
+          web guy, an alarm guy — none of whom owned the whole picture.
+        </p>
+        <p>
+          So we built a company that does. We design the network, build the
+          software, automate the home, and stick around to support it.
+        </p>
+
+        <h3 class="mt-3">About Marco</h3>
+        <p>
+          Marco's background is in enterprise infrastructure and software
+          engineering. He runs a full smart home and UniFi network at home,
+          builds custom software, and founded {{ SITE_NAME }} to bring that
+          engineering rigour to homes and small businesses in
+          {{ SITE_REGION }}.
+        </p>
+        <p>
+          When he's not laying Cat6 in someone's loft, he's probably
+          re-arranging YAML in Home Assistant.
+        </p>
+
+        <h3 class="mt-3">Chiltern View — our showroom</h3>
+        <p>
+          We deliberately use everything we sell. Chiltern View, our reference
+          home, is where prospective clients can see Wi-Fi 6E coverage,
+          Protect CCTV, and a fully local Home Assistant install in action
+          before they commit.
+        </p>
+      </div>
+
+      <div>
+        <h2>Our values</h2>
+        <div class="values-grid mt-2">
+          <div class="value fade-in">
+            <h4>Honesty over upsell</h4>
+            <p>If you don't need it, we'll say so. The cheapest job we ever did was telling someone "your existing kit is fine, just move it 2 metres."</p>
+          </div>
+          <div class="value fade-in">
+            <h4>Engineer everything</h4>
+            <p>If we wouldn't trust it in our own home, we won't put it in yours. We document, we label, we test.</p>
+          </div>
+          <div class="value fade-in">
+            <h4>Stay accountable</h4>
+            <p>Same engineer, same number, same email. No tier-1 call centre between you and someone who knows your setup.</p>
+          </div>
+          <div class="value fade-in">
+            <h4>No vendor lock-in</h4>
+            <p>You own your data, your code, your home brain. If you ever fire us, you can hand the runbook to the next person and they'll cope.</p>
+          </div>
+        </div>
+
+        <div class="card fade-in mt-3">
+          <h3>Service area</h3>
+          <p>Based in {{ SITE_REGION }}. We cover the whole region for on-site work, plus remote work nationwide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Want to talk it through?' cta_copy='Most of our work starts with a 30-minute call. No obligation, no slide deck, just a conversation.' %}
+{% endblock %}

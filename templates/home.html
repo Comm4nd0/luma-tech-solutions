@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Berkshire & Buckinghamshire</span>
+    <h1>Technology that works.<br/><span class="gradient">Support that lasts.</span></h1>
+    <p class="lede">
+      Professional networking, development, automation and support for homes
+      and businesses across {{ SITE_REGION }}. One company, four pillars —
+      no more juggling multiple vendors.
+    </p>
+    <div class="cta-row">
+      <a href="{% url 'contact' %}" class="btn btn-primary">Get in touch {% include 'partials/_icons.html' with name='arrow' %}</a>
+      <a href="{% url 'services' %}" class="btn btn-ghost">Explore services</a>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">10+</div><div class="label">Years engineering experience</div></div>
+      <div class="stat"><div class="num">4</div><div class="label">Service pillars, one team</div></div>
+      <div class="stat"><div class="num">£29</div><div class="label">Care plans from / month</div></div>
+      <div class="stat"><div class="num">100%</div><div class="label">UK-based & local</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>What we do</span>
+      <h2>Four pillars, one phone number.</h2>
+      <p class="lede">
+        From the cabling in your loft to the app on your customers' phones, we
+        cover the full technology stack — and we maintain it after we leave.
+      </p>
+    </div>
+
+    {% include 'partials/_pillars.html' %}
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Why us</span>
+      <h2>Built for people who are tired of being passed around.</h2>
+    </div>
+
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>One company, four pillars</h4>
+        <p>Networking, software, automation, support — under one roof. No more co-ordinating between three different "specialists" who blame each other.</p>
+      </div>
+      <div class="feature">
+        <h4>Enterprise engineering, residential pricing</h4>
+        <p>The same UniFi gear and engineering rigour we'd deploy in an office, sized for homes and small businesses that don't have a six-figure IT budget.</p>
+      </div>
+      <div class="feature">
+        <h4>We use what we sell</h4>
+        <p>Visit our showroom at Chiltern View — every product we recommend is running in our own home or office. If we wouldn't trust it, we won't sell it.</p>
+      </div>
+      <div class="feature">
+        <h4>Ongoing relationship, not hit-and-run</h4>
+        <p>We don't disappear after the install. Care plans start at £29/month and your engineer remains the same person every time you call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Featured project</span>
+      <h2>Chiltern View — our showroom for what's possible.</h2>
+    </div>
+
+    <div class="featured-case fade-in">
+      <div>
+        <h3>{{ featured_case.title }}</h3>
+        <p class="muted">{{ featured_case.summary }}</p>
+        <div class="stack-row">
+          {% for tech in featured_case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
+        </div>
+        <div class="row-actions mt-3">
+          <a href="{% url 'portfolio' %}" class="btn btn-ghost btn-sm">See full portfolio</a>
+          <a href="{% url 'service_automation' %}" class="btn btn-ghost btn-sm">How we automate homes</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Outcome</h4>
+        <p>{{ featured_case.outcome }}</p>
+        <h4 class="mt-3">What's running</h4>
+        <p>UniFi Wi-Fi 6E, Protect CCTV, Home Assistant, Zigbee2MQTT — all local, all controlled from one dashboard. Visit by appointment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Clients</span>
+      <h2>What people say.</h2>
+    </div>
+
+    <div class="grid grid-3">
+      {% for t in testimonials %}
+      <div class="card testimonial fade-in">
+        <span class="stars" aria-label="{{ t.rating }} out of 5 stars">
+          {% include 'partials/_icons.html' with name='star' %}
+          {% include 'partials/_icons.html' with name='star' %}
+          {% include 'partials/_icons.html' with name='star' %}
+          {% include 'partials/_icons.html' with name='star' %}
+          {% include 'partials/_icons.html' with name='star' %}
+        </span>
+        <blockquote>{{ t.quote }}</blockquote>
+        <cite><strong>{{ t.name }}</strong>{{ t.role }}</cite>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' %}
+
+{% endblock %}

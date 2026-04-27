@@ -1,0 +1,116 @@
+{% load static %}<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{% block title %}{{ page_title|default:SITE_NAME }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="{{ SITE_NAME }}" />
+  <meta property="og:title" content="{% block og_title %}{{ page_title|default:SITE_NAME }}{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
+  <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}" />
+  <meta property="og:image" content="{{ SITE_URL }}{% static 'img/og-default.svg' %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}" />
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="{% static 'img/favicon.svg' %}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="{% static 'css/site.css' %}" />
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main" style="position:absolute;left:-9999px;">Skip to content</a>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="container nav-inner">
+      <a class="brand" href="{% url 'home' %}">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>{{ SITE_NAME }}</span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Toggle navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <ul class="nav-links" data-nav-links>
+        <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}">Services</a></li>
+        <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}">Portfolio</a></li>
+        <li><a href="{% url 'pricing' %}" class="{% if active_nav == 'pricing' %}active{% endif %}">Pricing</a></li>
+        <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
+        <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
+        <li class="nav-cta"><a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Get in touch</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="{% url 'home' %}">
+            <span class="brand-mark" aria-hidden="true">L</span>
+            <span>{{ SITE_NAME }}</span>
+          </a>
+          <p class="muted mt-2" style="font-size:.93rem;max-width:22rem;">
+            Networking, software, automation and ongoing care for homes
+            and businesses across {{ SITE_REGION }}.
+          </p>
+        </div>
+        <div>
+          <h5>Services</h5>
+          <ul>
+            <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
+            <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
+            <li><a href="{% url 'service_automation' %}">Home Automation</a></li>
+            <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+            <li><a href="{% url 'pricing' %}">Pricing</a></li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a></li>
+            {% if SITE_PHONE %}<li><a href="tel:{{ SITE_PHONE }}">{{ SITE_PHONE }}</a></li>{% endif %}
+            <li><a href="{% url 'contact' %}">Send a message</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year"></span> {{ SITE_NAME }} Ltd · {{ SITE_REGION }}</span>
+        <span>
+          <a href="{% url 'robots' %}">robots.txt</a>
+          <span class="sep" style="opacity:.4;">·</span>
+          <a href="/sitemap.xml">sitemap.xml</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/site.js' %}" defer></script>
+</body>
+</html>

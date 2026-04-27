@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Pricing</span>
+    <h1>Transparent prices. <span class="gradient">No "call us" buttons.</span></h1>
+    <p class="lede">
+      We publish indicative pricing for every pillar. The actual quote depends
+      on the property and scope, but you'll never get blindsided by a 5x
+      multiplier on quote day.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Project work</span>
+      <h2>One-off engagements</h2>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='wifi' %}</div>
+        <h3>Wi-Fi & Networking</h3>
+        <p class="muted">Typical small-house install with UniFi Cloud Gateway, switch and 2 access points. Includes structured cabling, configuration and documentation.</p>
+        <div class="price-line mt-2" style="font-size:1.6rem;font-weight:700;color:var(--fg-strong);">From £800</div>
+        <a class="card-link" href="{% url 'service_networking' %}">See details <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></a>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='code' %}</div>
+        <h3>App & Web Development</h3>
+        <p class="muted">Project-priced, fixed-fee per deliverable. Marketing sites £2k–£6k. Web apps £8k–£40k. Mobile apps from £15k.</p>
+        <div class="price-line mt-2" style="font-size:1.6rem;font-weight:700;color:var(--fg-strong);">From £2,000</div>
+        <a class="card-link" href="{% url 'service_development' %}">See details <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></a>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='home' %}</div>
+        <h3>Home Automation</h3>
+        <p class="muted">Lighting, climate and security baseline for a typical 3-bed home. Whole-home installs from £5,000 depending on hardware.</p>
+        <div class="price-line mt-2" style="font-size:1.6rem;font-weight:700;color:var(--fg-strong);">From £1,500</div>
+        <a class="card-link" href="{% url 'service_automation' %}">See details <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></a>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='shield' %}</div>
+        <h3>Audit / consultation</h3>
+        <p class="muted">A 90-minute on-site (or remote) audit of your existing setup, followed by a written report with recommendations.</p>
+        <div class="price-line mt-2" style="font-size:1.6rem;font-weight:700;color:var(--fg-strong);">£195</div>
+        <a class="card-link" href="{% url 'contact' %}">Book an audit <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Care plans</span>
+      <h2>Ongoing support, monthly billed</h2>
+      <p class="lede">All plans are month-to-month. Cancel any time with 30 days' notice. Annual prepay knocks 10% off.</p>
+    </div>
+
+    <div class="price-grid">
+      {% for plan in care_plans %}
+        <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
+          {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
+          <h3>{{ plan.name }}</h3>
+          <div class="price">£{{ plan.price_monthly }}<span class="price-suffix"> / month</span></div>
+          <p class="price-tag">{{ plan.tagline }}</p>
+          <ul>
+            {% for feat in plan.features %}
+              <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
+            {% endfor %}
+          </ul>
+          <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}">Choose {{ plan.name }}</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <p class="muted center mt-3" style="margin-left:auto;margin-right:auto;">Need something custom — multi-site, 24/7, regulated? <a href="{% url 'contact' %}">Talk to us</a> about a bespoke SLA.</p>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Want a fixed-price quote?' cta_copy='Tell us the property, the goal, and the constraints. We will come back with a written proposal — usually within a working day.' %}
+{% endblock %}

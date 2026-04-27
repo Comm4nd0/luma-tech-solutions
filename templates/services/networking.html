@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Wi-Fi & Networking</nav>
+    <span class="eyebrow"><span class="dot"></span>From £800</span>
+    <h1>Wi-Fi & Networking, done <span class="gradient">properly.</span></h1>
+    <p class="lede">
+      We design and install enterprise-grade networks using the Ubiquiti UniFi
+      stack — the same kit running in offices, hotels and stadiums, sized
+      sensibly for homes and small businesses.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>The UniFi stack</h2>
+        <p class="lede">
+          UniFi gives you a single dashboard for Wi-Fi, switching, routing and
+          (optionally) CCTV. It's reliable, repairable, and you actually own
+          your network — no monthly cloud subscription holding it hostage.
+        </p>
+
+        <h3 class="mt-4">What we typically install</h3>
+        <ul class="bullets">
+          <li><strong>UniFi Dream Machine / Cloud Gateway</strong> — your router, firewall and controller, all in one box.</li>
+          <li><strong>UniFi Access Points</strong> — Wi-Fi 6 / 6E units, properly placed using a heat-map survey, not just stuck near the router.</li>
+          <li><strong>UniFi Switches</strong> — managed PoE switches so you can power cameras and APs cleanly over Ethernet.</li>
+          <li><strong>Structured cabling</strong> — Cat6 runs to every AP and camera location, terminated to a patch panel in the comms cupboard.</li>
+          <li><strong>UniFi Protect (optional)</strong> — local-recording CCTV with no cloud subscription. Footage stays on your kit.</li>
+        </ul>
+
+        <h3 class="mt-4">A typical engagement</h3>
+        <div class="steps">
+          <div class="step"><span class="step-num"></span><div><h4>Site survey</h4><p>We walk the property, map dead-spots, agree where APs and cabling will run.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Fixed-price proposal</h4><p>Written quote — hardware, cabling, labour, timeline. No surprise add-ons.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Install day</h4><p>Most homes are a one- or two-day install. We tidy as we go.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Handover</h4><p>You get a runbook, network diagram and admin credentials. Optional care plan picks it up from there.</p></div></div>
+        </div>
+
+        <h3 class="mt-4">What we'll never do</h3>
+        <ul class="bullets">
+          <li>Sell you consumer mesh kit dressed up as "professional".</li>
+          <li>Lock you into a proprietary controller you can't access.</li>
+          <li>Disappear after the install and stop returning emails.</li>
+        </ul>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Pricing</h4>
+        <div class="price-line">From £800</div>
+        <p>Typical small-house install with a UniFi Cloud Gateway, switch, and 2 access points. Larger properties from £1,800.</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Book a site survey</a>
+        <h4 style="margin-top:1.5rem;">Includes</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Hardware</li>
+          <li>Structured cabling</li>
+          <li>Configuration & VLANs</li>
+          <li>Documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Wi-Fi giving you grief?' cta_copy='Tell us the rough shape of your property and what you want it to do — we will tell you, honestly, whether it is a £200 fix or a £2,000 rebuild.' %}
+{% endblock %}

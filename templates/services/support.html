@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Support & Maintenance</nav>
+    <span class="eyebrow"><span class="dot"></span>Care plans</span>
+    <h1>Stop troubleshooting. <span class="gradient">Start enjoying it.</span></h1>
+    <p class="lede">
+      Three care-plan tiers, monthly billing, no nasty exit clauses. We
+      monitor, we patch, we pick up the phone — so you don't have to become
+      your household's reluctant IT department.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="price-grid">
+      {% for plan in care_plans %}
+        <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
+          {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
+          <h3>{{ plan.name }}</h3>
+          <div class="price">£{{ plan.price_monthly }}<span class="price-suffix"> / month</span></div>
+          <p class="price-tag">{{ plan.tagline }}</p>
+          <ul>
+            {% for feat in plan.features %}
+              <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
+            {% endfor %}
+          </ul>
+          <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}">Choose {{ plan.name }}</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>What we monitor</span>
+      <h2>Eyes on it, so you don't have to be.</h2>
+    </div>
+    <div class="grid grid-3">
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='wifi' %}</div>
+        <h3>Network health</h3>
+        <p>UniFi controller telemetry, AP availability, WAN drops, switch port errors, DHCP exhaustion. We see it before you do.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='shield' %}</div>
+        <h3>Security & updates</h3>
+        <p>Firmware patches across UniFi, Home Assistant and any custom apps we built for you. Quarterly access reviews.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='home' %}</div>
+        <h3>Smart-home brain</h3>
+        <p>Home Assistant uptime, integration health, encrypted off-site backups, and a periodic check that automations still do what you remember.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='code' %}</div>
+        <h3>Apps & sites</h3>
+        <p>Uptime monitoring, dependency security advisories, SSL expiry, error tracking, and the occasional "we should upgrade this" nudge.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='mail' %}</div>
+        <h3>Quarterly reports</h3>
+        <p>A short write-up: what happened, what we patched, what we recommend next. No 80-page PDFs nobody reads.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">{% include 'partials/_icons.html' with name='phone' %}</div>
+        <h3>A human on the phone</h3>
+        <p>Same engineer every time. They know your setup, they have the runbook, they don't make you re-explain everything.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Already got a setup that needs a guardian?' cta_copy='We can take over support of an existing UniFi network or Home Assistant install. Free 30-minute audit to see what is there and what is at risk.' %}
+{% endblock %}

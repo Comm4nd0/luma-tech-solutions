@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> App & Web Development</nav>
+    <span class="eyebrow"><span class="dot"></span>Custom software</span>
+    <h1>Software built by an <span class="gradient">engineer who supports it.</span></h1>
+    <p class="lede">
+      Mobile apps, websites, and web applications built with modern, boring,
+      maintainable tech. Shipped on time, supported afterwards, and documented
+      so any future developer can pick it up.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>The stack we use</h2>
+        <p class="lede">
+          We choose the same handful of tools for almost every project, because
+          we know them deeply and they cover 95% of cases. No "framework of the
+          week" risk on your codebase.
+        </p>
+
+        <div class="grid grid-2 mt-3">
+          <div class="card fade-in">
+            <h3>Web</h3>
+            <p>Django (Python) for back-end, server-rendered templates or React for richer front-ends, deployed via Docker. PostgreSQL or SQLite. Caddy or nginx in front.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>Mobile</h3>
+            <p>React Native (Expo) — one codebase, native iOS and Android. Pragmatic, well-supported, easy to hand to another team if you ever outgrow us.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>APIs & data</h3>
+            <p>Django REST Framework, OpenAPI specs, JWT or session auth. Background workers via Celery or RQ when needed.</p>
+          </div>
+          <div class="card fade-in">
+            <h3>Infra</h3>
+            <p>Docker Compose on a managed VPS for most clients — fast, cheap, transparent. Cloud-native (AWS / Cloudflare) when scale demands it.</p>
+          </div>
+        </div>
+
+        <h3 class="mt-4">What we build</h3>
+        <ul class="bullets">
+          <li><strong>Marketing websites</strong> with a CMS, contact forms and SEO baked in.</li>
+          <li><strong>Web applications</strong> — custom dashboards, internal tooling, customer portals.</li>
+          <li><strong>Mobile apps</strong> for iOS and Android, with proper App Store submission and CI.</li>
+          <li><strong>Integrations</strong> — Stripe, Mailchimp, HubSpot, anything with an API.</li>
+          <li><strong>Bespoke software</strong> for SMEs replacing a tangle of spreadsheets.</li>
+        </ul>
+
+        <h3 class="mt-4">Our process</h3>
+        <div class="steps">
+          <div class="step"><span class="step-num"></span><div><h4>Scope workshop</h4><p>We map the must-haves, the nice-to-haves, and the things we'll deliberately leave out of v1.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Design & spike</h4><p>Wireframes for the key screens, plus a technical spike on anything risky.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Build in sprints</h4><p>Two-week iterations, demoed live. You see progress, you can change direction.</p></div></div>
+          <div class="step"><span class="step-num"></span><div><h4>Launch & support</h4><p>Deployed, monitored, documented. Optional care plan keeps it healthy.</p></div></div>
+        </div>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Pricing</h4>
+        <div class="price-line">Project-priced</div>
+        <p>Most marketing sites £2k–£6k. Web apps £8k–£40k. Mobile apps from £15k. We quote fixed-price by deliverable, not by the hour.</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Discuss your project</a>
+        <h4 style="margin-top:1.5rem;">You always get</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Source code & ownership</li>
+          <li>CI/CD pipeline</li>
+          <li>Docs & runbook</li>
+          <li>30-day post-launch warranty</li>
+          <li>An engineer who answers email</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Got an idea worth building?' cta_copy='Send us a paragraph describing what you want to ship. We will reply with a rough scope, ballpark price, and whether we are the right fit.' %}
+{% endblock %}

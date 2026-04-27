@@ -7,3 +7,19 @@ Thumbs.db
 .vscode/
 .claude/
 node_modules/
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.python-version
+
+# Django collected/runtime
+staticfiles/
+data/
+db.sqlite3
+db.sqlite3-journal
+media/
