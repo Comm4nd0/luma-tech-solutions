@@ -161,6 +161,8 @@ section.tight { padding: clamp(2rem, 4vw, 3rem) 0; }
 }
 .nav-links a:hover { color: var(--fg-strong); background: var(--surface); }
 .nav-links a.active { color: var(--fg-strong); background: var(--surface-2); }
+.nav-links .btn-primary { color: #042f2e; }
+.nav-links .btn-primary:hover { color: #042f2e; background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%); }
 .nav-cta {
   margin-left: 0.5rem;
 }
