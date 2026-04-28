@@ -369,7 +369,7 @@ POST_10_CONTENT = """
   <li>It's the front door. Customers Google you, click through, and decide whether to bother in seconds.</li>
   <li>It's accessible everywhere — phone, laptop, tablet, work computer. No download required.</li>
   <li>It's findable. SEO, Google Business, Maps integration — none of which apps get for free.</li>
-  <li>It's cheaper. A polished marketing site for a tradesperson, gym or shop is £1,500 – £6,000. A mobile-app MVP starts at £8,000 — a full production app, £20,000+.</li>
+  <li>It's cheaper. A polished marketing site costs a fraction of a mobile app, and you can be live in weeks rather than months.</li>
 </ul>
 <p>If your problem is "people can't find us, and when they do they can't tell what we do" — you need a website, not an app.</p>
 
@@ -387,16 +387,15 @@ POST_10_CONTENT = """
 <p>For a lot of small businesses we end up here: a website-first build that adds PWA features for the small subset of users who want app-like behaviour. You get the SEO and findability of a website with the on-phone convenience of an app, for not much more than the website alone.</p>
 <p>A PWA does not work for: complex apps that need deep iOS/Android integration, anything that has to be in the App Store for credibility (banking, regulated industries), or anything where you genuinely need top-tier performance for graphics.</p>
 
-<h2>Costs in plain numbers (2026 prices)</h2>
+<h2>Costs: the honest version</h2>
+<p>Every project is different, so we quote fixed-price after a scoping conversation rather than publishing ranges that might mislead. What we can say:</p>
 <ul>
-  <li><strong>Simple website (5–8 pages, CMS, contact form, SEO):</strong> £1,500 – £3,000.</li>
-  <li><strong>Business website (10–20 pages, more complex CMS / integrations):</strong> £3,000 – £6,000.</li>
-  <li><strong>Web application (e-commerce, customer portal, internal tools):</strong> £5,000 – £25,000+.</li>
-  <li><strong>Mobile app, MVP (iOS + Android, cross-platform via React Native):</strong> £8,000 – £20,000.</li>
-  <li><strong>Mobile app, full production:</strong> £20,000 – £50,000+.</li>
-  <li><strong>SEO audit:</strong> £300 standalone. <strong>Ongoing retainer:</strong> £75/hour.</li>
+  <li>A website is always significantly cheaper than a mobile app.</li>
+  <li>A PWA sits somewhere in between — usually closer to the website end.</li>
+  <li>Hosting is included where needed, so you're not juggling a separate bill.</li>
+  <li>We quote by deliverable, not by the hour — no open-ended day-rate surprises.</li>
 </ul>
-<p>Plus ongoing: hosting + support is £30–£100/month for a website, £100–£300/month for an app (App Store accounts, push services, crash monitoring, occasional iOS/Android update releases).</p>
+<p><a href="/contact/?service=development">Get in touch</a> with a paragraph about what you need and we'll come back with a ballpark before anyone commits to a full scoping session.</p>
 
 <h2>Our default approach</h2>
 <p>For most small Berkshire and Bucks businesses we'll recommend: <strong>start with a great website</strong>, designed to make money on day one (clear positioning, good SEO, easy contact). Six to twelve months in, look at the numbers — repeat visits, average session, what people came back for. <em>Then</em> decide whether an app would genuinely make their lives easier, or whether a PWA layer on top of the existing site would do the job.</p>
