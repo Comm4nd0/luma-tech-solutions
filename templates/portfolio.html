@@ -17,7 +17,16 @@
   <div class="container">
     <div class="grid grid-2">
       {% for case in case_studies %}
-        <article class="case-card fade-in">
+        <article class="case-card has-img fade-in">
+          <div class="case-card-img">
+            {% if case.slug == 'chiltern-view' %}
+              {% include 'partials/_illustrations.html' with name='automation' %}
+            {% elif case.slug == 'for-sale-by-owner' %}
+              {% include 'partials/_illustrations.html' with name='development' %}
+            {% else %}
+              {% include 'partials/_illustrations.html' with name='development' %}
+            {% endif %}
+          </div>
           <span class="case-tag">
             {% if case.slug == 'chiltern-view' %}Smart home + networking
             {% elif case.slug == 'for-sale-by-owner' %}Mobile app

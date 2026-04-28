@@ -3,14 +3,21 @@
 {% block content %}
 <section class="service-hero">
   <div class="container">
-    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Home Automation</nav>
-    <span class="eyebrow"><span class="dot"></span>Smart homes done right</span>
-    <h1>A smart home that's <span class="gradient">yours, private, and keeps working.</span></h1>
-    <p class="lede">
-      We build smart homes around <strong>Home Assistant</strong> — fast,
-      private, and not at the mercy of a vendor changing the rules or
-      having a bad afternoon with their cloud servers.
-    </p>
+    <div class="service-hero-inner">
+      <div>
+        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Home Automation</nav>
+        <span class="eyebrow"><span class="dot"></span>Smart homes done right</span>
+        <h1>A smart home that's <span class="gradient">yours, private, and keeps working.</span></h1>
+        <p class="lede">
+          We build smart homes around <strong>Home Assistant</strong> — fast,
+          private, and not at the mercy of a vendor changing the rules or
+          having a bad afternoon with their cloud servers.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='automation' %}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -40,19 +47,19 @@
 
         <h3 class="mt-4">Equipment we trust</h3>
         <div class="grid grid-2">
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>The brain</h3>
             <p>A dedicated smart-home hub — purpose-built hardware with proper storage and encrypted off-site backups. The thing that runs your house deserves better than a hobby board with a flaky memory card.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>Wireless protocols</h3>
             <p>Zigbee for sensors and lighting, Z-Wave for door and window kit, Matter where it fits. We'll mix the right ones for your home, not whatever's on offer this week.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>How you control it</h3>
             <p>Wall tablets, your voice (Apple Home, Alexa or Google), or a tidy mobile dashboard. Whatever actually fits how you live — not how the vendor thinks you should.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>Network</h3>
             <p>Your smart-home devices get their own private network, kept away from your laptops and phones. Done right, you get reliability your gadget vendors didn't promise — and a much smaller security risk.</p>
           </div>

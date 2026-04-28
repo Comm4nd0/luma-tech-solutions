@@ -3,14 +3,21 @@
 {% block content %}
 <section class="service-hero">
   <div class="container">
-    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> App & Web Development</nav>
-    <span class="eyebrow"><span class="dot"></span>Custom software</span>
-    <h1>Software built by an <span class="gradient">engineer who supports it.</span></h1>
-    <p class="lede">
-      Mobile apps, websites, and web applications built with modern,
-      proven, maintainable tech. Shipped on time, supported afterwards,
-      and documented so any future developer can pick it up cold.
-    </p>
+    <div class="service-hero-inner">
+      <div>
+        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> App & Web Development</nav>
+        <span class="eyebrow"><span class="dot"></span>Custom software</span>
+        <h1>Software built by an <span class="gradient">engineer who supports it.</span></h1>
+        <p class="lede">
+          Mobile apps, websites, and web applications built with modern,
+          proven, maintainable tech. Shipped on time, supported afterwards,
+          and documented so any future developer can pick it up cold.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='development' %}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -26,19 +33,19 @@
         </p>
 
         <div class="grid grid-2 mt-3">
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>Web</h3>
             <p>Django (Python) for back-end, server-rendered templates or React for richer front-ends, deployed via Docker. PostgreSQL or SQLite. Caddy or nginx in front.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>Mobile</h3>
             <p>React Native (Expo) — one codebase, native iOS and Android. Pragmatic, well-supported, easy to hand to another team if you ever outgrow us.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>APIs & data</h3>
             <p>Django REST Framework, OpenAPI specs, JWT or session auth. Background workers via Celery or RQ when needed.</p>
           </div>
-          <div class="card fade-in">
+          <div class="card card-glow fade-in">
             <h3>Infra</h3>
             <p>Docker Compose on a managed VPS for most clients — fast, cheap, transparent. Cloud-native (AWS / Cloudflare) when scale demands it.</p>
           </div>

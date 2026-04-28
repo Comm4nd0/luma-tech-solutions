@@ -5,16 +5,23 @@
 
 <section class="hero">
   <div class="container hero-content">
-    <span class="eyebrow"><span class="dot"></span>Berkshire & Buckinghamshire</span>
-    <h1>Technology that works.<br/><span class="gradient">Support that lasts.</span></h1>
-    <p class="lede">
-      Professional networking, security, development, automation and
-      support for homes and businesses across {{ SITE_REGION }}. One
-      company, five pillars — no more juggling multiple vendors.
-    </p>
-    <div class="cta-row">
-      <a href="{% url 'contact' %}" class="btn btn-primary">Get in touch {% include 'partials/_icons.html' with name='arrow' %}</a>
-      <a href="{% url 'services' %}" class="btn btn-ghost">Explore services</a>
+    <div class="hero-split">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Berkshire & Buckinghamshire</span>
+        <h1>Technology that works.<br/><span class="gradient">Support that lasts.</span></h1>
+        <p class="lede">
+          Professional networking, security, development, automation and
+          support for homes and businesses across {{ SITE_REGION }}. One
+          company, five pillars — no more juggling multiple vendors.
+        </p>
+        <div class="cta-row">
+          <a href="{% url 'contact' %}" class="btn btn-primary">Get in touch {% include 'partials/_icons.html' with name='arrow' %}</a>
+          <a href="{% url 'services' %}" class="btn btn-ghost">Explore services</a>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='hero' %}
+      </div>
     </div>
 
     <div class="stat-row">
@@ -26,7 +33,7 @@
   </div>
 </section>
 
-<section>
+<section class="dot-grid">
   <div class="container">
     <div class="section-head fade-in">
       <span class="eyebrow"><span class="dot"></span>What we do</span>
@@ -41,7 +48,7 @@
   </div>
 </section>
 
-<section>
+<section class="section-orb">
   <div class="container">
     <div class="section-head fade-in">
       <span class="eyebrow"><span class="dot"></span>Why us</span>
@@ -86,6 +93,9 @@
 
     <div class="featured-case fade-in">
       <div>
+        <div class="featured-case-img mb-2">
+          {% include 'partials/_illustrations.html' with name='automation' %}
+        </div>
         <h3>{{ featured_case.title }}</h3>
         <p class="muted">{{ featured_case.summary }}</p>
         <div class="stack-row">

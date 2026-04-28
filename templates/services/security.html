@@ -3,15 +3,22 @@
 {% block content %}
 <section class="service-hero">
   <div class="container">
-    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Security</nav>
-    <span class="eyebrow"><span class="dot"></span>Physical &amp; cyber, one system</span>
-    <h1>Protect what matters, <span class="gradient">end to end.</span></h1>
-    <p class="lede">
-      Physical and cyber security, designed, installed and monitored as
-      one integrated system. CCTV, access control, alarms, smart locks
-      and network hardening — engineered together so they actually work
-      together.
-    </p>
+    <div class="service-hero-inner">
+      <div>
+        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Security</nav>
+        <span class="eyebrow"><span class="dot"></span>Physical &amp; cyber, one system</span>
+        <h1>Protect what matters, <span class="gradient">end to end.</span></h1>
+        <p class="lede">
+          Physical and cyber security, designed, installed and monitored as
+          one integrated system. CCTV, access control, alarms, smart locks
+          and network hardening — engineered together so they actually work
+          together.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='security' %}
+      </div>
+    </div>
   </div>
 </section>
 

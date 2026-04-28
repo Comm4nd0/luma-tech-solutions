@@ -3,14 +3,21 @@
 {% block content %}
 <section class="service-hero">
   <div class="container">
-    <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Wi-Fi & Networking</nav>
-    <span class="eyebrow"><span class="dot"></span>From £800</span>
-    <h1>Wi-Fi & Networking, done <span class="gradient">properly.</span></h1>
-    <p class="lede">
-      We design and install proper, business-grade networks using
-      Ubiquiti UniFi — the same kit running in offices, hotels and
-      stadiums, sized sensibly for homes and small businesses.
-    </p>
+    <div class="service-hero-inner">
+      <div>
+        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Wi-Fi & Networking</nav>
+        <span class="eyebrow"><span class="dot"></span>From £800</span>
+        <h1>Wi-Fi & Networking, done <span class="gradient">properly.</span></h1>
+        <p class="lede">
+          We design and install proper, business-grade networks using
+          Ubiquiti UniFi — the same kit running in offices, hotels and
+          stadiums, sized sensibly for homes and small businesses.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='networking' %}
+      </div>
+    </div>
   </div>
 </section>
 

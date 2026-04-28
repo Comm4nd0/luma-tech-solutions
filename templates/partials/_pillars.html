@@ -1,7 +1,7 @@
-{# Reusable 4-pillar grid. Pass `pillars`. #}
+{# Reusable pillar grid. Pass `pillars`. #}
 <div class="grid grid-4">
   {% for p in pillars %}
-    <a class="card pillar-card fade-in" href="{% url p.url_name %}">
+    <a class="card card-glow pillar-card fade-in" href="{% url p.url_name %}">
       <div class="card-icon">{% include 'partials/_icons.html' with name=p.icon %}</div>
       <span class="tag">{{ p.title }}</span>
       <h3>{{ p.title }}</h3>
