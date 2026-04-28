@@ -206,7 +206,7 @@ def services_overview(request):
             active="services",
             page_title=f"Services — {settings.SITE_NAME}",
             page_description=(
-                "Five pillars of service: Wi-Fi & networking, security, "
+                "Everything we offer: Wi-Fi & networking, security, "
                 "app & web development, home automation, and ongoing support."
             ),
         ),
