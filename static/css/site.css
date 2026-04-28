@@ -1043,7 +1043,7 @@ footer.site-footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.85;
+  opacity: 1;
 }
 @media (max-width: 900px) {
   .hero-split { grid-template-columns: 1fr; }
@@ -1153,7 +1153,7 @@ footer.site-footer {
 }
 .case-card-img .ill {
   max-width: 200px;
-  opacity: 0.5;
+  opacity: 0.85;
 }
 .case-card.has-img { padding: 0; }
 .case-card.has-img > *:not(.case-card-img) { padding: 0 1.75rem; }
@@ -1181,7 +1181,7 @@ footer.site-footer {
 }
 .featured-case-img .ill {
   max-width: 280px;
-  opacity: 0.45;
+  opacity: 0.8;
 }
 
 /* ---------- decorative dot grid ---------- */
