@@ -303,9 +303,9 @@ POST_8_CONTENT = """
 <h2>What our plans look like</h2>
 <p>We keep this deliberately simple — three tiers, monthly billed:</p>
 <ul>
-  <li><strong>Essential — £29/month.</strong> Remote monitoring, email support, quarterly health-check, firmware managed. Right for most homes.</li>
-  <li><strong>Professional — £59/month.</strong> Adds priority response, monthly check-in, an annual on-site visit, smart-home tweaks included. Right for households or small businesses that depend on the tech.</li>
-  <li><strong>Enterprise — £149/month.</strong> 2-hour response SLA, dedicated account manager, quarterly on-site visit, runbook documentation. Right for businesses or larger residential installs.</li>
+  <li><strong>Essential — £29/month.</strong> Automated monitoring, email support, quarterly health-check, firmware managed. Right for most homes.</li>
+  <li><strong>Professional — £59/month.</strong> Adds same-day response, quarterly check-in call, an annual on-site visit, smart-home tweaks included. Right for households or small businesses that depend on the tech.</li>
+  <li><strong>Enterprise — £149/month.</strong> Priority response, monthly check-in, quarterly on-site visit, full documentation kept up to date. Right for businesses or larger residential installs.</li>
 </ul>
 <p>All cancellable with 30 days' notice. Annual prepay knocks 10% off.</p>
 
