@@ -4,12 +4,12 @@
 <section class="service-hero">
   <div class="container">
     <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Home Automation</nav>
-    <span class="eyebrow"><span class="dot"></span>Local-first smart home</span>
-    <h1>Smart homes that are <span class="gradient">private and stay running.</span></h1>
+    <span class="eyebrow"><span class="dot"></span>Smart homes done right</span>
+    <h1>A smart home that's <span class="gradient">yours, private, and keeps working.</span></h1>
     <p class="lede">
-      We build smart homes around <strong>Home Assistant</strong> — local,
-      open-source, fast, and not at the mercy of a vendor changing the API or
-      switching the lights off when their server has a bad afternoon.
+      We build smart homes around <strong>Home Assistant</strong> — fast,
+      private, and not at the mercy of a vendor changing the rules or
+      having a bad afternoon with their cloud servers.
     </p>
   </div>
 </section>
@@ -18,13 +18,14 @@
   <div class="container">
     <div class="service-grid">
       <div>
-        <h2>Why local-first matters</h2>
+        <h2>Why it matters where the brain lives</h2>
         <p>
-          Most "smart home" platforms send every light switch through someone
-          else's cloud. That's slow, fragile, and a privacy choice you didn't
-          consciously make. With Home Assistant the brain lives in your house
-          — your scenes work even if your internet's out, your data doesn't
-          leak, and you can change anything without asking permission.
+          Most "smart home" platforms send every flick of a light switch
+          through somebody else's servers. That's slow, fragile, and a
+          privacy choice you didn't consciously make. With Home Assistant,
+          the brain lives in your house — your scenes work even when the
+          internet drops, your data stays put, and you can change anything
+          without asking a vendor's permission.
         </p>
 
         <h3 class="mt-3">What we automate</h3>
@@ -41,29 +42,37 @@
         <div class="grid grid-2">
           <div class="card fade-in">
             <h3>The brain</h3>
-            <p>Home Assistant on a dedicated mini-PC or Home Assistant Yellow, with off-site encrypted backups. The thing that runs your house should not be a Raspberry Pi on a sad SD card.</p>
+            <p>A dedicated smart-home hub — purpose-built hardware with proper storage and encrypted off-site backups. The thing that runs your house deserves better than a hobby board with a flaky memory card.</p>
           </div>
           <div class="card fade-in">
-            <h3>Radios</h3>
-            <p>Zigbee2MQTT for sensors and lighting, Z-Wave for door/window kit, Matter where it makes sense. We'll mix protocols when it's the right call, not for the sake of it.</p>
+            <h3>Wireless protocols</h3>
+            <p>Zigbee for sensors and lighting, Z-Wave for door and window kit, Matter where it fits. We'll mix the right ones for your home, not whatever's on offer this week.</p>
           </div>
           <div class="card fade-in">
-            <h3>Dashboards</h3>
-            <p>Wall tablets, voice (Apple Home / Alexa / Google), or an Android tablet running a custom Home Assistant dashboard. Whatever fits how you actually live.</p>
+            <h3>How you control it</h3>
+            <p>Wall tablets, your voice (Apple Home, Alexa or Google), or a tidy mobile dashboard. Whatever actually fits how you live — not how the vendor thinks you should.</p>
           </div>
           <div class="card fade-in">
             <h3>Network</h3>
-            <p>Smart home and IoT live on their own VLAN, segregated from your computers. Done right, you get Wi-Fi reliability your IoT vendors did not promise.</p>
+            <p>Your smart-home devices get their own private network, kept away from your laptops and phones. Done right, you get reliability your gadget vendors didn't promise — and a much smaller security risk.</p>
           </div>
         </div>
 
         <h3 class="mt-4">We run it ourselves</h3>
         <p>
-          We deliberately deploy every product we sell. Marco's own home
-          runs the full UniFi + Home Assistant + Zigbee2MQTT stack —
-          the same kit we install for clients. If something isn't
-          reliable enough for our daily life, it doesn't make it onto
-          your quote.
+          Every product we recommend is running in our own home, every
+          day. Same network. Same smart-home hub. Same locks, lights and
+          sensors. If something isn't reliable enough for our family,
+          it doesn't make it onto your quote.
+        </p>
+
+        <h3 class="mt-4">Custom brackets &amp; mounts, made in-house</h3>
+        <p>
+          When the off-the-shelf bracket doesn't fit your wall, your
+          architrave or that awkward corner above the porch, we design
+          and 3D print custom mounts, enclosures and cable-tidy parts
+          ourselves. It's a small thing — but it's the difference
+          between a clean install and a sensor dangling on cable ties.
         </p>
       </div>
 
@@ -72,12 +81,12 @@
         <div class="price-line">From £500</div>
         <p>Starter package £500–£1,000. Standard £1,500–£3,000. Premium / whole-home £3,000–£8,000+. Per-room add-on £200–£400. Dashboard tablet £250. Consultation £100 (credited).</p>
         <a href="{% url 'contact' %}" class="btn btn-primary">Book a chat</a>
-        <h4 style="margin-top:1.5rem;">Always</h4>
+        <h4 style="margin-top:1.5rem;">Always included</h4>
         <ul class="bullets" style="margin-top:.5rem;">
-          <li>Local control</li>
-          <li>You own the brain</li>
+          <li>Works without the internet</li>
+          <li>You own the hardware</li>
           <li>Encrypted backups</li>
-          <li>Documented automations</li>
+          <li>Plain-English documentation</li>
           <li>No vendor lock-in</li>
         </ul>
       </aside>

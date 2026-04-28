@@ -19,35 +19,35 @@ PILLARS = [
     {
         "key": "networking",
         "title": "Wi-Fi & Networking",
-        "tagline": "Enterprise-grade network design and installation using Ubiquiti UniFi.",
+        "tagline": "Properly engineered Wi-Fi and network design — no more dead-spots, no more rebooting the router.",
         "url_name": "service_networking",
         "icon": "wifi",
     },
     {
         "key": "security",
         "title": "Security",
-        "tagline": "CCTV, access control, alarms, and network hardening — physical and cyber security as one integrated system.",
+        "tagline": "CCTV, access control, alarms and smart locks — plus the network protection most installers skip.",
         "url_name": "service_security",
         "icon": "lock",
     },
     {
         "key": "development",
         "title": "App & Web Development",
-        "tagline": "Custom mobile apps, websites, and web applications.",
+        "tagline": "Custom websites, web applications and mobile apps — built and supported by the same engineer.",
         "url_name": "service_development",
         "icon": "code",
     },
     {
         "key": "automation",
         "title": "Home Automation",
-        "tagline": "Smart home design using Home Assistant — local, fast, private.",
+        "tagline": "Smart homes that are private, fast and keep working when the internet doesn't.",
         "url_name": "service_automation",
         "icon": "home",
     },
     {
         "key": "support",
         "title": "Support & Maintenance",
-        "tagline": "Ongoing care plans so you never troubleshoot alone.",
+        "tagline": "Ongoing care so you never have to troubleshoot your own house alone.",
         "url_name": "service_support",
         "icon": "shield",
     },
@@ -116,15 +116,15 @@ CARE_PLANS = [
     {
         "name": "Enterprise",
         "price_monthly": 149,
-        "tagline": "Mission-critical, with SLAs in writing.",
+        "tagline": "For setups that have to keep working — with response times in writing.",
         "highlighted": False,
         "features": [
             "Everything in Professional",
-            "2-hour response SLA",
+            "Two-hour response, in writing",
             "Dedicated account manager",
             "Quarterly on-site visit included",
             "Out-of-hours emergency support",
-            "Documented runbook for your stack",
+            "Plain-English documentation of your setup",
         ],
     },
 ]
@@ -133,27 +133,28 @@ CARE_PLANS = [
 CASE_STUDIES = [
     {
         "slug": "chiltern-view",
-        "title": "Chiltern View — full smart home + UniFi network",
+        "title": "Chiltern View — full smart home and UniFi network",
         "summary": (
-            "A complete residential rebuild: UniFi Wi-Fi 6E across the property, "
-            "Protect CCTV, Home Assistant running scenes, climate, lighting and "
-            "access — all on a single, locally-controlled stack. Aerial drone "
-            "documentation is included with every project we deliver."
+            "A complete residential rebuild: fast Wi-Fi everywhere, Protect "
+            "CCTV recording at the property, and Home Assistant running "
+            "scenes, climate, lighting and access — all on a single dashboard "
+            "that doesn't depend on anyone's cloud. Aerial drone documentation "
+            "is included with every project we deliver."
         ),
-        "stack": ["UniFi Dream Machine Pro", "UniFi APs & Switches", "UniFi Protect", "Home Assistant", "Zigbee2MQTT"],
-        "outcome": "Whole-home coverage, local-first automation, zero cloud lock-in.",
+        "stack": ["UniFi Dream Machine Pro", "UniFi APs & Switches", "UniFi Protect", "Home Assistant", "Zigbee"],
+        "outcome": "Whole-home coverage, automations that work without the internet, no cloud lock-in.",
         "featured": True,
     },
     {
         "slug": "for-sale-by-owner",
         "title": "For Sale By Owner — property listings mobile app",
         "summary": (
-            "A native-quality cross-platform mobile app for a UK property "
-            "listings business, with photo upload, geo-search, and an admin "
-            "back-office for moderation."
+            "A polished cross-platform mobile app for a UK property listings "
+            "business, with photo uploads, map-based search and a back-office "
+            "for the team to moderate listings."
         ),
         "stack": ["React Native (Expo)", "Django REST Framework", "PostgreSQL", "S3-compatible storage"],
-        "outcome": "Shipped iOS & Android in under 12 weeks. Live in production.",
+        "outcome": "Shipped on iOS and Android in under 12 weeks. Live and supported.",
         "featured": False,
     },
     {

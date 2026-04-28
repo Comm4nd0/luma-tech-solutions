@@ -115,7 +115,7 @@ POST_4_CONTENT = """
 
 <h2>2. What's the stack — and why did you choose it?</h2>
 <p>You don't need to understand the answer in detail, but the developer should be able to explain it without resorting to buzzwords. "We use Django because we know it deeply and most of what you need is built in" is a good answer. "We use [obscure framework] because it's the latest thing" is a warning sign — you don't want your business sitting on someone else's experiment.</p>
-<p>Boring tech is good tech. The boring choices are usually still being maintained and have a market of developers who can pick up the codebase if your relationship ever ends.</p>
+<p>Proven tech is good tech. The well-trodden choices are usually still being actively maintained and have a market of developers who can pick up the codebase if your relationship with the original team ever ends.</p>
 
 <h2>3. Who owns the code, the domain and the hosting?</h2>
 <p>You should. Always. The contract should state that the source code is yours, the domain is registered in your name (not the agency's), and the hosting account is in your name with you as the admin user.</p>
@@ -137,7 +137,7 @@ POST_4_CONTENT = """
 <h2>6. What does handover look like if I leave?</h2>
 <p>Last question, and the answer reveals more than you'd think. Good developers will say something like: "The repo is yours, the deployment runs from a documented Dockerfile, the runbook lives in the repo, and we'd help your next engineer get started." Bad developers will say: "Why would you leave?"</p>
 
-<h2>Boring sounds like the right word</h2>
+<h2>Practical sounds like the right word</h2>
 <p>Notice that none of these questions are about design. Design matters, but you can usually tell that from a portfolio. The questions above are about whether the relationship will still be working in two years' time.</p>
 <p>If you're a small or medium business in Berkshire or Buckinghamshire and you'd like to chat about a build with someone who actually answers their email, <a href="/contact/?service=development">drop us a line</a>. We don't pitch every project — but if we say yes, we mean it.</p>
 """
@@ -220,7 +220,7 @@ POST_6_CONTENT = """
 <p>Home Assistant is the open-source platform that runs the rest of our installs. It's not as instantly pretty as HomeKit, but two things make it different.</p>
 <p><strong>Local-first.</strong> The brain runs on a small computer in your house — a mini-PC, a Home Assistant Yellow, or similar. Your scenes work whether your internet is up or down. Your data doesn't leave the house unless you explicitly send it somewhere. If a vendor pulls a cloud API tomorrow, your house carries on.</p>
 <p><strong>Anything talks to anything.</strong> Home Assistant has integrations for thousands of devices and protocols — Zigbee, Z-Wave, Matter, Lutron, Hue, plus dozens of one-off integrations for cars, solar inverters, energy meters, even your Octopus tariff. If a device exists, there's a fair chance it can be wired in.</p>
-<p>The trade-off is the learning curve. Home Assistant assumes you'll learn its YAML and its automation language eventually. For people who don't want to do that — which is most of our clients — we set it up, write the automations, and leave a friendly dashboard behind.</p>
+<p>The trade-off is the learning curve. Home Assistant assumes you'll get comfortable editing configuration files eventually. For people who don't want to do that — which is most of our clients — we set it up, write the automations, and leave a friendly dashboard behind.</p>
 <p><strong>Pick Home Assistant if:</strong> you want serious automation, local control, no vendor lock-in, and either you're willing to tinker or you have someone who'll do the tinkering for you.</p>
 
 <h2>Our recommendation</h2>
@@ -413,7 +413,7 @@ POST_11_CONTENT = """
 
 <h2>Plan for the worst case, not the average case</h2>
 <p>In a military context, "what happens if the link goes down" is a question you ask before, not after. Redundancy isn't a luxury, it's the default. You assume the bit you depend on will fail, and you design so that the system limps usefully along when it does.</p>
-<p>That mentality changes how you plan a home install. We don't size a network to handle "everyone watching Netflix at 8pm on a normal Tuesday". We size it to handle "the kids' games console is downloading a 200GB update, the cleaner is on a video call, the camera system is uploading footage, and there's a router firmware update mid-process". The boring case looks comfortable; the awkward one is what tells you whether the kit is right.</p>
+<p>That mentality changes how you plan a home install. We don't size a network to handle "everyone watching Netflix at 8pm on a normal Tuesday". We size it to handle "the kids' games console is downloading a 200GB update, the cleaner is on a video call, the camera system is uploading footage, and there's a router firmware update mid-process". The easy case looks comfortable; the awkward one is what tells you whether the kit is right.</p>
 
 <h2>Document everything, because the next person isn't you</h2>
 <p>In the field, you might hand off a system to someone who's never seen it before, in conditions where they can't ask you questions. So everything is documented — runbooks, network diagrams, credentials, the lot — and you assume the person reading it doesn't have the context you do.</p>
@@ -427,9 +427,9 @@ POST_11_CONTENT = """
 <p>The military teaches you to keep the people who depend on you informed, even — especially — when something's going wrong. The instinct to hide problems while you fix them is human, and corrosive. Far better to say "this has gone wrong, here's what we're doing, here's the timeline" than to go quiet for a day and reappear with a fix.</p>
 <p>I bring that into how we run support. If a customer's network has had a wobble overnight, they'll get a message before the kettle's on the next morning. Not because they asked. Because they shouldn't have to.</p>
 
-<h2>Boring kit is good kit</h2>
+<h2>Proven kit is good kit</h2>
 <p>The flashy gear is rarely the dependable gear. In a military environment, you want the radio that's been in service for ten years, that engineers have rebuilt a hundred times, that has a known failure mode. Not the cutting-edge thing that nobody quite trusts yet.</p>
-<p>The same applies to a home network. UniFi has been around. Home Assistant has been around. Cat6 has been around. Boring, well-understood, predictable. The reason we use these tools — instead of whatever was launched at IFA last September — is the same reason the Marines stuck with kit a decade old: <em>it works, and we know how it fails</em>.</p>
+<p>The same applies to a home network. UniFi has been around. Home Assistant has been around. Cat6 has been around. Proven, well-understood, predictable. The reason we use these tools — instead of whatever was launched at IFA last September — is the same reason the Marines stuck with kit a decade old: <em>it works, and we know how it fails</em>.</p>
 
 <h2>Standards survive when individuals don't</h2>
 <p>This is the one I think about most. Personnel rotate. The unit's standards don't. The reason a system stays high-quality after handover is that the standard is institutional, not personal.</p>
