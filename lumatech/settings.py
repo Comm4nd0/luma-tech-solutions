@@ -115,7 +115,9 @@ EMAIL_HOST = os.environ.get("DJANGO_EMAIL_HOST", "")
 EMAIL_PORT = int(os.environ.get("DJANGO_EMAIL_PORT", "587"))
 EMAIL_HOST_USER = os.environ.get("DJANGO_EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_HOST_PASSWORD", "")
-EMAIL_USE_TLS = os.environ.get("DJANGO_EMAIL_USE_TLS", "1") == "1"
+EMAIL_USE_SSL = os.environ.get("DJANGO_EMAIL_USE_SSL", "0") == "1"
+# TLS and SSL are mutually exclusive in Django; SSL wins if both are set.
+EMAIL_USE_TLS = (not EMAIL_USE_SSL) and os.environ.get("DJANGO_EMAIL_USE_TLS", "1") == "1"
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DJANGO_DEFAULT_FROM_EMAIL", "Luma Tech Solutions <hello@lumatechsolutions.co.uk>"
 )
