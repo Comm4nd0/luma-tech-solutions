@@ -158,6 +158,26 @@ CASE_STUDIES = [
         "featured": False,
     },
     {
+        "slug": "littlewick-house",
+        "title": "LittleWick House — whole-property UniFi network",
+        "summary": (
+            "A large residential property in Maidenhead across four floors, "
+            "plus a cellar, garage and separate annex. Eleven access points, "
+            "three distribution switches, a Dream Machine Pro at the core, "
+            "and three VLANs separating home, IoT and guest traffic — all "
+            "on a single managed network with no dead spots."
+        ),
+        "stack": [
+            "UniFi Dream Machine Pro",
+            "Pro Max 24 PoE Switch",
+            "11× U7-Pro / U7-Pro-Wall APs",
+            "3× PoE Switches",
+            "VLAN segmentation",
+        ],
+        "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with proper network segmentation and room to grow.",
+        "featured": False,
+    },
+    {
         "slug": "paws-4-thought-dogs",
         "title": "Paws 4 Thought Dogs — small business website",
         "summary": (
@@ -316,8 +336,9 @@ def portfolio(request):
             active="portfolio",
             page_title="Portfolio — Luma Tech Solutions",
             page_description=(
-                "Selected case studies: Chiltern View smart home, For Sale By "
-                "Owner mobile app, Paws 4 Thought Dogs website."
+                "Selected case studies: Chiltern View smart home, LittleWick "
+                "House whole-property network, For Sale By Owner mobile app, "
+                "Paws 4 Thought Dogs website."
             ),
             case_studies=CASE_STUDIES,
         ),
