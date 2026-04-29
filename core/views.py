@@ -74,7 +74,7 @@ TESTIMONIALS = [
         ),
     },
     {
-        "name": "Sarah M.",
+        "name": "Claire M.",
         "role": "Paws 4 Thought Dogs",
         "rating": 5,
         "quote": (
