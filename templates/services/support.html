@@ -28,7 +28,6 @@
         <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
           {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
           <h3>{{ plan.name }}</h3>
-          <div class="price">£{{ plan.price_monthly }}<span class="price-suffix"> / month</span></div>
           <p class="price-tag">{{ plan.tagline }}</p>
           <ul>
             {% for feat in plan.features %}

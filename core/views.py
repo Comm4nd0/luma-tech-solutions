@@ -88,7 +88,6 @@ TESTIMONIALS = [
 CARE_PLANS = [
     {
         "name": "Essential",
-        "price_monthly": 29,
         "tagline": "Peace of mind for homes and small offices.",
         "highlighted": False,
         "features": [
@@ -101,7 +100,6 @@ CARE_PLANS = [
     },
     {
         "name": "Professional",
-        "price_monthly": 59,
         "tagline": "For households and businesses that depend on tech.",
         "highlighted": True,
         "features": [
@@ -115,7 +113,6 @@ CARE_PLANS = [
     },
     {
         "name": "Enterprise",
-        "price_monthly": 149,
         "tagline": "For setups that need priority attention and regular hands-on care.",
         "highlighted": False,
         "features": [
@@ -134,6 +131,8 @@ CASE_STUDIES = [
     {
         "slug": "chiltern-view",
         "title": "Chiltern View — full smart home and UniFi network",
+        "tag": "Smart home + networking",
+        "illustration": "automation",
         "summary": (
             "A complete residential rebuild: fast Wi-Fi everywhere, Protect "
             "CCTV recording at the property, and Home Assistant running "
@@ -148,6 +147,8 @@ CASE_STUDIES = [
     {
         "slug": "for-sale-by-owner",
         "title": "For Sale By Owner — property listings mobile app",
+        "tag": "Mobile app",
+        "illustration": "development",
         "summary": (
             "A polished cross-platform mobile app for a UK property listings "
             "business, with photo uploads, map-based search and a back-office "
@@ -160,6 +161,8 @@ CASE_STUDIES = [
     {
         "slug": "littlewick-house",
         "title": "LittleWick House — whole-property UniFi network",
+        "tag": "Networking",
+        "illustration": "networking",
         "summary": (
             "A large residential property in Maidenhead across four floors, "
             "plus a cellar, garage and separate annex. Eleven access points, "
@@ -180,12 +183,37 @@ CASE_STUDIES = [
     {
         "slug": "paws-4-thought-dogs",
         "title": "Paws 4 Thought Dogs — small business website",
+        "tag": "Marketing site",
+        "illustration": "development",
         "summary": (
             "A polished, SEO-friendly website for a local dog-walking business, "
             "with booking enquiries, gallery and Google Business integration."
         ),
         "stack": ["Static site", "Custom CSS", "Caddy + Docker", "Hetzner VPS"],
         "outcome": "First-page Google ranking for local search within 6 weeks.",
+        "featured": False,
+    },
+    {
+        "slug": "paws-4-thought-dogs-app",
+        "title": "Paws 4 Thought Dogs — mobile app",
+        "tag": "Mobile app",
+        "illustration": "development",
+        "summary": (
+            "A two-sided iOS app for the same Berkshire dog-daycare business. "
+            "Owners get a daily photo and video feed of their dogs, book "
+            "boarding, manage dog profiles and message staff directly. Staff "
+            "get a dashboard for daily assignments, request approvals, "
+            "transport tracking and compatibility notes — all synced to a "
+            "Django backend with offline-first caching for use in the field."
+        ),
+        "stack": [
+            "Flutter",
+            "Django REST Framework",
+            "PostgreSQL",
+            "Push notifications",
+            "Offline cache (Hive)",
+        ],
+        "outcome": "Live on the App Store. iPhone, iPad, Mac (M1+) and Apple Vision supported.",
         "featured": False,
     },
 ]
@@ -242,7 +270,7 @@ def service_networking(request):
             page_title="Wi-Fi & Networking — Luma Tech Solutions",
             page_description=(
                 "Enterprise-grade UniFi Wi-Fi and networking design, "
-                "installation and management. From £800."
+                "installation and management for homes and small offices."
             ),
         ),
     )
@@ -303,9 +331,9 @@ def service_support(request):
             active="services",
             page_title="Support & Care Plans — Luma Tech Solutions",
             page_description=(
-                "Three care-plan tiers — Essential (£29), Professional (£59) "
-                "and Enterprise (£149). Monitoring, response SLAs, and a "
-                "human on the other end of the phone."
+                "Three care-plan tiers — Essential, Professional and "
+                "Enterprise. Monitoring, response SLAs, and a human on the "
+                "other end of the phone."
             ),
             care_plans=CARE_PLANS,
         ),
@@ -341,23 +369,6 @@ def portfolio(request):
                 "Paws 4 Thought Dogs website."
             ),
             case_studies=CASE_STUDIES,
-        ),
-    )
-
-
-def pricing(request):
-    return render(
-        request,
-        "pricing.html",
-        _base_context(
-            active="pricing",
-            page_title="Pricing — Luma Tech Solutions",
-            page_description=(
-                "Transparent pricing across networking, development, "
-                "automation and support. No surprises, no day rates hidden "
-                "behind a ‘call us’ button."
-            ),
-            care_plans=CARE_PLANS,
         ),
     )
 

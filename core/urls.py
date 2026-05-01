@@ -14,7 +14,6 @@ urlpatterns = [
     path("services/support/", views.service_support, name="service_support"),
     path("about/", views.about, name="about"),
     path("portfolio/", views.portfolio, name="portfolio"),
-    path("pricing/", views.pricing, name="pricing"),
     path("contact/", views.contact, name="contact"),
     path("contact/thanks/", views.contact_thanks, name="contact_thanks"),
     path("blog/", views.blog, name="blog"),

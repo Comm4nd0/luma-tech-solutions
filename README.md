@@ -24,7 +24,6 @@ The full marketing website for [lumatechsolutions.co.uk](https://lumatechsolutio
 │   ├── home.html
 │   ├── about.html
 │   ├── portfolio.html
-│   ├── pricing.html
 │   ├── contact.html
 │   ├── contact_thanks.html
 │   ├── blog.html
@@ -98,7 +97,7 @@ docker exec caddy-caddy-1 caddy reload --config /etc/caddy/Caddyfile
 
 ## Pages
 
-`/`, `/services/`, `/services/{networking,development,automation,support}/`, `/about/`, `/portfolio/`, `/pricing/`, `/contact/`, `/contact/thanks/`, `/blog/`, `/healthz`, `/sitemap.xml`, `/robots.txt`, `/admin/`.
+`/`, `/services/`, `/services/{networking,development,automation,support}/`, `/about/`, `/portfolio/`, `/contact/`, `/contact/thanks/`, `/blog/`, `/healthz`, `/sitemap.xml`, `/robots.txt`, `/admin/`.
 
 ## Contact form
 

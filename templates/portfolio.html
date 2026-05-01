@@ -6,9 +6,9 @@
     <span class="eyebrow"><span class="dot"></span>Selected work</span>
     <h1>Things we've built. <span class="gradient">Things we still maintain.</span></h1>
     <p class="lede">
-      Three short case studies. Each one is still running and supported
-      today — and every one is something we're happy to talk through if
-      you'd like to know more.
+      A handful of selected case studies. Each one is still running and
+      supported today — and every one is something we're happy to talk
+      through if you'd like to know more.
     </p>
   </div>
 </section>
@@ -19,20 +19,9 @@
       {% for case in case_studies %}
         <article class="case-card has-img fade-in">
           <div class="case-card-img">
-            {% if case.slug == 'chiltern-view' %}
-              {% include 'partials/_illustrations.html' with name='automation' %}
-            {% elif case.slug == 'for-sale-by-owner' %}
-              {% include 'partials/_illustrations.html' with name='development' %}
-            {% else %}
-              {% include 'partials/_illustrations.html' with name='development' %}
-            {% endif %}
+            {% include 'partials/_illustrations.html' with name=case.illustration %}
           </div>
-          <span class="case-tag">
-            {% if case.slug == 'chiltern-view' %}Smart home + networking
-            {% elif case.slug == 'for-sale-by-owner' %}Mobile app
-            {% else %}Marketing site
-            {% endif %}
-          </span>
+          <span class="case-tag">{{ case.tag }}</span>
           <h3>{{ case.title }}</h3>
           <p>{{ case.summary }}</p>
           <div class="stack-row">

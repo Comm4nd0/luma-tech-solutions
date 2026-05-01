@@ -20,7 +20,6 @@ class StaticViewSitemap(Sitemap):
             ("service_support", 0.8),
             ("about", 0.7),
             ("portfolio", 0.8),
-            ("pricing", 0.8),
             ("contact", 0.7),
             ("blog", 0.5),
         ]
