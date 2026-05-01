@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from . import views
+from . import api, views
 from .feeds import BlogFeed
 
 urlpatterns = [
@@ -20,5 +20,7 @@ urlpatterns = [
     path("blog/", views.blog, name="blog"),
     path("blog/feed/", BlogFeed(), name="blog_feed"),
     path("blog/<slug:slug>/", views.blog_post, name="blog_post"),
+    path("api/blog/posts/", api.posts_collection, name="api_blog_posts"),
+    path("api/blog/posts/<slug:slug>/", api.post_detail, name="api_blog_post"),
     path("healthz", views.healthz, name="healthz"),
 ]

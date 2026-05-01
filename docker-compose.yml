@@ -22,6 +22,7 @@ services:
       DJANGO_EMAIL_USE_SSL: "${DJANGO_EMAIL_USE_SSL:-0}"
       DJANGO_DEFAULT_FROM_EMAIL: "${DJANGO_DEFAULT_FROM_EMAIL:-Luma Tech Solutions <hello@lumatechsolutions.co.uk>}"
       CONTACT_FORM_RECIPIENT: "${CONTACT_FORM_RECIPIENT:-hello@lumatechsolutions.co.uk}"
+      LUMA_BLOG_API_KEY: "${LUMA_BLOG_API_KEY:-}"
     volumes:
       - luma-data:/app/data
     restart: unless-stopped

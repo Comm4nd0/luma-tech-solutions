@@ -125,6 +125,12 @@ CONTACT_FORM_RECIPIENT = os.environ.get(
     "CONTACT_FORM_RECIPIENT", "hello@lumatechsolutions.co.uk"
 )
 
+# --- Blog publishing API ---
+# Bearer token used to authenticate POST/PUT/PATCH/DELETE on /api/blog/posts/.
+# Empty in dev unless set; the API responds 503 if no key is configured so
+# misconfigured production is loud, not silent.
+LUMA_BLOG_API_KEY = os.environ.get("LUMA_BLOG_API_KEY", "")
+
 # --- Site metadata (used by templates) ---
 SITE_NAME = "Luma Tech Solutions"
 SITE_URL = os.environ.get("SITE_URL", "https://lumatechsolutions.co.uk")

@@ -122,6 +122,53 @@ stdout via the console backend):
 - `DJANGO_EMAIL_HOST`, `DJANGO_EMAIL_PORT`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`
 - `CONTACT_FORM_RECIPIENT`
 
+For programmatic blog publishing via the JSON API:
+
+- `LUMA_BLOG_API_KEY` — shared Bearer token (any random ≥32 chars). The
+  endpoint returns **503** if this is unset, so prod misconfig is loud.
+  Generate one with `python -c "import secrets; print(secrets.token_urlsafe(40))"`.
+
+## Blog API
+
+JSON API for an automation to publish/update blog posts. All endpoints
+require `Authorization: Bearer $LUMA_BLOG_API_KEY`.
+
+| Method | Path                       | Action                                  |
+|--------|----------------------------|-----------------------------------------|
+| GET    | `/api/blog/posts/`         | List (paginated; `?status=draft|scheduled|published`, `?pillar=`) |
+| POST   | `/api/blog/posts/`         | Create — 201 with full record, 409 on slug conflict |
+| GET    | `/api/blog/posts/<slug>/`  | Fetch one (drafts included)             |
+| PUT    | `/api/blog/posts/<slug>/`  | Full replace; creates if absent (upsert)|
+| PATCH  | `/api/blog/posts/<slug>/`  | Partial update                          |
+| DELETE | `/api/blog/posts/<slug>/`  | Delete — 204                            |
+
+Body fields: `title`, `content` (HTML), `excerpt`, `slug` (optional, derived
+from title), `author` (optional), `pillar` (one of: `networking`, `security`,
+`development`, `automation`, `support`, `general`), `meta_description`
+(optional, falls back to excerpt), `published_at` (ISO 8601 — null/omitted
+keeps as draft, future date schedules, past/now publishes).
+
+Publishing model:
+
+- **Draft**: `published_at: null` → not on `/blog/`, not in sitemap, not in RSS.
+- **Scheduled**: `published_at` in the future → flips live automatically when due.
+- **Live**: `published_at` past/now → visible everywhere.
+
+Example — create and publish:
+
+```sh
+curl -s -X POST https://lumatechsolutions.co.uk/api/blog/posts/ \
+  -H "Authorization: Bearer $LUMA_BLOG_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "title": "Why home Wi-Fi fails (and how we fix it)",
+    "content": "<p>HTML body…</p>",
+    "excerpt": "Three reasons most home Wi-Fi underperforms.",
+    "pillar": "networking",
+    "published_at": "2026-05-02T09:00:00+01:00"
+  }'
+```
+
 ## Health & smoke-test
 
 ```sh
