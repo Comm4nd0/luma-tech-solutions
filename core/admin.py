@@ -5,9 +5,9 @@ from .models import BlogPost, ContactSubmission
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "service", "created_at", "notified")
-    list_filter = ("service", "notified", "created_at")
-    search_fields = ("name", "email", "phone", "message")
+    list_display = ("name", "email", "service", "source", "created_at", "notified")
+    list_filter = ("service", "source", "notified", "created_at")
+    search_fields = ("name", "email", "phone", "message", "source")
     readonly_fields = ("created_at",)
 
 

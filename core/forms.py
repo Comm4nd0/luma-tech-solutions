@@ -6,10 +6,11 @@ from .models import ContactSubmission
 class ContactForm(forms.ModelForm):
     # Honeypot — bots fill it, humans don't see it.
     website = forms.CharField(required=False, widget=forms.HiddenInput)
+    source = forms.CharField(required=False, widget=forms.HiddenInput)
 
     class Meta:
         model = ContactSubmission
-        fields = ["name", "email", "phone", "service", "message"]
+        fields = ["name", "email", "phone", "service", "message", "source"]
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Your name", "autocomplete": "name"}

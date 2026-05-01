@@ -21,6 +21,66 @@
   </div>
 </section>
 
+<section class="section-orb">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>For larger or older homes</span>
+      <h2>If your house is over 200 m², <span class="gradient">mesh isn't going to cut it.</span></h2>
+      <p class="lede">
+        We've seen it dozens of times: a £600 mesh kit in a 300 m² Edwardian,
+        a powerline adapter for the loft, a booster plugged in by the back
+        door — and the WiFi still drops out in the same three rooms it
+        always did. There are real, fixable reasons that happens.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>Why consumer kit fails in big houses</h3>
+        <ul class="bullets">
+          <li><strong>Wireless backhaul halves your bandwidth, every hop.</strong> Mesh nodes use the same radios to talk to each other <em>and</em> to your devices. Each hop between nodes costs ~50% throughput. By the third node you're back on dial-up speeds.</li>
+          <li><strong>Walls absorb signal, and old houses have lots of them.</strong> Lath-and-plaster, brick chimneys, foil-backed insulation, copper pipes, cast-iron radiators — every one of them eats RF. No consumer AP punches through them, no matter what the box says.</li>
+          <li><strong>Powerline adapters fight the noise on your ring main.</strong> Dimmer switches, EV chargers, fridges and old wiring all dump noise onto the same cabling powerline kit relies on. It works on a clean test rig and falls over in real homes.</li>
+          <li><strong>You can't see what's wrong.</strong> The "everything's fine" light on the front of the router is meaningless. Without a real dashboard you can't diagnose congestion, channel overlap, or which AP a device is actually connected to — so you reboot and hope.</li>
+        </ul>
+
+        <h3 class="mt-4">What we do instead</h3>
+        <ul class="bullets">
+          <li><strong>Multiple wired access points,</strong> sited from an actual ground &amp; aerial survey of your property — not guessed at from the size of the box.</li>
+          <li><strong>Cat6 to every AP,</strong> so each one runs at full speed without stealing airtime from your devices.</li>
+          <li><strong>PoE switching</strong> — power and data down the same cable, so no plug socket is needed at every AP location.</li>
+          <li><strong>One managed dashboard,</strong> so when something does misbehave you can actually see it and fix it — no rebooting routers in the dark.</li>
+          <li><strong>VLANs for IoT &amp; guests,</strong> so the smart fridge and the visiting kids aren't sitting on the same network as your work laptop.</li>
+        </ul>
+
+        <p class="mt-3">
+          For a typical large home (7+ access points, distribution switching,
+          structured cabling) installs start at <strong>£3,000</strong>.
+          Site survey first, fixed-price quote second — no surprises.
+        </p>
+
+        <div class="row-actions mt-3">
+          <a href="{% url 'contact' %}?source=networking-large-home" class="btn btn-primary">Book a site survey {% include 'partials/_icons.html' with name='arrow' %}</a>
+        </div>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <span class="eyebrow"><span class="dot"></span>Real example</span>
+        <h4 style="margin-top:.5rem;">LittleWick House</h4>
+        <p class="muted">A large residential property in Maidenhead across four floors, plus a cellar, garage and separate annex.</p>
+        <ul class="bullets" style="margin-top:.75rem;">
+          <li>11 access points (U7-Pro &amp; U7-Pro-Wall)</li>
+          <li>3 PoE distribution switches</li>
+          <li>UniFi Dream Machine Pro at the core</li>
+          <li>3 VLANs (home / IoT / guest)</li>
+        </ul>
+        <p style="margin-top:.75rem;"><strong>Outcome:</strong> rock-solid Wi-Fi from loft to cellar to annex, with proper segmentation and room to grow.</p>
+        <a href="{% url 'portfolio' %}" class="btn btn-ghost btn-sm" style="margin-top:1rem;">See full portfolio</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
 <section class="tight">
   <div class="container">
     <div class="service-grid">

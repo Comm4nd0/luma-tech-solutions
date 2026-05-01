@@ -143,7 +143,7 @@ CASE_STUDIES = [
         ),
         "stack": ["UniFi Dream Machine Pro", "UniFi APs & Switches", "UniFi Protect", "Home Assistant", "Zigbee"],
         "outcome": "Whole-home coverage, automations that work without the internet, no cloud lock-in.",
-        "featured": True,
+        "featured": False,
     },
     {
         "slug": "for-sale-by-owner",
@@ -175,7 +175,7 @@ CASE_STUDIES = [
             "VLAN segmentation",
         ],
         "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with proper network segmentation and room to grow.",
-        "featured": False,
+        "featured": True,
     },
     {
         "slug": "paws-4-thought-dogs",
@@ -390,7 +390,7 @@ def contact(request):
             messages.success(request, "Thanks — we'll be in touch shortly.")
             return redirect(reverse("contact_thanks"))
     else:
-        form = ContactForm()
+        form = ContactForm(initial={"source": request.GET.get("source", "")})
 
     return render(
         request,

@@ -31,6 +31,12 @@ class ContactSubmission(models.Model):
     phone = models.CharField(max_length=40, blank=True)
     service = models.CharField(max_length=32, choices=SERVICE_CHOICES, default="other")
     message = models.TextField()
+    source = models.CharField(
+        max_length=64,
+        blank=True,
+        default="",
+        help_text="Internal tag identifying which page/CTA the enquiry came from.",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     notified = models.BooleanField(default=False)
 
