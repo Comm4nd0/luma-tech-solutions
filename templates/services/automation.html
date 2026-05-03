@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
 {% block content %}
 <section class="service-hero">
   <div class="container">
     <div class="service-hero-inner">
       <div>
-        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Home Automation</nav>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>Smart homes done right</span>
         <h1>A smart home that's <span class="gradient">yours, private, and keeps working.</span></h1>
         <p class="lede">
@@ -73,6 +75,22 @@
           </div>
         </div>
 
+        <h3 class="mt-4">AI assistants that don't phone home</h3>
+        <p>
+          Voice control, done properly. Home Assistant's Assist runs
+          speech recognition, language understanding and the response
+          itself — all on the box in your house. You can ask "turn off
+          everything upstairs", "is the back door locked?", "set the
+          heating to 19 in the morning" and the answer comes from your
+          own kit, not Amazon's.
+        </p>
+        <ul class="bullets">
+          <li><strong>Local speech-to-text</strong> with Whisper, and text-to-speech with Piper — fast, private, and works without an internet connection.</li>
+          <li><strong>Optional local LLM</strong> — for households that want natural-language control ("when I say goodnight, lock up and dim the bedroom"), we wire up a small open-weights model that turns plain English into automations.</li>
+          <li><strong>Voice hardware around the house</strong> — Home Assistant's Voice Preview Edition is a tidy little tabletop puck that does all of the above; we set them up in the rooms you actually use them, replacing the Echo or Nest you've been side-eyeing for years.</li>
+          <li><strong>Cloud LLMs only when you ask for them</strong> — if you'd rather have a much smarter assistant and don't mind queries going to Claude or OpenAI, we can wire that in too. You choose, we configure.</li>
+        </ul>
+
         <h3 class="mt-4">We run it ourselves</h3>
         <p>
           Every product we recommend is running in our own home, every
@@ -107,6 +125,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_areas_served.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Curious what your home could do?' cta_copy='Tell us what frustrates you most about your current setup. Often a 30-minute call is enough to know exactly what would help — and what to leave alone.' %}
 {% endblock %}

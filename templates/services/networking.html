@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
 {% block content %}
 <section class="service-hero">
   <div class="container">
     <div class="service-hero-inner">
       <div>
-        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Wi-Fi & Networking</nav>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>UniFi, properly engineered</span>
         <h1>Wi-Fi & Networking, done <span class="gradient">properly.</span></h1>
         <p class="lede">
@@ -105,6 +107,19 @@
           <li><strong>UniFi Protect (optional)</strong> — CCTV that records to a box in your house. No monthly cloud subscription, footage stays on your kit.</li>
         </ul>
 
+        <h3 class="mt-4">AI where it actually helps the network</h3>
+        <p>
+          The UniFi platform now leans on AI for a handful of jobs that
+          used to need someone staring at graphs. We turn it on for the
+          bits that earn their keep, and ignore the rest.
+        </p>
+        <ul class="bullets">
+          <li><strong>Traffic intelligence &amp; anomaly detection</strong> — when a device starts behaving differently (the smart plug suddenly streams 100 MB/hour to an unknown host), the dashboard flags it before it becomes a problem.</li>
+          <li><strong>Application-aware traffic shaping</strong> — work video calls and live TV get prioritised over background updates and torrents, automatically. You don't have to know which is which.</li>
+          <li><strong>RF environment learning</strong> — access points adjust channels and power based on what they actually see in your building over time, not just from a one-shot survey on install day.</li>
+          <li><strong>Smarter dashboards</strong> — when something does go wrong, the controller surfaces what changed and where to look first, so we (and you) aren't digging through raw logs.</li>
+        </ul>
+
         <h3 class="mt-4">A typical engagement</h3>
         <div class="steps">
           <div class="step"><span class="step-num"></span><div><h4>Site survey (ground &amp; aerial)</h4><p>We walk the property and fly an aerial drone survey to find dead-spots, plan cable routes, and pick the right spots for access points and cameras — from angles you can't get from the ground.</p></div></div>
@@ -158,6 +173,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_areas_served.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Wi-Fi giving you grief?' cta_copy='Tell us the rough shape of your property and what you want it to do — we will tell you, honestly, whether it is a small tweak or a proper rebuild.' %}
 {% endblock %}

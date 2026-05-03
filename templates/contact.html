@@ -8,7 +8,8 @@
     <p class="lede">
       Send us a few sentences about your project or problem and we'll come
       back with honest, specific advice. We aim to reply within one working
-      day.
+      day. Based in Marlow, covering Maidenhead, Henley and the rest of the
+      Thames Valley.
     </p>
   </div>
 </section>
@@ -75,7 +76,7 @@
 
         {% if SITE_PHONE %}
         <span class="label">Phone</span>
-        <a href="tel:{{ SITE_PHONE }}">{{ SITE_PHONE }}</a>
+        <a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a>
         {% endif %}
 
         <span class="label">Hours</span>
@@ -97,7 +98,7 @@
             <text x="180" y="80" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter, sans-serif">Berks &amp; Bucks</text>
           </svg>
           <div class="label">Coverage</div>
-          <div class="region">{{ SITE_REGION }}</div>
+          <div class="region">{{ SITE_TOWNS_DISPLAY }}</div>
         </div>
       </aside>
     </div>

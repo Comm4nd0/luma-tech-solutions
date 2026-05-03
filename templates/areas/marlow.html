@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block jsonld %}{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Wi-Fi, CCTV and IT Support in Marlow",
+  "serviceType": "Wi-Fi Installation",
+  "description": "Local Marlow engineer for Wi-Fi installation, CCTV, smart-home design and ongoing IT support — for homes and small businesses across Marlow and Marlow Bottom.",
+  "url": "{{ SITE_URL }}{% url 'area_marlow' %}",
+  "provider": { "@id": "{{ SITE_URL }}#business" },
+  "areaServed": { "@type": "City", "name": "Marlow" }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>On your doorstep</span>
+        <h1>Wi-Fi, CCTV and IT support in <span class="gradient">Marlow.</span></h1>
+        <p class="lede">
+          We're based in Marlow. That means short drives, fast response,
+          and an engineer who knows the housing stock — from the Edwardian
+          and Georgian properties around the High Street to the larger
+          detached houses up Marlow Bottom and Munday Dean.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='networking' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Based in Marlow, on the doorstep</h2>
+        <p>
+          Most of our work happens within a twenty-minute drive of the
+          town centre — Marlow itself, Bourne End, Little Marlow, Marlow
+          Bottom, and across the bridge into Bisham. Being local matters
+          for the things that consumer-kit installers and big national
+          chains don't do well: walking the property properly before
+          quoting, turning up the same week when something stops working,
+          and knowing the kind of building you're working in before you
+          start drilling holes.
+        </p>
+        <p>
+          Marlow has a particular mix — period stock around the High
+          Street and Quarry Wood that punishes consumer Wi-Fi mesh
+          (thick walls, lath-and-plaster, foil-backed insulation), and
+          larger modern detached houses up the hill that are simply too
+          big for a single router to cover. We've engineered networks
+          for both, and the answer is rarely "buy a bigger mesh kit".
+        </p>
+
+        <h2 class="mt-4">What we do for Marlow homes and businesses</h2>
+
+        <h3 class="mt-3">Wi-Fi that reaches every room</h3>
+        <p>
+          Properly engineered UniFi networks — multiple wired access
+          points, sized from a real ground &amp; aerial survey, fed by
+          Cat6 to a tidy comms cupboard. One managed dashboard, no mesh,
+          no boosters, no rebooting the router every Sunday morning.
+          Typical Marlow projects run to between three and eleven access
+          points depending on the size and shape of the property.
+          <a href="{% url 'service_networking' %}">More about networking →</a>
+        </p>
+
+        <h3 class="mt-3">CCTV that records to your house</h3>
+        <p>
+          UniFi Protect cameras with on-device person/vehicle/package
+          detection and the recorder living in your house — no monthly
+          cloud subscription, footage stays on your kit. We plan camera
+          positions from the air with a drone survey first, so coverage
+          is verified before anything is drilled.
+          <a href="{% url 'service_security' %}">More about security →</a>
+        </p>
+
+        <h3 class="mt-3">Smart home that works without the internet</h3>
+        <p>
+          Home Assistant at the core — lighting, climate, security,
+          scenes — running on a small box at your house. Voice control
+          locally if you want it, no Amazon or Google recordings going
+          anywhere. Works when the broadband is down.
+          <a href="{% url 'service_automation' %}">More about automation →</a>
+        </p>
+
+        <h3 class="mt-3">Ongoing care, not hit-and-run</h3>
+        <p>
+          The same engineer takes the call every time. Optional care
+          plans cover monitoring, firmware updates, quarterly health
+          checks and a known response time when something does break.
+          <a href="{% url 'service_support' %}">More about support →</a>
+        </p>
+
+        <h2 class="mt-4">Why local matters in Marlow</h2>
+        <ul class="bullets">
+          <li><strong>Quick site surveys</strong> — most surveys happen the same week you ask. We walk the property, fly an aerial drone, and write up a fixed-price proposal before we leave the driveway.</li>
+          <li><strong>Same-day response on care plans</strong> — when something breaks, we're not flying down from Manchester. Often in the same day for Marlow postcodes.</li>
+          <li><strong>We know what's in the walls</strong> — Edwardian and Georgian builds, the foil-backed insulation, the cast-iron radiators. We've worked around all of it before.</li>
+          <li><strong>Honest quotes</strong> — fixed price, no day rates, no scope creep. Hardware, cabling, labour and timeline written down on one page.</li>
+        </ul>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Local engineer</h4>
+        <p><strong>Marco Baldanza</strong> — based in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
+        <p class="mt-2">Site surveys typically within 5 working days for Marlow postcodes.</p>
+        <a href="{% url 'contact' %}?source=area-marlow" class="btn btn-primary">Book a Marlow site survey</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Aerial drone survey</li>
+          <li>Fixed-price proposal</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also serving</h4>
+        <p style="margin:.25rem 0;">
+          <a href="{% url 'area_maidenhead' %}">Maidenhead</a>,
+          Bourne End, Cookham, Henley-on-Thames, Beaconsfield, High Wycombe.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Marlow project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — same week if we can.' %}
+{% endblock %}

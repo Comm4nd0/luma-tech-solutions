@@ -133,11 +133,32 @@ LUMA_BLOG_API_KEY = os.environ.get("LUMA_BLOG_API_KEY", "")
 
 # --- Site metadata (used by templates) ---
 SITE_NAME = "Luma Tech Solutions"
+SITE_BRAND = "Luma Tech"  # shorter form for page titles
 SITE_URL = os.environ.get("SITE_URL", "https://lumatechsolutions.co.uk")
 SITE_TAGLINE = "Technology that works. Support that lasts."
-SITE_PHONE = os.environ.get("SITE_PHONE", "")
+SITE_PHONE = os.environ.get("SITE_PHONE", "07500 776311")
+SITE_PHONE_E164 = os.environ.get("SITE_PHONE_E164", "+447500776311")
 SITE_EMAIL = os.environ.get("SITE_EMAIL", "hello@lumatechsolutions.co.uk")
-SITE_REGION = "Berkshire & Buckinghamshire"
+SITE_REGION = "the Thames Valley"
+SITE_TOWNS = [
+    "Marlow",
+    "Maidenhead",
+    "Henley-on-Thames",
+    "Beaconsfield",
+    "Bourne End",
+    "Cookham",
+    "High Wycombe",
+]
+SITE_COUNTIES = ["Buckinghamshire", "Berkshire"]
+SITE_TOWNS_DISPLAY = (
+    "Marlow, Maidenhead, Henley-on-Thames, Beaconsfield, "
+    "Bourne End, Cookham and High Wycombe"
+)
+SITE_FOUNDER = "Marco Baldanza"
+SITE_BASE_TOWN = "Marlow"
+# Bump when you ship a meaningful site-wide content change so the
+# static-page sitemap honestly reflects freshness.
+SITE_STATIC_LASTMOD = "2026-05-03"
 
 # --- Security in production ---
 if not DEBUG:

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block jsonld %}{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Wi-Fi, CCTV and IT Support in Maidenhead",
+  "serviceType": "Wi-Fi Installation",
+  "description": "Whole-property UniFi networks, CCTV and smart-home design for larger homes in Maidenhead — Furze Platt, Boyn Hill, Cox Green, Bray and Holyport.",
+  "url": "{{ SITE_URL }}{% url 'area_maidenhead' %}",
+  "provider": { "@id": "{{ SITE_URL }}#business" },
+  "areaServed": { "@type": "City", "name": "Maidenhead" }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>Engineered for larger homes</span>
+        <h1>Wi-Fi, CCTV and IT support in <span class="gradient">Maidenhead.</span></h1>
+        <p class="lede">
+          Maidenhead has a lot of larger detached properties — Furze Platt,
+          Boyn Hill, Cox Green, Bray and Holyport — and a stock of period
+          stone and brick around the High Street. Both punish consumer
+          mesh kit. We engineer proper, business-grade networks that just
+          work, from the loft to the bottom of the garden.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='networking' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if featured_case %}
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Featured Maidenhead project</span>
+      <h2>What a whole-property network looks like.</h2>
+    </div>
+
+    <div class="featured-case fade-in">
+      <div>
+        <div class="featured-case-img mb-2">
+          {% include 'partials/_illustrations.html' with name='networking' %}
+        </div>
+        <h3>{{ featured_case.title }}</h3>
+        <p class="muted">{{ featured_case.summary }}</p>
+        <div class="stack-row">
+          {% for tech in featured_case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
+        </div>
+        <div class="row-actions mt-3">
+          <a href="{% url 'portfolio' %}" class="btn btn-ghost btn-sm">See full portfolio</a>
+          <a href="{% url 'service_networking' %}" class="btn btn-ghost btn-sm">How we do networking</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Outcome</h4>
+        <p>{{ featured_case.outcome }}</p>
+        <h4 class="mt-3">What's running</h4>
+        <p>Eleven access points feeding wired backhaul, three PoE switches and a Dream Machine Pro at the core. Three VLANs for home, IoT and guest traffic — all on a single managed dashboard. No mesh, no boosters, no compromises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>What we do for Maidenhead homes and businesses</h2>
+
+        <h3 class="mt-3">Wi-Fi for larger and older properties</h3>
+        <p>
+          Maidenhead has more 200+ m² houses than most of the Thames
+          Valley, and a fair number of older period builds with thick
+          walls. The standard mesh-and-booster recipe doesn't cope.
+          We design wired UniFi networks with multiple ceiling-mounted
+          access points, sized from a real ground &amp; aerial survey,
+          fed by Cat6 to a tidy comms cupboard. Typical Maidenhead
+          installs run from five to eleven access points depending on
+          size and shape.
+          <a href="{% url 'service_networking' %}">More about networking →</a>
+        </p>
+
+        <h3 class="mt-3">CCTV with the recorder in your house</h3>
+        <p>
+          UniFi Protect cameras with on-device person, vehicle and
+          package detection, and (where useful) number-plate recognition
+          on the drive. Recordings live on a small NVR at your house
+          rather than in someone else's cloud — no monthly subscription
+          and no third-party AI looking through your footage. Camera
+          positions planned from above with a drone survey before any
+          drilling.
+          <a href="{% url 'service_security' %}">More about security →</a>
+        </p>
+
+        <h3 class="mt-3">Smart home that respects your privacy</h3>
+        <p>
+          Home Assistant at the core — lighting, climate, locks, scenes,
+          and a local voice assistant if you want one. Runs on a small
+          box at your house, works without the internet, no cloud lock-in.
+          <a href="{% url 'service_automation' %}">More about automation →</a>
+        </p>
+
+        <h3 class="mt-3">Ongoing care, by the same engineer</h3>
+        <p>
+          Optional care plans cover monitoring, firmware updates,
+          quarterly health checks and a known response time. Same
+          engineer takes the call every time — no tier-one call centre
+          between you and someone who knows the system.
+          <a href="{% url 'service_support' %}">More about support →</a>
+        </p>
+
+        <h2 class="mt-4">Why local matters in Maidenhead</h2>
+        <ul class="bullets">
+          <li><strong>Site surveys quickly</strong> — Marlow is fifteen minutes from the centre of Maidenhead. Most surveys happen within the week.</li>
+          <li><strong>We've done this stock before</strong> — Furze Platt 1930s detacheds, the bigger Boyn Hill houses, the Bray riverside properties — we've engineered Wi-Fi and CCTV for the kinds of buildings you live in.</li>
+          <li><strong>Real example you can read</strong> — see <a href="{% url 'portfolio' %}">LittleWick House</a> for a recent eleven-AP install across four floors plus cellar and annex.</li>
+          <li><strong>Fixed-price proposals</strong> — hardware, cabling, labour, timeline. No day rates, no surprise add-ons.</li>
+        </ul>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Local engineer</h4>
+        <p><strong>Marco Baldanza</strong> — based 15 minutes away in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
+        <p class="mt-2">Site surveys typically within 5 working days for Maidenhead postcodes.</p>
+        <a href="{% url 'contact' %}?source=area-maidenhead" class="btn btn-primary">Book a Maidenhead site survey</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Aerial drone survey</li>
+          <li>Fixed-price proposal</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also serving</h4>
+        <p style="margin:.25rem 0;">
+          <a href="{% url 'area_marlow' %}">Marlow</a>,
+          Cookham, Bourne End, Henley-on-Thames, Beaconsfield, High Wycombe.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Maidenhead project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — usually within the week.' %}
+{% endblock %}

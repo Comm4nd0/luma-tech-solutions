@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
 {% block content %}
 <section class="service-hero">
   <div class="container">
     <div class="service-hero-inner">
       <div>
-        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> App & Web Development</nav>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>Custom software</span>
         <h1>Software built by an <span class="gradient">engineer who supports it.</span></h1>
         <p class="lede">
@@ -66,6 +68,24 @@
           <li><strong>Mobile apps</strong> for iOS and Android, with proper App Store submission and CI.</li>
           <li><strong>Integrations</strong> — Stripe, Mailchimp, HubSpot, anything with an API.</li>
           <li><strong>Bespoke software</strong> for SMEs replacing a tangle of spreadsheets.</li>
+          <li><strong>AI features</strong> — LLM-powered search, summarisation, intake forms and assistants, built into your own product.</li>
+        </ul>
+
+        <h3 class="mt-4">AI features in your software</h3>
+        <p>
+          More clients want LLM-powered features inside their own apps —
+          document summarisation, smart intake forms, search-over-our-own-docs,
+          drafting and triage. We build those properly: with cost,
+          privacy and accuracy as design constraints, against the model
+          that fits the job rather than whichever one is on a billboard
+          this month.
+        </p>
+        <ul class="bullets">
+          <li><strong>Claude, OpenAI or local models</strong> — we pick the API that fits your use case, your budget and your data-sensitivity profile, and we'll explain the trade-offs in plain English before you commit.</li>
+          <li><strong>RAG over your own data</strong> — your documents, your tone, your facts. The AI answers from what your business actually knows, not from generic training data.</li>
+          <li><strong>Cost-aware by design</strong> — prompt caching, smaller-model fallbacks, batched calls. We've shipped enough of these to know how to stop the bill running away from you.</li>
+          <li><strong>Privacy when it matters</strong> — for sensitive workloads we run open-weights models on a private VPS or on-prem. Your data doesn't end up in someone else's training set.</li>
+          <li><strong>AI-augmented build process</strong> — we use Claude in our own toolchain every day, which is part of why we ship faster than shops that don't.</li>
         </ul>
 
         <h3 class="mt-4">Our process</h3>
@@ -95,6 +115,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_areas_served.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Got an idea worth building?' cta_copy='Send us a paragraph describing what you want to ship. We will reply with a rough scope, ballpark price, and whether we are the right fit.' %}
 {% endblock %}

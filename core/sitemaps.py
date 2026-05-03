@@ -1,7 +1,18 @@
+from datetime import date, datetime, time
+
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import BlogPost
+
+
+def _static_lastmod():
+    """Parse SITE_STATIC_LASTMOD into a tz-aware datetime for the sitemap."""
+    raw = settings.SITE_STATIC_LASTMOD
+    d = date.fromisoformat(raw)
+    return timezone.make_aware(datetime.combine(d, time.min))
 
 
 class StaticViewSitemap(Sitemap):
@@ -18,6 +29,9 @@ class StaticViewSitemap(Sitemap):
             ("service_development", 0.8),
             ("service_automation", 0.8),
             ("service_support", 0.8),
+            ("areas", 0.7),
+            ("area_marlow", 0.8),
+            ("area_maidenhead", 0.8),
             ("about", 0.7),
             ("portfolio", 0.8),
             ("contact", 0.7),
@@ -31,6 +45,9 @@ class StaticViewSitemap(Sitemap):
     def priority(self, item):
         _name, priority = item
         return priority
+
+    def lastmod(self, item):
+        return _static_lastmod()
 
 
 class BlogPostSitemap(Sitemap):

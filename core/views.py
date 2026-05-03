@@ -235,10 +235,10 @@ def home(request):
         "home.html",
         _base_context(
             active="home",
-            page_title=f"{settings.SITE_NAME} — {settings.SITE_TAGLINE}",
+            page_title="Wi-Fi, CCTV & IT Support in Marlow & Maidenhead | Luma Tech",
             page_description=(
-                "Professional networking, development, automation and support "
-                "for homes and businesses across Berkshire & Buckinghamshire."
+                "Local engineer for proper Wi-Fi, CCTV, smart homes and IT "
+                "support across Marlow, Maidenhead, Henley and the Thames Valley."
             ),
             testimonials=TESTIMONIALS,
             featured_case=featured,
@@ -252,11 +252,15 @@ def services_overview(request):
         "services/overview.html",
         _base_context(
             active="services",
-            page_title=f"Services — {settings.SITE_NAME}",
+            page_title="Networking, CCTV, Smart Home & IT Services | Luma Tech",
             page_description=(
-                "Everything we offer: Wi-Fi & networking, security, "
-                "app & web development, home automation, and ongoing support."
+                "Wi-Fi design, CCTV, app development, home automation and "
+                "ongoing care for homes and small businesses across Bucks and Berks."
             ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+            ],
         ),
     )
 
@@ -267,10 +271,23 @@ def service_networking(request):
         "services/networking.html",
         _base_context(
             active="services",
-            page_title="Wi-Fi & Networking — Luma Tech Solutions",
+            page_title="Wi-Fi Installation in Marlow & Maidenhead | Luma Tech",
             page_description=(
-                "Enterprise-grade UniFi Wi-Fi and networking design, "
-                "installation and management for homes and small offices."
+                "UniFi Wi-Fi design and installation for large homes and "
+                "offices across Marlow, Maidenhead, Henley and the Thames Valley."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("Wi-Fi & Networking", reverse("service_networking")),
+            ],
+            service_name="Wi-Fi & Networking",
+            service_type="Wi-Fi Installation",
+            service_url=reverse("service_networking"),
+            service_description=(
+                "UniFi Wi-Fi and network design, installation and management "
+                "for homes and small businesses across Marlow, Maidenhead, "
+                "Henley-on-Thames and the wider Thames Valley."
             ),
         ),
     )
@@ -282,12 +299,23 @@ def service_security(request):
         "services/security.html",
         _base_context(
             active="security",
-            page_title="Security — Luma Tech Solutions",
+            page_title="CCTV & Security Installation, Marlow & Bucks | Luma Tech",
             page_description=(
-                "Physical and cyber security designed, installed and "
-                "monitored as one integrated system. UniFi Protect CCTV, "
-                "access control, intruder alarms, smart locks and "
-                "network hardening."
+                "UniFi Protect CCTV, alarms, smart locks and network security "
+                "across Marlow, Maidenhead, Beaconsfield and the Thames Valley."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("Security", reverse("service_security")),
+            ],
+            service_name="Security",
+            service_type="CCTV Installation",
+            service_url=reverse("service_security"),
+            service_description=(
+                "UniFi Protect CCTV, access control, alarms, smart locks and "
+                "network hardening for homes and businesses across Marlow, "
+                "Maidenhead, Beaconsfield and the Thames Valley."
             ),
         ),
     )
@@ -299,10 +327,22 @@ def service_development(request):
         "services/development.html",
         _base_context(
             active="services",
-            page_title="App & Web Development — Luma Tech Solutions",
+            page_title="Mobile App & Website Development | Luma Tech",
             page_description=(
-                "Custom mobile apps, websites and web applications, built by "
-                "an engineer who actually ships and supports what they build."
+                "Custom websites, web apps and iOS/Android apps built and "
+                "supported by one engineer in Marlow, Buckinghamshire."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("App & Web Development", reverse("service_development")),
+            ],
+            service_name="App & Web Development",
+            service_type="Software Development",
+            service_url=reverse("service_development"),
+            service_description=(
+                "Custom websites, web applications and mobile apps built and "
+                "supported by an engineer in Marlow, Buckinghamshire."
             ),
         ),
     )
@@ -314,10 +354,23 @@ def service_automation(request):
         "services/automation.html",
         _base_context(
             active="services",
-            page_title="Home Automation — Luma Tech Solutions",
+            page_title="Smart Home Installer, Marlow & Henley | Luma Tech",
             page_description=(
                 "Local-first smart-home design with Home Assistant. Lighting, "
-                "climate, security, scenes — privately, reliably."
+                "climate, security across Marlow, Henley and the Thames Valley."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("Home Automation", reverse("service_automation")),
+            ],
+            service_name="Home Automation",
+            service_type="Home Automation",
+            service_url=reverse("service_automation"),
+            service_description=(
+                "Local-first smart-home design with Home Assistant — lighting, "
+                "climate, security and scenes across Marlow, Henley-on-Thames "
+                "and the Thames Valley."
             ),
         ),
     )
@@ -329,11 +382,22 @@ def service_support(request):
         "services/support.html",
         _base_context(
             active="services",
-            page_title="Support & Care Plans — Luma Tech Solutions",
+            page_title="IT Support & Care Plans, Bucks & Berks | Luma Tech",
             page_description=(
-                "Three care-plan tiers — Essential, Professional and "
-                "Enterprise. Monitoring, response SLAs, and a human on the "
-                "other end of the phone."
+                "Three care-plan tiers with monitoring, response SLAs and a "
+                "real human. Serving homes and businesses across the Thames Valley."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("Support & Maintenance", reverse("service_support")),
+            ],
+            service_name="Support & Maintenance",
+            service_type="IT Support",
+            service_url=reverse("service_support"),
+            service_description=(
+                "Ongoing IT support and care plans for homes and small "
+                "businesses across Marlow, Maidenhead and the Thames Valley."
             ),
             care_plans=CARE_PLANS,
         ),
@@ -346,11 +410,10 @@ def about(request):
         "about.html",
         _base_context(
             active="about",
-            page_title="About — Luma Tech Solutions",
+            page_title="About Marco Baldanza, Luma Tech Solutions, Marlow",
             page_description=(
-                "Founded by Marco Baldanza, an engineer with a background in "
-                "enterprise infrastructure and software. Based in Berkshire & "
-                "Buckinghamshire."
+                "Veteran-owned tech business in Marlow run by Marco Baldanza, "
+                "an engineer with an enterprise infrastructure and software background."
             ),
         ),
     )
@@ -362,11 +425,10 @@ def portfolio(request):
         "portfolio.html",
         _base_context(
             active="portfolio",
-            page_title="Portfolio — Luma Tech Solutions",
+            page_title="Case Studies — Wi-Fi, CCTV, Smart Home | Luma Tech",
             page_description=(
-                "Selected case studies: Chiltern View smart home, LittleWick "
-                "House whole-property network, For Sale By Owner mobile app, "
-                "Paws 4 Thought Dogs website."
+                "Recent work: a whole-property UniFi network in Maidenhead, "
+                "smart-home builds, mobile apps and small-business websites."
             ),
             case_studies=CASE_STUDIES,
         ),
@@ -408,11 +470,10 @@ def contact(request):
         "contact.html",
         _base_context(
             active="contact",
-            page_title="Contact — Luma Tech Solutions",
+            page_title="Contact Luma Tech — Marlow & Maidenhead Engineer",
             page_description=(
-                "Get in touch about networking, development, automation or "
-                "support. We cover Berkshire, Buckinghamshire and the "
-                "surrounding area."
+                "Talk to Marco about Wi-Fi, CCTV, smart-home or IT support "
+                "across Marlow, Maidenhead, Henley and the Thames Valley."
             ),
             form=form,
         ),
@@ -425,8 +486,8 @@ def contact_thanks(request):
         "contact_thanks.html",
         _base_context(
             active="contact",
-            page_title="Thanks — Luma Tech Solutions",
-            page_description="Your enquiry has been received.",
+            page_title="Thanks — we'll be in touch | Luma Tech",
+            page_description="Your enquiry has been received. We reply within one working day.",
         ),
     )
 
@@ -440,11 +501,10 @@ def blog(request):
         "blog/list.html",
         _base_context(
             active="blog",
-            page_title="Blog — Luma Tech Solutions",
+            page_title="Notes on Wi-Fi, Smart Home & IT | Luma Tech",
             page_description=(
                 "Practical write-ups on networking, security, smart-home "
-                "automation and software, from Luma Tech Solutions in "
-                "Berkshire & Buckinghamshire."
+                "automation and software from a Marlow-based engineer."
             ),
             page_obj=page_obj,
             posts=page_obj.object_list,
@@ -463,10 +523,84 @@ def blog_post(request, slug):
         "blog/detail.html",
         _base_context(
             active="blog",
-            page_title=f"{post.title} — Luma Tech Solutions",
+            page_title=f"{post.title} | Luma Tech",
             page_description=post.seo_description,
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Blog", reverse("blog")),
+                (post.get_pillar_display(), reverse("blog")),
+                (post.title, post.get_absolute_url()),
+            ],
             post=post,
             related=related,
+        ),
+    )
+
+
+# --- Areas served ---
+
+def areas_index(request):
+    return render(
+        request,
+        "areas/index.html",
+        _base_context(
+            active="services",
+            page_title="Areas Covered — Marlow, Maidenhead, Bucks | Luma Tech",
+            page_description=(
+                "Where we work: Marlow, Maidenhead, Henley-on-Thames, "
+                "Beaconsfield, Bourne End, Cookham and High Wycombe."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Areas", reverse("areas")),
+            ],
+        ),
+    )
+
+
+def area_marlow(request):
+    return render(
+        request,
+        "areas/marlow.html",
+        _base_context(
+            active="services",
+            page_title="Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
+            page_description=(
+                "Marlow-based engineer for Wi-Fi installation, CCTV, smart-home "
+                "and IT support. Local response, fixed-price proposals."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Areas", reverse("areas")),
+                ("Marlow", reverse("area_marlow")),
+            ],
+            town="Marlow",
+        ),
+    )
+
+
+def area_maidenhead(request):
+    featured = next(
+        (c for c in CASE_STUDIES if c["slug"] == "littlewick-house"),
+        None,
+    )
+    return render(
+        request,
+        "areas/maidenhead.html",
+        _base_context(
+            active="services",
+            page_title="Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
+            page_description=(
+                "Whole-property UniFi networks, CCTV and smart-home design "
+                "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Areas", reverse("areas")),
+                ("Maidenhead", reverse("area_maidenhead")),
+            ],
+            town="Maidenhead",
+            featured_case=featured,
         ),
     )
 

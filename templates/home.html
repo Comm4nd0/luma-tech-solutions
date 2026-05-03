@@ -7,13 +7,14 @@
   <div class="container hero-content">
     <div class="hero-split">
       <div>
-        <span class="eyebrow"><span class="dot"></span>Berkshire & Buckinghamshire</span>
+        <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · the Thames Valley</span>
         <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
         <p class="lede">
           If your house is too big for your router — and the mesh kit didn't
           fix it — we engineer proper, business-grade networks for homes that
           consumer gear can't cover. Plus security, automation, development
-          and support. One company, every service covered.
+          and support. One company, every service covered. Based in Marlow,
+          covering Maidenhead, Henley-on-Thames and the wider Thames Valley.
         </p>
         <div class="cta-row">
           <a href="{% url 'contact' %}?source=home-wifi-hero" class="btn btn-primary">Book a site survey {% include 'partials/_icons.html' with name='arrow' %}</a>
@@ -103,6 +104,11 @@
     </div>
 
     {% include 'partials/_pillars.html' %}
+
+    <p class="muted mt-4" style="text-align:center;font-size:.95rem;">
+      Based in Marlow. We cover {{ SITE_TOWNS_DISPLAY }} — and the rest of the Thames Valley by arrangement.
+      <a href="{% url 'areas' %}">See where we work</a>.
+    </p>
   </div>
 </section>
 
@@ -153,6 +159,40 @@
       <div class="feature">
         <h4>Drone-assisted surveys</h4>
         <p>Every significant project includes an aerial drone survey for precise AP placement, cable routing and CCTV coverage planning. Most installers can't offer this — we include it as standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>AI, where it earns its keep</span>
+      <h2>The smart bits that <span class="gradient">actually do something useful.</span></h2>
+      <p class="lede">
+        We've been threading AI through every install for a couple of years
+        now — not because it's on the marketing brochure, but because it
+        works. On-device camera detection, anomaly alerts on the network,
+        a voice assistant that runs locally and doesn't phone home.
+      </p>
+    </div>
+
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>Cameras that know what they're looking at</h4>
+        <p>UniFi's AI cameras tell person from vehicle from package on the camera itself — and (optionally) recognise faces and number plates. Your phone only buzzes for things that matter, and the footage never leaves your house for an AI to "look at it".</p>
+      </div>
+      <div class="feature">
+        <h4>A network that flags its own problems</h4>
+        <p>UniFi's traffic intelligence picks out the smart bulb that's started phoning home to a server in another country, or the camera that suddenly tripled its bandwidth — long before you'd notice manually.</p>
+      </div>
+      <div class="feature">
+        <h4>Talk to your house, privately</h4>
+        <p>Home Assistant's voice assistant runs speech recognition, language understanding and the response on the box in your house. "Turn off everything upstairs", "is the back door locked?" — answered locally. No Amazon, no Google, no recordings going anywhere.</p>
+      </div>
+      <div class="feature">
+        <h4>AI features in the software we build</h4>
+        <p>For clients who want it, we build Claude, OpenAI or local-LLM features into their own apps — document summarisation, smart intake forms, RAG over their own data. With cost, privacy and accuracy as design constraints, not afterthoughts.</p>
       </div>
     </div>
   </div>

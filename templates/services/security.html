@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
 {% block content %}
 <section class="service-hero">
   <div class="container">
     <div class="service-hero-inner">
       <div>
-        <nav class="crumbs"><a href="{% url 'services' %}">Services</a><span class="sep">/</span> Security</nav>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>Physical &amp; cyber, one system</span>
         <h1>Protect what matters, <span class="gradient">end to end.</span></h1>
         <p class="lede">
@@ -51,6 +53,22 @@
           <li><strong>A recorder that lives in your house</strong> — small for homes, rack-mount for larger sites. Footage stays with you.</li>
           <li><strong>Smart detection</strong> — the cameras tell person from vehicle from delivery, on the camera itself, so notifications mean something.</li>
           <li><strong>View from anywhere</strong> — secure phone, tablet or web access. Your footage never goes through a third-party cloud.</li>
+        </ul>
+
+        <h3 class="mt-4">On-device AI, no cloud needed</h3>
+        <p>
+          The newer UniFi cameras run their detection AI on the camera
+          itself — there's a small neural processor inside each unit.
+          That means notifications are smart from day one, your footage
+          never leaves your network so an AI can "look at it", and
+          there's no monthly cloud bill paying for it.
+        </p>
+        <ul class="bullets">
+          <li><strong>Person, vehicle, package</strong> — the most useful classes, on every AI-capable camera. So the doorbell stops alerting on every leaf that blows past.</li>
+          <li><strong>Number plate recognition</strong> on AI Pro and AI LPR units — log every vehicle that comes up the drive, with the plate searchable later.</li>
+          <li><strong>Smart Detection Search</strong> — "show me every person who came through the gate yesterday between 4 and 6pm" returns a few clips, not three hours of footage.</li>
+          <li><strong>Face recognition (optional, opt-in)</strong> — the system learns the people who live there and stops alerting on them, so the alerts that <em>do</em> come through are meaningful.</li>
+          <li><strong>Animal detection</strong> — useful if you'd rather not get woken up because the fox is back.</li>
         </ul>
 
         <h2 class="mt-4">Access control</h2>
@@ -146,6 +164,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_areas_served.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Worried about a specific risk?' cta_copy='Tell us what you are trying to protect — a property, a business, a server room. We will tell you, honestly, what is worth doing and what is theatre.' %}
 {% endblock %}

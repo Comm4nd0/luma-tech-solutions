@@ -13,7 +13,7 @@
   <meta property="og:title" content="{% block og_title %}{{ page_title|default:SITE_NAME }}{% endblock %}" />
   <meta property="og:description" content="{% block og_description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
   <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}" />
-  <meta property="og:image" content="{{ SITE_URL }}{% static 'img/og-default.svg' %}" />
+  <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'img/og-default.svg' %}{% endblock %}" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}" />
@@ -26,6 +26,61 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
   <link rel="stylesheet" href="{% static 'css/site.css' %}" />
+
+  {% block jsonld %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "{{ SITE_URL }}#org",
+        "name": "{{ SITE_NAME|escapejs }}",
+        "url": "{{ SITE_URL }}",
+        "email": "{{ SITE_EMAIL|escapejs }}",
+        "telephone": "{{ SITE_PHONE_E164|escapejs }}",
+        "logo": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
+        "founder": {
+          "@type": "Person",
+          "name": "{{ SITE_FOUNDER|escapejs }}"
+        },
+        "sameAs": []
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "{{ SITE_URL }}#business",
+        "name": "{{ SITE_NAME|escapejs }}",
+        "url": "{{ SITE_URL }}",
+        "email": "{{ SITE_EMAIL|escapejs }}",
+        "telephone": "{{ SITE_PHONE_E164|escapejs }}",
+        "image": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
+        "parentOrganization": { "@id": "{{ SITE_URL }}#org" },
+        "priceRange": "££",
+        "areaServed": [{% for town in SITE_TOWNS %}
+          { "@type": "City", "name": "{{ town|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}{% for county in SITE_COUNTIES %},
+          { "@type": "AdministrativeArea", "name": "{{ county|escapejs }}" }{% endfor %}
+        ],
+        "knowsAbout": [
+          "Wi-Fi installation",
+          "CCTV installation",
+          "Network design",
+          "Smart home installation",
+          "IT support",
+          "UniFi",
+          "Home Assistant"
+        ],
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }]
+      }
+    ]
+  }
+  </script>
+  {% endblock %}
+
   {% block head_extra %}{% endblock %}
 </head>
 <body>
@@ -70,8 +125,8 @@
             <span>{{ SITE_NAME }}</span>
           </a>
           <p class="muted mt-2" style="font-size:.93rem;max-width:22rem;">
-            Networking, software, automation and ongoing care for homes
-            and businesses across {{ SITE_REGION }}.
+            Networking, CCTV, smart homes and IT support for homes and
+            small businesses across {{ SITE_TOWNS_DISPLAY }}.
           </p>
         </div>
         <div>
@@ -89,6 +144,7 @@
           <ul>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+            <li><a href="{% url 'areas' %}">Areas we cover</a></li>
             <li><a href="{% url 'blog' %}">Blog</a></li>
           </ul>
         </div>
@@ -96,13 +152,13 @@
           <h5>Contact</h5>
           <ul>
             <li><a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a></li>
-            {% if SITE_PHONE %}<li><a href="tel:{{ SITE_PHONE }}">{{ SITE_PHONE }}</a></li>{% endif %}
+            {% if SITE_PHONE %}<li><a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a></li>{% endif %}
             <li><a href="{% url 'contact' %}">Send a message</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; <span id="year"></span> {{ SITE_NAME }} Ltd · {{ SITE_REGION }}</span>
+        <span>&copy; <span id="year"></span> {{ SITE_NAME }} Ltd · Marlow, Buckinghamshire</span>
         <span class="veteran" aria-label="Veteran-owned business">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 22s7-3.5 7-10V5l-7-3-7 3v7c0 6.5 7 10 7 10Z"/>

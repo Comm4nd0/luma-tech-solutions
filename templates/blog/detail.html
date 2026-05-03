@@ -28,7 +28,7 @@
 <article>
   <section class="post-hero">
     <div class="container">
-      <nav class="crumbs"><a href="{% url 'blog' %}">Blog</a><span class="sep">/</span> {{ post.get_pillar_display }}</nav>
+      {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
       {% include 'partials/_post_meta.html' with post=post %}
       <h1>{{ post.title }}</h1>
       <p class="lede">{{ post.excerpt }}</p>

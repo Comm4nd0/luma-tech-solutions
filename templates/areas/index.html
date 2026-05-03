@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span>Where we work</span>
+    <h1>Local engineer for <span class="gradient">Wi-Fi, CCTV and IT support</span> across Bucks &amp; Berks.</h1>
+    <p class="lede">
+      We're based in Marlow and work on-site across the Thames Valley.
+      Most jobs land within a 25-minute drive. Beyond the towns listed
+      below we'll happily travel further by arrangement — just ask.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+
+    <div class="section-head fade-in mt-3">
+      <span class="eyebrow"><span class="dot"></span>Towns we cover</span>
+      <h2>Where the van turns up.</h2>
+    </div>
+
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>Marlow</h4>
+        <p>Home base. Wi-Fi, CCTV and smart-home installs from the High Street out to Marlow Bottom and Munday Dean. <a href="{% url 'area_marlow' %}">More about Marlow →</a></p>
+      </div>
+      <div class="feature">
+        <h4>Maidenhead</h4>
+        <p>Larger residential builds across Furze Platt, Boyn Hill, Cox Green and Bray — plus the <strong>LittleWick House</strong> whole-property network. <a href="{% url 'area_maidenhead' %}">More about Maidenhead →</a></p>
+      </div>
+      <div class="feature">
+        <h4>Henley-on-Thames</h4>
+        <p>Period properties along the river and out toward Remenham — Wi-Fi, CCTV and smart-home work where consumer kit can't keep up.</p>
+      </div>
+      <div class="feature">
+        <h4>Beaconsfield</h4>
+        <p>Networking, security and ongoing IT support for homes and small businesses around the old town and the new town.</p>
+      </div>
+      <div class="feature">
+        <h4>Bourne End</h4>
+        <p>On the doorstep — Wi-Fi installs, CCTV and quick-response support along the Thames between Marlow and Cookham.</p>
+      </div>
+      <div class="feature">
+        <h4>Cookham</h4>
+        <p>Rural-edge homes that sit between mediocre broadband and a thick stone wall. We design networks that cope with both.</p>
+      </div>
+      <div class="feature">
+        <h4>High Wycombe</h4>
+        <p>Wi-Fi, CCTV and ongoing care for homes and small businesses across Wycombe, Hazlemere and the surrounding villages.</p>
+      </div>
+      <div class="feature">
+        <h4>Beyond the Thames Valley</h4>
+        <p>Remote work nationwide; on-site work further afield by arrangement. <a href="{% url 'contact' %}">Tell us where you are</a> and we'll be straight with you about whether it's a fit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Not sure if we cover your postcode?' cta_copy='Drop us a quick line. We will be straight about whether we are the right fit and how soon we can get to you.' %}
+{% endblock %}

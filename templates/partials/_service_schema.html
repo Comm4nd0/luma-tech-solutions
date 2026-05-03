@@ -1,0 +1,18 @@
+{# Service JSON-LD for a single service page.
+   Caller passes service_name, service_type, service_description, service_url
+   (the URL path, not absolute) via the view context. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ service_name|escapejs }}",
+  "serviceType": "{{ service_type|escapejs }}",
+  "description": "{{ service_description|escapejs }}",
+  "url": "{{ SITE_URL }}{{ service_url }}",
+  "provider": { "@id": "{{ SITE_URL }}#business" },
+  "areaServed": [{% for town in SITE_TOWNS %}
+    { "@type": "City", "name": "{{ town|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}{% for county in SITE_COUNTIES %},
+    { "@type": "AdministrativeArea", "name": "{{ county|escapejs }}" }{% endfor %}
+  ]
+}
+</script>
