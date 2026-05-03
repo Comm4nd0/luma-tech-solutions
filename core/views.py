@@ -137,8 +137,7 @@ CASE_STUDIES = [
             "A complete residential rebuild: fast Wi-Fi everywhere, Protect "
             "CCTV recording at the property, and Home Assistant running "
             "scenes, climate, lighting and access — all on a single dashboard "
-            "that doesn't depend on anyone's cloud. Aerial drone documentation "
-            "is included with every project we deliver."
+            "that doesn't depend on anyone's cloud."
         ),
         "stack": ["UniFi Dream Machine Pro", "UniFi APs & Switches", "UniFi Protect", "Home Assistant", "Zigbee"],
         "outcome": "Whole-home coverage, automations that work without the internet, no cloud lock-in.",

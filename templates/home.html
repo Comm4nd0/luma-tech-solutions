@@ -10,11 +10,12 @@
         <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · the Thames Valley</span>
         <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
         <p class="lede">
-          If your house is too big for your router — and the mesh kit didn't
-          fix it — we engineer proper, business-grade networks for homes that
-          consumer gear can't cover. Plus security, automation, development
-          and support. One company, every service covered. Based in Marlow,
-          covering Maidenhead, Henley-on-Thames and the wider Thames Valley.
+          If your home or office is too big for consumer routers — and the
+          mesh kit didn't fix it — we engineer proper business-grade networks
+          for larger homes and small businesses that need it to just work.
+          Plus security, automation, development and support. One company,
+          every service covered. Based in Marlow, covering Maidenhead,
+          Henley-on-Thames and the wider Thames Valley.
         </p>
         <div class="cta-row">
           <a href="{% url 'contact' %}?source=home-wifi-hero" class="btn btn-primary">Book a site survey {% include 'partials/_icons.html' with name='arrow' %}</a>
@@ -29,7 +30,7 @@
     <div class="stat-row">
       <div class="stat"><div class="num">10+</div><div class="label">Years engineering experience</div></div>
       <div class="stat"><div class="num">5</div><div class="label">Services, one team</div></div>
-      <div class="stat"><div class="num">Drone</div><div class="label">Aerial surveys included</div></div>
+      <div class="stat"><div class="num">11 APs</div><div class="label">Largest single home</div></div>
       <div class="stat"><div class="num">100%</div><div class="label">UK-based & local</div></div>
     </div>
   </div>
@@ -46,6 +47,10 @@
         floorspace, the laws of physics catch up — and rebooting the router
         for the third time this week isn't going to fix it.
       </p>
+    </div>
+
+    <div class="diagnostic-illustration fade-in" aria-hidden="true">
+      {% include 'partials/_illustrations.html' with name='house-coverage' %}
     </div>
 
     <div class="feature-grid fade-in">
@@ -103,7 +108,7 @@
       </p>
     </div>
 
-    {% include 'partials/_pillars.html' %}
+    {% include 'partials/_pillars_visual.html' %}
 
     <p class="muted mt-4" style="text-align:center;font-size:.95rem;">
       Based in Marlow. We cover {{ SITE_TOWNS_DISPLAY }} — and the rest of the Thames Valley by arrangement.
@@ -156,10 +161,41 @@
         <h4>Royal Marines trained</h4>
         <p>Founded by a former Royal Marines IT specialist (RMIS branch). The same discipline, attention to detail, and "it has to work" mentality applied to every installation.</p>
       </div>
-      <div class="feature">
-        <h4>Drone-assisted surveys</h4>
-        <p>Every significant project includes an aerial drone survey for precise AP placement, cable routing and CCTV coverage planning. Most installers can't offer this — we include it as standard.</p>
-      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Recent work</span>
+      <h2>From the comms cupboard out.</h2>
+      <p class="lede">
+        A few snapshots from recent installs across the Thames Valley.
+        Tidy cabling, sensible mounts, and dashboards you'll actually
+        recognise the next time something needs a tweak.
+      </p>
+    </div>
+
+    <div class="work-gallery fade-in">
+      <figure>
+        <div class="img-frame img-frame--sq">
+          <img src="{% static 'img/work/rack.jpg' %}" alt="Tidy comms-cupboard install at LittleWick House" loading="lazy" onerror="this.style.display='none'"/>
+        </div>
+        <figcaption>Comms cupboard at LittleWick House</figcaption>
+      </figure>
+      <figure>
+        <div class="img-frame img-frame--sq">
+          <img src="{% static 'img/work/ap-ceiling.jpg' %}" alt="Ceiling-mounted UniFi U7-Pro access point" loading="lazy" onerror="this.style.display='none'"/>
+        </div>
+        <figcaption>Ceiling-mounted U7-Pro</figcaption>
+      </figure>
+      <figure>
+        <div class="img-frame img-frame--sq">
+          <img src="{% static 'img/work/dashboard.jpg' %}" alt="UniFi dashboard showing whole-property network" loading="lazy" onerror="this.style.display='none'"/>
+        </div>
+        <figcaption>One managed dashboard</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -209,6 +245,7 @@
       <div>
         <div class="featured-case-img mb-2">
           {% include 'partials/_illustrations.html' with name='networking' %}
+          <img src="{% static 'img/work/littlewick-hero.jpg' %}" alt="Whole-property UniFi install at LittleWick House" loading="lazy" onerror="this.style.display='none'"/>
         </div>
         <h3>{{ featured_case.title }}</h3>
         <p class="muted">{{ featured_case.summary }}</p>

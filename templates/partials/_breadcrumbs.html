@@ -1,6 +1,8 @@
-{# Renders both the visible <nav class="crumbs"> markup and a BreadcrumbList JSON-LD block.
-   Pass `crumbs` as a list of (label, url) tuples. The last entry's url is rendered
-   plain text (it's the current page). #}
+{% comment %}
+Renders both the visible <nav class="crumbs"> markup and a BreadcrumbList JSON-LD block.
+Pass `crumbs` as a list of (label, url) tuples. The last entry's url is rendered
+plain text (it's the current page).
+{% endcomment %}
 <nav class="crumbs">
   {% for label, url in crumbs %}
     {% if forloop.last %}{{ label }}{% else %}<a href="{{ url }}">{{ label }}</a><span class="sep">/</span> {% endif %}

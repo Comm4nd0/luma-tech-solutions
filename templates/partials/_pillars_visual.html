@@ -1,0 +1,29 @@
+{% comment %}
+Image-led pillar grid for the home page. Pass `pillars`. Each card has a
+top image strip — an <img> pointing at static/img/services/<key>.jpg falls
+back to the matching abstract SVG illustration if the file isn't there yet,
+courtesy of an inline onerror that swaps display.
+{% endcomment %}
+{% load static %}
+<div class="pillar-grid-visual">
+  {% for p in pillars %}
+    <a class="card card-glow pillar-card-visual fade-in" href="{% url p.url_name %}">
+      <div class="pillar-card-visual-img">
+        {% include 'partials/_illustrations.html' with name=p.key %}
+        <img
+          src="{% static 'img/services/' %}{{ p.key }}.jpg"
+          alt=""
+          loading="lazy"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <div class="pillar-card-visual-body">
+        <div class="card-icon">{% include 'partials/_icons.html' with name=p.icon %}</div>
+        <span class="tag">{{ p.title }}</span>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.tagline }}</p>
+        <span class="card-link">Learn more <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></span>
+      </div>
+    </a>
+  {% endfor %}
+</div>

@@ -44,7 +44,9 @@
           "@type": "Person",
           "name": "{{ SITE_FOUNDER|escapejs }}"
         },
-        "sameAs": []
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61560720497065"
+        ]
       },
       {
         "@type": "ProfessionalService",
@@ -154,6 +156,7 @@
             <li><a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a></li>
             {% if SITE_PHONE %}<li><a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a></li>{% endif %}
             <li><a href="{% url 'contact' %}">Send a message</a></li>
+            <li><a class="footer-social" href="https://www.facebook.com/profile.php?id=61560720497065" target="_blank" rel="noopener" aria-label="Luma Tech on Facebook">{% include 'partials/_icons.html' with name='facebook' %} Facebook</a></li>
           </ul>
         </div>
       </div>

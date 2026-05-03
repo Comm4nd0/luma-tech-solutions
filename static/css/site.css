@@ -632,6 +632,12 @@ footer.site-footer {
 .footer-grid li { padding: 0.25rem 0; }
 .footer-grid li a { color: var(--fg); font-size: 0.93rem; }
 .footer-grid li a:hover { color: var(--accent); }
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.footer-social svg { width: 16px; height: 16px; }
 .footer-bottom {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -1276,6 +1282,87 @@ footer.site-footer {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ---------- diagnostic-illustration (home page WiFi section) ---------- */
+.diagnostic-illustration {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 2.5rem;
+}
+.diagnostic-illustration .ill {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+}
+
+/* ---------- visual pillar cards (home page services grid) ---------- */
+.pillar-grid-visual {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.pillar-card-visual {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+.pillar-card-visual-img {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(20, 184, 166, 0.10), transparent 70%),
+    radial-gradient(ellipse at 70% 50%, rgba(14, 165, 233, 0.08), transparent 70%),
+    var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.pillar-card-visual-img .ill {
+  max-width: 220px;
+  opacity: 0.85;
+}
+.pillar-card-visual-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pillar-card-visual-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.pillar-card-visual-body .card-icon { margin-bottom: 0.6rem; }
+.pillar-card-visual-body .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.pillar-card-visual-body h3 { margin: 0 0 0.4rem; }
+.pillar-card-visual-body p { color: var(--muted); margin: 0 0 1rem; flex: 1; }
+
+/* ---------- work gallery (home page recent-work section) ---------- */
+.work-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.work-gallery figure { margin: 0; }
+.work-gallery figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
 }
 
 /* ---------- utility ---------- */
