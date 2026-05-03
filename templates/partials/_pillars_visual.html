@@ -4,18 +4,14 @@ top image strip — an <img> pointing at static/img/services/<key>.jpg falls
 back to the matching abstract SVG illustration if the file isn't there yet,
 courtesy of an inline onerror that swaps display.
 {% endcomment %}
-{% load static %}
+{% load optional_static %}
 <div class="pillar-grid-visual">
   {% for p in pillars %}
     <a class="card card-glow pillar-card-visual fade-in" href="{% url p.url_name %}">
       <div class="pillar-card-visual-img">
         {% include 'partials/_illustrations.html' with name=p.key %}
-        <img
-          src="{% static 'img/services/' %}{{ p.key }}.jpg"
-          alt=""
-          loading="lazy"
-          onerror="this.style.display='none'"
-        />
+        {% static_optional 'img/services/'|add:p.key|add:'.jpg' as photo_url %}
+        {% if photo_url %}<img src="{{ photo_url }}" alt="" loading="lazy"/>{% endif %}
       </div>
       <div class="pillar-card-visual-body">
         <div class="card-icon">{% include 'partials/_icons.html' with name=p.icon %}</div>

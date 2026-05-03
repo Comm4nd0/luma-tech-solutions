@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load optional_static %}
 
 {% block content %}
 
@@ -178,21 +179,24 @@
     </div>
 
     <div class="work-gallery fade-in">
+      {% static_optional 'img/work/rack.jpg' as rack_url %}
+      {% static_optional 'img/work/ap-ceiling.jpg' as ap_url %}
+      {% static_optional 'img/work/dashboard.jpg' as dash_url %}
       <figure>
         <div class="img-frame img-frame--sq">
-          <img src="{% static 'img/work/rack.jpg' %}" alt="Tidy comms-cupboard install at LittleWick House" loading="lazy" onerror="this.style.display='none'"/>
+          {% if rack_url %}<img src="{{ rack_url }}" alt="Tidy comms-cupboard install at LittleWick House" loading="lazy"/>{% endif %}
         </div>
         <figcaption>Comms cupboard at LittleWick House</figcaption>
       </figure>
       <figure>
         <div class="img-frame img-frame--sq">
-          <img src="{% static 'img/work/ap-ceiling.jpg' %}" alt="Ceiling-mounted UniFi U7-Pro access point" loading="lazy" onerror="this.style.display='none'"/>
+          {% if ap_url %}<img src="{{ ap_url }}" alt="Ceiling-mounted UniFi U7-Pro access point" loading="lazy"/>{% endif %}
         </div>
         <figcaption>Ceiling-mounted U7-Pro</figcaption>
       </figure>
       <figure>
         <div class="img-frame img-frame--sq">
-          <img src="{% static 'img/work/dashboard.jpg' %}" alt="UniFi dashboard showing whole-property network" loading="lazy" onerror="this.style.display='none'"/>
+          {% if dash_url %}<img src="{{ dash_url }}" alt="UniFi dashboard showing whole-property network" loading="lazy"/>{% endif %}
         </div>
         <figcaption>One managed dashboard</figcaption>
       </figure>
@@ -245,7 +249,8 @@
       <div>
         <div class="featured-case-img mb-2">
           {% include 'partials/_illustrations.html' with name='networking' %}
-          <img src="{% static 'img/work/littlewick-hero.jpg' %}" alt="Whole-property UniFi install at LittleWick House" loading="lazy" onerror="this.style.display='none'"/>
+          {% static_optional 'img/work/littlewick-hero.jpg' as hero_url %}
+          {% if hero_url %}<img src="{{ hero_url }}" alt="Whole-property UniFi install at LittleWick House" loading="lazy"/>{% endif %}
         </div>
         <h3>{{ featured_case.title }}</h3>
         <p class="muted">{{ featured_case.summary }}</p>
