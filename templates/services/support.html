@@ -84,6 +84,43 @@
   </div>
 </section>
 
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Already a client?</span>
+      <h2>One place for tickets, SLAs and your setup.</h2>
+    </div>
+
+    <div class="featured-case fade-in">
+      <div>
+        <h3>The Luma client portal</h3>
+        <p class="muted">
+          Care-plan clients get a private portal for raising tickets, tracking
+          progress against your SLA, and seeing the runbook for your setup.
+          Same engineer on the other end, same context every time — no
+          re-explaining your network from scratch.
+        </p>
+        <div class="row-actions mt-3">
+          <a href="https://support.lumatechsolutions.co.uk/" target="_blank" rel="noopener" class="btn btn-primary">Open the client portal {% include 'partials/_icons.html' with name='arrow' %}</a>
+        </div>
+        <p class="muted mt-2" style="font-size:.88rem;">
+          Access is provisioned at handover for clients on an active care plan.
+          Not a client yet? <a href="{% url 'contact' %}?service=support">Get in touch</a>.
+        </p>
+      </div>
+      <div class="panel">
+        <h4>What you can do there</h4>
+        <ul class="bullets" style="margin-top:.25rem;">
+          <li>Submit a new ticket with photos or screenshots</li>
+          <li>See live status and SLA timer on every open ticket</li>
+          <li>Read the history of past tickets and resolutions</li>
+          <li>Find the runbook for your setup in one place</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% include 'partials/_areas_served.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Already got a setup that needs a guardian?' cta_copy='We can take over support of an existing UniFi network or Home Assistant install. Free 30-minute audit to see what is there and what is at risk.' %}
