@@ -88,6 +88,9 @@ TESTIMONIALS = [
 CARE_PLANS = [
     {
         "name": "Essential",
+        "price": "£75",
+        "annual_price": "£810",
+        "min_term": "3-month rolling",
         "tagline": "Quiet, reliable IT — we watch it, you forget about it.",
         "highlighted": False,
         "features": [
@@ -97,11 +100,14 @@ CARE_PLANS = [
             "Quarterly health-check report",
             "One-page network diagram, kept current with any changes we make",
             "20% off our standard hourly rate for work outside the plan",
-            "BT/OpenReach liaison when your line goes down — we make the calls",
+            "Internet provider liaison when your line goes down — we make the calls",
         ],
     },
     {
         "name": "Professional",
+        "price": "£165",
+        "annual_price": "£1,780",
+        "min_term": "6-month rolling",
         "tagline": "For homes and businesses that genuinely depend on the network.",
         "highlighted": True,
         "features": [
@@ -116,6 +122,9 @@ CARE_PLANS = [
     },
     {
         "name": "Concierge",
+        "price": "£325",
+        "annual_price": "£3,510",
+        "min_term": "12-month",
         "tagline": "Front of the queue. Hands-on. Documented to the wire.",
         "highlighted": False,
         "features": [

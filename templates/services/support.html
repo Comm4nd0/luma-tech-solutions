@@ -36,6 +36,9 @@
         <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
           {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
           <h3>{{ plan.name }}</h3>
+          <p class="price">{{ plan.price }}<span class="price-suffix">/mo +VAT</span></p>
+          <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">or {{ plan.annual_price }}/yr (save 10%)</p>
+          <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}</p>
           <p class="price-tag">{{ plan.tagline }}</p>
           <ul>
             {% for feat in plan.features %}
@@ -45,6 +48,11 @@
           <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}">Choose {{ plan.name }}</a>
         </div>
       {% endfor %}
+    </div>
+
+    <div class="muted center mt-4" style="max-width:42rem;margin:2.5rem auto 0;font-size:.88rem;line-height:1.6;">
+      <p style="margin:0 0 .75rem;"><strong>Standard hourly rate</strong> for work outside the plan: £95/hr +VAT — plan members pay £76/hr.</p>
+      <p style="margin:0;"><strong>Quoted separately:</strong> project installs (new networks, CCTV builds, smart-home design), hardware procurement, M365 / Google Workspace licensing, multi-site beyond two properties, and travel beyond ~25 miles from Marlow.</p>
     </div>
   </div>
 </section>
