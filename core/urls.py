@@ -17,6 +17,7 @@ urlpatterns = [
     path("areas/", views.areas_index, name="areas"),
     path("areas/marlow/", views.area_marlow, name="area_marlow"),
     path("areas/maidenhead/", views.area_maidenhead, name="area_maidenhead"),
+    path("areas/henley/", views.area_henley, name="area_henley"),
     path("contact/", views.contact, name="contact"),
     path("contact/thanks/", views.contact_thanks, name="contact_thanks"),
     path("blog/", views.blog, name="blog"),

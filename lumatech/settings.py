@@ -158,7 +158,7 @@ SITE_FOUNDER = "Marco Baldanza"
 SITE_BASE_TOWN = "Marlow"
 # Bump when you ship a meaningful site-wide content change so the
 # static-page sitemap honestly reflects freshness.
-SITE_STATIC_LASTMOD = "2026-05-03"
+SITE_STATIC_LASTMOD = "2026-05-04"
 
 # --- Security in production ---
 if not DEBUG:

@@ -32,6 +32,7 @@ class StaticViewSitemap(Sitemap):
             ("areas", 0.7),
             ("area_marlow", 0.8),
             ("area_maidenhead", 0.8),
+            ("area_henley", 0.8),
             ("about", 0.7),
             ("portfolio", 0.8),
             ("contact", 0.7),

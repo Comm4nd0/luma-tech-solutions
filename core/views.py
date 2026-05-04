@@ -249,7 +249,7 @@ def home(request):
         "home.html",
         _base_context(
             active="home",
-            page_title="Wi-Fi, CCTV & IT Support in Marlow & Maidenhead | Luma Tech",
+            page_title="Wi-Fi, CCTV & IT Support — Marlow, Maidenhead & Henley | Luma Tech",
             page_description=(
                 "Local engineer for proper Wi-Fi, CCTV, smart homes and IT "
                 "support across Marlow, Maidenhead, Henley and the Thames Valley."
@@ -285,7 +285,7 @@ def service_networking(request):
         "services/networking.html",
         _base_context(
             active="services",
-            page_title="Wi-Fi Installation in Marlow & Maidenhead | Luma Tech",
+            page_title="Wi-Fi Installation in Marlow, Maidenhead & Henley | Luma Tech",
             page_description=(
                 "UniFi Wi-Fi design and installation for large homes and "
                 "offices across Marlow, Maidenhead, Henley and the Thames Valley."
@@ -313,10 +313,10 @@ def service_security(request):
         "services/security.html",
         _base_context(
             active="security",
-            page_title="CCTV & Security Installation, Marlow & Bucks | Luma Tech",
+            page_title="CCTV Installation in Marlow, Maidenhead & Henley | Luma Tech",
             page_description=(
                 "UniFi Protect CCTV, alarms, smart locks and network security "
-                "across Marlow, Maidenhead, Beaconsfield and the Thames Valley."
+                "across Marlow, Maidenhead, Henley-on-Thames and the Thames Valley."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -505,7 +505,7 @@ def contact(request):
         "contact.html",
         _base_context(
             active="contact",
-            page_title="Contact Luma Tech — Marlow & Maidenhead Engineer",
+            page_title="Contact Luma Tech — Marlow, Maidenhead & Henley Engineer",
             page_description=(
                 "Talk to Marco about Wi-Fi, CCTV, smart-home or IT support "
                 "across Marlow, Maidenhead, Henley and the Thames Valley."
@@ -580,7 +580,7 @@ def areas_index(request):
         "areas/index.html",
         _base_context(
             active="services",
-            page_title="Areas Covered — Marlow, Maidenhead, Bucks | Luma Tech",
+            page_title="Areas Covered — Marlow, Maidenhead, Henley & Bucks | Luma Tech",
             page_description=(
                 "Where we work: Marlow, Maidenhead, Henley-on-Thames, "
                 "Beaconsfield, Bourne End, Cookham and High Wycombe."
@@ -636,6 +636,28 @@ def area_maidenhead(request):
             ],
             town="Maidenhead",
             featured_case=featured,
+        ),
+    )
+
+
+def area_henley(request):
+    return render(
+        request,
+        "areas/henley.html",
+        _base_context(
+            active="services",
+            page_title="Wi-Fi, CCTV & IT Support in Henley-on-Thames | Luma Tech",
+            page_description=(
+                "Wi-Fi, CCTV and smart-home design for period homes and "
+                "riverside properties in Henley-on-Thames, Remenham, "
+                "Hambleden and Mill End."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Areas", reverse("areas")),
+                ("Henley-on-Thames", reverse("area_henley")),
+            ],
+            town="Henley-on-Thames",
         ),
     )
 
