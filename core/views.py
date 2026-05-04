@@ -493,7 +493,10 @@ def contact(request):
         plan = request.GET.get("plan", "").strip().lower()
         plan_lookup = {p["name"].lower(): p["name"] for p in CARE_PLANS}
         if plan in plan_lookup:
-            initial["message"] = f"I'm interested in {plan_lookup[plan]}."
+            initial["message"] = (
+                f"I'm interested in {plan_lookup[plan]} support package. "
+                "Please can you tell me more"
+            )
 
         form = ContactForm(initial=initial)
 
