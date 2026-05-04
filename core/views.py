@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .forms import ContactForm
-from .models import BlogPost
+from .models import BlogPost, SERVICE_CHOICES
 
 log = logging.getLogger(__name__)
 
@@ -477,7 +477,25 @@ def contact(request):
             messages.success(request, "Thanks — we'll be in touch shortly.")
             return redirect(reverse("contact_thanks"))
     else:
-        form = ContactForm(initial={"source": request.GET.get("source", "")})
+        initial = {"source": request.GET.get("source", "")}
+
+        # ?service=support → preselect the "Interested in" dropdown.
+        # Validate against SERVICE_CHOICES so a bad URL doesn't drop a missing
+        # option into the form.
+        service = request.GET.get("service", "").strip().lower()
+        valid_services = {key for key, _ in SERVICE_CHOICES}
+        if service in valid_services:
+            initial["service"] = service
+
+        # ?plan=essential → pre-populate the message with the chosen tier.
+        # Match case-insensitively against canonical CARE_PLANS names so the
+        # message renders with the correct capitalisation.
+        plan = request.GET.get("plan", "").strip().lower()
+        plan_lookup = {p["name"].lower(): p["name"] for p in CARE_PLANS}
+        if plan in plan_lookup:
+            initial["message"] = f"I'm interested in {plan_lookup[plan]}."
+
+        form = ContactForm(initial=initial)
 
     return render(
         request,
