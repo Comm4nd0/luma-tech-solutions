@@ -110,7 +110,6 @@ CARE_PLANS = [
             "Phone, video and WhatsApp support",
             "2 hours of remote moves-and-changes per year (rolls over up to 4)",
             "One on-site visit per year included (tune-up, cable check, hardware audit)",
-            "Quarterly check-in call",
             "Hardware warranty management — UI Care registered, RMAs handled by us",
             "5% loyalty discount from year 2",
         ],
