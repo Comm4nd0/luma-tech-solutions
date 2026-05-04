@@ -112,7 +112,7 @@ CARE_PLANS = [
         ],
     },
     {
-        "name": "Enterprise",
+        "name": "Concierge",
         "tagline": "For setups that need priority attention and regular hands-on care.",
         "highlighted": False,
         "features": [
@@ -412,7 +412,7 @@ def about(request):
             page_title="About Marco Baldanza, Luma Tech Solutions, Marlow",
             page_description=(
                 "Veteran-owned tech business in Marlow run by Marco Baldanza, "
-                "an engineer with an enterprise infrastructure and software background."
+                "an engineer with a deep infrastructure and software background."
             ),
         ),
     )

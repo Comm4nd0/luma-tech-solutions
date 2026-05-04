@@ -190,7 +190,7 @@ POST_5_CONTENT = """
 <p>Three reasons. One: it works, year after year, with very little drama. Two: every site we install is documented and we (or the next engineer) can pick it up cold. Three: there's no recurring cost — you own the kit, no monthly cloud subscription. The dashboard runs on hardware in your house and that's the end of it.</p>
 
 <h2>What it doesn't do well</h2>
-<p>Worth being honest. UniFi is overkill for a one-bed flat (a £150 mesh kit will do fine), and the controller has a learning curve that's friendlier than most enterprise gear but still not "consumer". If you want to manage it yourself, you'll need to spend an evening or two getting comfortable. If you don't, that's what we're here for.</p>
+<p>Worth being honest. UniFi is overkill for a one-bed flat (a £150 mesh kit will do fine), and the controller has a learning curve that's friendlier than most pro-grade kit but still not "consumer". If you want to manage it yourself, you'll need to spend an evening or two getting comfortable. If you don't, that's what we're here for.</p>
 
 <h2>Want a UniFi install in Berks or Bucks?</h2>
 <p><a href="/contact/?service=networking">Get in touch</a> and we'll come and walk the property. On-site survey, written quote, fixed price. No subscriptions, no day rates.</p>
@@ -305,7 +305,7 @@ POST_8_CONTENT = """
 <ul>
   <li><strong>Essential — £29/month.</strong> Automated monitoring, email support, quarterly health-check, firmware managed. Right for most homes.</li>
   <li><strong>Professional — £59/month.</strong> Adds same-day response, quarterly check-in call, an annual on-site visit, smart-home tweaks included. Right for households or small businesses that depend on the tech.</li>
-  <li><strong>Enterprise — £149/month.</strong> Priority response, monthly check-in, quarterly on-site visit, full documentation kept up to date. Right for businesses or larger residential installs.</li>
+  <li><strong>Concierge — £149/month.</strong> Priority response, monthly check-in, quarterly on-site visit, full documentation kept up to date. Right for businesses or larger residential installs.</li>
 </ul>
 <p>All cancellable with 30 days' notice. Annual prepay knocks 10% off.</p>
 
@@ -473,7 +473,7 @@ POST_12_CONTENT = """
   <li><strong>Yale Linus L2.</strong> The default residential retrofit choice in the UK. Sits over your existing thumb-turn, keeps your key, integrates with HomeKit, Alexa, Google, Home Assistant. £230ish installed.</li>
   <li><strong>Aqara U200 / U300.</strong> Newer Matter-compatible options, integrate cleanly with Home Assistant. Watch for firmware-update track record over the next year.</li>
   <li><strong>Igloohome.</strong> For Airbnb / short-let. Generates time-limited codes that work without internet. Useful when guests check in while you're abroad.</li>
-  <li><strong>Salto.</strong> Commercial. The default for offices, gyms, multi-tenant buildings. Audit trail and integration is enterprise-grade.</li>
+  <li><strong>Salto.</strong> Commercial. The default for offices, gyms, multi-tenant buildings. Audit trail and integration is professional-grade.</li>
 </ul>
 
 <h2>What we'd avoid</h2>
