@@ -170,6 +170,12 @@
           Veteran-owned business
         </span>
         <span>
+          <a href="{% url 'terms' %}">Terms</a>
+          <span class="sep" style="opacity:.4;">·</span>
+          <a href="{% url 'privacy' %}">Privacy</a>
+          <span class="sep" style="opacity:.4;">·</span>
+          <a href="#" data-cookie-prefs-trigger>Cookie preferences</a>
+          <span class="sep" style="opacity:.4;">·</span>
           <a href="{% url 'robots' %}">robots.txt</a>
           <span class="sep" style="opacity:.4;">·</span>
           <a href="/sitemap.xml">sitemap.xml</a>
@@ -178,6 +184,9 @@
     </div>
   </footer>
 
+  {% include 'partials/_cookie_consent.html' %}
+
   <script src="{% static 'js/site.js' %}" defer></script>
+  <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 </body>
 </html>

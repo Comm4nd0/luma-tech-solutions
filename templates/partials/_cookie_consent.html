@@ -1,0 +1,66 @@
+{% comment %}
+Cookie consent banner. Two-stage UX:
+- "notice" stage: brief copy + Accept all / Reject all / Customize buttons
+- "preferences" stage: per-category toggles + Save / Back
+
+State stored in the lt_consent cookie (1 year, SameSite=Lax). Banner only
+appears on first visit OR when triggered via the footer "Cookie preferences"
+link. Wired up by static/js/cookie-consent.js.
+{% endcomment %}
+<div class="cookie-consent" data-cookie-consent role="region" aria-label="Cookie preferences" hidden>
+  <div class="cookie-consent-inner" data-consent-stage="notice">
+    <h3>Cookie preferences</h3>
+    <p>
+      We use strictly-necessary cookies to keep the contact form working
+      and the site secure. With your permission, we'd also like to use
+      analytics cookies to understand how the site is used. We don't run
+      advertising trackers — but the option is here for transparency.
+      <a href="{% url 'privacy' %}">Read our Privacy Policy</a>.
+    </p>
+    <div class="cookie-consent-actions">
+      <button type="button" class="btn btn-ghost btn-sm" data-consent-action="reject">Reject all</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-consent-action="customize">Customize</button>
+      <button type="button" class="btn btn-primary btn-sm" data-consent-action="accept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-consent-inner cookie-consent-prefs" data-consent-stage="preferences" hidden>
+    <h3>Cookie preferences</h3>
+    <p>Pick what you're happy with. You can change this any time via the "Cookie preferences" link in the footer.</p>
+
+    <div class="cookie-consent-cat">
+      <div>
+        <h4>Strictly necessary <span class="muted" style="font-weight:normal;font-size:.8rem;">— always on</span></h4>
+        <p>Needed for the contact form and basic site security (Django CSRF and session cookies). Can't be turned off.</p>
+      </div>
+      <span class="cookie-toggle is-disabled" aria-hidden="true"><span class="cookie-toggle-knob"></span></span>
+    </div>
+
+    <div class="cookie-consent-cat">
+      <div>
+        <h4>Analytics</h4>
+        <p>Helps us understand which pages are useful and where people get stuck. Aggregate only — never identifying. We're not currently running any analytics, but this preference will apply if we add a privacy-friendly tool later.</p>
+      </div>
+      <label class="cookie-toggle">
+        <input type="checkbox" data-consent-cat="analytics" aria-label="Allow analytics cookies"/>
+        <span class="cookie-toggle-knob"></span>
+      </label>
+    </div>
+
+    <div class="cookie-consent-cat">
+      <div>
+        <h4>Marketing</h4>
+        <p>Reserved for any future advertising or remarketing tools. We don't currently use any of these and have no plans to.</p>
+      </div>
+      <label class="cookie-toggle">
+        <input type="checkbox" data-consent-cat="marketing" aria-label="Allow marketing cookies"/>
+        <span class="cookie-toggle-knob"></span>
+      </label>
+    </div>
+
+    <div class="cookie-consent-actions">
+      <button type="button" class="btn btn-ghost btn-sm" data-consent-action="back">Back</button>
+      <button type="button" class="btn btn-primary btn-sm" data-consent-action="save">Save preferences</button>
+    </div>
+  </div>
+</div>

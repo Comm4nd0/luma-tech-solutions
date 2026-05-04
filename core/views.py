@@ -640,6 +640,43 @@ def area_maidenhead(request):
     )
 
 
+def terms(request):
+    return render(
+        request,
+        "terms.html",
+        _base_context(
+            active=None,
+            page_title="Terms and Conditions | Luma Tech",
+            page_description=(
+                "Website terms and conditions for Luma Tech Solutions."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Terms", reverse("terms")),
+            ],
+        ),
+    )
+
+
+def privacy(request):
+    return render(
+        request,
+        "privacy.html",
+        _base_context(
+            active=None,
+            page_title="Privacy Policy | Luma Tech",
+            page_description=(
+                "How Luma Tech Solutions collects, uses and protects your "
+                "personal data — UK GDPR-compliant."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Privacy", reverse("privacy")),
+            ],
+        ),
+    )
+
+
 def area_henley(request):
     return render(
         request,

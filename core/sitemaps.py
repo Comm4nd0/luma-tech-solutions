@@ -37,6 +37,8 @@ class StaticViewSitemap(Sitemap):
             ("portfolio", 0.8),
             ("contact", 0.7),
             ("blog", 0.5),
+            ("terms", 0.3),
+            ("privacy", 0.3),
         ]
 
     def location(self, item):

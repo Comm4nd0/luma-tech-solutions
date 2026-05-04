@@ -1284,6 +1284,103 @@ footer.site-footer {
   color: transparent;
 }
 
+/* ---------- cookie consent banner ---------- */
+.cookie-consent {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 100;
+  max-width: 720px;
+  margin: 0 auto;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  color: var(--fg);
+  font-size: 0.93rem;
+}
+.cookie-consent[hidden] { display: none; }
+.cookie-consent-inner { padding: 1.25rem 1.5rem; }
+.cookie-consent h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
+.cookie-consent h4 { font-size: 0.92rem; margin: 0 0 0.2rem; }
+.cookie-consent p { font-size: 0.88rem; color: var(--muted); margin: 0 0 0.75rem; max-width: none; }
+.cookie-consent-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}
+.cookie-consent-cat {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px dashed var(--border);
+}
+.cookie-consent-cat:first-of-type { border-top: 0; padding-top: 0; }
+.cookie-consent-cat > div { flex: 1; }
+.cookie-consent-cat p { margin: 0; font-size: 0.83rem; }
+.cookie-toggle {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  cursor: pointer;
+}
+.cookie-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.cookie-toggle-knob {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.cookie-toggle-knob::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--muted);
+  border-radius: 50%;
+  transition: transform 200ms ease, background 200ms ease;
+}
+.cookie-toggle input:checked + .cookie-toggle-knob {
+  background: rgba(20, 184, 166, 0.2);
+  border-color: var(--accent);
+}
+.cookie-toggle input:checked + .cookie-toggle-knob::before {
+  transform: translateX(16px);
+  background: var(--accent);
+}
+.cookie-toggle input:focus-visible + .cookie-toggle-knob {
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25);
+}
+.cookie-toggle.is-disabled { cursor: not-allowed; }
+.cookie-toggle.is-disabled .cookie-toggle-knob {
+  background: rgba(20, 184, 166, 0.18);
+  border-color: rgba(20, 184, 166, 0.45);
+  opacity: 0.85;
+}
+.cookie-toggle.is-disabled .cookie-toggle-knob::before {
+  transform: translateX(16px);
+  background: var(--accent);
+}
+@media (max-width: 700px) {
+  .cookie-consent { left: 0.5rem; right: 0.5rem; bottom: 0.5rem; }
+  .cookie-consent-inner { padding: 1rem 1.1rem; }
+  .cookie-consent-actions { flex-direction: column-reverse; }
+  .cookie-consent-actions .btn { width: 100%; justify-content: center; }
+}
+
 /* ---------- diagnostic-illustration (home page WiFi section) ---------- */
 .diagnostic-illustration {
   display: flex;

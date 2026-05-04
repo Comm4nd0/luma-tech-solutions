@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="post-hero">
+  <div class="container post-container">
+    {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+    <span class="eyebrow"><span class="dot"></span>Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="lede">Last updated: 4 May 2026</p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container post-container">
+    <div class="post-content">
+      <p>
+        This Privacy Policy explains how Luma Tech Solutions ("we", "us",
+        or "our") collects, uses and protects personal data when you visit
+        <a href="https://lumatechsolutions.co.uk">lumatechsolutions.co.uk</a>
+        or get in touch with us. We aim to be straight with you: we collect
+        as little as we need, we don't sell or share your data with marketers,
+        and you can ask us to delete it whenever you like.
+      </p>
+      <p>
+        This policy is written to comply with the UK General Data Protection
+        Regulation (UK GDPR) and the Data Protection Act 2018.
+      </p>
+
+      <h2>1. Who we are</h2>
+      <p>
+        Luma Tech Solutions is a sole-trader IT business based in Marlow,
+        Buckinghamshire. We are the "data controller" for the personal data
+        we collect through this website.
+      </p>
+      <p>
+        <strong>Contact:</strong>
+        <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+      </p>
+
+      <h2>2. What information we collect</h2>
+      <p>We collect personal data in three places:</p>
+      <ul>
+        <li>
+          <strong>The contact form.</strong> When you fill in the form on
+          <a href="{% url 'contact' %}">our contact page</a>, we collect:
+          your name, your email address, your phone number (if you provide
+          one), the service you're interested in, the message you send us,
+          and an internal "source" tag identifying which page or call-to-action
+          your enquiry came from. We also record the date and time of
+          submission.
+        </li>
+        <li>
+          <strong>Server logs.</strong> Our hosting provider's web server
+          records routine information about every request: your IP address,
+          the page you requested, the time of the request, your browser's
+          user-agent string, and the page that referred you (if any). This
+          is standard for almost every website and is used for security,
+          debugging and abuse prevention.
+        </li>
+        <li>
+          <strong>Cookies.</strong> We only set strictly-necessary cookies —
+          see <a href="#cookies">section 8</a> below for the specifics. We
+          do <em>not</em> use any analytics, advertising or social-media
+          tracking cookies, which is why you don't see a cookie consent
+          banner on this site.
+        </li>
+      </ul>
+      <p>
+        If you become a client and we exchange emails, those emails will of
+        course contain whatever you choose to send us. We treat that
+        correspondence as confidential.
+      </p>
+
+      <h2>3. How we use your information</h2>
+      <p>We use your personal data to:</p>
+      <ul>
+        <li>Reply to your enquiry and discuss whether we can help.</li>
+        <li>Provide quotes, scheduling and any subsequent services if you choose to engage us.</li>
+        <li>Keep records of our work, invoices and correspondence to the extent we are legally required to (UK tax and accounting law).</li>
+        <li>Keep the site available, secure, and free of abuse.</li>
+        <li>Respond to lawful requests from regulators, courts or law enforcement where required.</li>
+      </ul>
+      <p>We do <strong>not</strong>:</p>
+      <ul>
+        <li>Send you marketing emails unless you specifically ask to be added to a mailing list (we don't currently run one).</li>
+        <li>Sell or rent your personal data to anyone, ever.</li>
+        <li>Profile you or feed your data into automated decision-making.</li>
+      </ul>
+
+      <h2>4. Legal basis for processing</h2>
+      <p>We rely on the following legal bases under UK GDPR:</p>
+      <ul>
+        <li><strong>Contract / pre-contract steps</strong> (Article 6(1)(b)) — when you ask us about a service, we process the data you give us so we can respond and, if it goes ahead, deliver the work.</li>
+        <li><strong>Legal obligation</strong> (Article 6(1)(c)) — record-keeping for tax and accounting purposes (HMRC requires us to keep business records for at least six years).</li>
+        <li><strong>Legitimate interests</strong> (Article 6(1)(f)) — we run the website and keep server logs to operate the service securely and prevent abuse. We've considered your interests and rights, and we believe these uses don't override them. If you disagree, please get in touch (see <a href="#rights">section 9</a>).</li>
+      </ul>
+
+      <h2>5. How long we keep it</h2>
+      <ul>
+        <li><strong>Contact form submissions</strong> are kept for as long as is reasonably necessary to respond to your enquiry, and — if you become a client — for the duration of our working relationship plus any period required by tax law.</li>
+        <li><strong>Unconverted enquiries</strong> are reviewed periodically and deleted when there's no realistic prospect of contact resuming.</li>
+        <li><strong>Records of completed work, invoices and correspondence</strong> are kept for at least six years from the end of the tax year in which the work happened, as required by HMRC.</li>
+        <li><strong>Server logs</strong> are typically kept for around 30 days for security and debugging purposes.</li>
+      </ul>
+
+      <h2>6. Who we share it with</h2>
+      <p>
+        We share personal data only with a small number of trusted service
+        providers ("processors") who help us run the business, and only the
+        data necessary for the service they provide:
+      </p>
+      <ul>
+        <li><strong>Zoho Mail</strong> — handles inbound and outbound email for our <em>@lumatechsolutions.co.uk</em> address. Your enquiry message is delivered through their servers.</li>
+        <li><strong>Hetzner Online GmbH</strong> — hosts the website and database. The contact-form database lives on a server at their facility in Germany.</li>
+        <li><strong>Our accountant</strong>, where the data is necessary for our statutory accounts.</li>
+      </ul>
+      <p>
+        We may also share data where we are legally required to — for example
+        with HMRC, the police, or in response to a valid court order.
+      </p>
+      <p>
+        We do not sell, rent or trade your personal data with anyone.
+      </p>
+
+      <h2>7. International transfers</h2>
+      <p>
+        Our website is hosted in <strong>Germany</strong> (within the
+        European Economic Area). The UK government has confirmed that the EEA
+        provides an adequate level of protection for personal data, so no
+        additional safeguards are needed for transfers from the UK to our
+        German hosting facility.
+      </p>
+      <p>
+        Where any of our other processors handle data outside the UK or EEA,
+        we rely on appropriate safeguards (such as the UK International Data
+        Transfer Agreement or the EU Standard Contractual Clauses with the
+        UK addendum).
+      </p>
+
+      <h2 id="cookies">8. Cookies</h2>
+      <p>
+        We split cookies into three categories. You can change your
+        preferences at any time using the <strong>"Cookie preferences"</strong>
+        link in the page footer.
+      </p>
+      <h3>Strictly necessary (always on)</h3>
+      <p>
+        Required for the website and contact form to work. The law does
+        <em>not</em> require consent for these.
+      </p>
+      <ul>
+        <li><strong>csrftoken</strong> — set by Django to protect the contact form against cross-site request forgery (a security attack). Lasts for one year.</li>
+        <li><strong>sessionid</strong> — set when needed to remember a session across the contact-form flow. Cleared when you close your browser.</li>
+        <li><strong>lt_consent</strong> — remembers your cookie preferences so we don't ask you again on every visit. Lasts for one year.</li>
+      </ul>
+      <h3>Analytics (off by default)</h3>
+      <p>
+        Helps us understand which pages are useful and where people get
+        stuck — aggregate, never identifying. We are <strong>not currently
+        running any analytics tools</strong>; this category exists so that
+        if we ever add a privacy-friendly tool (such as Plausible) it will
+        respect your choice.
+      </p>
+      <h3>Marketing (off by default)</h3>
+      <p>
+        Reserved for any future advertising or remarketing. We do not
+        currently use any tools in this category and have no plans to.
+      </p>
+      <p>
+        We do not use Google Analytics, Facebook Pixel, or any other
+        third-party tracking today. The consent banner is in place so that
+        when (if) we add such tools, you'll have already chosen whether
+        they are allowed to run.
+      </p>
+
+      <h2 id="rights">9. Your rights under UK GDPR</h2>
+      <p>You have the following rights in respect of your personal data:</p>
+      <ul>
+        <li><strong>Right of access</strong> — ask for a copy of the personal data we hold about you.</li>
+        <li><strong>Right to rectification</strong> — ask us to correct anything that's wrong.</li>
+        <li><strong>Right to erasure ("right to be forgotten")</strong> — ask us to delete your data, subject to any legal obligation we have to keep records.</li>
+        <li><strong>Right to restrict processing</strong> — ask us to pause our use of your data while we sort out a query you have raised.</li>
+        <li><strong>Right to data portability</strong> — ask for a machine-readable copy of the data you provided to us.</li>
+        <li><strong>Right to object</strong> — object to our processing where we rely on legitimate interests.</li>
+        <li><strong>Right to withdraw consent</strong> — where we rely on consent (we don't currently, but if that changes you can withdraw it at any time).</li>
+      </ul>
+
+      <h2>10. How to exercise your rights</h2>
+      <p>
+        Email us at
+        <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+        with a brief description of what you'd like us to do. We aim to
+        respond within five working days and to fulfil straightforward
+        requests within one calendar month, as required by UK GDPR. We may
+        ask for proof of identity if it isn't obvious that the request is
+        from you.
+      </p>
+      <p>
+        Exercising any of these rights is free of charge.
+      </p>
+
+      <h2>11. Complaints</h2>
+      <p>
+        If you have a concern about how we have handled your personal data,
+        please contact us first — we'd much rather hear from you and put it
+        right than not know about it. If you're not satisfied with our
+        response, you have the right to lodge a complaint with the UK's
+        data-protection regulator:
+      </p>
+      <p>
+        <strong>Information Commissioner's Office (ICO)</strong><br/>
+        Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF<br/>
+        Helpline: 0303 123 1113<br/>
+        <a href="https://ico.org.uk/" target="_blank" rel="noopener">ico.org.uk</a>
+      </p>
+
+      <h2>12. Changes to this policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time — for example,
+        if we change the tools we use or the services we offer. The "Last
+        updated" date at the top of this page will reflect any change.
+        Material changes will be highlighted on the page so that returning
+        visitors notice them.
+      </p>
+
+      <h2>13. Contact</h2>
+      <p>
+        If you have questions about this policy or about how we handle your
+        personal data, please contact:
+      </p>
+      <p>
+        <strong>Luma Tech Solutions</strong><br/>
+        Marlow, Buckinghamshire, United Kingdom<br/>
+        Email: <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
