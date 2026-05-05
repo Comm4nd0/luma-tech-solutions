@@ -22,12 +22,19 @@
     {% if posts %}
       <div class="post-list">
         {% for post in posts %}
-          <article class="blog-card fade-in">
+          <article class="blog-card fade-in{% if post.first_image %} has-image{% endif %}">
             <a href="{{ post.get_absolute_url }}" class="blog-card-link">
-              {% include 'partials/_post_meta.html' with post=post %}
-              <h2>{{ post.title }}</h2>
-              <p class="muted">{{ post.excerpt }}</p>
-              <span class="card-link">Read more <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></span>
+              {% if post.first_image %}
+                <div class="blog-card-image">
+                  <img src="{{ post.first_image.src }}" alt="{{ post.first_image.alt }}" loading="lazy" decoding="async">
+                </div>
+              {% endif %}
+              <div class="blog-card-body">
+                {% include 'partials/_post_meta.html' with post=post %}
+                <h2>{{ post.title }}</h2>
+                <p class="muted">{{ post.excerpt }}</p>
+                <span class="card-link">Read more <span class="arrow">{% include 'partials/_icons.html' with name='arrow' %}</span></span>
+              </div>
             </a>
           </article>
         {% endfor %}

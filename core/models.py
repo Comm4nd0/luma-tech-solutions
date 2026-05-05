@@ -107,6 +107,19 @@ class BlogPost(models.Model):
         return max(1, round(words / 220))
 
     @property
+    def first_image(self):
+        if not self.content:
+            return None
+        tag = re.search(r"<img\b[^>]*>", self.content, re.IGNORECASE)
+        if not tag:
+            return None
+        src = re.search(r'\bsrc="([^"]+)"', tag.group(0), re.IGNORECASE)
+        if not src:
+            return None
+        alt = re.search(r'\balt="([^"]*)"', tag.group(0), re.IGNORECASE)
+        return {"src": src.group(1), "alt": (alt.group(1) if alt else self.title) or ""}
+
+    @property
     def seo_description(self):
         return (self.meta_description or self.excerpt)[:200]
 
