@@ -506,6 +506,62 @@ a.card:hover { color: inherit; }
   .price-card.popular { transform: none; }
 }
 
+/* ---------- audience toggle (home/business on support page) ---------- */
+.audience-toggle {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 auto 2rem;
+  padding: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  min-inline-size: 0;
+  line-height: 1;
+}
+.audience-toggle input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.audience-toggle label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--muted);
+  transition: color 0.15s, background 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+.audience-toggle label:hover { color: var(--fg); }
+.audience-toggle input[type="radio"]:checked + label {
+  color: #042f2e;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 14px -4px rgba(20, 184, 166, 0.5);
+}
+.audience-toggle input[type="radio"]:focus-visible + label {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.support-pricing:has(#aud-home:checked) [data-audience="business"],
+.support-pricing:has(#aud-business:checked) [data-audience="home"] {
+  display: none;
+}
+
+/* Form variant: left-aligned inside a form field, no auto-centering. */
+.audience-toggle-form {
+  margin: 0.4rem 0 0;
+  position: static;
+  left: auto;
+  transform: none;
+}
+
 /* ---------- form ---------- */
 .form {
   display: grid;

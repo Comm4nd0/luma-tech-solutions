@@ -11,9 +11,9 @@
         <span class="eyebrow"><span class="dot"></span>Care plans</span>
         <h1>Stop troubleshooting. <span class="gradient">Start enjoying it.</span></h1>
         <p class="lede">
-          Three care-plan tiers, monthly billing, no nasty exit clauses. We
-          monitor, we patch, we pick up the phone — so you don't have to become
-          your household's reluctant IT department.
+          Three tiers, monthly billing, no nasty exit clauses. We monitor, we
+          patch, we pick up the phone — for homes that have outgrown the
+          consumer kit, and for small businesses that can't afford to be down.
         </p>
       </div>
       <div class="hero-illustration">
@@ -23,7 +23,7 @@
   </div>
 </section>
 
-<section class="tight">
+<section class="tight support-pricing">
   <div class="container">
     <p class="muted center" style="max-width:42rem;margin:0 auto 2rem;font-size:.95rem;line-height:1.55;">
       One engineer, not a call centre. The response targets below are honest —
@@ -31,24 +31,34 @@
       not contractual SLAs. If you need a tier-1 helpdesk with 24/7 phone cover,
       we'll happily refer you to a larger MSP.
     </p>
-    <div class="price-grid">
-      {% for plan in care_plans %}
-        <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
-          {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
-          <h3>{{ plan.name }}</h3>
-          <p class="price">{{ plan.price }}<span class="price-suffix">/mo +VAT</span></p>
-          <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">or {{ plan.annual_price }}/yr (save 10%)</p>
-          <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}</p>
-          <p class="price-tag">{{ plan.tagline }}</p>
-          <ul>
-            {% for feat in plan.features %}
-              <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
-            {% endfor %}
-          </ul>
-          <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}">Choose {{ plan.name }}</a>
-        </div>
-      {% endfor %}
+
+    <div class="audience-toggle" role="radiogroup" aria-label="Choose audience">
+      <input type="radio" id="aud-home" name="support-audience" value="home" checked>
+      <label for="aud-home">For homes</label>
+      <input type="radio" id="aud-business" name="support-audience" value="business">
+      <label for="aud-business">For businesses</label>
     </div>
+
+    {% for grid in plan_grids %}
+      <div class="price-grid" data-audience="{{ grid.audience }}">
+        {% for plan in grid.plans %}
+          <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
+            {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
+            <h3>{{ plan.name }}</h3>
+            <p class="price">{{ plan.price }}<span class="price-suffix">{{ plan.price_suffix }}</span></p>
+            <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">or {{ plan.annual_price }}{{ plan.annual_suffix }} (save 10%)</p>
+            <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}</p>
+            <p class="price-tag">{{ plan.tagline }}</p>
+            <ul>
+              {% for feat in plan.features %}
+                <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
+              {% endfor %}
+            </ul>
+            <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}&audience={{ grid.audience }}">Choose {{ plan.name }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
 
     <div class="muted center mt-4" style="max-width:42rem;margin:2.5rem auto 0;font-size:.88rem;line-height:1.6;">
       <p style="margin:0 0 .75rem;"><strong>Standard hourly rate</strong> for work outside the plan: £95/hr +VAT — plan members pay £76/hr.</p>

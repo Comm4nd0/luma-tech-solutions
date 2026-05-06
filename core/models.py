@@ -15,6 +15,12 @@ SERVICE_CHOICES = [
 ]
 
 
+AUDIENCE_CHOICES = [
+    ("home", "Home"),
+    ("business", "Business"),
+]
+
+
 PILLAR_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
     ("security", "Security"),
@@ -29,6 +35,9 @@ class ContactSubmission(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField()
     phone = models.CharField(max_length=40, blank=True)
+    audience = models.CharField(
+        max_length=16, choices=AUDIENCE_CHOICES, blank=True, default=""
+    )
     service = models.CharField(max_length=32, choices=SERVICE_CHOICES, default="other")
     message = models.TextField()
     source = models.CharField(

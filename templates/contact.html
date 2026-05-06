@@ -56,6 +56,17 @@
           </div>
 
           <div>
+            <label>For your home or business?</label>
+            <div class="audience-toggle audience-toggle-form" role="radiogroup" aria-label="Home or business?">
+              {% for radio in form.audience %}
+                {{ radio.tag }}
+                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+              {% endfor %}
+            </div>
+            {{ form.audience.errors }}
+          </div>
+
+          <div>
             <label for="{{ form.message.id_for_label }}">What can we help with?</label>
             {{ form.message }}
             {{ form.message.errors }}

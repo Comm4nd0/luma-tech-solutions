@@ -85,11 +85,13 @@ TESTIMONIALS = [
 ]
 
 
-CARE_PLANS = [
+HOME_CARE_PLANS = [
     {
         "name": "Essential",
         "price": "£75",
+        "price_suffix": "/mo +VAT",
         "annual_price": "£810",
+        "annual_suffix": "/yr",
         "min_term": "3-month rolling",
         "tagline": "Quiet, reliable IT — we watch it, you forget about it.",
         "highlighted": False,
@@ -106,7 +108,9 @@ CARE_PLANS = [
     {
         "name": "Professional",
         "price": "£165",
+        "price_suffix": "/mo +VAT",
         "annual_price": "£1,780",
+        "annual_suffix": "/yr",
         "min_term": "6-month rolling",
         "tagline": "Hands-on support for everything Luma installed — same engineer who built it.",
         "highlighted": True,
@@ -124,13 +128,15 @@ CARE_PLANS = [
     {
         "name": "Concierge",
         "price": "£325",
+        "price_suffix": "/mo +VAT",
         "annual_price": "£3,510",
+        "annual_suffix": "/yr",
         "min_term": "12-month",
         "tagline": "The whole smart home, whoever installed it — one engineer, one number, one bill.",
         "highlighted": False,
         "features": [
             "Everything in Professional",
-            "Covers every smart-home product in your house, regardless of who installed it — Sonos, Lutron, Ring, Nest, Hue, legacy integrations from a previous installer, the lot",
+            "We'll take a look at any smart-home product in the house, whoever installed it — Sonos, Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't warrant kit we didn't supply, but you've got one number to call.",
             "Front of queue; target within 2 working hours for service-down",
             "Best-effort out-of-hours for genuine emergencies",
             "One on-site visit per quarter + monthly check-in call",
@@ -138,6 +144,71 @@ CARE_PLANS = [
             "Full living documentation — network map, device inventory, credentials vault, runbook",
             "Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf",
             "Multi-site coverage — main home plus a holiday let or small office under one plan",
+            "10% loyalty discount from year 2",
+        ],
+    },
+]
+
+
+BUSINESS_CARE_PLANS = [
+    {
+        "name": "Essential",
+        "price": "£25",
+        "price_suffix": "/user/mo +VAT",
+        "annual_price": "£270",
+        "annual_suffix": "/user/yr",
+        "min_term": "3-month rolling",
+        "tagline": "Quiet, reliable IT for small teams — we watch it, you focus on the work.",
+        "highlighted": False,
+        "features": [
+            "24/7 automated network monitoring with alerts to us",
+            "Firmware, security patches and daily config backups managed for you",
+            "Email support — next business day for routine, same business day (best effort) for service-down",
+            "Quarterly health-check report",
+            "One-page network diagram, kept current with any changes we make",
+            "20% off our standard hourly rate for work outside the plan",
+            "Internet provider liaison when your line goes down — we make the calls",
+        ],
+    },
+    {
+        "name": "Professional",
+        "price": "£55",
+        "price_suffix": "/user/mo +VAT",
+        "annual_price": "£595",
+        "annual_suffix": "/user/yr",
+        "min_term": "6-month rolling",
+        "tagline": "Hands-on support for everything Luma installed — same engineer who built it.",
+        "highlighted": True,
+        "features": [
+            "Everything in Essential",
+            "Reactive support for any kit, app or integration we supplied or installed — networking, CCTV, point-of-sale, custom apps",
+            "Same business day for routine; target within 4 working hours for service-down",
+            "Phone, video and WhatsApp support",
+            "2 hours of remote moves-and-changes per user per year (rolls over up to 4)",
+            "One on-site visit per quarter (cable check, hardware audit, team Q&A)",
+            "Warranty management on hardware we supply — UI Care registered, RMAs handled by us",
+            "5% loyalty discount from year 2",
+        ],
+    },
+    {
+        "name": "Concierge",
+        "price": "£110",
+        "price_suffix": "/user/mo +VAT",
+        "annual_price": "£1,190",
+        "annual_suffix": "/user/yr",
+        "min_term": "12-month",
+        "tagline": "The whole office, whoever installed it — one engineer, one number, one bill.",
+        "highlighted": False,
+        "features": [
+            "Everything in Professional",
+            "We'll take a look at any networked product on the premises, whoever installed it — printers, NAS, VOIP, point-of-sale, legacy kit from a previous IT company. Diagnose, advise and escalate to the manufacturer; we don't warrant kit we didn't supply, but you've got one number to call.",
+            "Front of queue; target within 2 working hours for service-down",
+            "Best-effort out-of-hours for genuine emergencies",
+            "One on-site visit per month + monthly check-in call",
+            "6 hours of remote moves-and-changes per user per year (rolls over up to 12)",
+            "Full living documentation — network map, device inventory, credentials vault, runbook",
+            "Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf",
+            "Multi-site coverage — main office plus a satellite or warehouse under one plan",
             "10% loyalty discount from year 2",
         ],
     },
@@ -415,7 +486,10 @@ def service_support(request):
                 "Ongoing IT support and care plans for homes and small "
                 "businesses across Marlow, Maidenhead and the Thames Valley."
             ),
-            care_plans=CARE_PLANS,
+            plan_grids=[
+                {"audience": "home", "plans": HOME_CARE_PLANS},
+                {"audience": "business", "plans": BUSINESS_CARE_PLANS},
+            ],
         ),
     )
 
@@ -461,10 +535,11 @@ def contact(request):
                 send_mail(
                     subject=f"[Luma Tech] New enquiry from {submission.name}",
                     message=(
-                        f"Name:    {submission.name}\n"
-                        f"Email:   {submission.email}\n"
-                        f"Phone:   {submission.phone or '—'}\n"
-                        f"Service: {submission.get_service_display()}\n"
+                        f"Name:     {submission.name}\n"
+                        f"Email:    {submission.email}\n"
+                        f"Phone:    {submission.phone or '—'}\n"
+                        f"Audience: {submission.get_audience_display() or '—'}\n"
+                        f"Service:  {submission.get_service_display()}\n"
                         f"\n"
                         f"{submission.message}\n"
                     ),
@@ -490,14 +565,27 @@ def contact(request):
             initial["service"] = service
 
         # ?plan=essential → pre-populate the message with the chosen tier.
-        # Match case-insensitively against canonical CARE_PLANS names so the
-        # message renders with the correct capitalisation.
+        # ?audience=home|business → pre-select the audience on the form and
+        # tailor the message wording. Default behaviour (no param) leaves it blank.
+        audience = request.GET.get("audience", "").strip().lower()
+        if audience in {"home", "business"}:
+            initial["audience"] = audience
+
+        # ?plan=essential|professional|concierge → pre-populate the message.
+        # Plan names are shared between home and business lists, so a single
+        # lookup off either list is enough to find the canonical capitalisation.
         plan = request.GET.get("plan", "").strip().lower()
-        plan_lookup = {p["name"].lower(): p["name"] for p in CARE_PLANS}
+        plan_lookup = {p["name"].lower(): p["name"] for p in HOME_CARE_PLANS}
         if plan in plan_lookup:
+            scope = (
+                "for our business" if audience == "business"
+                else "for our home" if audience == "home"
+                else ""
+            )
             initial["message"] = (
-                f"I'm interested in {plan_lookup[plan]} support package. "
-                "Please can you tell me more"
+                f"I'm interested in the {plan_lookup[plan]} support package"
+                f"{' ' + scope if scope else ''}. "
+                "Please can you tell me more."
             )
 
         form = ContactForm(initial=initial)
