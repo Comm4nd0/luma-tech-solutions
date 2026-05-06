@@ -30,4 +30,33 @@
   // Footer year
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
+
+  // reCAPTCHA v3: fetch a token on submit, inject into hidden input, then submit.
+  // Falls through silently if grecaptcha didn't load — server treats missing
+  // token as a fail, which is the correct behaviour in production. In dev with
+  // no secret configured, the server skips verification anyway.
+  var contactForm = document.querySelector('[data-contact-form]');
+  if (contactForm) {
+    var recaptchaKey = contactForm.dataset.recaptchaKey;
+    var tokenInput = contactForm.querySelector('input[name="g-recaptcha-response"]');
+    var submitted = false;
+    contactForm.addEventListener('submit', function (e) {
+      if (submitted) return; // already got a token, let it through
+      if (!recaptchaKey || typeof grecaptcha === 'undefined' || !grecaptcha.execute) return;
+      e.preventDefault();
+      grecaptcha.ready(function () {
+        grecaptcha.execute(recaptchaKey, { action: 'contact' }).then(function (token) {
+          if (tokenInput) tokenInput.value = token;
+          submitted = true;
+          contactForm.submit();
+        }).catch(function () {
+          // If reCAPTCHA fails for any reason, submit without a token; server
+          // will reject in prod (where the secret is set) and the user sees
+          // the "couldn't verify" error.
+          submitted = true;
+          contactForm.submit();
+        });
+      });
+    });
+  }
 })();

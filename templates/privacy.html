@@ -112,6 +112,7 @@
       <ul>
         <li><strong>Zoho Mail</strong> — handles inbound and outbound email for our <em>@lumatechsolutions.co.uk</em> address. Your enquiry message is delivered through their servers.</li>
         <li><strong>Hetzner Online GmbH</strong> — hosts the website and database. The contact-form database lives on a server at their facility in Germany.</li>
+        <li><strong>Google (reCAPTCHA)</strong> — when you submit the contact form, your browser sends a verification request to Google's reCAPTCHA service to confirm you're not a bot. Google receives your IP address and limited usage data; we receive only a pass/fail score. See Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> for details.</li>
         <li><strong>Our accountant</strong>, where the data is necessary for our statutory accounts.</li>
       </ul>
       <p>
@@ -152,6 +153,7 @@
         <li><strong>csrftoken</strong> — set by Django to protect the contact form against cross-site request forgery (a security attack). Lasts for one year.</li>
         <li><strong>sessionid</strong> — set when needed to remember a session across the contact-form flow. Cleared when you close your browser.</li>
         <li><strong>lt_consent</strong> — remembers your cookie preferences so we don't ask you again on every visit. Lasts for one year.</li>
+        <li><strong>Google reCAPTCHA cookies</strong> (<code>_GRECAPTCHA</code>) — set on Google's domain when you load the contact page, so Google can decide whether you're a bot before you submit the form. We treat this as strictly-necessary because without it the contact form is open to spam abuse.</li>
       </ul>
       <h3>Analytics (off by default)</h3>
       <p>

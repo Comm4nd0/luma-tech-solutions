@@ -16,4 +16,5 @@ def site(request):
         "SITE_TOWNS_DISPLAY": settings.SITE_TOWNS_DISPLAY,
         "SITE_FOUNDER": settings.SITE_FOUNDER,
         "SITE_BASE_TOWN": settings.SITE_BASE_TOWN,
+        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
     }

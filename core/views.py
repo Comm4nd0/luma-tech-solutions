@@ -1,4 +1,7 @@
+import json
 import logging
+import urllib.parse
+import urllib.request
 
 from django.conf import settings
 from django.contrib import messages
@@ -13,6 +16,44 @@ from .forms import ContactForm
 from .models import BlogPost, SERVICE_CHOICES
 
 log = logging.getLogger(__name__)
+
+
+def _verify_recaptcha(token, remote_ip=""):
+    """Verify a reCAPTCHA v3 token with Google. Returns (passed, score, reason).
+
+    When RECAPTCHA_SECRET_KEY is unset (local dev), verification is skipped
+    and (True, 1.0, "skipped") is returned so the form still works.
+    """
+    if not settings.RECAPTCHA_SECRET_KEY:
+        return True, 1.0, "skipped (no secret configured)"
+    if not token:
+        return False, 0.0, "missing token"
+    try:
+        data = urllib.parse.urlencode(
+            {
+                "secret": settings.RECAPTCHA_SECRET_KEY,
+                "response": token,
+                "remoteip": remote_ip,
+            }
+        ).encode()
+        req = urllib.request.Request(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data=data,
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            result = json.loads(resp.read().decode())
+    except Exception as exc:
+        log.warning("reCAPTCHA verification network error: %s", exc)
+        return False, 0.0, "verification error"
+
+    score = float(result.get("score", 0.0))
+    if not result.get("success"):
+        codes = ",".join(result.get("error-codes", [])) or "unknown"
+        return False, score, codes
+    if score < settings.RECAPTCHA_MIN_SCORE:
+        return False, score, f"low score {score:.2f}"
+    return True, score, "ok"
 
 
 PILLARS = [
@@ -529,7 +570,15 @@ def portfolio(request):
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
-        if form.is_valid():
+        # Verify reCAPTCHA before trusting the rest of the form. We do this
+        # outside form.is_valid() so a low score short-circuits other work.
+        token = request.POST.get("g-recaptcha-response", "")
+        remote_ip = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip() or request.META.get("REMOTE_ADDR", "")
+        passed, score, reason = _verify_recaptcha(token, remote_ip)
+        if not passed:
+            log.info("reCAPTCHA rejected contact form: score=%.2f reason=%s", score, reason)
+            form.add_error(None, "We couldn't verify your submission. Please try again, or email us directly.")
+        elif form.is_valid():
             submission = form.save()
             try:
                 send_mail(

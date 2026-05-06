@@ -125,6 +125,19 @@ CONTACT_FORM_RECIPIENT = os.environ.get(
     "CONTACT_FORM_RECIPIENT", "hello@lumatechsolutions.co.uk"
 )
 
+# --- reCAPTCHA v3 (contact form) ---
+# Site key is public and ships in HTML — fine to commit. Secret key is
+# server-side only and MUST be set via env var in production. When the secret
+# is empty (e.g. local dev), verification is skipped and the form behaves as
+# if reCAPTCHA wasn't there. Submissions below RECAPTCHA_MIN_SCORE are
+# rejected with a generic "couldn't verify" form error.
+RECAPTCHA_SITE_KEY = os.environ.get(
+    "RECAPTCHA_SITE_KEY",
+    "6Leel9wsAAAAAOCRw7b0t5Gj939fy8fy25ZFRXnU",
+)
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
+RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
+
 # --- Blog publishing API ---
 # Bearer token used to authenticate POST/PUT/PATCH/DELETE on /api/blog/posts/.
 # Empty in dev unless set; the API responds 503 if no key is configured so

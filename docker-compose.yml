@@ -23,6 +23,9 @@ services:
       DJANGO_DEFAULT_FROM_EMAIL: "${DJANGO_DEFAULT_FROM_EMAIL:-Luma Tech Solutions <hello@lumatechsolutions.co.uk>}"
       CONTACT_FORM_RECIPIENT: "${CONTACT_FORM_RECIPIENT:-hello@lumatechsolutions.co.uk}"
       LUMA_BLOG_API_KEY: "${LUMA_BLOG_API_KEY:-}"
+      RECAPTCHA_SITE_KEY: "${RECAPTCHA_SITE_KEY:-6Leel9wsAAAAAOCRw7b0t5Gj939fy8fy25ZFRXnU}"
+      RECAPTCHA_SECRET_KEY: "${RECAPTCHA_SECRET_KEY:-}"
+      RECAPTCHA_MIN_SCORE: "${RECAPTCHA_MIN_SCORE:-0.5}"
     volumes:
       - luma-data:/app/data
     restart: unless-stopped

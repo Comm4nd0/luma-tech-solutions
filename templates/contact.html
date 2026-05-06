@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block head_extra %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" async defer></script>
+{% endblock %}
+
 {% block content %}
 <section class="hero">
   <div class="container hero-content">
@@ -22,10 +26,19 @@
           {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
         {% endif %}
 
-        <form method="post" class="form fade-in" novalidate>
+        <form method="post" class="form fade-in" data-contact-form data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
           {% csrf_token %}
           {{ form.website }}
           {{ form.source }}
+          <input type="hidden" name="g-recaptcha-response" value="">
+
+          <p class="muted" style="font-size:.78rem;margin:0;">
+            This form is protected by Google reCAPTCHA — the
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            and
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+            apply.
+          </p>
 
           {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
 
@@ -91,7 +104,7 @@
         {% endif %}
 
         <span class="label">Hours</span>
-        <p style="margin:0;">Mon–Fri, 9am–6pm. Concierge care-plan customers get best-effort out-of-hours for genuine emergencies.</p>
+        <p style="margin:0;">Mon–Fri, 8am–5pm. Concierge care-plan customers get best-effort out-of-hours for genuine emergencies.</p>
 
         <span class="label">Service area</span>
         <div class="map-card mt-1">
