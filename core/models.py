@@ -23,7 +23,7 @@ AUDIENCE_CHOICES = [
 
 PILLAR_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
-    ("security", "Security"),
+    ("security", "Physical Security"),
     ("development", "App & Web Development"),
     ("automation", "Home Automation"),
     ("support", "Support & Maintenance"),

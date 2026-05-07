@@ -66,8 +66,8 @@ PILLARS = [
     },
     {
         "key": "security",
-        "title": "Security",
-        "tagline": "CCTV, access control, alarms and smart locks — plus the network protection most installers skip.",
+        "title": "Physical Security",
+        "tagline": "CCTV, access control, alarms and smart locks — professionally installed and integrated with your network.",
         "url_name": "service_security",
         "icon": "lock",
     },
@@ -435,9 +435,9 @@ def service_security(request):
             breadcrumbs=[
                 ("Home", reverse("home")),
                 ("Services", reverse("services")),
-                ("Security", reverse("service_security")),
+                ("Physical Security", reverse("service_security")),
             ],
-            service_name="Security",
+            service_name="Physical Security",
             service_type="CCTV Installation",
             service_url=reverse("service_security"),
             service_description=(
