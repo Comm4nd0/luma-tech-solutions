@@ -173,6 +173,21 @@ SITE_BASE_TOWN = "Marlow"
 # static-page sitemap honestly reflects freshness.
 SITE_STATIC_LASTMOD = "2026-05-04"
 
+# --- WhatsApp click-to-chat ---
+# E.164 format (e.g. +447xxxxxxxxx). Empty hides the floating button.
+SITE_WHATSAPP_E164 = os.environ.get("SITE_WHATSAPP_E164", "")
+
+# --- Analytics (cookieless) ---
+# When set, drops the Plausible snippet into base.html. Empty disables it.
+# The default script src uses Plausible's tagged-events variant so we can
+# fire custom events via class="plausible-event-name=..." on any element.
+# Swap PLAUSIBLE_SCRIPT_SRC to point at Umami / Fathom / self-hosted Plausible
+# if the provider changes; the snippet shape is identical.
+PLAUSIBLE_DOMAIN = os.environ.get("PLAUSIBLE_DOMAIN", "")
+PLAUSIBLE_SCRIPT_SRC = os.environ.get(
+    "PLAUSIBLE_SCRIPT_SRC", "https://plausible.io/js/script.tagged-events.js"
+)
+
 # --- Security in production ---
 if not DEBUG:
     SESSION_COOKIE_SECURE = True

@@ -26,6 +26,9 @@ services:
       RECAPTCHA_SITE_KEY: "${RECAPTCHA_SITE_KEY:-6Leel9wsAAAAAOCRw7b0t5Gj939fy8fy25ZFRXnU}"
       RECAPTCHA_SECRET_KEY: "${RECAPTCHA_SECRET_KEY:-}"
       RECAPTCHA_MIN_SCORE: "${RECAPTCHA_MIN_SCORE:-0.5}"
+      SITE_WHATSAPP_E164: "${SITE_WHATSAPP_E164:-}"
+      PLAUSIBLE_DOMAIN: "${PLAUSIBLE_DOMAIN:-}"
+      PLAUSIBLE_SCRIPT_SRC: "${PLAUSIBLE_SCRIPT_SRC:-https://plausible.io/js/script.tagged-events.js}"
     volumes:
       - luma-data:/app/data
     restart: unless-stopped
