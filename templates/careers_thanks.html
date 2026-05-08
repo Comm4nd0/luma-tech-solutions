@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content" style="text-align:center;">
+    <span class="eyebrow"><span class="dot"></span>Application received</span>
+    <h1>Thanks — we've got <span class="gradient">your application.</span></h1>
+    <p class="lede" style="margin-left:auto;margin-right:auto;">
+      We read every application personally and aim to come back to you
+      within one working week. Meanwhile, feel free to keep poking around.
+    </p>
+    <div class="cta-row" style="justify-content:center;">
+      <a href="{% url 'home' %}" class="btn btn-ghost">Back to homepage</a>
+      <a href="{% url 'portfolio' %}" class="btn btn-primary">See our work {% include 'partials/_icons.html' with name='arrow' %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

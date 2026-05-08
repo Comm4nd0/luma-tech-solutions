@@ -36,6 +36,7 @@ class StaticViewSitemap(Sitemap):
             ("about", 0.7),
             ("portfolio", 0.8),
             ("contact", 0.7),
+            ("careers", 0.6),
             ("blog", 0.5),
             ("terms", 0.3),
             ("privacy", 0.3),

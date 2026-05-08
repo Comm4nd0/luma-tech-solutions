@@ -121,6 +121,8 @@ stdout via the console backend):
 - `DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend`
 - `DJANGO_EMAIL_HOST`, `DJANGO_EMAIL_PORT`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`
 - `CONTACT_FORM_RECIPIENT`
+- `CAREERS_FORM_RECIPIENT` — optional. Where `/careers/` job applications
+  are emailed to. Falls back to `CONTACT_FORM_RECIPIENT` when unset.
 
 For programmatic blog publishing via the JSON API:
 

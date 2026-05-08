@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BlogPost, ContactSubmission
+from .models import BlogPost, ContactSubmission, JobApplication
 
 
 @admin.register(ContactSubmission)
@@ -9,6 +9,14 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
     list_filter = ("service", "source", "notified", "created_at")
     search_fields = ("name", "email", "phone", "message", "source")
     readonly_fields = ("created_at",)
+
+
+@admin.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "role", "cv_filename", "created_at", "notified")
+    list_filter = ("role", "notified", "created_at")
+    search_fields = ("name", "email", "phone", "cover_note", "cv_filename")
+    readonly_fields = ("created_at", "cv_filename", "cv_size_bytes")
 
 
 @admin.register(BlogPost)

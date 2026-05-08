@@ -124,6 +124,16 @@ DEFAULT_FROM_EMAIL = os.environ.get(
 CONTACT_FORM_RECIPIENT = os.environ.get(
     "CONTACT_FORM_RECIPIENT", "hello@lumatechsolutions.co.uk"
 )
+# Falls back to CONTACT_FORM_RECIPIENT — set this if you want job applications
+# routed to a separate inbox (e.g. careers@).
+CAREERS_FORM_RECIPIENT = os.environ.get(
+    "CAREERS_FORM_RECIPIENT", CONTACT_FORM_RECIPIENT
+)
+
+# CV uploads can run to ~5 MB. Django's default 2.5 MB cap on POST body and
+# in-memory upload would reject those, so bump both ceilings to 6 MB.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 6 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 6 * 1024 * 1024
 
 # --- reCAPTCHA v3 (contact form) ---
 # Site key is public and ships in HTML — fine to commit. Secret key is

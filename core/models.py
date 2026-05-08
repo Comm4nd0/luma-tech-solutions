@@ -21,6 +21,13 @@ AUDIENCE_CHOICES = [
 ]
 
 
+JOB_ROLE_CHOICES = [
+    ("network", "UniFi Network Engineer"),
+    ("infrastructure", "Infrastructure Engineer (Cable Installations)"),
+    ("cyber", "Cyber Security Engineer"),
+]
+
+
 PILLAR_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
     ("security", "Physical Security"),
@@ -54,6 +61,24 @@ class ContactSubmission(models.Model):
 
     def __str__(self):
         return f"{self.name} <{self.email}> — {self.get_service_display()}"
+
+
+class JobApplication(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    role = models.CharField(max_length=32, choices=JOB_ROLE_CHOICES)
+    cover_note = models.TextField(blank=True)
+    cv_filename = models.CharField(max_length=255, blank=True)
+    cv_size_bytes = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    notified = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} <{self.email}> — {self.get_role_display()}"
 
 
 class PublishedBlogManager(models.Manager):

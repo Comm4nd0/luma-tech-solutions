@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block head_extra %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" async defer></script>
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+    <span class="eyebrow"><span class="dot"></span>Careers</span>
+    <h1>We're hiring engineers who <span class="gradient">give a damn.</span></h1>
+    <p class="lede">
+      Luma Tech is growing. We design and install proper UniFi networks for
+      homes and small businesses across Marlow, Maidenhead, Henley and the
+      wider Thames Valley — and we're looking for two people to join us on
+      site and behind the screen.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Open roles</span>
+      <h2>Two roles, one team.</h2>
+      <p class="muted" style="max-width:42rem;">
+        Both roles are field-based out of Marlow with a mix of residential
+        and small-commercial work across Buckinghamshire and Berkshire. Read
+        the brief, then send your CV using the form below.
+      </p>
+    </div>
+
+    <div class="values-grid mt-2">
+      {% for role in roles %}
+        <article class="card fade-in" id="role-{{ role.key }}">
+          <h3>{{ role.title }}</h3>
+          <p class="muted">{{ role.summary }}</p>
+
+          <h4 class="mt-3">What you'll do</h4>
+          <ul>
+            {% for item in role.responsibilities %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+
+          <h4 class="mt-3">What we're looking for</h4>
+          <ul>
+            {% for item in role.ideal %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+
+          <h4 class="mt-3">Where &amp; how</h4>
+          <p>{{ role.logistics }}</p>
+
+          <a class="btn btn-ghost mt-2" href="#apply" data-role-jump="{{ role.key }}">Apply for this role {% include 'partials/_icons.html' with name='arrow' %}</a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="tight" id="apply">
+  <div class="container" style="max-width:780px;">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Apply</span>
+      <h2>Send us your CV.</h2>
+      <p class="muted">
+        Drop your CV and (optionally) a short cover note telling us which
+        role appeals and why. We read every application personally and aim
+        to reply within one working week.
+      </p>
+    </div>
+
+    {% if messages %}
+      {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="form fade-in" data-contact-form data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
+      {% csrf_token %}
+      {{ form.website }}
+      <input type="hidden" name="g-recaptcha-response" value="">
+
+      <p class="muted" style="font-size:.78rem;margin:0;">
+        This form is protected by Google reCAPTCHA — the
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+        and
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+        apply.
+      </p>
+
+      {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
+
+      <div class="row two">
+        <div>
+          <label for="{{ form.name.id_for_label }}">Your name</label>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </div>
+        <div>
+          <label for="{{ form.email.id_for_label }}">Email</label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+      </div>
+
+      <div class="row two">
+        <div>
+          <label for="{{ form.phone.id_for_label }}">Phone (optional)</label>
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </div>
+        <div>
+          <label for="{{ form.role.id_for_label }}">Role</label>
+          {{ form.role }}
+          {{ form.role.errors }}
+        </div>
+      </div>
+
+      <div>
+        <label for="{{ form.cv.id_for_label }}">Your CV</label>
+        {{ form.cv }}
+        <p class="muted" style="font-size:.78rem;margin:.4rem 0 0;">{{ form.cv.help_text }}</p>
+        {{ form.cv.errors }}
+      </div>
+
+      <div>
+        <label for="{{ form.cover_note.id_for_label }}">Cover note (optional)</label>
+        {{ form.cover_note }}
+        {{ form.cover_note.errors }}
+      </div>
+
+      <div class="row-actions">
+        <button type="submit" class="btn btn-primary plausible-event-name=Careers+Submit">Send application {% include 'partials/_icons.html' with name='arrow' %}</button>
+        <a href="mailto:{{ SITE_EMAIL }}?subject=Job%20application" class="btn btn-ghost">Or email us directly</a>
+      </div>
+
+      <p class="muted" style="font-size:.78rem;margin:.5rem 0 0;">
+        By submitting, you agree we'll process your details and CV solely to
+        evaluate your application. See our <a href="{% url 'privacy' %}">privacy policy</a>.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Pre-select the role dropdown when the user clicks an in-page "Apply" CTA.
+  document.querySelectorAll('[data-role-jump]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var key = link.getAttribute('data-role-jump');
+      var select = document.getElementById('{{ form.role.id_for_label }}');
+      if (select) { select.value = key; }
+    });
+  });
+</script>
+{% endblock %}

@@ -5,15 +5,15 @@ import urllib.request
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage, send_mail
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from .forms import ContactForm
-from .models import BlogPost, SERVICE_CHOICES
+from .forms import ContactForm, JobApplicationForm
+from .models import BlogPost, JOB_ROLE_CHOICES, SERVICE_CHOICES
 
 log = logging.getLogger(__name__)
 
@@ -347,6 +347,66 @@ CASE_STUDIES = [
 ]
 
 
+JOB_ROLES = [
+    {
+        "key": "network",
+        "title": "UniFi Network Engineer",
+        "summary": "Design and deploy UniFi networks for homes and small businesses across the Thames Valley.",
+        "responsibilities": [
+            "Plan and install UniFi Wi-Fi, switching and gateway kit on residential and small-business sites",
+            "Configure VLANs, firewall rules, guest networks and Protect CCTV — properly segmented, properly documented",
+            "Commission, label and hand-over networks with clean as-built documentation",
+            "Triage and resolve client issues remotely (UniFi Site Manager) and on-site",
+        ],
+        "ideal": [
+            "Hands-on UniFi experience — Dream Machines, switches, APs, Protect",
+            "Comfortable reading floor plans and planning AP placement for coverage",
+            "Working knowledge of VLANs, DHCP, DNS and basic firewall rules",
+            "Tidy worker — cable management is a craft, not an afterthought",
+        ],
+        "logistics": "Based in Marlow / Maidenhead. Driving licence and own transport essential. Mix of on-site and remote work.",
+    },
+    {
+        "key": "infrastructure",
+        "title": "Infrastructure Engineer — Cable Installations",
+        "summary": "First-fix and second-fix structured cabling for residential and small-commercial UniFi installations.",
+        "responsibilities": [
+            "Pull and terminate Cat6/Cat6a runs through lofts, voids, conduit and trunking",
+            "Install and patch keystones, faceplates and patch panels — labelled and tested",
+            "Mount APs, CCTV cameras, switches and small comms cabinets",
+            "Work alongside the network engineer to turn a design into a clean, working install",
+        ],
+        "ideal": [
+            "Proven structured-cabling experience (Cat5e/Cat6/Cat6a) and confident with a Fluke or similar tester",
+            "Good with power tools, ladders and access equipment — H&S aware",
+            "ECS / CSCS / IPAF tickets a bonus, not essential",
+            "Pride in finished work and a willingness to do it right the first time",
+        ],
+        "logistics": "Field-based across Marlow, Maidenhead, Henley and the Thames Valley. Driving licence and own transport essential.",
+    },
+    {
+        "key": "cyber",
+        "title": "Cyber Security Engineer",
+        "summary": "Harden the networks we build and help small-business clients reach Cyber Essentials and beyond.",
+        "responsibilities": [
+            "Design and review firewall, VLAN and remote-access policies on UniFi gateways and cloud services",
+            "Run vulnerability scans, patch reviews and config audits for client networks and endpoints",
+            "Support clients through Cyber Essentials and Cyber Essentials Plus certification",
+            "Investigate and triage incidents — phishing, account compromise, suspicious traffic — and lead the response",
+            "Tighten Microsoft 365 / Google Workspace tenants: MFA, conditional access, mailbox rules, retention",
+        ],
+        "ideal": [
+            "Solid grounding in network security fundamentals (firewalls, segmentation, IDS/IPS, VPNs)",
+            "Hands-on with at least one EDR / endpoint suite and one cloud-identity platform (Entra ID, Google Workspace)",
+            "Comfortable explaining risk in plain English to non-technical business owners",
+            "Relevant cert (CompTIA Security+, BTL1, SC-200, OSCP) helpful but practical experience matters more",
+            "DBS-friendly — some clients require it",
+        ],
+        "logistics": "Hybrid — mostly remote with site visits across Marlow, Maidenhead, Henley and the Thames Valley. Driving licence preferred.",
+    },
+]
+
+
 def _base_context(active=None, **extra):
     ctx = {
         "active_nav": active,
@@ -662,6 +722,93 @@ def contact_thanks(request):
             active="contact",
             page_title="Thanks — we'll be in touch | Luma Tech",
             page_description="Your enquiry has been received. We reply within one working day.",
+        ),
+    )
+
+
+@require_http_methods(["GET", "POST"])
+def careers(request):
+    if request.method == "POST":
+        form = JobApplicationForm(request.POST, request.FILES)
+        token = request.POST.get("g-recaptcha-response", "")
+        remote_ip = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip() or request.META.get("REMOTE_ADDR", "")
+        passed, score, reason = _verify_recaptcha(token, remote_ip)
+        if not passed:
+            log.info("reCAPTCHA rejected careers form: score=%.2f reason=%s", score, reason)
+            form.add_error(
+                None,
+                "We couldn't verify your submission. Please try again, or email us directly.",
+            )
+        elif form.is_valid():
+            cv = form.cleaned_data["cv"]
+            application = form.save(commit=False)
+            application.cv_filename = cv.name[:255]
+            application.cv_size_bytes = cv.size
+            application.save()
+            try:
+                msg = EmailMessage(
+                    subject=f"[Luma Tech] Job application — {application.get_role_display()} — {application.name}",
+                    body=(
+                        f"Role:    {application.get_role_display()}\n"
+                        f"Name:    {application.name}\n"
+                        f"Email:   {application.email}\n"
+                        f"Phone:   {application.phone or '—'}\n"
+                        f"\n"
+                        f"Cover note:\n{application.cover_note or '—'}\n"
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[settings.CAREERS_FORM_RECIPIENT],
+                    reply_to=[application.email],
+                )
+                msg.attach(
+                    cv.name,
+                    cv.read(),
+                    cv.content_type or "application/octet-stream",
+                )
+                msg.send(fail_silently=False)
+                application.notified = True
+                application.save(update_fields=["notified"])
+            except Exception:
+                log.exception("Failed to send job application notification email")
+            messages.success(request, "Thanks — we've received your application.")
+            return redirect(reverse("careers_thanks"))
+    else:
+        initial = {}
+        # ?role=network|infrastructure → preselect the role.
+        role = request.GET.get("role", "").strip().lower()
+        valid_roles = {key for key, _ in JOB_ROLE_CHOICES}
+        if role in valid_roles:
+            initial["role"] = role
+        form = JobApplicationForm(initial=initial)
+
+    return render(
+        request,
+        "careers.html",
+        _base_context(
+            active="careers",
+            page_title="Careers — Network & Infrastructure Engineers | Luma Tech",
+            page_description=(
+                "We're hiring a UniFi Network Engineer and an Infrastructure "
+                "Engineer (cable installations) to join Luma Tech in Marlow."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Careers", reverse("careers")),
+            ],
+            roles=JOB_ROLES,
+            form=form,
+        ),
+    )
+
+
+def careers_thanks(request):
+    return render(
+        request,
+        "careers_thanks.html",
+        _base_context(
+            active="careers",
+            page_title="Application received — thanks | Luma Tech",
+            page_description="Your job application has been received. We'll be in touch shortly.",
         ),
     )
 
