@@ -627,6 +627,41 @@ a.card:hover { color: inherit; }
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }
+
+/* ---- collapsible role cards ---- */
+.role-details {
+  cursor: pointer;
+}
+.role-details summary {
+  list-style: none;
+  position: relative;
+  padding-right: 2rem;
+}
+.role-details summary::-webkit-details-marker { display: none; }
+.role-details summary::after {
+  content: '+';
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--accent);
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+.role-details[open] summary::after {
+  content: '−';
+}
+.role-details .role-body {
+  padding-top: 0.5rem;
+}
+.role-details:not([open]) .role-body {
+  display: none;
+}
+.role-details[open] {
+  cursor: default;
+}
+
 .form .errorlist {
   list-style: none; margin: 0.4rem 0 0; padding: 0;
   color: var(--danger);

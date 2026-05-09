@@ -156,6 +156,29 @@ Publishing model:
 - **Scheduled**: `published_at` in the future → flips live automatically when due.
 - **Live**: `published_at` past/now → visible everywhere.
 
+### SEO requirements for blog articles
+
+Every blog article **must** be optimised for search engines:
+
+- **Title** — include the primary keyword naturally; keep under 60 characters
+  where possible so it doesn't truncate in SERPs.
+- **`meta_description`** — a compelling 150–160 character summary containing
+  the target keyword. This is the snippet Google shows.
+- **`excerpt`** — short, keyword-rich summary used on the blog listing page.
+- **Heading structure** — one `<h1>` (handled by the template from the title),
+  then `<h2>` for major sections and `<h3>` for sub-sections. Include
+  keywords in at least one or two `<h2>` headings.
+- **Image alt text** — every `<img>` must have a descriptive `alt` attribute
+  that includes relevant keywords where natural.
+- **Internal links** — link to relevant service pages (`/services/…`) and
+  other blog posts where it adds value. Use descriptive anchor text, not
+  "click here".
+- **Local keywords** — reference Marlow, Maidenhead, Henley, Thames Valley,
+  Berkshire or Buckinghamshire where natural to strengthen local SEO.
+- **Readability** — short paragraphs (2–4 sentences), bullet lists to break
+  up dense content, and a conversational tone. Google rewards content that
+  keeps readers on the page.
+
 Example — create and publish:
 
 ```sh

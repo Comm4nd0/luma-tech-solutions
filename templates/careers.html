@@ -9,12 +9,12 @@
   <div class="container hero-content">
     {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
     <span class="eyebrow"><span class="dot"></span>Careers</span>
-    <h1>We're hiring engineers who <span class="gradient">give a damn.</span></h1>
+    <h1><span class="gradient">We're hiring.</span></h1>
     <p class="lede">
       Luma Tech is growing. We design and install proper UniFi networks for
       homes and small businesses across Marlow, Maidenhead, Henley and the
-      wider Thames Valley — and we're looking for two people to join us on
-      site and behind the screen.
+      wider Thames Valley — and we're looking for talented people to join
+      the team.
     </p>
   </div>
 </section>
@@ -23,39 +23,43 @@
   <div class="container">
     <div class="section-head fade-in">
       <span class="eyebrow"><span class="dot"></span>Open roles</span>
-      <h2>Two roles, one team.</h2>
+      <h2>Open roles.</h2>
       <p class="muted" style="max-width:42rem;">
-        Both roles are field-based out of Marlow with a mix of residential
-        and small-commercial work across Buckinghamshire and Berkshire. Read
+        All roles are based out of Marlow with a mix of residential and
+        small-commercial work across Buckinghamshire and Berkshire. Read
         the brief, then send your CV using the form below.
       </p>
     </div>
 
     <div class="values-grid mt-2">
       {% for role in roles %}
-        <article class="card fade-in" id="role-{{ role.key }}">
-          <h3>{{ role.title }}</h3>
-          <p class="muted">{{ role.summary }}</p>
+        <details class="card fade-in role-details" id="role-{{ role.key }}">
+          <summary>
+            <h3>{{ role.title }}</h3>
+            <p class="muted">{{ role.summary }}</p>
+          </summary>
 
-          <h4 class="mt-3">What you'll do</h4>
-          <ul>
-            {% for item in role.responsibilities %}
-              <li>{{ item }}</li>
-            {% endfor %}
-          </ul>
+          <div class="role-body">
+            <h4 class="mt-3">What you'll do</h4>
+            <ul>
+              {% for item in role.responsibilities %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
 
-          <h4 class="mt-3">What we're looking for</h4>
-          <ul>
-            {% for item in role.ideal %}
-              <li>{{ item }}</li>
-            {% endfor %}
-          </ul>
+            <h4 class="mt-3">What we're looking for</h4>
+            <ul>
+              {% for item in role.ideal %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
 
-          <h4 class="mt-3">Where &amp; how</h4>
-          <p>{{ role.logistics }}</p>
+            <h4 class="mt-3">Where &amp; how</h4>
+            <p>{{ role.logistics }}</p>
 
-          <a class="btn btn-ghost mt-2" href="#apply" data-role-jump="{{ role.key }}">Apply for this role {% include 'partials/_icons.html' with name='arrow' %}</a>
-        </article>
+            <a class="btn btn-ghost mt-2" href="#apply" data-role-jump="{{ role.key }}">Apply for this role {% include 'partials/_icons.html' with name='arrow' %}</a>
+          </div>
+        </details>
       {% endfor %}
     </div>
   </div>
