@@ -760,11 +760,18 @@ def careers(request):
                     to=[settings.CAREERS_FORM_RECIPIENT],
                     reply_to=[application.email],
                 )
-                msg.attach(
-                    cv.name,
-                    cv.read(),
-                    cv.content_type or "application/octet-stream",
-                )
+                # Derive MIME type from the validated extension, not the
+                # browser-supplied content_type which is user-controlled.
+                _CV_MIME = {
+                    ".pdf": "application/pdf",
+                    ".doc": "application/msword",
+                    ".docx": "application/vnd.openxmlformats-officedocument"
+                            ".wordprocessingml.document",
+                }
+                ext = ("." + cv.name.rsplit(".", 1)[-1].lower()
+                       if "." in cv.name else "")
+                mime = _CV_MIME.get(ext, "application/octet-stream")
+                msg.attach(cv.name, cv.read(), mime)
                 msg.send(fail_silently=False)
                 application.notified = True
                 application.save(update_fields=["notified"])
