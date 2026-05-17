@@ -6,25 +6,49 @@
 
 <section class="hero">
   <div class="container hero-content">
-    <div class="hero-split">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · the Thames Valley</span>
-        <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
-        <p class="lede">
-          If your home or office is too big for consumer routers — and the
-          mesh kit didn't fix it — we engineer efficient business-grade networks
-          for larger homes and small businesses that need it to just work.
-          Plus security, automation, development and support. One company,
-          every service covered. Based in Marlow, covering Maidenhead,
-          Henley-on-Thames and the wider Thames Valley.
-        </p>
-        <div class="cta-row">
-          <a href="{% url 'contact' %}?source=home-wifi-hero" class="btn btn-primary">Book a site survey {% include 'partials/_icons.html' with name='arrow' %}</a>
-          <a href="{% url 'services' %}" class="btn btn-ghost">Explore services</a>
-        </div>
-      </div>
-      <div class="hero-illustration">
-        {% include 'partials/_illustrations.html' with name='hero' %}
+    <div class="hero-slider"
+         data-hero-slider
+         data-autoplay-ms="3000"
+         role="region"
+         aria-roledescription="carousel"
+         aria-label="Luma Tech Solutions services">
+      <ul class="hero-slides">
+        {% for slide in hero_slides %}
+        <li class="hero-slide hero-split{% if forloop.first %} is-active{% endif %}"
+            data-slide-index="{{ forloop.counter0 }}"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="{{ forloop.counter }} of {{ hero_slides|length }}: {{ slide.eyebrow }}"
+            {% if not forloop.first %}aria-hidden="true"{% endif %}>
+          <div>
+            <span class="eyebrow"><span class="dot"></span>{{ slide.eyebrow }}</span>
+            {% if forloop.first %}
+              <h1>{{ slide.headline_top }}<br/><span class="gradient">{{ slide.headline_bottom }}</span></h1>
+            {% else %}
+              <h2 class="hero-h1-equiv">{{ slide.headline_top }}<br/><span class="gradient">{{ slide.headline_bottom }}</span></h2>
+            {% endif %}
+            <p class="lede">{{ slide.lede }}</p>
+            <div class="cta-row">
+              <a href="{% url slide.primary_cta_url_name %}{% if slide.primary_cta_source %}?source={{ slide.primary_cta_source }}{% endif %}" class="btn btn-primary">{{ slide.primary_cta_text }} {% include 'partials/_icons.html' with name='arrow' %}</a>
+              <a href="{% url slide.secondary_cta_url_name %}" class="btn btn-ghost">{{ slide.secondary_cta_text }}</a>
+            </div>
+          </div>
+          <div class="hero-illustration">
+            {% include 'partials/_illustrations.html' with name=slide.illustration %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="hero-dots" role="tablist" aria-label="Choose service slide">
+        {% for slide in hero_slides %}
+        <button type="button"
+                class="hero-dot{% if forloop.first %} is-active{% endif %}"
+                data-slide-to="{{ forloop.counter0 }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-label="Show slide {{ forloop.counter }}: {{ slide.eyebrow }}"></button>
+        {% endfor %}
       </div>
     </div>
 
