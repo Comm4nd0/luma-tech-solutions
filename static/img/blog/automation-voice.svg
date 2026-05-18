@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Smart speaker inside a house outline with a padlock indicating privacy">
+  <rect width="1200" height="630" fill="#0F172A"/>
+  <g transform="translate(280 80)" fill="none" stroke="#38BDF8" stroke-width="4">
+    <path d="M0 200 L320 40 L640 200 V480 H0 Z" stroke-linejoin="round"/>
+    <line x1="0" y1="200" x2="640" y2="200" opacity="0.4"/>
+  </g>
+  <g transform="translate(520 240)">
+    <ellipse cx="80" cy="20" rx="78" ry="16" fill="#10B981" opacity="0.4"/>
+    <rect x="2" y="20" width="156" height="180" rx="8" fill="#0B1220" stroke="#10B981" stroke-width="4"/>
+    <ellipse cx="80" cy="200" rx="78" ry="14" fill="#0B1220" stroke="#10B981" stroke-width="4"/>
+    <g stroke="#10B981" stroke-width="2" opacity="0.6">
+      <line x1="20" y1="60" x2="140" y2="60"/>
+      <line x1="20" y1="90" x2="140" y2="90"/>
+      <line x1="20" y1="120" x2="140" y2="120"/>
+      <line x1="20" y1="150" x2="140" y2="150"/>
+    </g>
+    <circle cx="80" cy="32" r="6" fill="#10B981"/>
+    <g stroke="#38BDF8" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85">
+      <path d="M-30 100 q-30 10 -50 0"/>
+      <path d="M-30 100 q-50 30 -90 30"/>
+      <path d="M190 100 q30 10 50 0"/>
+      <path d="M190 100 q50 30 90 30"/>
+    </g>
+  </g>
+  <g transform="translate(820 360)">
+    <rect x="0" y="40" width="120" height="100" rx="10" fill="#0B1220" stroke="#10B981" stroke-width="4"/>
+    <path d="M20 40 V20 a40 40 0 0 1 80 0 V40" fill="none" stroke="#10B981" stroke-width="4"/>
+    <circle cx="60" cy="80" r="10" fill="#10B981"/>
+    <rect x="56" y="86" width="8" height="26" fill="#10B981"/>
+  </g>
+</svg>

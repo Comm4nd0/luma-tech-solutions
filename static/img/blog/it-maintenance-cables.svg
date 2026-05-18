@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Tangled cables on the left contrasted with neatly organised cables on the right">
+  <rect width="1200" height="630" fill="#0F172A"/>
+  <line x1="600" y1="80" x2="600" y2="550" stroke="#1E293B" stroke-width="2" stroke-dasharray="6 8"/>
+  <g fill="none" stroke-width="6" stroke-linecap="round">
+    <path d="M80 150 C 200 100, 300 400, 180 320 S 480 480, 320 240 S 100 460, 240 540"
+          stroke="#38BDF8" opacity="0.85"/>
+    <path d="M140 220 C 320 180, 420 360, 220 380 S 500 280, 380 460 S 180 360, 80 480"
+          stroke="#10B981" opacity="0.85"/>
+    <path d="M100 380 C 220 320, 380 220, 460 460 S 260 540, 180 280"
+          stroke="#38BDF8" opacity="0.6"/>
+    <path d="M260 120 C 400 240, 540 200, 460 380 S 280 460, 380 540"
+          stroke="#10B981" opacity="0.6"/>
+  </g>
+  <g stroke="#38BDF8" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M720 140 L 1120 140"/>
+    <path d="M720 200 L 1120 200"/>
+    <path d="M720 260 L 1120 260"/>
+  </g>
+  <g stroke="#10B981" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M720 340 L 1120 340"/>
+    <path d="M720 400 L 1120 400"/>
+    <path d="M720 460 L 1120 460"/>
+  </g>
+  <g fill="none" stroke="#38BDF8" stroke-width="3">
+    <rect x="780" y="120" width="40" height="40" rx="4"/>
+    <rect x="1020" y="120" width="40" height="40" rx="4"/>
+    <rect x="780" y="180" width="40" height="40" rx="4"/>
+    <rect x="1020" y="180" width="40" height="40" rx="4"/>
+    <rect x="780" y="240" width="40" height="40" rx="4"/>
+    <rect x="1020" y="240" width="40" height="40" rx="4"/>
+  </g>
+  <g fill="none" stroke="#10B981" stroke-width="3">
+    <rect x="780" y="320" width="40" height="40" rx="4"/>
+    <rect x="1020" y="320" width="40" height="40" rx="4"/>
+    <rect x="780" y="380" width="40" height="40" rx="4"/>
+    <rect x="1020" y="380" width="40" height="40" rx="4"/>
+    <rect x="780" y="440" width="40" height="40" rx="4"/>
+    <rect x="1020" y="440" width="40" height="40" rx="4"/>
+  </g>
+</svg>

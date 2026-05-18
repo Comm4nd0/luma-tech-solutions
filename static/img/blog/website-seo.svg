@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Magnifying glass over search results with an upward trending arrow">
+  <rect width="1200" height="630" fill="#0F172A"/>
+  <g transform="translate(140 130)">
+    <rect x="0" y="0" width="520" height="60" rx="30" fill="#0B1220" stroke="#38BDF8" stroke-width="3"/>
+    <circle cx="42" cy="30" r="12" fill="none" stroke="#38BDF8" stroke-width="3"/>
+    <line x1="52" y1="40" x2="66" y2="54" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+    <rect x="86" y="22" width="200" height="14" rx="3" fill="#38BDF8" opacity="0.45"/>
+    <g transform="translate(0 100)">
+      <rect x="0" y="0" width="520" height="80" rx="8" fill="#0B1220" stroke="#10B981" stroke-width="2"/>
+      <rect x="20" y="18" width="280" height="16" rx="3" fill="#10B981"/>
+      <rect x="20" y="44" width="440" height="10" rx="3" fill="#38BDF8" opacity="0.5"/>
+      <rect x="20" y="60" width="380" height="10" rx="3" fill="#38BDF8" opacity="0.5"/>
+    </g>
+    <g transform="translate(0 200)">
+      <rect x="0" y="0" width="520" height="80" rx="8" fill="#0B1220" stroke="#38BDF8" stroke-width="2"/>
+      <rect x="20" y="18" width="240" height="16" rx="3" fill="#38BDF8" opacity="0.7"/>
+      <rect x="20" y="44" width="460" height="10" rx="3" fill="#38BDF8" opacity="0.35"/>
+      <rect x="20" y="60" width="360" height="10" rx="3" fill="#38BDF8" opacity="0.35"/>
+    </g>
+    <g transform="translate(0 300)">
+      <rect x="0" y="0" width="520" height="80" rx="8" fill="#0B1220" stroke="#38BDF8" stroke-width="2"/>
+      <rect x="20" y="18" width="220" height="16" rx="3" fill="#38BDF8" opacity="0.7"/>
+      <rect x="20" y="44" width="430" height="10" rx="3" fill="#38BDF8" opacity="0.35"/>
+      <rect x="20" y="60" width="340" height="10" rx="3" fill="#38BDF8" opacity="0.35"/>
+    </g>
+  </g>
+  <g transform="translate(560 100)">
+    <circle cx="180" cy="180" r="130" fill="none" stroke="#38BDF8" stroke-width="8"/>
+    <line x1="278" y1="278" x2="380" y2="380" stroke="#38BDF8" stroke-width="14" stroke-linecap="round"/>
+    <g transform="translate(110 110)" stroke="#10B981" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="0,140 40,90 80,110 140,30"/>
+      <polyline points="110,30 140,30 140,60"/>
+    </g>
+  </g>
+</svg>
