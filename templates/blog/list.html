@@ -22,13 +22,15 @@
     {% if posts %}
       <div class="post-list">
         {% for post in posts %}
-          <article class="blog-card fade-in{% if post.first_image %} has-image{% endif %}">
+          <article class="blog-card fade-in has-image">
             <a href="{{ post.get_absolute_url }}" class="blog-card-link">
-              {% if post.first_image %}
-                <div class="blog-card-image">
+              <div class="blog-card-image{% if not post.first_image %} blog-card-image--illustration pillar-{{ post.pillar }}{% endif %}">
+                {% if post.first_image %}
                   <img src="{{ post.first_image.src }}" alt="{{ post.first_image.alt }}" loading="lazy" decoding="async">
-                </div>
-              {% endif %}
+                {% else %}
+                  {% include 'partials/_blog_hero_illustration.html' with pillar=post.pillar %}
+                {% endif %}
+              </div>
               <div class="blog-card-body">
                 {% include 'partials/_post_meta.html' with post=post %}
                 <h2>{{ post.title }}</h2>

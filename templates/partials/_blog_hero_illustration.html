@@ -1,0 +1,19 @@
+{% comment %}
+Blog hero illustration. Picks the brand SVG that matches the post's
+pillar so every article has a coherent visual, even with no uploaded
+image. Falls back to the networking illustration for "general" posts.
+
+Caller passes `pillar` (one of: networking, security, development,
+automation, support, general).
+{% endcomment %}
+{% if pillar == 'security' %}
+  {% include 'partials/_illustrations.html' with name='security' %}
+{% elif pillar == 'development' %}
+  {% include 'partials/_illustrations.html' with name='development' %}
+{% elif pillar == 'automation' %}
+  {% include 'partials/_illustrations.html' with name='automation' %}
+{% elif pillar == 'support' %}
+  {% include 'partials/_illustrations.html' with name='support' %}
+{% else %}
+  {% include 'partials/_illustrations.html' with name='networking' %}
+{% endif %}

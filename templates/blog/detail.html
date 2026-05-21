@@ -35,6 +35,16 @@
     </div>
   </section>
 
+  {% if not post.first_image %}
+  <section class="tight post-hero-illustration pillar-{{ post.pillar }}">
+    <div class="container">
+      <div class="post-hero-illustration-inner">
+        {% include 'partials/_blog_hero_illustration.html' with pillar=post.pillar %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   <section class="tight">
     <div class="container post-container">
       <div class="post-content">

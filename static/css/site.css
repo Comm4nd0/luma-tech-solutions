@@ -1960,3 +1960,104 @@ footer.site-footer {
 @media (max-width: 700px) {
   .coverage-map { height: 260px; }
 }
+
+/* ---------- Blog hero illustration fallback ---------- */
+/* When a post has no embedded <img>, we drop in the pillar's brand SVG so
+   cards never have an empty image slot and detail pages still feel
+   visually anchored. Each pillar gets a subtle tinted backdrop. */
+
+.blog-card-image--illustration {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(20, 184, 166, 0.08), transparent 70%),
+    var(--surface-2);
+}
+.blog-card-image--illustration .ill {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+/* Per-pillar tint — matches the pillar-badge palette so the cards visually
+   align with the badge colour even at a glance. */
+.blog-card-image--illustration.pillar-security {
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(244, 63, 94, 0.10), transparent 70%),
+    var(--surface-2);
+}
+.blog-card-image--illustration.pillar-development {
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(14, 165, 233, 0.10), transparent 70%),
+    var(--surface-2);
+}
+.blog-card-image--illustration.pillar-automation {
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(168, 85, 247, 0.10), transparent 70%),
+    var(--surface-2);
+}
+.blog-card-image--illustration.pillar-support {
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(245, 158, 11, 0.10), transparent 70%),
+    var(--surface-2);
+}
+.blog-card-image--illustration.pillar-general,
+.blog-card-image--illustration.pillar-networking {
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(20, 184, 166, 0.10), transparent 70%),
+    var(--surface-2);
+}
+
+/* No scale-on-hover for the SVG (we only do that for raster <img>). */
+.blog-card:hover .blog-card-image--illustration .ill { transform: none; }
+
+/* ---------- Blog detail: illustration hero strip ---------- */
+/* A modest illustration band between the post header and the body for
+   posts that have no embedded imagery, so the article still feels
+   "designed" and not text-on-a-page. */
+.post-hero-illustration {
+  padding-top: 0;
+}
+.post-hero-illustration-inner {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(20, 184, 166, 0.08), transparent 70%),
+    var(--surface);
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  max-height: 320px;
+  overflow: hidden;
+}
+.post-hero-illustration-inner .ill {
+  max-height: 260px;
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+}
+.post-hero-illustration.pillar-security .post-hero-illustration-inner {
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(244, 63, 94, 0.10), transparent 70%),
+    var(--surface);
+}
+.post-hero-illustration.pillar-development .post-hero-illustration-inner {
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(14, 165, 233, 0.10), transparent 70%),
+    var(--surface);
+}
+.post-hero-illustration.pillar-automation .post-hero-illustration-inner {
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(168, 85, 247, 0.10), transparent 70%),
+    var(--surface);
+}
+.post-hero-illustration.pillar-support .post-hero-illustration-inner {
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(245, 158, 11, 0.10), transparent 70%),
+    var(--surface);
+}
+@media (max-width: 700px) {
+  .post-hero-illustration-inner { padding: 1.25rem; max-height: 240px; }
+  .post-hero-illustration-inner .ill { max-height: 200px; }
+}
