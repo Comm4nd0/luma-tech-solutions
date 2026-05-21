@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" async defer></script>
+{% endblock %}
+
+{% block jsonld %}{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Get a quote — Luma Tech Solutions",
+  "url": "{{ SITE_URL }}{% url 'quote' %}",
+  "about": { "@id": "{{ SITE_URL }}#business" },
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "name": "Book a site survey",
+    "target": "{{ SITE_URL }}{% url 'quote' %}"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>Get a quote</span>
+        <h1>Tell us about your <span class="gradient">property.</span></h1>
+        <p class="lede">
+          A few quick details so we can come back with something useful —
+          not just a generic reply. We aim to confirm survey availability
+          within one working day. Free site survey, fixed-price quote on
+          one page, no obligation.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='networking' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    {% include 'partials/_process_steps.html' %}
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        {% if messages %}
+          {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
+        {% endif %}
+
+        <form method="post" class="form fade-in" data-contact-form data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
+          {% csrf_token %}
+          {{ form.website }}
+          {{ form.source }}
+          <input type="hidden" name="g-recaptcha-response" value="">
+
+          <p class="muted" style="font-size:.78rem;margin:0;">
+            This form is protected by Google reCAPTCHA — the
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            and
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+            apply.
+          </p>
+
+          {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
+
+          <div class="row two">
+            <div>
+              <label for="{{ form.name.id_for_label }}">Your name</label>
+              {{ form.name }}
+              {{ form.name.errors }}
+            </div>
+            <div>
+              <label for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email }}
+              {{ form.email.errors }}
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="{{ form.phone.id_for_label }}">Phone (optional)</label>
+              {{ form.phone }}
+              {{ form.phone.errors }}
+            </div>
+            <div>
+              <label for="{{ form.postcode.id_for_label }}">Property postcode</label>
+              {{ form.postcode }}
+              <p class="muted" style="font-size:.78rem;margin:.3rem 0 0;">So we can confirm you're in our coverage area.</p>
+              {{ form.postcode.errors }}
+            </div>
+          </div>
+
+          <div>
+            <label for="{{ form.property_type.id_for_label }}">What's the property?</label>
+            {{ form.property_type }}
+            {{ form.property_type.errors }}
+          </div>
+
+          <div>
+            <label>What do you need? <span class="muted" style="font-weight:400;">(pick all that apply)</span></label>
+            <div class="checkbox-grid">
+              {% for cb in form.services %}
+              <label class="checkbox-card">
+                {{ cb.tag }}
+                <span>{{ cb.choice_label }}</span>
+              </label>
+              {% endfor %}
+            </div>
+            {{ form.services.errors }}
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
+              {{ form.timeline }}
+              {{ form.timeline.errors }}
+            </div>
+            <div>
+              <label for="{{ form.budget.id_for_label }}">Budget (optional)</label>
+              {{ form.budget }}
+              <p class="muted" style="font-size:.78rem;margin:.3rem 0 0;">Helps us tailor what we propose. Doesn't lock you in.</p>
+              {{ form.budget.errors }}
+            </div>
+          </div>
+
+          <div>
+            <label for="{{ form.notes.id_for_label }}">Anything else we should know?</label>
+            {{ form.notes }}
+            {{ form.notes.errors }}
+          </div>
+
+          <div class="row-actions">
+            <button type="submit" class="btn btn-primary plausible-event-name=Quote+Submit">Send my quote request {% include 'partials/_icons.html' with name='arrow' %}</button>
+            <a href="{% url 'contact' %}" class="btn btn-ghost">Or just send a message</a>
+          </div>
+
+          <p class="muted" style="font-size:.85rem;margin-top:1rem;">
+            <strong>Marco replies directly</strong> — no call centre, no
+            sales chase, no upsell. If we're not the right fit, we'll tell
+            you and point you somewhere better.
+          </p>
+        </form>
+      </div>
+
+      <aside class="contact-info fade-in">
+        <h2 style="font-size:1.25rem;">What happens next</h2>
+
+        <span class="label">1. We reply</span>
+        <p style="margin:0;">Within one working day. Usually faster.</p>
+
+        <span class="label">2. Free site survey</span>
+        <p style="margin:0;">We walk the property, listen, measure. No pressure, no obligation.</p>
+
+        <span class="label">3. Fixed-price quote</span>
+        <p style="margin:0;">One page. Hardware, cabling, labour, timeline. No day rates, no scope creep.</p>
+
+        <span class="label" style="margin-top:1.5rem;">Coverage</span>
+        <div class="map-card mt-1">
+          <svg class="area" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="ring" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="180" cy="110" r="90" fill="url(#ring)"/>
+            <circle cx="180" cy="110" r="62" stroke="#14b8a6" stroke-opacity="0.5" stroke-dasharray="3 4"/>
+            <circle cx="180" cy="110" r="34" stroke="#14b8a6" stroke-opacity="0.7" stroke-dasharray="3 4"/>
+            <circle cx="180" cy="110" r="6" fill="#14b8a6"/>
+            <text x="180" y="80" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter, sans-serif">Berks &amp; Bucks</text>
+          </svg>
+          <div class="label">Service area</div>
+          <div class="region">{{ SITE_TOWNS_DISPLAY }}</div>
+        </div>
+
+        <span class="label" style="margin-top:1.5rem;">Or reach us directly</span>
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
+        {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a>{% endif %}
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

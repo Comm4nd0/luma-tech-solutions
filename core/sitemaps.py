@@ -23,6 +23,7 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             ("home", 1.0),
+            ("quote", 0.95),
             ("services", 0.9),
             ("service_networking", 0.8),
             ("service_security", 0.8),
@@ -33,6 +34,7 @@ class StaticViewSitemap(Sitemap):
             ("area_marlow", 0.8),
             ("area_maidenhead", 0.8),
             ("area_henley", 0.8),
+            ("area_beaconsfield", 0.8),
             ("about", 0.7),
             ("portfolio", 0.8),
             ("contact", 0.7),

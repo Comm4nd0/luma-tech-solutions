@@ -63,19 +63,39 @@
         "image": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
         "parentOrganization": { "@id": "{{ SITE_URL }}#org" },
         "priceRange": "££",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "{{ SITE_BASE_TOWN|escapejs }}",
+          "addressRegion": "Buckinghamshire",
+          "addressCountry": "GB"
+        },
         "areaServed": [{% for town in SITE_TOWNS %}
           { "@type": "City", "name": "{{ town|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}{% for county in SITE_COUNTIES %},
           { "@type": "AdministrativeArea", "name": "{{ county|escapejs }}" }{% endfor %}
         ],
         "knowsAbout": [
           "Wi-Fi installation",
+          "UniFi installation",
           "CCTV installation",
           "Network design",
           "Smart home installation",
+          "Home Assistant",
+          "Structured cabling",
+          "Access control",
           "IT support",
-          "UniFi",
-          "Home Assistant"
+          "Mobile app development"
         ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Luma Tech Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UniFi Wi-Fi Installation", "url": "{{ SITE_URL }}{% url 'service_networking' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CCTV Installation", "url": "{{ SITE_URL }}{% url 'service_security' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Smart Home Installation", "url": "{{ SITE_URL }}{% url 'service_automation' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "App & Web Development", "url": "{{ SITE_URL }}{% url 'service_development' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "IT Support & Care Plans", "url": "{{ SITE_URL }}{% url 'service_support' %}" } }
+          ]
+        },
         "openingHoursSpecification": [{
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -115,7 +135,8 @@
         <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
         <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
         <li><a href="{% url 'careers' %}" class="{% if active_nav == 'careers' %}active{% endif %}">Careers</a></li>
-        <li class="nav-cta"><a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Get in touch</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}">Contact</a></li>
+        <li class="nav-cta"><a href="{% url 'quote' %}" class="btn btn-primary btn-sm plausible-event-name=Nav+Quote+Click">Get a quote</a></li>
       </ul>
     </div>
   </nav>
@@ -145,6 +166,7 @@
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
             <li><a href="{% url 'service_automation' %}">Home Automation</a></li>
             <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>
+            <li><a href="{% url 'quote' %}"><strong>Get a quote →</strong></a></li>
           </ul>
         </div>
         <div>

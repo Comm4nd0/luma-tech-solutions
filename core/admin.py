@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BlogPost, ContactSubmission, JobApplication
+from .models import BlogPost, ContactSubmission, JobApplication, QuoteRequest
 
 
 @admin.register(ContactSubmission)
@@ -8,6 +8,19 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "service", "source", "created_at", "notified")
     list_filter = ("service", "source", "notified", "created_at")
     search_fields = ("name", "email", "phone", "message", "source")
+    readonly_fields = ("created_at",)
+
+
+@admin.register(QuoteRequest)
+class QuoteRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        "name", "email", "postcode", "property_type", "timeline",
+        "budget", "source", "created_at", "notified",
+    )
+    list_filter = (
+        "property_type", "timeline", "budget", "source", "notified", "created_at",
+    )
+    search_fields = ("name", "email", "phone", "postcode", "notes", "source")
     readonly_fields = ("created_at",)
 
 

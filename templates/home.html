@@ -251,6 +251,8 @@
   </div>
 </section>
 
-{% include 'partials/_cta_banner.html' %}
+{% include 'partials/_faqs.html' with faqs=faqs faq_eyebrow='Common questions' faq_title='Things people ask before getting in touch' %}
+
+{% include 'partials/_cta_banner.html' with cta_source='home-bottom' %}
 
 {% endblock %}

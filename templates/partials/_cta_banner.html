@@ -1,13 +1,39 @@
-{# Bottom-of-page CTA banner. Optional override of title/copy via include with-args. #}
+{# Bottom-of-page CTA banner.
+   Optional overrides via include with-args:
+     cta_title, cta_copy, cta_primary, cta_primary_url, cta_secondary, cta_secondary_url, cta_source
+   `cta_primary_url` defaults to the dedicated quote page — every CTA is now
+   funnelled through structured-quote-first; the secondary "Or just send a
+   message" is the soft escape for tyre-kickers. #}
 <section class="tight">
   <div class="container">
     <div class="cta-banner fade-in">
       <div>
-        <h2>{{ cta_title|default:"Ready to upgrade your tech?" }}</h2>
-        <p>{{ cta_copy|default:"Tell us what you're trying to achieve. We'll come back with honest, specific advice — usually within a working day." }}</p>
+        <h2>{{ cta_title|default:"Ready to get a real quote?" }}</h2>
+        <p>{{ cta_copy|default:"Tell us about your property and what you're trying to fix. We'll come and look — usually within the week — and reply with a fixed-price quote on one page. No callbacks from sales people. Marco replies, same day where possible." }}</p>
+        <p class="cta-trust mt-2">
+          <span class="cta-trust-item">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Free site survey
+          </span>
+          <span class="cta-trust-item">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Fixed-price quote in 48h
+          </span>
+          <span class="cta-trust-item">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            No obligation, no day rates
+          </span>
+        </p>
       </div>
       <div class="actions">
-        <a href="{% url 'contact' %}" class="btn btn-primary">Start a conversation {% include 'partials/_icons.html' with name='arrow' %}</a>
+        <a href="{% url cta_primary_url|default:'quote' %}{% if cta_source %}?source={{ cta_source }}{% endif %}" class="btn btn-primary plausible-event-name=CTA+Banner+Quote">{{ cta_primary|default:"Get my quote" }} {% include 'partials/_icons.html' with name='arrow' %}</a>
+        <a href="{% url cta_secondary_url|default:'contact' %}" class="btn btn-ghost btn-sm">{{ cta_secondary|default:"Or just send a message" }}</a>
       </div>
     </div>
   </div>

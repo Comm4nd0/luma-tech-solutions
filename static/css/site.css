@@ -1739,3 +1739,167 @@ footer.site-footer {
 .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; }
 .muted { color: var(--muted); }
 .hidden { display: none !important; }
+
+/* =========================================================
+   SEO + CTA OVERHAUL — May 2026
+   Components: nav-secondary, FAQ accordion, process steps,
+   checkbox grid (quote form), CTA banner trust signals.
+   ========================================================= */
+
+/* ---------- nav secondary text link (Contact next to the CTA) ---------- */
+.nav-links a.nav-secondary {
+  /* Slightly de-emphasised so the primary CTA button reads as the main action */
+  opacity: 0.92;
+}
+
+/* ---------- CTA banner trust signals ---------- */
+.cta-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0;
+}
+.cta-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+.cta-trust-item svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ---------- Process steps (1-2-3 reassurance band) ---------- */
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.process-step {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  position: relative;
+}
+.process-step h4 {
+  margin: 0.75rem 0 0.4rem;
+  font-size: 1.05rem;
+  color: var(--fg-strong);
+}
+.process-step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.process-step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #042f2e;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+@media (max-width: 800px) {
+  .process-steps { grid-template-columns: 1fr; }
+}
+
+/* ---------- FAQ accordion ---------- */
+.faq-list {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.faq-item[open] {
+  border-color: rgba(20, 184, 166, 0.4);
+  background: var(--surface-2);
+}
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: var(--fg-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--accent); }
+.faq-chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 200ms ease, color 200ms ease;
+}
+.faq-item[open] .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+.faq-answer {
+  padding: 0 1.25rem 1.1rem;
+  color: var(--fg);
+}
+.faq-answer p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ---------- Quote form: services checkbox grid ---------- */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+.checkbox-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--fg);
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+.checkbox-card:hover {
+  border-color: rgba(20, 184, 166, 0.4);
+  color: var(--fg-strong);
+}
+.checkbox-card input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.checkbox-card:has(input[type="checkbox"]:checked) {
+  border-color: var(--accent);
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--fg-strong);
+}

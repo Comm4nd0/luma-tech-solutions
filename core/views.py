@@ -12,8 +12,16 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from .forms import ContactForm, JobApplicationForm
-from .models import BlogPost, JOB_ROLE_CHOICES, SERVICE_CHOICES
+from .forms import ContactForm, JobApplicationForm, QuoteRequestForm
+from .models import (
+    BlogPost,
+    BUDGET_CHOICES,
+    JOB_ROLE_CHOICES,
+    PROPERTY_TYPE_CHOICES,
+    QUOTE_SERVICE_CHOICES,
+    SERVICE_CHOICES,
+    TIMELINE_CHOICES,
+)
 
 log = logging.getLogger(__name__)
 
@@ -108,8 +116,8 @@ HERO_SLIDES = [
             "just work. Plus security, automation, development and support. "
             "Based in Marlow, covering the Thames Valley."
         ),
-        "primary_cta_text": "Book a site survey",
-        "primary_cta_url_name": "contact",
+        "primary_cta_text": "Get a quote",
+        "primary_cta_url_name": "quote",
         "primary_cta_source": "home-wifi-hero",
         "secondary_cta_text": "Explore services",
         "secondary_cta_url_name": "services",
@@ -125,8 +133,8 @@ HERO_SLIDES = [
             "points placed from a real site survey, managed switches and "
             "VLANs underneath. No mesh, no guesswork."
         ),
-        "primary_cta_text": "Book a site survey",
-        "primary_cta_url_name": "contact",
+        "primary_cta_text": "Get a Wi-Fi quote",
+        "primary_cta_url_name": "quote",
         "primary_cta_source": "home-networking-hero",
         "secondary_cta_text": "See LittleWick House",
         "secondary_cta_url_name": "portfolio",
@@ -142,8 +150,8 @@ HERO_SLIDES = [
             "installed and integrated with the same network we built. "
             "Recorded on-site, not on someone else's cloud."
         ),
-        "primary_cta_text": "Get a security quote",
-        "primary_cta_url_name": "contact",
+        "primary_cta_text": "Get a CCTV quote",
+        "primary_cta_url_name": "quote",
         "primary_cta_source": "home-security-hero",
         "secondary_cta_text": "How we do security",
         "secondary_cta_url_name": "service_security",
@@ -160,7 +168,7 @@ HERO_SLIDES = [
             "no offshore black-box."
         ),
         "primary_cta_text": "Scope a build",
-        "primary_cta_url_name": "contact",
+        "primary_cta_url_name": "quote",
         "primary_cta_source": "home-development-hero",
         "secondary_cta_text": "Recent work",
         "secondary_cta_url_name": "portfolio",
@@ -177,7 +185,7 @@ HERO_SLIDES = [
             "broadband isn't."
         ),
         "primary_cta_text": "Plan my smart home",
-        "primary_cta_url_name": "contact",
+        "primary_cta_url_name": "quote",
         "primary_cta_source": "home-automation-hero",
         "secondary_cta_text": "See a real install",
         "secondary_cta_url_name": "portfolio",
@@ -455,6 +463,142 @@ CASE_STUDIES = [
 ]
 
 
+# --- FAQ data ---
+# Shown on the home page and (subset) on service pages. Also rendered into
+# FAQPage JSON-LD so Google can show them as rich results / featured snippets.
+# Keep answers short, plain-English, keyword-rich without keyword stuffing.
+
+FAQS_GENERAL = [
+    {
+        "q": "What areas do you cover?",
+        "a": (
+            "We're based in Marlow and cover the Thames Valley — Marlow, "
+            "Maidenhead, Henley-on-Thames, Beaconsfield, Bourne End, "
+            "Cookham and High Wycombe. We'll travel further across "
+            "Buckinghamshire and Berkshire by arrangement."
+        ),
+    },
+    {
+        "q": "How much does a Wi-Fi installation cost?",
+        "a": (
+            "Every property is different — the honest answer is we'll quote "
+            "after a site survey. A typical large-home UniFi install (4–6 "
+            "access points, switching, cabling) runs from around £3,000; "
+            "bigger properties with 8+ APs, multiple VLANs and CCTV usually "
+            "fall between £8,000 and £20,000. Every quote is fixed-price and "
+            "written down — no day rates, no surprise add-ons."
+        ),
+    },
+    {
+        "q": "How long does an installation take?",
+        "a": (
+            "A standard home Wi-Fi install is usually 1–2 days on site once "
+            "we've finished the survey and ordered kit. Whole-property "
+            "networks with structured cabling can run to 5–10 days, often "
+            "split across visits so we work around your routine. We agree "
+            "the schedule up-front and stick to it."
+        ),
+    },
+    {
+        "q": "Do I have to sign up to a care plan?",
+        "a": (
+            "No. Every install comes with 30 days of post-install support "
+            "as standard. Care plans are optional from there — they're for "
+            "clients who want monitoring, faster response, and one engineer "
+            "who knows the system on call. From £75/month + VAT for homes "
+            "or £25/user/month for small businesses."
+        ),
+    },
+    {
+        "q": "Why UniFi instead of consumer mesh kit?",
+        "a": (
+            "Consumer mesh and powerline kit are designed for small flats "
+            "with thin walls. Once you add a second storey, thick masonry, "
+            "or 200+ m² of floorspace, the physics catch up. UniFi gives "
+            "you wired access points (no halving bandwidth every hop), "
+            "real diagnostics, and one dashboard for Wi-Fi, switching and "
+            "CCTV — the same kit that runs in offices and hotels."
+        ),
+    },
+    {
+        "q": "Will my CCTV footage be stored in the cloud?",
+        "a": (
+            "Not unless you specifically want it to be. We default to "
+            "UniFi Protect, which records to a small NVR at your house. "
+            "No monthly subscription, no third-party AI looking through "
+            "your footage, and it keeps working when your broadband doesn't."
+        ),
+    },
+]
+
+
+# Networking-specific FAQs, used on the Wi-Fi service page.
+FAQS_NETWORKING = [
+    {
+        "q": "Will UniFi work in my period property?",
+        "a": (
+            "Yes — and we design specifically for older houses. Lath-and-"
+            "plaster walls, foil-backed insulation and thick masonry "
+            "absorb Wi-Fi, so the answer is more access points placed "
+            "correctly, fed by wired Cat6 — not a bigger mesh kit. We've "
+            "done Georgian, Victorian and listed properties around Marlow "
+            "and Henley."
+        ),
+    },
+    {
+        "q": "Do I need to run cables everywhere?",
+        "a": (
+            "We run Cat6 from a central comms cupboard to each access "
+            "point and camera. Where the loft is accessible we drop down "
+            "the walls; where it isn't, we use existing voids, conduits, "
+            "or surface-mount trunking discreetly. We plan all the runs "
+            "in the site survey so you see exactly what's going where "
+            "before we drill anything."
+        ),
+    },
+    {
+        "q": "Can you cover the garden and outbuildings?",
+        "a": (
+            "Yes. Outdoor APs, point-to-point links to garden offices and "
+            "annexes, and weatherproof CCTV coverage are part of what we "
+            "design. We've done pool houses, stable blocks, garden offices "
+            "and large gardens across the Thames Valley."
+        ),
+    },
+]
+
+
+# Security-specific FAQs, used on the Physical Security service page.
+FAQS_SECURITY = [
+    {
+        "q": "Is the CCTV recorded in the cloud?",
+        "a": (
+            "Not by default. UniFi Protect records to an NVR at your "
+            "property, so footage stays with you. No monthly subscription "
+            "and no third-party AI rifling through your footage. We can "
+            "add encrypted off-site backup as an option if you want it."
+        ),
+    },
+    {
+        "q": "Do the cameras work in the dark?",
+        "a": (
+            "Yes. The cameras we install have proper infrared night vision "
+            "and (on most models) low-light colour modes. On-device AI "
+            "tells person from vehicle from package, so your phone only "
+            "buzzes for things that matter."
+        ),
+    },
+    {
+        "q": "Can I view it on my phone?",
+        "a": (
+            "Yes — secure remote viewing through the UniFi Protect app on "
+            "iOS and Android. Two-factor authentication, end-to-end "
+            "encrypted, and no public ports opened on your router."
+        ),
+    },
+]
+
+
 JOB_ROLES = [
     {
         "key": "network",
@@ -531,14 +675,16 @@ def home(request):
         "home.html",
         _base_context(
             active="home",
-            page_title="Wi-Fi, CCTV & IT Support — Marlow, Maidenhead & Henley | Luma Tech",
+            page_title="Wi-Fi Installation Marlow, CCTV & IT Support | Luma Tech",
             page_description=(
-                "Local engineer for proper Wi-Fi, CCTV, smart homes and IT "
-                "support across Marlow, Maidenhead, Henley and the Thames Valley."
+                "Marlow-based engineer for proper UniFi Wi-Fi, CCTV and "
+                "smart-home installation across Marlow, Maidenhead, Henley "
+                "and the Thames Valley. Fixed-price quotes, no mesh."
             ),
             testimonials=TESTIMONIALS,
             featured_case=featured,
             hero_slides=HERO_SLIDES,
+            faqs=FAQS_GENERAL,
         ),
     )
 
@@ -551,8 +697,9 @@ def services_overview(request):
             active="services",
             page_title="Networking, CCTV, Smart Home & IT Services | Luma Tech",
             page_description=(
-                "Wi-Fi design, CCTV, app development, home automation and "
-                "ongoing care for homes and small businesses across Bucks and Berks."
+                "Wi-Fi design, CCTV installation, app development, smart-home "
+                "automation and IT support for homes and small businesses "
+                "across Marlow, Maidenhead, Henley and the Thames Valley."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -568,10 +715,11 @@ def service_networking(request):
         "services/networking.html",
         _base_context(
             active="services",
-            page_title="Wi-Fi Installation in Marlow, Maidenhead & Henley | Luma Tech",
+            page_title="UniFi Wi-Fi Installation, Marlow & Henley | Luma Tech",
             page_description=(
-                "UniFi Wi-Fi design and installation for large homes and "
-                "offices across Marlow, Maidenhead, Henley and the Thames Valley."
+                "Professionally engineered UniFi Wi-Fi for large and period "
+                "homes — Marlow, Maidenhead, Henley-on-Thames and the Thames "
+                "Valley. Wired access points, fixed-price quotes, no mesh."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -586,6 +734,7 @@ def service_networking(request):
                 "for homes and small businesses across Marlow, Maidenhead, "
                 "Henley-on-Thames and the wider Thames Valley."
             ),
+            faqs=FAQS_NETWORKING,
         ),
     )
 
@@ -596,10 +745,11 @@ def service_security(request):
         "services/security.html",
         _base_context(
             active="security",
-            page_title="CCTV Installation in Marlow, Maidenhead & Henley | Luma Tech",
+            page_title="CCTV Installation Marlow, Maidenhead & Henley | Luma Tech",
             page_description=(
-                "UniFi Protect CCTV, alarms, smart locks and network security "
-                "across Marlow, Maidenhead, Henley-on-Thames and the Thames Valley."
+                "UniFi Protect CCTV, access control and alarms across Marlow, "
+                "Maidenhead, Henley-on-Thames and the Thames Valley. Footage "
+                "stays on your kit — no cloud subscription required."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -614,6 +764,7 @@ def service_security(request):
                 "network hardening for homes and businesses across Marlow, "
                 "Maidenhead, Beaconsfield and the Thames Valley."
             ),
+            faqs=FAQS_SECURITY,
         ),
     )
 
@@ -651,10 +802,11 @@ def service_automation(request):
         "services/automation.html",
         _base_context(
             active="services",
-            page_title="Smart Home Installer, Marlow & Henley | Luma Tech",
+            page_title="Smart Home Installer — Marlow, Henley, Maidenhead | Luma Tech",
             page_description=(
-                "Local-first smart-home design with Home Assistant. Lighting, "
-                "climate, security across Marlow, Henley and the Thames Valley."
+                "Local-first Home Assistant smart-home installation. Lighting, "
+                "climate, scenes and security across Marlow, Henley-on-Thames, "
+                "Maidenhead and the Thames Valley. No cloud lock-in."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -1085,11 +1237,11 @@ def area_henley(request):
         "areas/henley.html",
         _base_context(
             active="services",
-            page_title="Wi-Fi, CCTV & IT Support in Henley-on-Thames | Luma Tech",
+            page_title="Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech",
             page_description=(
-                "Wi-Fi, CCTV and smart-home design for period homes and "
-                "riverside properties in Henley-on-Thames, Remenham, "
-                "Hambleden and Mill End."
+                "UniFi Wi-Fi, CCTV and smart-home installation for period "
+                "homes and riverside properties in Henley-on-Thames, "
+                "Remenham, Hambleden and Mill End. Local Marlow engineer."
             ),
             breadcrumbs=[
                 ("Home", reverse("home")),
@@ -1097,6 +1249,143 @@ def area_henley(request):
                 ("Henley-on-Thames", reverse("area_henley")),
             ],
             town="Henley-on-Thames",
+        ),
+    )
+
+
+def area_beaconsfield(request):
+    return render(
+        request,
+        "areas/beaconsfield.html",
+        _base_context(
+            active="services",
+            page_title="Wi-Fi, CCTV & Smart Home Installation in Beaconsfield | Luma Tech",
+            page_description=(
+                "UniFi Wi-Fi, CCTV and smart-home installation for the larger "
+                "homes and businesses around Beaconsfield, Knotty Green and "
+                "Holtspur. Local Marlow engineer, fixed-price quotes."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Areas", reverse("areas")),
+                ("Beaconsfield", reverse("area_beaconsfield")),
+            ],
+            town="Beaconsfield",
+        ),
+    )
+
+
+# --- Quote request ---
+
+@require_http_methods(["GET", "POST"])
+def quote(request):
+    """Structured quote-request landing page. Captures property type,
+    postcode, services, timeline and budget — more qualifying data than the
+    generic contact form so we can reply with a real survey slot.
+    """
+    if request.method == "POST":
+        form = QuoteRequestForm(request.POST)
+        token = request.POST.get("g-recaptcha-response", "")
+        remote_ip = (
+            request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip()
+            or request.META.get("REMOTE_ADDR", "")
+        )
+        passed, score, reason = _verify_recaptcha(token, remote_ip)
+        if not passed:
+            log.info(
+                "reCAPTCHA rejected quote form: score=%.2f reason=%s",
+                score,
+                reason,
+            )
+            form.add_error(
+                None,
+                "We couldn't verify your submission. Please try again, or email us directly.",
+            )
+        elif form.is_valid():
+            quote_req = form.save()
+            try:
+                send_mail(
+                    subject=f"[Luma Tech] Quote request from {quote_req.name} ({quote_req.postcode})",
+                    message=(
+                        f"Name:      {quote_req.name}\n"
+                        f"Email:     {quote_req.email}\n"
+                        f"Phone:     {quote_req.phone or '—'}\n"
+                        f"Postcode:  {quote_req.postcode}\n"
+                        f"Property:  {quote_req.get_property_type_display()}\n"
+                        f"Services:  {quote_req.services_display() or '—'}\n"
+                        f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
+                        f"Budget:    {quote_req.get_budget_display() or '—'}\n"
+                        f"Source:    {quote_req.source or '—'}\n"
+                        f"\n"
+                        f"Notes:\n{quote_req.notes or '—'}\n"
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.CONTACT_FORM_RECIPIENT],
+                    fail_silently=False,
+                )
+                quote_req.notified = True
+                quote_req.save(update_fields=["notified"])
+            except Exception:
+                log.exception("Failed to send quote notification email")
+            messages.success(request, "Thanks — we'll be in touch shortly.")
+            return redirect(reverse("quote_thanks"))
+    else:
+        initial = {"source": request.GET.get("source", "")}
+
+        # ?service=networking → preselect that service in the multi-select.
+        # Accept multiple comma-separated keys: ?service=networking,security
+        service_param = request.GET.get("service", "").strip().lower()
+        if service_param:
+            valid_keys = {k for k, _ in QUOTE_SERVICE_CHOICES}
+            selected = [
+                s for s in service_param.split(",") if s.strip() in valid_keys
+            ]
+            if selected:
+                initial["services"] = selected
+
+        # ?property=home_large → preselect the property type.
+        prop = request.GET.get("property", "").strip().lower()
+        valid_props = {k for k, _ in PROPERTY_TYPE_CHOICES}
+        if prop in valid_props:
+            initial["property_type"] = prop
+
+        form = QuoteRequestForm(initial=initial)
+
+    return render(
+        request,
+        "quote.html",
+        _base_context(
+            active="quote",
+            page_title="Get a Quote — Wi-Fi, CCTV & Smart Home | Luma Tech",
+            page_description=(
+                "Tell us about your property and we'll come back with a "
+                "fixed-price quote. Marlow-based engineer, covering the "
+                "Thames Valley. Most surveys booked within the week."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Get a quote", reverse("quote")),
+            ],
+            form=form,
+            property_type_choices=PROPERTY_TYPE_CHOICES,
+            timeline_choices=TIMELINE_CHOICES,
+            budget_choices=BUDGET_CHOICES,
+            service_choices=QUOTE_SERVICE_CHOICES,
+        ),
+    )
+
+
+def quote_thanks(request):
+    return render(
+        request,
+        "quote_thanks.html",
+        _base_context(
+            active="quote",
+            page_title="Quote request received — thanks | Luma Tech",
+            page_description=(
+                "Your quote request has been received. We'll be in touch "
+                "within one working day to book your free site survey."
+            ),
         ),
     )
 

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content" style="text-align:center;">
+    <span class="eyebrow"><span class="dot"></span>Quote request received</span>
+    <h1>Thanks — Marco will be <span class="gradient">in touch shortly.</span></h1>
+    <p class="lede" style="margin-left:auto;margin-right:auto;">
+      Your quote request has reached us. We aim to reply within one
+      working day to confirm survey availability — usually faster. We'll
+      come and look, then send a fixed-price quote on one page. No
+      obligation, no sales chase.
+    </p>
+    <div class="cta-row" style="justify-content:center;">
+      <a href="{% url 'home' %}" class="btn btn-ghost">Back to homepage</a>
+      <a href="{% url 'portfolio' %}" class="btn btn-primary">See our work {% include 'partials/_icons.html' with name='arrow' %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
