@@ -120,18 +120,10 @@
             {{ form.services.errors }}
           </div>
 
-          <div class="row two">
-            <div>
-              <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
-              {{ form.timeline }}
-              {{ form.timeline.errors }}
-            </div>
-            <div>
-              <label for="{{ form.budget.id_for_label }}">Budget (optional)</label>
-              {{ form.budget }}
-              <p class="muted" style="font-size:.78rem;margin:.3rem 0 0;">Helps us tailor what we propose. Doesn't lock you in.</p>
-              {{ form.budget.errors }}
-            </div>
+          <div>
+            <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
+            {{ form.timeline }}
+            {{ form.timeline.errors }}
           </div>
 
           <div>

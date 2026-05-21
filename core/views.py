@@ -1314,7 +1314,6 @@ def quote(request):
                         f"Property:  {quote_req.get_property_type_display()}\n"
                         f"Services:  {quote_req.services_display() or '—'}\n"
                         f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
-                        f"Budget:    {quote_req.get_budget_display() or '—'}\n"
                         f"Source:    {quote_req.source or '—'}\n"
                         f"\n"
                         f"Notes:\n{quote_req.notes or '—'}\n"
@@ -1369,7 +1368,6 @@ def quote(request):
             form=form,
             property_type_choices=PROPERTY_TYPE_CHOICES,
             timeline_choices=TIMELINE_CHOICES,
-            budget_choices=BUDGET_CHOICES,
             service_choices=QUOTE_SERVICE_CHOICES,
         ),
     )
