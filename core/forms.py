@@ -3,7 +3,13 @@ import re
 
 from django import forms
 
-from .models import AUDIENCE_CHOICES, ContactSubmission, JobApplication
+from .models import (
+    AUDIENCE_CHOICES,
+    ContactSubmission,
+    JobApplication,
+    QUOTE_SERVICE_CHOICES,
+    QuoteRequest,
+)
 
 
 ALLOWED_CV_EXTENSIONS = {".pdf", ".doc", ".docx"}
@@ -154,3 +160,95 @@ class JobApplicationForm(forms.ModelForm):
                 )
 
         return f
+
+
+# UK postcode validation — accepts standard formats with or without a space.
+# Source: official BS 7666 postcode regex, slightly relaxed (case-insensitive,
+# trims whitespace before matching).
+_UK_POSTCODE_RE = re.compile(
+    r"^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$",
+    re.IGNORECASE,
+)
+
+
+class QuoteRequestForm(forms.ModelForm):
+    """Structured quote request form. Captures property type, postcode,
+    selected services, timeline and (optional) budget — enough qualifying
+    detail to reply with a real survey slot rather than a generic 'tell us
+    more' email.
+    """
+
+    # Honeypot — bots fill it, humans don't see it.
+    website = forms.CharField(required=False, widget=forms.HiddenInput)
+    source = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    services = forms.MultipleChoiceField(
+        choices=QUOTE_SERVICE_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        error_messages={"required": "Pick at least one service so we know what to quote."},
+    )
+
+    class Meta:
+        model = QuoteRequest
+        fields = [
+            "name",
+            "email",
+            "phone",
+            "postcode",
+            "property_type",
+            "services",
+            "timeline",
+            "budget",
+            "notes",
+            "source",
+        ]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Your name", "autocomplete": "name"}
+            ),
+            "email": forms.EmailInput(
+                attrs={"placeholder": "you@example.com", "autocomplete": "email"}
+            ),
+            "phone": forms.TextInput(
+                attrs={"placeholder": "07… (optional)", "autocomplete": "tel"}
+            ),
+            "postcode": forms.TextInput(
+                attrs={
+                    "placeholder": "e.g. SL7 1AA",
+                    "autocomplete": "postal-code",
+                    "autocapitalize": "characters",
+                    "maxlength": "16",
+                }
+            ),
+            "notes": forms.Textarea(
+                attrs={
+                    "rows": 5,
+                    "placeholder": "Anything we should know? Floor plan, problem areas, deadlines, listed-building constraints, etc.",
+                }
+            ),
+        }
+
+    def clean_website(self):
+        if self.cleaned_data.get("website"):
+            raise forms.ValidationError("Spam detected.")
+        return ""
+
+    def clean_postcode(self):
+        raw = (self.cleaned_data.get("postcode") or "").strip().upper()
+        if not raw:
+            raise forms.ValidationError("Please enter your postcode.")
+        if not _UK_POSTCODE_RE.match(raw):
+            raise forms.ValidationError(
+                "That doesn't look like a UK postcode — please double-check."
+            )
+        # Normalise to the canonical 'OUTWARD INWARD' format with one space.
+        compact = raw.replace(" ", "")
+        return f"{compact[:-3]} {compact[-3:]}"
+
+    def clean_services(self):
+        # ModelForm doesn't natively map MultipleChoiceField → CharField; we
+        # join the cleaned list back into the canonical comma-separated form
+        # that the model stores.
+        values = self.cleaned_data.get("services") or []
+        return ",".join(values)

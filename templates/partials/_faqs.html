@@ -1,0 +1,48 @@
+{# FAQ accordion + FAQPage JSON-LD.
+   Include with `faqs` list of {"q": "...", "a": "..."} dicts.
+   Optional: `faq_title`, `faq_eyebrow`.
+   The FAQPage schema is emitted inline (not inside the page's jsonld block)
+   because Google accepts multiple JSON-LD blocks per page. #}
+{% if faqs %}
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>{{ faq_eyebrow|default:"Common questions" }}</span>
+      <h2>{{ faq_title|default:"Frequently asked questions" }}</h2>
+    </div>
+
+    <div class="faq-list">
+      {% for f in faqs %}
+      <details class="faq-item fade-in">
+        <summary>
+          <span>{{ f.q }}</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="faq-answer">
+          <p>{{ f.a }}</p>
+        </div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{% for f in faqs %}
+    {
+      "@type": "Question",
+      "name": "{{ f.q|escapejs }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ f.a|escapejs }}"
+      }
+    }{% if not forloop.last %},{% endif %}{% endfor %}
+  ]
+}
+</script>
+{% endif %}

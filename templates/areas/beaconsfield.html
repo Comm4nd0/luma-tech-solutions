@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block jsonld %}{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Wi-Fi, CCTV and IT Support in Beaconsfield",
+  "serviceType": "Wi-Fi Installation",
+  "description": "UniFi Wi-Fi, CCTV and smart-home installation for the larger homes and small businesses around Beaconsfield, Knotty Green, Holtspur and Forty Green.",
+  "url": "{{ SITE_URL }}{% url 'area_beaconsfield' %}",
+  "provider": { "@id": "{{ SITE_URL }}#business" },
+  "areaServed": { "@type": "City", "name": "Beaconsfield" }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>15 minutes up the A40</span>
+        <h1>Wi-Fi, CCTV and IT support in <span class="gradient">Beaconsfield.</span></h1>
+        <p class="lede">
+          Beaconsfield has some of the largest detached homes in the
+          Thames Valley — and a tight, old town centre full of period
+          properties. Both are notoriously hard to cover with consumer
+          mesh kit. We design properly engineered UniFi networks that
+          reach every room, every outbuilding, and the bottom of the
+          garden.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='networking' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Beaconsfield's challenge: big houses, old town centre</h2>
+        <p>
+          Beaconsfield's housing stock is two extremes glued together —
+          the larger detached new-builds out toward Knotty Green and
+          Forty Green that simply can't be covered by a single router,
+          and the Georgian / Victorian period properties around the old
+          town with thick walls, lath-and-plaster, and conservation
+          constraints on what you can fix to the outside.
+        </p>
+        <p>
+          Both punish consumer mesh kit. The answer in both cases is
+          the same: wired access points, sized from an actual site
+          survey, fed by Cat6 to a tidy comms cupboard. One managed
+          dashboard, real diagnostics, no rebooting the router.
+        </p>
+
+        <h2 class="mt-4">What we do for Beaconsfield homes and businesses</h2>
+
+        <h3 class="mt-3">Wi-Fi installation for larger properties</h3>
+        <p>
+          Properly engineered UniFi networks — multiple wired access
+          points, sized from an on-site survey, fed by Cat6 to a tidy
+          comms cupboard. One managed dashboard, no mesh, no boosters.
+          Typical Beaconsfield installs run from four to ten access
+          points depending on size, layout and whether the outbuilding
+          or pool house needs coverage too.
+          <a href="{% url 'service_networking' %}">More about networking →</a>
+        </p>
+
+        <h3 class="mt-3">CCTV for period and listed properties</h3>
+        <p>
+          UniFi Protect cameras with on-device person, vehicle and
+          package detection, recordings stored on a small NVR at your
+          house — no monthly cloud subscription, footage stays on your
+          kit. Mounts and cable runs planned to be discreet on period
+          façades, so the old town centre look isn't ruined by a
+          fishmonger-sign of cameras and boxes.
+          <a href="{% url 'service_security' %}">More about physical security →</a>
+        </p>
+
+        <h3 class="mt-3">Smart home that works without the cloud</h3>
+        <p>
+          Home Assistant at the core — lighting, climate, security,
+          scenes — running on a small box at your house. Local voice
+          control if you want it; no Amazon or Google recordings going
+          anywhere. Keeps working when the BT exchange takes a Sunday
+          off.
+          <a href="{% url 'service_automation' %}">More about automation →</a>
+        </p>
+
+        <h3 class="mt-3">Ongoing care, by the same engineer</h3>
+        <p>
+          Optional care plans cover monitoring, firmware updates,
+          quarterly health checks and a known response time. Same
+          engineer takes the call every time — no tier-one call centre.
+          <a href="{% url 'service_support' %}">More about support →</a>
+        </p>
+
+        <h2 class="mt-4">Why local matters in Beaconsfield</h2>
+        <ul class="bullets">
+          <li><strong>15 minutes from Marlow</strong> — quick on-site surveys, same-day response on care plans for HP9 postcodes and around.</li>
+          <li><strong>We know the housing stock</strong> — Knotty Green new-builds, the Forty Green farmland houses, and the period stock around the old town. We've designed Wi-Fi and CCTV for all of it.</li>
+          <li><strong>Discreet by default</strong> — conservation areas and listed buildings mean exterior changes get noticed. We plan camera positions and AP mounts to be invisible from the street.</li>
+          <li><strong>Honest, fixed-price quotes</strong> — hardware, cabling, labour, timeline. One page. No day rates, no scope creep.</li>
+        </ul>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Local engineer</h4>
+        <p><strong>Marco Baldanza</strong> — based 15 minutes away in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
+        <p class="mt-2">Site surveys typically within 5 working days for Beaconsfield postcodes (HP9 and surrounding).</p>
+        <a href="{% url 'quote' %}?source=area-beaconsfield" class="btn btn-primary">Get a Beaconsfield quote</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Free on-site survey</li>
+          <li>Fixed-price proposal in 48h</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also serving</h4>
+        <p style="margin:.25rem 0;">
+          <a href="{% url 'area_marlow' %}">Marlow</a>,
+          <a href="{% url 'area_maidenhead' %}">Maidenhead</a>,
+          <a href="{% url 'area_henley' %}">Henley-on-Thames</a>,
+          Bourne End, Cookham, High Wycombe.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Beaconsfield project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — usually within the week — and reply with a fixed-price quote on one page.' cta_source='area-beaconsfield-bottom' %}
+{% endblock %}
