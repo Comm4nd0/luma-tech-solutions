@@ -1903,3 +1903,60 @@ footer.site-footer {
   background: rgba(20, 184, 166, 0.08);
   color: var(--fg-strong);
 }
+
+/* ---------- Coverage map (Leaflet) ---------- */
+.coverage-map-wrap {
+  margin-top: 0.5rem;
+}
+.coverage-map {
+  /* Tall enough to read at a glance, capped so it doesn't dominate. */
+  height: 320px;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  /* Subtle outer glow to tie it into the rest of the dark theme. */
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.08);
+}
+.coverage-map-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  text-align: center;
+}
+/* Leaflet's default attribution bar is bright white — soften it for our dark UI. */
+.leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: var(--muted) !important;
+  font-size: 0.7rem !important;
+}
+.leaflet-control-attribution a {
+  color: var(--accent) !important;
+}
+/* Tooltip dark theme. */
+.leaflet-tooltip {
+  background: var(--surface-2) !important;
+  color: var(--fg-strong) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  font-family: inherit !important;
+  font-size: 0.85rem !important;
+  padding: 4px 8px !important;
+}
+.leaflet-tooltip-top:before { border-top-color: var(--border) !important; }
+.leaflet-tooltip-bottom:before { border-bottom-color: var(--border) !important; }
+.leaflet-tooltip-left:before { border-left-color: var(--border) !important; }
+.leaflet-tooltip-right:before { border-right-color: var(--border) !important; }
+/* Zoom control dark. */
+.leaflet-bar a {
+  background-color: var(--surface) !important;
+  color: var(--fg) !important;
+  border-bottom-color: var(--border) !important;
+}
+.leaflet-bar a:hover {
+  background-color: var(--surface-2) !important;
+  color: var(--accent) !important;
+}
+@media (max-width: 700px) {
+  .coverage-map { height: 260px; }
+}

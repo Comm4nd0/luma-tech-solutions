@@ -1,8 +1,12 @@
-{# FAQ accordion + FAQPage JSON-LD.
-   Include with `faqs` list of {"q": "...", "a": "..."} dicts.
-   Optional: `faq_title`, `faq_eyebrow`.
-   The FAQPage schema is emitted inline (not inside the page's jsonld block)
-   because Google accepts multiple JSON-LD blocks per page. #}
+{% comment %}
+FAQ accordion + FAQPage JSON-LD.
+
+Include with `faqs` list of {"q": "...", "a": "..."} dicts.
+Optional: `faq_title`, `faq_eyebrow`.
+
+The FAQPage schema is emitted inline (not inside the page's jsonld block)
+because Google accepts multiple JSON-LD blocks per page.
+{% endcomment %}
 {% if faqs %}
 <section class="tight">
   <div class="container">

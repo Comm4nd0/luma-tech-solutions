@@ -1,9 +1,14 @@
-{# Bottom-of-page CTA banner.
-   Optional overrides via include with-args:
-     cta_title, cta_copy, cta_primary, cta_primary_url, cta_secondary, cta_secondary_url, cta_source
-   `cta_primary_url` defaults to the dedicated quote page — every CTA is now
-   funnelled through structured-quote-first; the secondary "Or just send a
-   message" is the soft escape for tyre-kickers. #}
+{% comment %}
+Bottom-of-page CTA banner.
+
+Optional overrides via include with-args:
+  cta_title, cta_copy, cta_primary, cta_primary_url,
+  cta_secondary, cta_secondary_url, cta_source
+
+`cta_primary_url` defaults to the dedicated quote page — every CTA is now
+funnelled through structured-quote-first; the secondary "Or just send a
+message" is the soft escape for tyre-kickers.
+{% endcomment %}
 <section class="tight">
   <div class="container">
     <div class="cta-banner fade-in">

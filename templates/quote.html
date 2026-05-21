@@ -158,23 +158,8 @@
         <p style="margin:0;">One page. Hardware, cabling, labour, timeline. No day rates, no scope creep.</p>
 
         <span class="label" style="margin-top:1.5rem;">Coverage</span>
-        <div class="map-card mt-1">
-          <svg class="area" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <radialGradient id="ring" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.35"/>
-                <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <circle cx="180" cy="110" r="90" fill="url(#ring)"/>
-            <circle cx="180" cy="110" r="62" stroke="#14b8a6" stroke-opacity="0.5" stroke-dasharray="3 4"/>
-            <circle cx="180" cy="110" r="34" stroke="#14b8a6" stroke-opacity="0.7" stroke-dasharray="3 4"/>
-            <circle cx="180" cy="110" r="6" fill="#14b8a6"/>
-            <text x="180" y="80" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter, sans-serif">Berks &amp; Bucks</text>
-          </svg>
-          <div class="label">Service area</div>
-          <div class="region">{{ SITE_TOWNS_DISPLAY }}</div>
-        </div>
+        {% include 'partials/_coverage_map.html' %}
+        <p class="muted" style="font-size:.78rem;margin:.35rem 0 0;">{{ SITE_TOWNS_DISPLAY }}</p>
 
         <span class="label" style="margin-top:1.5rem;">Or reach us directly</span>
         <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
