@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-content">
+    {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+    <span class="eyebrow"><span class="dot"></span>How we install cameras</span>
+    <h1>Our approach to <span class="gradient">camera privacy.</span></h1>
+    <p class="lede">
+      Every CCTV and AI-camera install we do follows the same principles.
+      This page is the long version &mdash; useful before you commission us,
+      and a handy artefact to hand to a workplace H&amp;S officer, a
+      neighbour, an insurer, or a DPIA reviewer who asks "how is this
+      actually set up?".
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>1. Footage stays on your kit</h2>
+        <p>
+          Every system we install records to a Network Video Recorder
+          (NVR) or Cloud Key that lives at your property &mdash; a small
+          appliance in a cupboard, comms rack or site cabinet. Footage
+          does not pass through a third-party cloud service to be stored
+          or analysed. If your broadband goes down, the cameras keep
+          recording locally; nothing is lost.
+        </p>
+        <p>
+          Off-site backup is an option, not a default. If you want
+          encrypted off-site copies, we'll set it up &mdash; to a location
+          you choose (your own object storage, a second site you own,
+          or a UK-based service we agree on together). It's never a
+          condition of the system working.
+        </p>
+
+        <h2 class="mt-4">2. AI runs on the camera, not in someone's data centre</h2>
+        <p>
+          The cameras we install carry their own neural-processing
+          hardware. Person, vehicle, package, animal and number-plate
+          detection all run on the camera itself. Your video stream is
+          never shipped to a third party for "analysis". Optional
+          features like face recognition are explicitly opt-in,
+          configured per-camera, and the enrolled-faces database lives
+          on your NVR (not a vendor cloud) so you control it &mdash;
+          including being able to wipe it in one click.
+        </p>
+
+        <h2 class="mt-4">3. Schedules &amp; geofences are configured before handover</h2>
+        <p>
+          A camera that records 24/7 is rarely what's appropriate, and
+          rarely what's lawful in a workplace or shared environment.
+          Every install ships with recording schedules and geofencing
+          configured to match what you actually need:
+        </p>
+        <ul class="bullets">
+          <li><strong>Time-of-day schedules</strong> per camera &mdash; for example, internal cameras off during occupied hours, on overnight; site cameras off during the working day, on out of hours.</li>
+          <li><strong>Geofenced arming</strong> using household / staff phones &mdash; when the last authorised phone leaves the property, internal cameras switch to "armed" recording; when the first phone returns, they disarm. No manual arming, no forgotten alarm.</li>
+          <li><strong>Day-of-week patterns</strong> &mdash; "weekday only" or "weekend only" schedules where they make sense.</li>
+          <li><strong>Holiday modes</strong> &mdash; a single tap on the dashboard switches the whole system into a configured "away" pattern.</li>
+        </ul>
+
+        <h2 class="mt-4">4. Privacy zones are masked at the camera</h2>
+        <p>
+          Where a camera's natural field-of-view includes areas it has
+          no business recording &mdash; a neighbour's window, a footpath
+          that isn't yours, a child's bedroom door, a staff break-room
+          &mdash; we configure privacy masks at the camera. Those zones
+          are blacked out before the image is encoded, so they aren't
+          stored in the recording at all. We document each mask in the
+          handover pack so the configuration is auditable.
+        </p>
+
+        <h2 class="mt-4">5. Access is per-user, two-factor and audited</h2>
+        <p>
+          Every person who needs to view the system gets their own
+          named login with two-factor authentication mandatory. There
+          is no shared admin password. The system logs who viewed what,
+          when, and from where &mdash; so if a question is ever raised,
+          there's an answer. Adding or removing a user is a one-click
+          job; we'll do it for you on care-plan accounts or hand you
+          the dashboard if you'd rather manage it yourself.
+        </p>
+
+        <h2 class="mt-4">6. No ports are opened on your firewall</h2>
+        <p>
+          Remote viewing on a phone or laptop goes through either the
+          vendor's encrypted relay (authenticated end-to-end) or a
+          private VPN we configure on your router. We never expose the
+          recorder or cameras directly to the internet, which is the
+          single most common cause of CCTV systems being compromised in
+          the wild.
+        </p>
+
+        <h2 class="mt-4">7. Retention is set deliberately, not by default</h2>
+        <p>
+          We agree a retention period with you on install &mdash; typically
+          7 days for residential, 30 days for commercial sites where
+          incidents may need investigating &mdash; and the recorder is
+          sized accordingly. Once the retention window passes, footage
+          is overwritten automatically. Specific clips can be exported
+          and kept longer (an incident, a billing dispute) but the
+          default is "delete after N days, unless explicitly saved".
+        </p>
+
+        <h2 class="mt-4">8. Workplace installs get a DPIA and signage</h2>
+        <p>
+          For business installs &mdash; offices, sites, retail premises,
+          letting properties &mdash; we draft a Data Protection Impact
+          Assessment as part of the install package. We supply the
+          mandatory signage for every entrance and viewable area, and
+          we hand over a one-page "what we record, for how long, who
+          can see it, lawful basis" document that satisfies the ICO
+          requirements you'd be checked against in an audit.
+        </p>
+        <p>
+          We don't provide legal advice and we're not a solicitor &mdash;
+          but the documents we hand over are the documents you'd
+          otherwise have to commission separately, and they're written
+          in plain English. You can run them past your own lawyer if
+          you want belt-and-braces.
+        </p>
+
+        <h2 class="mt-4">9. You can leave with everything</h2>
+        <p>
+          We don't lock you into proprietary platforms you can't get
+          out of. The recorder is hardware you own. The footage is
+          files on a disk you own. The configuration is documented in
+          your handover pack. If you ever stop working with us, you
+          can hand the system to another competent engineer (or run it
+          yourself) without losing access to anything.
+        </p>
+
+        <h2 class="mt-4">10. We won't install what we wouldn't install at home</h2>
+        <p>
+          That rules out a list of common things:
+        </p>
+        <ul class="bullets">
+          <li>Cloud-only systems where your footage is hostage to a subscription.</li>
+          <li>Any system where the AI runs in a third-party data centre and your video is the training data.</li>
+          <li>Cameras that share a single account across every household, with no audit trail.</li>
+          <li>Installs that require us to open ports on your firewall.</li>
+          <li>Cameras pointed at things they shouldn't be pointed at, no matter who's asking.</li>
+        </ul>
+        <p>
+          If a camera install needs one of those things to work, we'll
+          tell you honestly &mdash; and either redesign it so it doesn't,
+          or recommend you talk to someone else.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Need this for a DPIA?</h4>
+        <p>
+          If you're commissioning a workplace install and need a written
+          statement of how the system is configured for the ICO or your
+          own data-protection lead, we'll happily supply one signed off
+          on Luma Tech letterhead as part of the install package.
+        </p>
+        <a href="{% url 'contact' %}?service=security&amp;source=camera-privacy-dpia" class="btn btn-primary btn-sm" style="margin-top:.5rem;">Request the DPIA pack</a>
+
+        <h4 style="margin-top:1.5rem;">Related</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li><a href="{% url 'service_ai_cameras' %}">AI camera systems &rarr;</a></li>
+          <li><a href="{% url 'service_security' %}">Physical security overview &rarr;</a></li>
+          <li><a href="{% url 'privacy' %}">Site privacy policy &rarr;</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='Got a camera install in mind?' cta_copy='Tell us what you are trying to watch (and what you are not). We will quote the kit, the install and the paperwork in one go &mdash; with the privacy controls configured before we hand it over.' cta_source='camera-privacy-bottom' %}
+{% endblock %}

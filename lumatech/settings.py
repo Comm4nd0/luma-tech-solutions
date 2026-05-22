@@ -181,7 +181,7 @@ SITE_FOUNDER = "Marco Baldanza"
 SITE_BASE_TOWN = "Marlow"
 # Bump when you ship a meaningful site-wide content change so the
 # static-page sitemap honestly reflects freshness.
-SITE_STATIC_LASTMOD = "2026-05-21"
+SITE_STATIC_LASTMOD = "2026-05-22"
 
 # --- WhatsApp click-to-chat ---
 # E.164 format (e.g. +447xxxxxxxxx). Empty hides the floating button.

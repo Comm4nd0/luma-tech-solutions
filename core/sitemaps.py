@@ -27,6 +27,8 @@ class StaticViewSitemap(Sitemap):
             ("services", 0.9),
             ("service_networking", 0.8),
             ("service_security", 0.8),
+            ("service_ai_cameras", 0.85),
+            ("camera_privacy", 0.6),
             ("service_development", 0.8),
             ("service_automation", 0.8),
             ("service_support", 0.8),

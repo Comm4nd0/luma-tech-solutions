@@ -403,6 +403,37 @@ CASE_STUDIES = [
         "featured": False,
     },
     {
+        "slug": "chiltern-yard-anpr",
+        "title": "Chiltern Yard, Maidenhead — ANPR & site CCTV",
+        "tag": "Construction · ANPR",
+        "illustration": "security",
+        "summary": (
+            "A working builder's compound in Maidenhead — 0.8 acres, "
+            "gated entrance, mixed sub-contractor traffic across a "
+            "six-month groundworks programme. Two UniFi AI LPR cameras "
+            "at the gate log every vehicle in and out; an AI 360 covers "
+            "the material yard; four G5 Bullets cover the perimeter. "
+            "Recording stays on a UDM Pro in a lockable site cabinet, "
+            "with 4G failover during the first six weeks before the "
+            "fixed line went in."
+        ),
+        "stack": [
+            "UniFi Dream Machine Pro",
+            "2× AI LPR (gate ANPR)",
+            "AI 360 (yard)",
+            "4× G5 Bullet (perimeter)",
+            "PoE Switch + 4G failover",
+            "DPIA + signage pack",
+        ],
+        "outcome": (
+            "Sub-contractor billing disputes resolved in an afternoon from "
+            "timestamped gate footage. Site manager reports ~3 hours/week "
+            "saved on attendance reconciliation. Zero out-of-hours "
+            "intrusions over the install period."
+        ),
+        "featured": False,
+    },
+    {
         "slug": "littlewick-house",
         "title": "LittleWick House — whole-property UniFi network",
         "tag": "Networking",
@@ -597,6 +628,91 @@ FAQS_SECURITY = [
         ),
     },
 ]
+
+
+# AI-cameras FAQs, used on the AI camera systems service page.
+FAQS_AI_CAMERAS = [
+    {
+        "q": "Does the AI run in the cloud?",
+        "a": (
+            "No. The cameras we install carry their own neural-processing "
+            "hardware — person, vehicle, package, animal and number-plate "
+            "detection all run on the camera itself. Your video stream is "
+            "never shipped to a third party for analysis, and the system "
+            "works fully even when your broadband is down."
+        ),
+    },
+    {
+        "q": "How accurate is the number plate recognition (ANPR)?",
+        "a": (
+            "On UniFi AI Pro and AI LPR cameras, plate capture is reliable "
+            "for typical UK gate speeds (under ~30 mph) with the camera "
+            "positioned and aimed correctly during the site survey. We "
+            "design the install around the angle and distance the model "
+            "needs, not the convenience of an existing mounting point — "
+            "which is the difference between 95%+ readable captures and "
+            "the cheap kit that misses half the plates."
+        ),
+    },
+    {
+        "q": "Can the cameras be set to only record at certain times?",
+        "a": (
+            "Yes — every install ships with recording schedules and "
+            "geofence arming configured before handover, per camera. "
+            "Site cameras can be off during the working day and on "
+            "out-of-hours; internal cameras can be off when family or "
+            "staff phones are inside the geofence and on automatically "
+            "when everyone has left. We agree the pattern with you up "
+            "front and document it in the handover pack."
+        ),
+    },
+    {
+        "q": "Do I need an ICO registration for ANPR on a building site?",
+        "a": (
+            "If you're processing personal data via CCTV in a workplace "
+            "or commercial setting — which ANPR is — yes, you should be "
+            "registered with the ICO, have a Data Protection Impact "
+            "Assessment, and display compliant signage. We draft the "
+            "DPIA, supply the signage and hand over a one-page summary "
+            "of what's recorded, for how long, and who can see it as "
+            "part of the install package."
+        ),
+    },
+    {
+        "q": "Can family members watch the cameras from their phones?",
+        "a": (
+            "Yes — we set up the UniFi Protect app on each authorised "
+            "phone with two-factor authentication mandatory, and each "
+            "viewer gets their own named login (not a shared password). "
+            "Remote viewing goes through the vendor's encrypted relay or "
+            "your own VPN — we never open ports on your firewall."
+        ),
+    },
+    {
+        "q": "Will the cameras work if the internet goes down?",
+        "a": (
+            "Yes. Recording happens locally on a Network Video Recorder "
+            "at your property, not in the cloud, so footage keeps being "
+            "captured even when the WAN is offline. On sites with poor "
+            "broadband we add a 4G failover so remote alerts still get "
+            "through; the recording itself never stops."
+        ),
+    },
+    {
+        "q": "Can you do fall detection or medical alerts?",
+        "a": (
+            "Honestly — no, not as a medical-grade product. AI cameras "
+            "can flag unusual events like a person remaining motionless, "
+            "but a camera is not a medical alarm and shouldn't be sold as "
+            "one. For households where someone needs reliable fall or "
+            "medical-emergency response, we'll happily build a "
+            "monitoring system for peace of mind — and we'll insist you "
+            "pair it with a proper telecare device (a Lifeline pendant "
+            "or equivalent) for the medical side."
+        ),
+    },
+]
+
 
 
 JOB_ROLES = [
@@ -821,6 +937,62 @@ def service_automation(request):
                 "climate, security and scenes across Marlow, Henley-on-Thames "
                 "and the Thames Valley."
             ),
+        ),
+    )
+
+
+def service_ai_cameras(request):
+    return render(
+        request,
+        "services/ai_cameras.html",
+        _base_context(
+            active="services",
+            page_title="AI Camera Systems — ANPR, Smart CCTV, Privacy-First | Luma Tech",
+            page_description=(
+                "AI cameras done properly across Marlow, Maidenhead, "
+                "Henley and the Thames Valley. ANPR for construction "
+                "sites, smart home & family monitoring, scheduled and "
+                "geofenced recording. Footage stays on your kit."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Services", reverse("services")),
+                ("AI Camera Systems", reverse("service_ai_cameras")),
+            ],
+            service_name="AI Camera Systems",
+            service_type="CCTV Installation",
+            service_url=reverse("service_ai_cameras"),
+            service_description=(
+                "AI camera systems with on-device person, vehicle, package, "
+                "animal and number-plate recognition. Designed for "
+                "construction sites, homes and small businesses across "
+                "Marlow, Maidenhead, Henley and the Thames Valley. "
+                "Scheduled recording, geofenced arming, on-site storage — "
+                "no third-party cloud."
+            ),
+            faqs=FAQS_AI_CAMERAS,
+        ),
+    )
+
+
+def camera_privacy(request):
+    return render(
+        request,
+        "camera_privacy.html",
+        _base_context(
+            active="services",
+            page_title="Our Approach to Camera Privacy | Luma Tech",
+            page_description=(
+                "How Luma Tech installs CCTV and AI cameras: on-site "
+                "recording, on-device AI, scheduled & geofenced arming, "
+                "privacy masks, per-user 2FA access, DPIA and signage. "
+                "The full write-up — useful before you commission us, "
+                "and as a DPIA artefact."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Our approach to camera privacy", reverse("camera_privacy")),
+            ],
         ),
     )
 

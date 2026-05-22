@@ -91,6 +91,7 @@
           "itemListElement": [
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UniFi Wi-Fi Installation", "url": "{{ SITE_URL }}{% url 'service_networking' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CCTV Installation", "url": "{{ SITE_URL }}{% url 'service_security' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Camera Systems & ANPR", "url": "{{ SITE_URL }}{% url 'service_ai_cameras' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Smart Home Installation", "url": "{{ SITE_URL }}{% url 'service_automation' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "App & Web Development", "url": "{{ SITE_URL }}{% url 'service_development' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "IT Support & Care Plans", "url": "{{ SITE_URL }}{% url 'service_support' %}" } }
@@ -163,6 +164,7 @@
           <ul>
             <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
             <li><a href="{% url 'service_security' %}">Physical Security</a></li>
+            <li><a href="{% url 'service_ai_cameras' %}">AI Camera Systems</a></li>
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
             <li><a href="{% url 'service_automation' %}">Home Automation</a></li>
             <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>

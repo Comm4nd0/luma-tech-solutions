@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>AI Cameras &middot; privacy-first</span>
+        <h1>AI cameras that <span class="gradient">don't spy on you.</span></h1>
+        <p class="lede">
+          On-device AI for the things you actually want it for &mdash;
+          number plates on a building site, peace of mind while you're
+          away, smart alerts that mean something. Recorded on your kit,
+          scheduled to be off when you don't want it watching, geofenced
+          to follow your phone. No third-party cloud, no monthly AI
+          subscription, no footage leaving the building.
+        </p>
+        <div class="row-actions mt-3">
+          <a href="{% url 'quote' %}?service=security&amp;source=ai-cameras-hero" class="btn btn-primary plausible-event-name=AI+Cameras+Hero+Quote">Get an AI camera quote {% include 'partials/_icons.html' with name='arrow' %}</a>
+          <a href="#construction" class="btn btn-ghost btn-sm">Construction sites &amp; ANPR</a>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        {% include 'partials/_illustrations.html' with name='security' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>The honest pitch</span>
+      <h2>Everyone sells "AI cameras". We sell <span class="gradient">AI cameras you actually control.</span></h2>
+      <p class="lede">
+        The clever stuff &mdash; recognising people, number plates,
+        packages, falls, animals &mdash; runs on a small neural processor
+        inside the camera itself. It never has to phone home to a
+        third-party AI to work. We deliberately design every system that
+        way, then layer the privacy controls (schedules, geofences,
+        on-site recording) on top so the cameras do exactly what you
+        want, exactly when you want, and nothing else.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="case-card fade-in">
+        <span class="case-tag">Construction &amp; sites</span>
+        <h3>ANPR &amp; on-site presence</h3>
+        <p>Know exactly who arrived, when they left, and which vehicles came through the gate &mdash; without standing at the entrance with a clipboard.</p>
+        <a href="#construction" class="btn btn-ghost btn-sm mt-3">How it works &rarr;</a>
+      </article>
+      <article class="case-card fade-in">
+        <span class="case-tag">Home &amp; family</span>
+        <h3>Peace-of-mind monitoring</h3>
+        <p>Check in on the dog, the back gate, or the workshop while you're out. Smart alerts that buzz for things that matter, ignore things that don't.</p>
+        <a href="#home" class="btn btn-ghost btn-sm mt-3">How it works &rarr;</a>
+      </article>
+      <article class="case-card fade-in">
+        <span class="case-tag">Privacy by design</span>
+        <h3>Schedules &amp; geofences</h3>
+        <p>Cameras that record only when they should. Recording windows by time of day, automatic disarm when your phone is home, masked zones for sensitive areas.</p>
+        <a href="#privacy" class="btn btn-ghost btn-sm mt-3">How it works &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="construction" class="section-orb">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>For construction &amp; site managers</span>
+      <h2>ANPR &amp; on-site presence, <span class="gradient">without a clipboard.</span></h2>
+      <p class="lede">
+        Build sites have a real, expensive problem: nobody actually knows
+        who was on site, when, and for how long. Sub-contractor billing
+        disputes, RAMS compliance, H&amp;S audits, insurance claims,
+        late-night gate breaches &mdash; all of it gets argued from memory
+        and a half-filled-in paper log. AI cameras with on-board number-
+        plate recognition fix it cleanly.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>What we install</h3>
+        <ul class="bullets">
+          <li><strong>UniFi AI Pro &amp; AI LPR cameras at the gate</strong> &mdash; 4K with on-device licence plate recognition. Every vehicle in, every vehicle out, logged with timestamp and an actual readable image of the plate.</li>
+          <li><strong>UniFi AI 360s for the yard</strong> &mdash; panoramic ceiling-mount coverage for compound and material storage.</li>
+          <li><strong>UniFi G5 Bullets on the perimeter</strong> &mdash; weatherproof, IK-rated, mounted high enough to survive site life.</li>
+          <li><strong>A Dream Machine Pro and PoE switching in a lockable site cabinet</strong> &mdash; recording stays on site, on your kit. Footage doesn't sit on someone else's server.</li>
+          <li><strong>4G failover where there's no decent broadband</strong> &mdash; system keeps recording locally and syncs alerts over cellular until the WAN comes back.</li>
+        </ul>
+
+        <h3 class="mt-4">What the site manager gets</h3>
+        <ul class="bullets">
+          <li><strong>A daily presence report</strong> &mdash; "vehicles on site between 07:30 and 17:00 today" &mdash; auto-emailed at the end of the working day.</li>
+          <li><strong>Plate-watchlist alerts</strong> &mdash; flag specific subbie plates so you get a buzz when they arrive and a record of when they left.</li>
+          <li><strong>Searchable history</strong> &mdash; "show me every visit by plate <code>AB12 CDE</code> last month" returns clips and timestamps in seconds.</li>
+          <li><strong>Out-of-hours alerts only</strong> &mdash; the system stays quiet during normal working hours and only buzzes for movement on the gate after the site is closed.</li>
+          <li><strong>One dashboard, on a phone</strong> &mdash; iOS and Android, two-factor, no public ports opened on the router.</li>
+        </ul>
+
+        <h3 class="mt-4">The legal bit, handled</h3>
+        <p>
+          Workplace CCTV with ANPR has real obligations &mdash; ICO
+          registration, a Data Protection Impact Assessment (DPIA),
+          appropriate signage at every entrance, a lawful basis for
+          processing, and a retention policy you can actually point at.
+          We bake the paperwork into the install package so you don't
+          have to figure it out: we draft the DPIA, supply the signs,
+          and hand over a one-page "what we record, how long for, who
+          can see it" sheet your H&amp;S team can file. No legal advice
+          beyond what we hand you in writing &mdash; if you want a
+          solicitor to bless it, we'll happily co-operate.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <span class="eyebrow"><span class="dot"></span>Real example</span>
+        <h4 style="margin-top:.5rem;">Chiltern Yard, Maidenhead</h4>
+        <p class="muted">A working builder's compound in Maidenhead &mdash; 0.8 acres, gated entrance, mixed sub-contractor traffic across a six-month groundworks programme.</p>
+        <ul class="bullets" style="margin-top:.75rem;">
+          <li>2x UniFi AI LPR at the gate</li>
+          <li>1x AI 360 over the material yard</li>
+          <li>4x G5 Bullets on the perimeter</li>
+          <li>UDM Pro + PoE switch in a lockable site cabinet</li>
+          <li>4G failover during the first 6 weeks (no fixed line)</li>
+        </ul>
+        <p style="margin-top:.75rem;"><strong>Outcome:</strong> billing disputes with two subbies resolved in an afternoon by pulling timestamped gate footage. Site manager reports ~3 hours/week saved on attendance reconciliation. Zero out-of-hours intrusions over the install period.</p>
+        <a href="{% url 'quote' %}?service=security&amp;source=ai-cameras-construction-sidebar" class="btn btn-primary btn-sm" style="margin-top:1rem;">Quote my site</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="home" class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>For homes &amp; families</span>
+      <h2>Peace of mind, <span class="gradient">not surveillance.</span></h2>
+      <p class="lede">
+        Check the workshop. Watch the dog while you're at the office.
+        Make sure the gardener turned up on the day they said. Get
+        useful alerts when the kids are home from school. None of it
+        needs to live on Ring's, Nest's or Hik's servers.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>Pets &amp; the back of the house</h3>
+        <ul class="bullets">
+          <li><strong>Animal detection</strong> on AI-capable cameras &mdash; the system tells the difference between the dog moving and a person at the back gate, so the alerts you get on holiday are the ones that matter.</li>
+          <li><strong>Two-way audio</strong> on indoor units &mdash; tell the dog off when it's on the sofa, reassure it during fireworks, talk to the cat sitter through the kitchen camera.</li>
+          <li><strong>Clip-on-event recording</strong> &mdash; the system only keeps clips when something happened, so a fortnight away doesn't fill the recorder with empty hallway footage.</li>
+        </ul>
+
+        <h3 class="mt-4">Family check-ins (the careful version)</h3>
+        <p>
+          A camera on a child's room or a relative's hallway is never a
+          casual decision. We treat these installs like the considered
+          job they are: an explicit conversation about what the camera
+          is and isn't for, a fixed schedule (e.g. "off entirely during
+          the day", "on only when the door is opened"), masked zones
+          for private areas, and an audit trail of every login. For
+          households where someone with special needs or reduced
+          mobility lives, we'll happily build a system to give carers
+          and family peace of mind &mdash; but we'll be straight with you
+          up front: a camera is not a fall-alarm and not a medical
+          device. Pair it with proper telecare (a Lifeline pendant or
+          equivalent) for the medical-emergency side of things, and the
+          camera does what it's good at: showing you, calmly, that
+          everything is fine.
+        </p>
+
+        <h3 class="mt-4">The bit nobody else mentions</h3>
+        <p>
+          We don't install camera systems we wouldn't put in our own
+          house. That rules out anything cloud-only (your footage is
+          a hostage), anything where the AI runs in someone else's data
+          centre (your footage is the training data), and anything that
+          demands a monthly subscription to keep working. UniFi Protect
+          and Home Assistant do not.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>What an at-home AI camera install looks like</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>UniFi G5 Bullets outside, AI Pro at the front door</li>
+          <li>A small Cloud Key in a cupboard &mdash; recording stays at home</li>
+          <li>Person / vehicle / package / animal detection on every AI-capable unit</li>
+          <li>Schedules, geofence and masked zones configured for you</li>
+          <li>Phone app set up on every family member's phone with 2FA</li>
+          <li>Written handover &mdash; what's recorded, for how long, who can see it</li>
+        </ul>
+        <a href="{% url 'quote' %}?service=security&amp;source=ai-cameras-home-sidebar" class="btn btn-primary btn-sm" style="margin-top:1rem;">Quote my home</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="privacy" class="section-orb">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Privacy by design</span>
+      <h2>Schedules, geofences and footage that <span class="gradient">stays where it belongs.</span></h2>
+      <p class="lede">
+        Most CCTV is "on, all the time, watching everything". That's
+        rarely what you actually want, and increasingly it's not what's
+        legal either. Every Luma install ships with the controls below
+        configured from day one &mdash; not as a paid add-on, not as a
+        thing you discover six months in.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>What we configure as standard</h3>
+        <ul class="bullets">
+          <li><strong>Recording schedules</strong> &mdash; cameras can be off during occupied hours and on overnight, off during business hours and on at the weekend, or any other pattern you actually want. Schedules can vary by camera; the office camera doesn't have to follow the same rules as the back-garden one.</li>
+          <li><strong>Geofenced arming</strong> &mdash; when the last household phone leaves a configured radius around the property, the internal cameras switch on; when the first phone is back, they switch off. No "did I arm the alarm?".</li>
+          <li><strong>Masked / privacy zones</strong> &mdash; the camera that watches the drive doesn't need to also be looking through the neighbour's bedroom window. We mask sensitive zones at the camera, so they aren't recorded in the first place.</li>
+          <li><strong>On-site recording</strong> &mdash; footage lives on a small NVR or Cloud Key in your house or office. Encrypted off-site backup is available if you want it, but it's a deliberate choice, not the default.</li>
+          <li><strong>No public ports</strong> &mdash; remote viewing goes through an encrypted relay or your own VPN. Nothing on your router is opened to the internet for the cameras to work.</li>
+          <li><strong>Per-user access</strong> &mdash; each viewer has their own login, two-factor on every account, an audit trail of who watched what.</li>
+        </ul>
+
+        <h3 class="mt-4">What we'll never do</h3>
+        <ul class="bullets">
+          <li>Pipe your footage to a third-party cloud service "for analysis".</li>
+          <li>Install a system that stops working when its subscription lapses.</li>
+          <li>Open a port on your firewall so you can watch the cameras from your phone.</li>
+          <li>Hand you a system you can't audit, change or take with you if you ever stop working with us.</li>
+        </ul>
+
+        <p class="mt-3">
+          The full write-up of how we approach this on every install lives
+          on its own page &mdash; useful reading before you commission, and a
+          handy artefact if a workplace, neighbour or insurer ever asks
+          "how is this set up?".
+        </p>
+        <div class="row-actions mt-3">
+          <a href="{% url 'camera_privacy' %}" class="btn btn-ghost btn-sm">Read: our approach to camera privacy &rarr;</a>
+        </div>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Bespoke installs</h4>
+        <p>
+          Specialist use-cases &mdash; supported living, SEN households,
+          care environments, listed buildings with planning constraints,
+          equestrian and farm sites &mdash; we handle on a bespoke,
+          one-conversation-at-a-time basis. We won't pretend they're
+          off-the-shelf. Get in touch and we'll work through what's
+          appropriate.
+        </p>
+        <a href="{% url 'contact' %}?service=security&amp;source=ai-cameras-bespoke" class="btn btn-ghost btn-sm" style="margin-top:.5rem;">Talk about a bespoke install</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_areas_served.html' %}
+
+{% include 'partials/_faqs.html' with faqs=faqs %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Tell us what you want it to watch (and what you don\'t).' cta_copy='Construction site, family home, holiday let, workshop, yard. We will quote the kit, the install and the paperwork on one page, fixed price, with the privacy controls configured before we hand it over.' cta_source='service-ai-cameras-bottom' %}
+{% endblock %}
