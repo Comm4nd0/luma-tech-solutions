@@ -19,7 +19,7 @@ PILLARS = [
     {
         "key": "networking",
         "title": "Wi-Fi & Networking",
-        "tagline": "Properly engineered Wi-Fi and network design — no more dead-spots, no more rebooting the router.",
+        "tagline": "Properly engineered Wi-Fi and network design — no more dead spots, no more rebooting the router.",
         "url_name": "service_networking",
         "icon": "wifi",
     },
@@ -134,6 +134,8 @@ CASE_STUDIES = [
     {
         "slug": "chiltern-view",
         "title": "Chiltern View — full smart home and UniFi network",
+        "tag": "Smart home + networking",
+        "illustration": "automation",
         "summary": (
             "A complete residential rebuild: fast Wi-Fi everywhere, Protect "
             "CCTV recording at the property, and Home Assistant running "
@@ -148,6 +150,8 @@ CASE_STUDIES = [
     {
         "slug": "for-sale-by-owner",
         "title": "For Sale By Owner — property listings mobile app",
+        "tag": "Mobile app",
+        "illustration": "development",
         "summary": (
             "A polished cross-platform mobile app for a UK property listings "
             "business, with photo uploads, map-based search and a back-office "
@@ -160,6 +164,8 @@ CASE_STUDIES = [
     {
         "slug": "littlewick-house",
         "title": "LittleWick House — whole-property UniFi network",
+        "tag": "Networking",
+        "illustration": "networking",
         "summary": (
             "A large residential property in Maidenhead across four floors, "
             "plus a cellar, garage and separate annex. Eleven access points, "
@@ -180,6 +186,8 @@ CASE_STUDIES = [
     {
         "slug": "paws-4-thought-dogs",
         "title": "Paws 4 Thought Dogs — small business website",
+        "tag": "Marketing site",
+        "illustration": "development",
         "summary": (
             "A polished, SEO-friendly website for a local dog-walking business, "
             "with booking enquiries, gallery and Google Business integration."
