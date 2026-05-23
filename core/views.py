@@ -452,7 +452,7 @@ CASE_STUDIES = [
             "3× PoE Switches",
             "VLAN segmentation",
         ],
-        "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with proper network segmentation and room to grow.",
+        "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with robust network segmentation and room to grow.",
         "featured": True,
     },
     {
@@ -613,7 +613,7 @@ FAQS_SECURITY = [
     {
         "q": "Do the cameras work in the dark?",
         "a": (
-            "Yes. The cameras we install have proper infrared night vision "
+            "Yes. The cameras we install have high-quality infrared night vision "
             "and (on most models) low-light colour modes. On-device AI "
             "tells person from vehicle from package, so your phone only "
             "buzzes for things that matter."
@@ -707,7 +707,7 @@ FAQS_AI_CAMERAS = [
             "one. For households where someone needs reliable fall or "
             "medical-emergency response, we'll happily build a "
             "monitoring system for peace of mind — and we'll insist you "
-            "pair it with a proper telecare device (a Lifeline pendant "
+            "pair it with a dedicated telecare device (a Lifeline pendant "
             "or equivalent) for the medical side."
         ),
     },
@@ -722,7 +722,7 @@ JOB_ROLES = [
         "summary": "Design and deploy UniFi networks for homes and small businesses across the Thames Valley.",
         "responsibilities": [
             "Plan and install UniFi Wi-Fi, switching and gateway kit on residential and small-business sites",
-            "Configure VLANs, firewall rules, guest networks and Protect CCTV — properly segmented, properly documented",
+            "Configure VLANs, firewall rules, guest networks and Protect CCTV — carefully segmented, thoroughly documented",
             "Commission, label and hand-over networks with clean as-built documentation",
             "Triage and resolve client issues remotely (UniFi Site Manager) and on-site",
         ],
@@ -793,7 +793,7 @@ def home(request):
             active="home",
             page_title="Wi-Fi Installation Marlow, CCTV & IT Support | Luma Tech",
             page_description=(
-                "Marlow-based engineer for proper UniFi Wi-Fi, CCTV and "
+                "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and "
                 "smart-home installation across Marlow, Maidenhead, Henley "
                 "and the Thames Valley. Fixed-price quotes, no mesh."
             ),
@@ -949,7 +949,7 @@ def service_ai_cameras(request):
             active="services",
             page_title="AI Camera Systems — ANPR, Smart CCTV, Privacy-First | Luma Tech",
             page_description=(
-                "AI cameras done properly across Marlow, Maidenhead, "
+                "AI cameras done right across Marlow, Maidenhead, "
                 "Henley and the Thames Valley. ANPR for construction "
                 "sites, smart home & family monitoring, scheduled and "
                 "geofenced recording. Footage stays on your kit."
