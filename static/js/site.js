@@ -1,3 +1,91 @@
+// Theme toggle (light / dark)
+(function () {
+  var btn = document.querySelector('[data-theme-toggle]');
+  if (!btn) return;
+  var SWEEP_MS = 600;
+  var sweeping = false;
+  function apply(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+  }
+  // Initialise aria-pressed from whatever the inline head script applied.
+  apply(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  function buttonCircleCoords() {
+    var rect = btn.getBoundingClientRect();
+    var x = rect.left + rect.width / 2;
+    var y = rect.top + rect.height / 2;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    return { x: x, y: y, maxR: Math.hypot(Math.max(x, w - x), Math.max(y, h - y)) };
+  }
+
+  btn.addEventListener('click', function () {
+    if (sweeping) return;
+    var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    var next = current === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('luma-theme', next); } catch (e) {}
+    // Radial reveal: a circle of the destination colour grows from the toggle
+    // button's centre out to the farthest viewport corner. When it covers the
+    // viewport, swap the theme attribute and remove the overlay — the colour
+    // beneath now matches what was visible.
+    sweeping = true;
+    var c = buttonCircleCoords();
+    var overlay = document.createElement('div');
+    overlay.className = 'theme-sweep theme-sweep--to-' + next;
+    overlay.style.clipPath = 'circle(0px at ' + c.x + 'px ' + c.y + 'px)';
+    overlay.style.transition = 'clip-path ' + SWEEP_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
+    document.body.appendChild(overlay);
+    void overlay.offsetHeight;
+    overlay.style.clipPath = 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)';
+    setTimeout(function () {
+      apply(next);
+      overlay.remove();
+      sweeping = false;
+    }, SWEEP_MS);
+  });
+
+  // One-time hint pulse: 3 seconds after load, a dark wave emanates from the
+  // toggle to showcase dark mode, then fades back to the current theme.
+  // Gated to once per session via sessionStorage.
+  function showThemeHintPulse() {
+    if (sweeping) return;
+    if (!document.body.animate) return; // very old browser without WAAPI
+    var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    // The pulse shows the opposite of the current theme — usually dark on light.
+    var pulseTheme = current === 'light' ? 'dark' : 'light';
+    var c = buttonCircleCoords();
+    var overlay = document.createElement('div');
+    overlay.className = 'theme-sweep theme-sweep--to-' + pulseTheme;
+    overlay.style.clipPath = 'circle(0px at ' + c.x + 'px ' + c.y + 'px)';
+    document.body.appendChild(overlay);
+    var anim = overlay.animate([
+      { clipPath: 'circle(0px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0 },
+      { clipPath: 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0.45, offset: 0.6 },
+      { clipPath: 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0 },
+    ], {
+      duration: 1300,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      fill: 'forwards',
+    });
+    anim.onfinish = function () { overlay.remove(); };
+  }
+
+  try {
+    if (!sessionStorage.getItem('luma-theme-hint-seen')) {
+      setTimeout(function () {
+        showThemeHintPulse();
+        try { sessionStorage.setItem('luma-theme-hint-seen', '1'); } catch (e) {}
+      }, 3000);
+    }
+  } catch (e) {
+    setTimeout(showThemeHintPulse, 3000);
+  }
+})();
+
 // Mobile nav toggle
 (function () {
   var toggle = document.querySelector('[data-nav-toggle]');

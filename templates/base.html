@@ -35,6 +35,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('luma-theme');
+        // Default to light; honour an explicit user toggle (saved) above all.
+        var pref = (saved === 'dark') ? 'dark' : 'light';
+        if (pref === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      } catch (e) {
+        // localStorage may throw in private mode — fall through to the light default
+        // (no data-theme set means dark, so set it explicitly for the fallback).
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
   <link rel="stylesheet" href="{% static 'css/site.css' %}" />
 
   {% if PLAUSIBLE_DOMAIN %}
@@ -147,6 +162,17 @@
         <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
         <li><a href="{% url 'careers' %}" class="{% if active_nav == 'careers' %}active{% endif %}">Careers</a></li>
         <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}">Contact</a></li>
+        <li class="nav-theme-toggle">
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle light/dark theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+            </svg>
+          </button>
+        </li>
         <li class="nav-cta"><a href="{% url 'quote' %}" class="btn btn-primary btn-sm plausible-event-name=Nav+Quote+Click">Get a quote</a></li>
       </ul>
     </div>
@@ -234,7 +260,7 @@
        class="social-fab__btn social-fab__btn--google plausible-event-name=Google+Review+Click"
        target="_blank" rel="noopener"
        aria-label="Leave us a Google review">
-      {% include 'partials/_icons.html' with name='star' %}
+      {% include 'partials/_icons.html' with name='google-g' %}
     </a>
     <a href="https://www.instagram.com/luma_tech_solutions/"
        class="social-fab__btn social-fab__btn--instagram plausible-event-name=Instagram+Click"
