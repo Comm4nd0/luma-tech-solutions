@@ -75,7 +75,7 @@ PILLARS = [
     {
         "key": "security",
         "title": "Physical Security",
-        "tagline": "CCTV, access control, alarms and smart locks — professionally installed and integrated with your network.",
+        "tagline": "CCTV, access control and alarms — professionally installed and integrated with your network.",
         "url_name": "service_security",
         "icon": "lock",
     },
@@ -146,8 +146,8 @@ HERO_SLIDES = [
         "headline_top": "CCTV, access and alarms —",
         "headline_bottom": "one integrated system.",
         "lede": (
-            "CCTV, access control, alarms and smart locks — professionally "
-            "installed and integrated with the same network we built. "
+            "CCTV, access control and alarms — professionally installed "
+            "and integrated with the same network we built. "
             "Recorded on-site, not on someone else's cloud."
         ),
         "primary_cta_text": "Get a CCTV quote",
@@ -876,7 +876,7 @@ def service_security(request):
             service_type="CCTV Installation",
             service_url=reverse("service_security"),
             service_description=(
-                "UniFi Protect CCTV, access control, alarms, smart locks and "
+                "UniFi Protect CCTV, access control, alarms and "
                 "network hardening for homes and businesses across Marlow, "
                 "Maidenhead, Beaconsfield and the Thames Valley."
             ),

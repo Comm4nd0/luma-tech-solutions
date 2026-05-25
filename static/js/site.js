@@ -71,12 +71,23 @@
   if (slides.length < 2) return;
 
   var autoplayMs = parseInt(slider.getAttribute('data-autoplay-ms'), 10) || 3000;
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  slider.style.setProperty('--hero-progress-duration', autoplayMs + 'ms');
+  var progressBar = slider.querySelector('[data-hero-progress]');
 
   var current = 0;
   var timerId = null;
   var paused = false;
   var hidden = false;
+
+  function resetProgress() {
+    if (!progressBar) return;
+    // Restart the CSS animation by toggling animation: none, forcing a reflow,
+    // then letting it pick up the class-driven animation again.
+    progressBar.style.animation = 'none';
+    // eslint-disable-next-line no-unused-expressions
+    progressBar.offsetHeight;
+    progressBar.style.animation = '';
+  }
 
   function go(n) {
     n = ((n % slides.length) + slides.length) % slides.length;
@@ -92,14 +103,18 @@
       d.setAttribute('aria-selected', active ? 'true' : 'false');
     });
     current = n;
+    resetProgress();
   }
   function next() { go(current + 1); }
   function start() {
-    if (reduceMotion || paused || hidden || timerId) return;
+    if (paused || hidden || timerId) return;
     timerId = setInterval(next, autoplayMs);
+    slider.classList.add('is-playing');
+    slider.classList.remove('is-paused');
   }
   function stop() {
     if (timerId) { clearInterval(timerId); timerId = null; }
+    slider.classList.add('is-paused');
   }
   function restart() { stop(); start(); }
 
@@ -131,4 +146,78 @@
   }
 
   start();
+})();
+
+// Cursor-attracted ambient orbs
+(function () {
+  if (!window.matchMedia) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  var ORB_COUNT = 14;
+  var ATTRACT_RADIUS = 260;
+  var PULL_STRENGTH = 0.55;
+  var EASE = 0.08;
+
+  var container = document.createElement('div');
+  container.className = 'cursor-orbs';
+  container.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(container);
+
+  var orbs = [];
+  for (var i = 0; i < ORB_COUNT; i++) {
+    var el = document.createElement('span');
+    el.className = 'cursor-orb';
+    var size = (3 + Math.random() * 6).toFixed(1);
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.opacity = (0.18 + Math.random() * 0.28).toFixed(2);
+    container.appendChild(el);
+    orbs.push({
+      el: el,
+      bx: 0.05 + Math.random() * 0.9,
+      by: 0.05 + Math.random() * 0.9,
+      ox: 0, oy: 0,
+      tx: 0, ty: 0,
+    });
+  }
+
+  var mx = -9999, my = -9999, hasMouse = false;
+  document.addEventListener('mousemove', function (e) {
+    mx = e.clientX;
+    my = e.clientY;
+    hasMouse = true;
+  }, { passive: true });
+  document.addEventListener('mouseleave', function () { hasMouse = false; });
+
+  var vw = window.innerWidth, vh = window.innerHeight;
+  window.addEventListener('resize', function () {
+    vw = window.innerWidth; vh = window.innerHeight;
+  });
+
+  function tick() {
+    for (var i = 0; i < orbs.length; i++) {
+      var o = orbs[i];
+      var px = o.bx * vw;
+      var py = o.by * vh;
+      if (hasMouse) {
+        var dx = mx - px;
+        var dy = my - py;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < ATTRACT_RADIUS) {
+          var strength = 1 - (dist / ATTRACT_RADIUS);
+          o.tx = dx * strength * PULL_STRENGTH;
+          o.ty = dy * strength * PULL_STRENGTH;
+        } else {
+          o.tx = 0; o.ty = 0;
+        }
+      } else {
+        o.tx = 0; o.ty = 0;
+      }
+      o.ox += (o.tx - o.ox) * EASE;
+      o.oy += (o.ty - o.oy) * EASE;
+      o.el.style.transform = 'translate3d(' + (px + o.ox).toFixed(1) + 'px,' + (py + o.oy).toFixed(1) + 'px,0)';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();

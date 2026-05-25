@@ -8,7 +8,7 @@
   <div class="container hero-content">
     <div class="hero-slider"
          data-hero-slider
-         data-autoplay-ms="3000"
+         data-autoplay-ms="8000"
          role="region"
          aria-roledescription="carousel"
          aria-label="Luma Tech Solutions services">
@@ -49,6 +49,10 @@
                 aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
                 aria-label="Show slide {{ forloop.counter }}: {{ slide.eyebrow }}"></button>
         {% endfor %}
+      </div>
+
+      <div class="hero-progress" aria-hidden="true">
+        <div class="hero-progress-bar" data-hero-progress></div>
       </div>
     </div>
 
@@ -182,7 +186,7 @@
       </div>
       <div class="feature">
         <h4>Talk to your house, privately</h4>
-        <p>Home Assistant's voice assistant runs speech recognition, language understanding and the response on the box in your house. "Turn off everything upstairs", "is the back door locked?" — answered locally. No Amazon, no Google, no recordings going anywhere.</p>
+        <p>Home Assistant's voice assistant runs speech recognition, language understanding and the response on the box in your house. "Turn off everything upstairs", "are the lights off downstairs?" — answered locally. No Amazon, no Google, no recordings going anywhere.</p>
       </div>
       <div class="feature">
         <h4>AI features in the software we build</h4>
