@@ -39,30 +39,48 @@
       <label for="aud-business">For businesses</label>
     </div>
 
+    <p class="audience-note" data-audience="business">
+      Every business engagement is scoped to fit — the figures below are starting
+      points. Your final quote depends on team size, number of sites and how
+      hands-on day-to-day support needs to be.
+    </p>
+
     {% for grid in plan_grids %}
       <div class="price-grid" data-audience="{{ grid.audience }}">
         {% for plan in grid.plans %}
           <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
             {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
             <h3>{{ plan.name }}</h3>
-            <p class="price">{{ plan.price }}<span class="price-suffix">{{ plan.price_suffix }}</span></p>
-            <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">or {{ plan.annual_price }}{{ plan.annual_suffix }} (save 10%)</p>
-            <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}</p>
+            <p class="price">{% if plan.quoted %}<span class="price-prefix">From</span> {% endif %}{{ plan.price }}<span class="price-suffix">{{ plan.price_suffix }}</span></p>
+            <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">{% if plan.quoted %}from {% else %}or {% endif %}{{ plan.annual_price }}{{ plan.annual_suffix }} (save 10%)</p>
+            <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}{% if plan.quoted %} · Tailored quote{% endif %}</p>
             <p class="price-tag">{{ plan.tagline }}</p>
-            <ul>
-              {% for feat in plan.features %}
-                <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
-              {% endfor %}
-            </ul>
-            <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}&audience={{ grid.audience }}">Choose {{ plan.name }}</a>
+            <div class="features">
+              <p class="features-label">Included in this plan</p>
+              <ul class="included">
+                {% for feat in plan.features %}
+                  <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
+                {% endfor %}
+              </ul>
+              {% if plan.not_included %}
+                <div class="extras">
+                  <p class="features-label">Not included — quoted separately</p>
+                  <ul>
+                    {% for item in plan.not_included %}
+                      <li>{% include 'partials/_icons.html' with name='minus' %}<span>{{ item }}</span></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            </div>
+            <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}&audience={{ grid.audience }}">{% if plan.quoted %}Get a tailored quote{% else %}Choose {{ plan.name }}{% endif %}</a>
           </div>
         {% endfor %}
       </div>
     {% endfor %}
 
     <div class="muted center mt-4" style="max-width:42rem;margin:2.5rem auto 0;font-size:.88rem;line-height:1.6;">
-      <p style="margin:0 0 .75rem;"><strong>Standard hourly rate</strong> for work outside the plan: £95/hr +VAT — plan members pay £76/hr.</p>
-      <p style="margin:0;"><strong>Quoted separately:</strong> project installs (new networks, CCTV builds, smart-home design), hardware procurement, M365 / Google Workspace licensing, multi-site beyond two properties, and travel beyond ~25 miles from Marlow.</p>
+      <p style="margin:0;">All hourly work outside the plan is billed at <strong>£76/hr +VAT</strong> for plan members (standard rate £95/hr). Hardware, project installs and licensing are always quoted in advance — no surprise invoices.</p>
     </div>
   </div>
 </section>
