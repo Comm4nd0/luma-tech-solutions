@@ -452,7 +452,7 @@ CASE_STUDIES = [
             "3× PoE Switches",
             "VLAN segmentation",
         ],
-        "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with robust network segmentation and room to grow.",
+        "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with proper network segmentation and room to grow.",
         "featured": True,
     },
     {
