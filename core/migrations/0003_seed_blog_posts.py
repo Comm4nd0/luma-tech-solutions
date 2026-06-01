@@ -29,7 +29,7 @@ POST_1_CONTENT = """
 
 <h2>2. One radio, expecting full coverage</h2>
 <p>A typical home router puts out around 20–30dBm of signal from one spot. Wi-Fi attenuates fast through walls, and faster still through old plaster, lath-and-lath partitions, or the steel-studded walls you find in a lot of newer extensions. By the time the signal reaches the back of the ground floor it's weak. By the time it climbs the stairs to a child's bedroom at the rear, you've got a barely usable trickle.</p>
-<p>The fix is multiple access points wired back to a central switch — not a chain of "extenders" that halve your bandwidth at every hop. With three or four properly placed APs you can flood a 3,000 sq ft property with strong, consistent Wi-Fi. We fly a drone survey before drilling, because the obvious spot is surprisingly often the wrong spot.</p>
+<p>The fix is multiple access points wired back to a central switch — not a chain of "extenders" that halve your bandwidth at every hop. With three or four properly placed APs you can flood a 3,000 sq ft property with strong, consistent Wi-Fi. We survey the property before drilling, because the obvious spot is surprisingly often the wrong spot.</p>
 
 <h2>3. Channel pollution and 2.4GHz nostalgia</h2>
 <p>If you live anywhere remotely populated — and most of Bucks counts — your Wi-Fi is competing with every neighbour's network for airtime. The 2.4GHz band is especially bad: only three non-overlapping channels, used by every cheap IoT device, microwave and baby monitor on the planet. Most routers run on "auto" and pick the worst channel out of inertia.</p>
@@ -43,7 +43,7 @@ POST_1_CONTENT = """
 <p>A typical Berkshire or Bucks home with three or four UniFi access points, a managed switch and a Cloud Gateway lands somewhere between £800 and £2,000 including cabling and labour. It lasts for years and pays for itself the first time you don't get a "dropping connection" call from a parent working from home.</p>
 
 <h2>If your Wi-Fi is letting you down</h2>
-<p>If you're in Berkshire, Buckinghamshire or the surrounding area and tired of patchy coverage, <a href="/contact/">get in touch</a>. We'll walk the property, fly a drone survey and tell you honestly whether it's a £200 fix or a proper rebuild. No pressure, no day rates.</p>
+<p>If you're in Berkshire, Buckinghamshire or the surrounding area and tired of patchy coverage, <a href="/contact/">get in touch</a>. We'll walk the property and tell you honestly whether it's a £200 fix or a proper rebuild. No pressure, no day rates.</p>
 """
 
 POST_2_CONTENT = """
@@ -193,7 +193,7 @@ POST_5_CONTENT = """
 <p>Worth being honest. UniFi is overkill for a one-bed flat (a £150 mesh kit will do fine), and the controller has a learning curve that's friendlier than most enterprise gear but still not "consumer". If you want to manage it yourself, you'll need to spend an evening or two getting comfortable. If you don't, that's what we're here for.</p>
 
 <h2>Want a UniFi install in Berks or Bucks?</h2>
-<p><a href="/contact/?service=networking">Get in touch</a> and we'll come and walk the property. Drone survey, written quote, fixed price. No subscriptions, no day rates.</p>
+<p><a href="/contact/?service=networking">Get in touch</a> and we'll come and walk the property. Full survey, written quote, fixed price. No subscriptions, no day rates.</p>
 """
 
 POST_6_CONTENT = """
@@ -259,9 +259,9 @@ POST_7_CONTENT = """
 <p>Most modern cameras do both. Infrared (IR) is invisible to the naked eye and lights the scene up to maybe 30 feet — great for unobtrusive coverage, but everything's monochrome. Spotlight cameras kick out white light when triggered — colour at night, but obvious to anyone in the area. Spotlights also work as a deterrent, which has real value.</p>
 <p>We typically use IR for back-of-property cameras (where you don't want to advertise their presence) and spotlight for front-of-house and driveway (where deterrence is part of the job).</p>
 
-<h2>The drone survey</h2>
-<p>Once we've got rough zones, we fly an aerial drone survey before drilling anything. Two reasons. First, it surfaces blind spots you can't see from the ground — roof angles, overhanging trees that hide an approach, neighbouring sight-lines. Second, it lets us pre-plan cable routes and PoE distances. By the time install day comes round, we know exactly where every camera goes and how the cable runs.</p>
-<p>The aerial imagery is handed over to you with the runbook — useful for insurance, useful if we ever expand the system, useful as a record of the property as it was.</p>
+<h2>Survey before you drill</h2>
+<p>Once we've got rough zones, we survey the property properly before drilling anything. Two reasons. First, it surfaces blind spots that aren't obvious until you walk them — roof angles, overhanging trees that hide an approach, neighbouring sight-lines. Second, it lets us pre-plan cable routes and PoE distances. By the time install day comes round, we know exactly where every camera goes and how the cable runs.</p>
+<p>The survey notes and the final plan are handed over to you with the runbook — useful for insurance, useful if we ever expand the system, useful as a record of the property as it was.</p>
 
 <h2>What about doorbells?</h2>
 <p>A video doorbell is a useful supplement, not a replacement. They're great at "person at the door" detection and two-way audio, but the lens position is fixed, the field of view is wide-but-shallow, and most are battery-powered (which means they miss things while waking up). For a serious install, the doorbell sits on top of a proper PoE camera covering the same approach.</p>
@@ -274,7 +274,7 @@ POST_7_CONTENT = """
 </ul>
 
 <h2>Want a CCTV plan for your property?</h2>
-<p>Our security assessment is £150 — we'll walk the property, fly the drone, talk you through the zones, and write up a plan with hardware costs. Across Berkshire, Buckinghamshire and the surrounding area. <a href="/contact/?service=security">Book one here</a>.</p>
+<p>Our security assessment is £150 — we'll walk the property, talk you through the zones, and write up a plan with hardware costs. Across Berkshire, Buckinghamshire and the surrounding area. <a href="/contact/?service=security">Book one here</a>.</p>
 """
 
 POST_8_CONTENT = """
@@ -593,12 +593,12 @@ POSTS = [
         "title": "Planning Your Home CCTV System: Camera Placement Tips From a Professional Installer",
         "pillar": "security",
         "excerpt": (
-            "Coverage zones, height, angle, sun, night vision and the drone "
-            "survey — how we plan CCTV installs across Berks and Bucks."
+            "Coverage zones, height, angle, sun and night vision — how we plan "
+            "CCTV installs that actually catch what matters across Berks and Bucks."
         ),
         "meta_description": (
             "How to plan home CCTV that actually catches what matters: coverage "
-            "zones, height, angles, sun, night vision and aerial surveys."
+            "zones, height, angles, sun and night vision."
         ),
         "content": POST_7_CONTENT,
         "published_at": at(2026, 6, 9),

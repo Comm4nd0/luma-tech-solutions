@@ -6,8 +6,8 @@
     <span class="eyebrow"><span class="dot"></span>Selected work</span>
     <h1>Things we've built. <span class="gradient">Things we still maintain.</span></h1>
     <p class="lede">
-      Three short case studies. Each one is still running and supported
-      today — and every one is something we're happy to talk through if
+      A few short case studies. Each one is still running and supported
+      today, and every one is something we're happy to talk through if
       you'd like to know more.
     </p>
   </div>
@@ -21,6 +21,8 @@
           <div class="case-card-img">
             {% if case.slug == 'chiltern-view' %}
               {% include 'partials/_illustrations.html' with name='automation' %}
+            {% elif case.slug == 'littlewick-house' %}
+              {% include 'partials/_illustrations.html' with name='networking' %}
             {% elif case.slug == 'for-sale-by-owner' %}
               {% include 'partials/_illustrations.html' with name='development' %}
             {% else %}
@@ -29,6 +31,7 @@
           </div>
           <span class="case-tag">
             {% if case.slug == 'chiltern-view' %}Smart home + networking
+            {% elif case.slug == 'littlewick-house' %}Whole-property network
             {% elif case.slug == 'for-sale-by-owner' %}Mobile app
             {% else %}Marketing site
             {% endif %}
