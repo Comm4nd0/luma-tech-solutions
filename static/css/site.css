@@ -2284,3 +2284,12 @@ footer.site-footer {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
 }
+
+/* Hero photos add value on mobile too — the old rule hid the SVG illustrations
+   (decorative) below 900px, but the photo heroes should stay visible. */
+@media (max-width: 900px) {
+  .service-hero-inner .hero-illustration,
+  .hero-slide .hero-illustration { display: flex; margin-top: 1.25rem; }
+  .service-hero-inner .hero-photo,
+  .hero-slide .hero-photo { max-width: 100%; }
+}
