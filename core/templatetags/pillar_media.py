@@ -15,7 +15,7 @@ register = template.Library()
 # pillar / slide key -> Pexels photo id
 _PILLAR_PHOTOS = {
     "networking": "1054397",   # patched ethernet on a switch
-    "security": "558630",      # CCTV camera
+    "security": "96612",       # CCTV camera against a clear sky
     "development": "16592498", # source code on screen
     "automation": "16423104",  # smart-home control
     "support": "442152",       # field engineer with a laptop
