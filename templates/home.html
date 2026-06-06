@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load optional_static %}
+{% load pillar_media %}
 
 {% block content %}
 
@@ -34,7 +35,7 @@
             </div>
           </div>
           <div class="hero-illustration">
-            {% include 'partials/_illustrations.html' with name=slide.illustration %}
+            <div class="hero-photo" style="background-image:url('{% pillar_photo slide.illustration 900 %}'),linear-gradient(160deg,#155e63,#0f172a);" role="img" aria-label="{{ slide.eyebrow }}"></div>
           </div>
         </li>
         {% endfor %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pillar_media %}
 
 {% block content %}
 <section class="hero">
@@ -24,11 +25,9 @@
         {% for post in posts %}
           <article class="blog-card fade-in has-image">
             <a href="{{ post.get_absolute_url }}" class="blog-card-link">
-              <div class="blog-card-image{% if not post.first_image %} blog-card-image--illustration pillar-{{ post.pillar }}{% endif %}">
+              <div class="blog-card-image"{% if not post.first_image %} style="background-image:url('{% pillar_photo post.pillar 800 %}'),linear-gradient(160deg,#155e63,#0f172a);background-size:cover;background-position:center;"{% endif %}>
                 {% if post.first_image %}
                   <img src="{{ post.first_image.src }}" alt="{{ post.first_image.alt }}" loading="lazy" decoding="async">
-                {% else %}
-                  {% include 'partials/_blog_hero_illustration.html' with pillar=post.pillar %}
                 {% endif %}
               </div>
               <div class="blog-card-body">
