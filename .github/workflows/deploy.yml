@@ -1,0 +1,65 @@
+name: Deploy to Luma001
+
+# Deploys luma-tech-solutions to the Hetzner box (Luma001) over SSH.
+# Runs automatically on every push to main, and can be triggered manually.
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   DEPLOY_HOST     server IP/hostname        e.g. 178.104.29.66
+#   DEPLOY_USER     SSH user                  e.g. root
+#   DEPLOY_SSH_KEY  private SSH key (PEM/OpenSSH) whose public half is in the
+#                   server's ~/.ssh/authorized_keys
+# Optional:
+#   DEPLOY_PORT     SSH port (defaults to 22)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys run at once; cancel an in-flight one if a newer push lands.
+concurrency:
+  group: deploy-luma001
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${DEPLOY_PORT:-22}" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
+      - name: Pull and rebuild on the server
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_PORT:-22}" \
+            -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" 'bash -se' <<'REMOTE'
+          set -euo pipefail
+          cd /root/luma-tech-solutions
+          git pull --ff-only
+          docker compose up -d --build
+          # container runs `migrate --noinput` on start; give it a moment to boot
+          sleep 5
+          echo "--- healthz ---"
+          curl -fsS http://127.0.0.1:8005/healthz
+          echo
+          echo "--- showcase smoke test ---"
+          curl -fsS -o /dev/null -w 'portfolio: %{http_code}\n' http://127.0.0.1:8005/portfolio/
+          curl -fsS -o /dev/null -w 'demo:      %{http_code}\n' http://127.0.0.1:8005/showcase/maple-and-vine/
+          REMOTE
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
+      - name: Clean up key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
