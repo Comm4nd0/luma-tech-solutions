@@ -16,6 +16,7 @@ urlpatterns = [
     path("services/support/", views.service_support, name="service_support"),
     path("about/", views.about, name="about"),
     path("portfolio/", views.portfolio, name="portfolio"),
+    path("showcase/<slug:slug>/", views.showcase_demo, name="showcase_demo"),
     path("areas/", views.areas_index, name="areas"),
     path("areas/marlow/", views.area_marlow, name="area_marlow"),
     path("areas/maidenhead/", views.area_maidenhead, name="area_maidenhead"),

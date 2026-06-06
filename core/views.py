@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage, send_mail
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -490,6 +490,57 @@ CASE_STUDIES = [
         ],
         "outcome": "Live on the App Store. iPhone, iPad, Mac (M1+) and Apple Vision supported.",
         "featured": False,
+    },
+]
+
+
+# --- Website demos ---
+# Standalone, fully-designed one-page demo sites for fictional local businesses,
+# shown on /portfolio/ so prospects can click through and experience the kind of
+# website we'd build for them. Each "template" is a self-contained HTML document
+# (it does NOT extend base.html and does NOT load site.css) so every demo can look
+# genuinely different. The businesses are fictional and the pages are noindex.
+
+WEBSITE_DEMOS = [
+    {
+        "slug": "maple-and-vine",
+        "name": "The Maple & Vine",
+        "industry": "Restaurant · Marlow",
+        "tagline": "Seasonal British bistro on the high street — menus, story and table bookings.",
+        "accent": "#9a3b2e",
+        "template": "showcase/maple_and_vine.html",
+    },
+    {
+        "slug": "riverside-strength",
+        "name": "Riverside Strength",
+        "industry": "Fitness studio · Maidenhead",
+        "tagline": "Bold strength-and-conditioning gym with class timetable and membership pricing.",
+        "accent": "#e4572e",
+        "template": "showcase/riverside_strength.html",
+    },
+    {
+        "slug": "thames-valley-gardens",
+        "name": "Thames Valley Gardens",
+        "industry": "Landscaping · Henley",
+        "tagline": "Garden design and grounds care — services, planting gallery and free site visits.",
+        "accent": "#3f7d4e",
+        "template": "showcase/thames_valley_gardens.html",
+    },
+    {
+        "slug": "marlow-dental-care",
+        "name": "Marlow Dental Care",
+        "industry": "Dental practice · Marlow",
+        "tagline": "Calm, modern dentistry — treatments, plans and online appointment requests.",
+        "accent": "#2f80c2",
+        "template": "showcase/marlow_dental_care.html",
+    },
+    {
+        "slug": "frame-and-field",
+        "name": "Frame & Field",
+        "industry": "Photographer · Thames Valley",
+        "tagline": "Minimal monochrome portfolio for a wedding and portrait photographer.",
+        "accent": "#111111",
+        "template": "showcase/frame_and_field.html",
     },
 ]
 
@@ -1055,8 +1106,21 @@ def portfolio(request):
                 "smart-home builds, mobile apps and small-business websites."
             ),
             case_studies=CASE_STUDIES,
+            website_demos=WEBSITE_DEMOS,
         ),
     )
+
+
+def showcase_demo(request, slug):
+    """Render a standalone one-page demo customer website.
+
+    Deliberately does NOT use _base_context() — these pages have their own
+    self-contained design and no Luma chrome.
+    """
+    demo = next((d for d in WEBSITE_DEMOS if d["slug"] == slug), None)
+    if demo is None:
+        raise Http404("Unknown demo")
+    return render(request, demo["template"], {"demo": demo})
 
 
 @require_http_methods(["GET", "POST"])

@@ -1,0 +1,170 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>The Maple &amp; Vine — Seasonal British Bistro, Marlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cream:#f6efe4; --paper:#fbf7f0; --ink:#2a241d; --muted:#6f655a;
+      --wine:#9a3b2e; --gold:#b08524; --line:rgba(42,36,29,.14);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+    a{color:inherit}
+    .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+    .ey{font-family:'Jost';text-transform:uppercase;letter-spacing:.32em;font-size:12px;color:var(--wine);font-weight:500}
+    /* nav */
+    nav.mv{position:sticky;top:44px;z-index:50;background:rgba(251,247,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    nav.mv .row{display:flex;align-items:center;justify-content:space-between;height:74px}
+    nav.mv .brand{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:.02em}
+    nav.mv .brand small{display:block;font-family:'Jost';font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);font-weight:400}
+    nav.mv ul{display:flex;gap:30px;list-style:none;align-items:center}
+    nav.mv a{text-decoration:none;font-size:14px;letter-spacing:.04em;color:var(--ink);opacity:.85}
+    nav.mv a:hover{opacity:1;color:var(--wine)}
+    .btn{display:inline-block;background:var(--wine);color:#fff;text-decoration:none;padding:13px 26px;border-radius:2px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:background .2s}
+    .btn:hover{background:#7d2e23}
+    .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+    .btn.ghost:hover{background:var(--ink);color:var(--cream)}
+    @media(max-width:760px){nav.mv ul li.hide{display:none}}
+    /* hero */
+    .hero{position:relative;min-height:82vh;display:flex;align-items:center;
+      background:
+        linear-gradient(180deg,rgba(20,15,11,.55),rgba(20,15,11,.62)),
+        radial-gradient(120% 90% at 80% 10%, #6a3b1e, transparent 60%),
+        linear-gradient(135deg,#3a2418,#1c130c);
+      color:var(--paper)}
+    .hero .inner{padding:90px 0;max-width:680px}
+    .hero .ey{color:var(--gold)}
+    .hero h1{font-size:clamp(40px,7vw,78px);line-height:1.02;font-weight:700;margin:18px 0 22px}
+    .hero h1 em{font-style:italic;color:#e9c976}
+    .hero p{font-size:19px;font-weight:300;max-width:520px;color:#efe6d8;margin-bottom:34px}
+    .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+    /* sections */
+    section.pad{padding:96px 0}
+    .center{text-align:center;max-width:640px;margin:0 auto}
+    .lead{font-size:clamp(26px,3.6vw,38px);line-height:1.25;margin:16px 0}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    @media(max-width:820px){.two{grid-template-columns:1fr;gap:36px}}
+    .imgblock{aspect-ratio:4/5;border-radius:3px;background:
+      linear-gradient(160deg,#caa46a,#7d5a32);position:relative;overflow:hidden;box-shadow:0 30px 60px -30px rgba(40,20,8,.6)}
+    .imgblock::after{content:"";position:absolute;inset:0;background:
+      repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 14px,transparent 14px 28px)}
+    .imgblock span{position:absolute;left:0;right:0;bottom:0;padding:18px;color:#fff;font-family:'Playfair Display';font-style:italic;font-size:18px;background:linear-gradient(0deg,rgba(0,0,0,.5),transparent)}
+    /* menu */
+    .menu{background:var(--paper)}
+    .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 56px;margin-top:36px}
+    @media(max-width:760px){.menu-grid{grid-template-columns:1fr}}
+    .dish{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px dotted var(--line)}
+    .dish h4{font-family:'Playfair Display';font-weight:500;font-size:19px}
+    .dish p{font-size:14px;color:var(--muted)}
+    .dish .price{font-family:'Playfair Display';color:var(--wine);font-size:19px;white-space:nowrap}
+    /* gallery */
+    .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:40px}
+    @media(max-width:760px){.gal{grid-template-columns:repeat(2,1fr)}}
+    .gal div{aspect-ratio:1;border-radius:2px}
+    .g1{background:linear-gradient(135deg,#b5732f,#5c3415)}
+    .g2{background:linear-gradient(135deg,#7a8b4f,#3f4a22)}
+    .g3{background:linear-gradient(135deg,#c9a04a,#856321)}
+    .g4{background:linear-gradient(135deg,#9a3b2e,#5a1f17)}
+    /* reserve */
+    .reserve{background:#241a12;color:var(--paper);text-align:center}
+    .reserve .ey{color:var(--gold)}
+    .reserve h2{font-size:clamp(30px,5vw,52px);margin:14px 0 10px}
+    .reserve p{color:#d9cdbb;max-width:480px;margin:0 auto 30px}
+    .hours{display:flex;gap:46px;justify-content:center;flex-wrap:wrap;margin-top:46px;color:#cdbfac;font-size:14px}
+    .hours b{display:block;font-family:'Playfair Display';color:#e9c976;font-size:16px;margin-bottom:4px}
+    footer.mv{background:#1a120c;color:#9a8b78;text-align:center;padding:40px 0;font-size:13px}
+    footer.mv .brand{font-family:'Playfair Display';color:#e9c976;font-size:20px;margin-bottom:8px}
+  </style>
+</head>
+<body>
+{% include 'showcase/_back_bar.html' %}
+
+<nav class="mv">
+  <div class="wrap row">
+    <div class="brand">The Maple &amp; Vine<small>Marlow · est. 2019</small></div>
+    <ul>
+      <li class="hide"><a href="#story">Our story</a></li>
+      <li class="hide"><a href="#menu">Menu</a></li>
+      <li class="hide"><a href="#gallery">Gallery</a></li>
+      <li><a class="btn" href="#reserve">Book a table</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap inner">
+    <span class="ey">Seasonal British bistro</span>
+    <h1>Honest food,<br><em>gently done.</em></h1>
+    <p>A small kitchen on Marlow high street cooking with the best of the season — Thames Valley growers, proper service, an unhurried table.</p>
+    <div class="cta">
+      <a class="btn" href="#reserve">Reserve a table</a>
+      <a class="btn ghost" href="#menu" style="color:#f6efe4;border-color:#f6efe4">View the menu</a>
+    </div>
+  </div>
+</header>
+
+<section class="pad" id="story">
+  <div class="wrap two">
+    <div>
+      <span class="ey">Our story</span>
+      <h2 class="lead">From a market stall to the high&nbsp;street.</h2>
+      <p style="color:var(--muted);margin-bottom:16px">We started The Maple &amp; Vine with a simple idea: cook the food we'd want to eat on our day off. Everything is made in-house, from the bread to the ice cream, and the menu changes with whatever's good that week.</p>
+      <p style="color:var(--muted)">You'll find us a two-minute walk from the river — twelve tables, an open pass, and a wine list that leans towards small European growers.</p>
+    </div>
+    <div class="imgblock"><span>The pass, mid-service</span></div>
+  </div>
+</section>
+
+<section class="pad menu" id="menu">
+  <div class="wrap">
+    <div class="center"><span class="ey">À la carte</span><h2 class="lead">This week's menu</h2></div>
+    <div class="menu-grid">
+      <div class="dish"><div><h4>Heritage tomato &amp; burrata</h4><p>basil oil, sourdough crumb</p></div><span class="price">11</span></div>
+      <div class="dish"><div><h4>Cured Loch Duart salmon</h4><p>cucumber, dill crème fraîche</p></div><span class="price">13</span></div>
+      <div class="dish"><div><h4>Roast chalk-stream trout</h4><p>brown butter, samphire, new potatoes</p></div><span class="price">24</span></div>
+      <div class="dish"><div><h4>Dexter beef, dry-aged</h4><p>bone marrow, watercress, triple-cooked chips</p></div><span class="price">29</span></div>
+      <div class="dish"><div><h4>Wild mushroom orzotto</h4><p>aged parmesan, truffle, pickled walnut</p></div><span class="price">21</span></div>
+      <div class="dish"><div><h4>Warm treacle tart</h4><p>clotted cream, lemon</p></div><span class="price">9</span></div>
+    </div>
+    <div class="center" style="margin-top:42px"><a class="btn ghost" href="#reserve">Book to taste it →</a></div>
+  </div>
+</section>
+
+<section class="pad" id="gallery">
+  <div class="wrap">
+    <div class="center"><span class="ey">The room &amp; the plates</span><h2 class="lead">A look inside</h2></div>
+    <div class="gal"><div class="g1"></div><div class="g2"></div><div class="g3"></div><div class="g4"></div></div>
+  </div>
+</section>
+
+<section class="pad reserve" id="reserve">
+  <div class="wrap">
+    <span class="ey">Reservations</span>
+    <h2>Pull up a chair.</h2>
+    <p>We take bookings for lunch and dinner, Wednesday through Sunday. Tables of six or more, do drop us a line.</p>
+    <a class="btn" href="#reserve">Book online</a>
+    <div class="hours">
+      <div><b>Lunch</b>Wed–Sun · 12:00–14:30</div>
+      <div><b>Dinner</b>Wed–Sat · 18:00–21:30</div>
+      <div><b>Find us</b>22 High Street, Marlow SL7</div>
+    </div>
+  </div>
+</section>
+
+<footer class="mv">
+  <div class="wrap">
+    <div class="brand">The Maple &amp; Vine</div>
+    <div>22 High Street, Marlow, Buckinghamshire SL7 · 01628 000 000 · hello@mapleandvine.example</div>
+    <div style="margin-top:10px;opacity:.7">© The Maple &amp; Vine — demo website</div>
+  </div>
+</footer>
+</body>
+</html>

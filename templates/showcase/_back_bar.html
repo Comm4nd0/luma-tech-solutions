@@ -1,0 +1,45 @@
+{% load static %}
+{# Shared "this is a demo" bar for standalone showcase sites. Scoped under
+   .luma-demo-bar so it never clashes with a demo's own styles. Fixed to the top;
+   each demo offsets its body/nav by 44px to sit beneath it. #}
+<style>
+  body { padding-top: 44px; }
+  .luma-demo-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 2147483647;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    padding: 0 1rem;
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.2;
+    box-shadow: 0 1px 0 rgba(255,255,255,.08), 0 6px 18px -10px rgba(0,0,0,.6);
+  }
+  .luma-demo-bar strong { color: #f8fafc; font-weight: 600; }
+  .luma-demo-bar .luma-demo-dot { color: #14b8a6; }
+  .luma-demo-bar a.luma-demo-back {
+    color: #0f172a;
+    background: #14b8a6;
+    text-decoration: none;
+    font-weight: 600;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .15s ease;
+  }
+  .luma-demo-bar a.luma-demo-back:hover { background: #0ea5e9; }
+  @media (max-width: 520px) {
+    .luma-demo-bar .luma-demo-label-long { display: none; }
+  }
+</style>
+<div class="luma-demo-bar" role="note" aria-label="Demo website notice">
+  <span><span class="luma-demo-dot">●</span> <strong>Demo built by Luma Tech</strong>
+    <span class="luma-demo-label-long">— sample website for {{ demo.name }}</span></span>
+  <a class="luma-demo-back" href="{% url 'portfolio' %}#website-demos">← Back to showcase</a>
+</div>

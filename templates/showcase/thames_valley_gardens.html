@@ -1,0 +1,172 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Thames Valley Gardens — Garden Design &amp; Grounds Care, Henley</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f4f6ef;--card:#fff;--ink:#22301f;--mut:#5d6b53;--green:#3f7d4e;--green-d:#2c5b39;--moss:#7fa05a;--clay:#c98a4b;--line:rgba(34,48,31,.12)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'Nunito Sans',sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:600;line-height:1.08}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+    .ey{text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:700;color:var(--green)}
+    .btn{display:inline-block;background:var(--green);color:#fff;font-weight:700;padding:14px 28px;border-radius:999px;transition:background .2s,transform .12s}
+    .btn:hover{background:var(--green-d);transform:translateY(-2px)}
+    .btn.soft{background:#e7eede;color:var(--green-d)}
+    .btn.soft:hover{background:#dbe6cd}
+    /* nav */
+    nav.tg{position:sticky;top:44px;z-index:50;background:rgba(244,246,239,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    nav.tg .row{display:flex;align-items:center;justify-content:space-between;height:76px}
+    nav.tg .brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces';font-size:21px;font-weight:600}
+    nav.tg .leaf{width:30px;height:30px;border-radius:50% 50% 50% 0;background:linear-gradient(135deg,var(--moss),var(--green-d));transform:rotate(45deg)}
+    nav.tg ul{display:flex;gap:28px;list-style:none;align-items:center}
+    nav.tg ul a{font-weight:600;font-size:15px;color:var(--mut)}
+    nav.tg ul a:hover{color:var(--green)}
+    @media(max-width:780px){nav.tg li.hide{display:none}}
+    /* hero */
+    .hero{position:relative;overflow:hidden;padding:96px 0 104px}
+    .hero::before{content:"";position:absolute;right:-120px;top:-120px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(127,160,90,.45),transparent 70%)}
+    .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
+    @media(max-width:860px){.hero .grid{grid-template-columns:1fr;gap:36px}}
+    .hero h1{font-size:clamp(40px,6.4vw,72px)}
+    .hero h1 em{font-style:italic;color:var(--green)}
+    .hero p{font-size:19px;color:var(--mut);max-width:480px;margin:22px 0 30px}
+    .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+    .photo{aspect-ratio:5/6;border-radius:26px;background:
+      radial-gradient(120% 90% at 70% 10%,#9cc36a,transparent 55%),
+      linear-gradient(160deg,#5f8f49,#2c5b39);position:relative;overflow:hidden;box-shadow:0 40px 70px -36px rgba(34,60,31,.45)}
+    .photo .badge{position:absolute;left:18px;bottom:18px;background:#fff;border-radius:16px;padding:14px 18px;font-size:14px;box-shadow:0 14px 30px -16px rgba(0,0,0,.3)}
+    .photo .badge b{display:block;font-family:'Fraunces';color:var(--green-d);font-size:17px}
+    /* trust strip */
+    .trust{display:flex;gap:36px;flex-wrap:wrap;justify-content:center;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--mut);font-weight:600;font-size:14px}
+    .trust span::before{content:"✿ ";color:var(--moss)}
+    /* services */
+    section.pad{padding:96px 0}
+    .head{text-align:center;max-width:620px;margin:0 auto}
+    .head h2{font-size:clamp(32px,5vw,50px);margin:14px 0}
+    .head p{color:var(--mut);font-size:18px}
+    .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+    @media(max-width:820px){.svc{grid-template-columns:1fr}}
+    .scard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;transition:transform .14s,box-shadow .2s}
+    .scard:hover{transform:translateY(-5px);box-shadow:0 30px 50px -30px rgba(34,60,31,.3)}
+    .scard .ic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:#e7eede;margin-bottom:16px}
+    .scard h3{font-size:23px;margin-bottom:8px}
+    .scard p{color:var(--mut);font-size:15px}
+    /* gallery */
+    .gal{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:120px;gap:14px;margin-top:48px}
+    .gal div{border-radius:18px}
+    .gal .big{grid-column:span 3;grid-row:span 2}
+    .gal .wide{grid-column:span 3}
+    .gal .sq{grid-column:span 2}
+    @media(max-width:760px){.gal{grid-template-columns:repeat(2,1fr)}.gal .big,.gal .wide,.gal .sq{grid-column:span 1;grid-row:span 1}}
+    .p1{background:linear-gradient(150deg,#7fa05a,#2c5b39)}
+    .p2{background:linear-gradient(150deg,#c98a4b,#7a4f24)}
+    .p3{background:linear-gradient(150deg,#9cc36a,#4a7a3a)}
+    .p4{background:linear-gradient(150deg,#6f9bd8,#37597f)}
+    .p5{background:linear-gradient(150deg,#b7c98a,#6b8049)}
+    /* process */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:50px}
+    @media(max-width:820px){.steps{grid-template-columns:1fr 1fr}}
+    .step .n{font-family:'Fraunces';font-size:40px;color:var(--moss)}
+    .step h4{font-size:19px;margin:6px 0 6px;font-family:'Fraunces'}
+    .step p{color:var(--mut);font-size:14px}
+    /* cta */
+    .visit{background:linear-gradient(150deg,#2c5b39,#1d3e27);color:#eaf2e2;text-align:center}
+    .visit h2{color:#fff;font-size:clamp(30px,5vw,52px)}
+    .visit p{max-width:480px;margin:14px auto 28px;color:#cddcc1}
+    footer.tg{background:#1a3322;color:#9db89a;padding:42px 0;text-align:center;font-size:14px}
+    footer.tg .brand{font-family:'Fraunces';color:#eaf2e2;font-size:20px;margin-bottom:8px}
+  </style>
+</head>
+<body>
+{% include 'showcase/_back_bar.html' %}
+
+<nav class="tg">
+  <div class="wrap row">
+    <div class="brand"><span class="leaf"></span>Thames Valley Gardens</div>
+    <ul>
+      <li class="hide"><a href="#services">Services</a></li>
+      <li class="hide"><a href="#work">Our work</a></li>
+      <li class="hide"><a href="#process">How it works</a></li>
+      <li><a class="btn" href="#visit">Free site visit</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <span class="ey">Henley-on-Thames · since 2008</span>
+      <h1>Gardens that <em>grow up</em> with you.</h1>
+      <p>Design, build and year-round care for gardens across the Thames Valley. From a tired lawn to a full landscape redesign — we plant it, and we keep it thriving.</p>
+      <div class="cta">
+        <a class="btn" href="#visit">Book a free site visit</a>
+        <a class="btn soft" href="#work">See recent gardens</a>
+      </div>
+    </div>
+    <div class="photo"><div class="badge"><b>RHS-trained</b>designers &amp; gardeners</div></div>
+  </div>
+</header>
+
+<div class="trust"><div class="wrap" style="display:flex;gap:36px;flex-wrap:wrap;justify-content:center">
+  <span>Garden design</span><span>Soft &amp; hard landscaping</span><span>Lawn &amp; hedge care</span><span>Planting schemes</span><span>Fully insured</span>
+</div></div>
+
+<section class="pad" id="services">
+  <div class="wrap">
+    <div class="head"><span class="ey">What we do</span><h2>From bare ground to in bloom.</h2><p>One team for the whole job — no juggling three different trades.</p></div>
+    <div class="svc">
+      <div class="scard"><div class="ic">🌿</div><h3>Garden design</h3><p>Scaled plans, planting schemes and 3D visuals so you can see it before we lift a spade.</p></div>
+      <div class="scard"><div class="ic">🧱</div><h3>Landscaping</h3><p>Patios, paths, raised beds, fencing and decking — built to last British weather.</p></div>
+      <div class="scard"><div class="ic">🌳</div><h3>Grounds care</h3><p>Regular maintenance, seasonal tidies and lawn programmes that keep it looking its best.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="work" style="background:#eef2e6">
+  <div class="wrap">
+    <div class="head"><span class="ey">Recent gardens</span><h2>A little of our work.</h2></div>
+    <div class="gal">
+      <div class="big p1"></div><div class="sq p2"></div><div class="sq p3"></div>
+      <div class="wide p4"></div><div class="sq p5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="process">
+  <div class="wrap">
+    <div class="head"><span class="ey">How it works</span><h2>Simple, from hello to hedge.</h2></div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h4>Site visit</h4><p>We walk the garden with you and listen to how you want to use it.</p></div>
+      <div class="step"><div class="n">02</div><h4>Design &amp; quote</h4><p>A clear plan and a fixed price — no surprises later.</p></div>
+      <div class="step"><div class="n">03</div><h4>We build it</h4><p>One tidy, friendly crew, on the dates we promised.</p></div>
+      <div class="step"><div class="n">04</div><h4>We care for it</h4><p>Optional maintenance to keep everything looking the day-one best.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad visit" id="visit">
+  <div class="wrap">
+    <span class="ey" style="color:#9cc36a">Free, no obligation</span>
+    <h2>Let's see your garden.</h2>
+    <p>Tell us a little about the space and we'll arrange a visit within the week, anywhere around Henley, Marlow and Maidenhead.</p>
+    <a class="btn soft" href="#visit">Request a site visit →</a>
+  </div>
+</section>
+
+<footer class="tg">
+  <div class="wrap">
+    <div class="brand">Thames Valley Gardens</div>
+    <div>Henley-on-Thames, Oxfordshire · 01491 000 000 · hello@thamesvalleygardens.example</div>
+    <div style="margin-top:10px;opacity:.7">© Thames Valley Gardens — demo website</div>
+  </div>
+</footer>
+</body>
+</html>

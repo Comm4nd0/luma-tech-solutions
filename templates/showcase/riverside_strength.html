@@ -1,0 +1,178 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Riverside Strength — Strength &amp; Conditioning Gym, Maidenhead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0c0d10;--panel:#15171c;--panel2:#1c1f26;--fg:#f3f4f6;--mut:#9aa1ad;--acc:#e4572e;--acc2:#ffd23f;--line:rgba(255,255,255,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--fg);font-family:'Barlow',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.disp{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.96}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+    .ey{font-weight:700;text-transform:uppercase;letter-spacing:.28em;font-size:12px;color:var(--acc2)}
+    .btn{display:inline-block;background:var(--acc);color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:14px;padding:15px 30px;border-radius:4px;transition:transform .12s,background .2s}
+    .btn:hover{transform:translateY(-2px);background:#cf4622}
+    .btn.line{background:transparent;border:2px solid var(--fg);padding:13px 28px}
+    .btn.line:hover{background:var(--fg);color:var(--bg)}
+    /* nav */
+    nav.rs{position:sticky;top:44px;z-index:50;background:rgba(12,13,16,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    nav.rs .row{display:flex;align-items:center;justify-content:space-between;height:72px}
+    nav.rs .brand{font-family:'Anton';font-size:25px;letter-spacing:.02em}
+    nav.rs .brand span{color:var(--acc)}
+    nav.rs ul{display:flex;gap:28px;list-style:none;align-items:center}
+    nav.rs ul a{font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+    nav.rs ul a:hover{color:var(--fg)}
+    @media(max-width:780px){nav.rs li.hide{display:none}}
+    /* hero */
+    .hero{position:relative;overflow:hidden;padding:120px 0 110px;
+      background:radial-gradient(90% 120% at 100% 0%,rgba(228,87,46,.25),transparent 55%),linear-gradient(180deg,#101216,#0c0d10)}
+    .hero .ey{margin-bottom:18px;display:inline-block}
+    .hero h1{font-size:clamp(56px,12vw,150px)}
+    .hero h1 .o{color:transparent;-webkit-text-stroke:2px var(--acc)}
+    .hero p{max-width:480px;color:var(--mut);font-size:19px;margin:26px 0 34px}
+    .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:70px;border-radius:8px;overflow:hidden}
+    .stats div{background:var(--panel);padding:26px}
+    .stats .n{font-family:'Anton';font-size:42px;color:var(--acc2)}
+    .stats .l{color:var(--mut);font-size:13px;text-transform:uppercase;letter-spacing:.16em}
+    @media(max-width:620px){.stats{grid-template-columns:1fr}}
+    /* sections */
+    section.pad{padding:100px 0}
+    .head{max-width:620px}
+    .head h2{font-size:clamp(36px,6vw,64px)}
+    .head p{color:var(--mut);margin-top:14px;font-size:18px}
+    /* programmes */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+    @media(max-width:820px){.cards{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:30px;transition:border-color .2s,transform .12s}
+    .card:hover{border-color:var(--acc);transform:translateY(-4px)}
+    .card .k{font-family:'Anton';font-size:14px;color:var(--acc);letter-spacing:.1em}
+    .card h3{font-size:26px;margin:10px 0 12px}
+    .card p{color:var(--mut);font-size:15px}
+    /* timetable */
+    .tt{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:46px}
+    .tt .r{display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-top:1px solid var(--line)}
+    .tt .r:first-child{border-top:0}
+    .tt .r>div{padding:16px 18px;border-left:1px solid var(--line)}
+    .tt .r>div:first-child{border-left:0;font-family:'Anton';color:var(--acc2);font-size:14px;display:flex;align-items:center}
+    .tt .hd{background:var(--panel2)}
+    .tt .hd>div{font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--mut)}
+    .cls b{display:block;font-weight:700}
+    .cls span{font-size:13px;color:var(--mut)}
+    @media(max-width:780px){.tt{display:none}}
+    .tt-note{display:none;color:var(--mut);margin-top:24px}
+    @media(max-width:780px){.tt-note{display:block}}
+    /* pricing */
+    .price{background:linear-gradient(180deg,#0e0f13,#0c0d10)}
+    .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+    @media(max-width:820px){.prices{grid-template-columns:1fr}}
+    .pl{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:34px}
+    .pl.feat{border-color:var(--acc);background:linear-gradient(180deg,rgba(228,87,46,.12),var(--panel))}
+    .pl .tag{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc2);font-weight:700}
+    .pl .amt{font-family:'Anton';font-size:54px;margin:8px 0}
+    .pl .amt small{font-family:'Barlow';font-size:16px;color:var(--mut);font-weight:600}
+    .pl ul{list-style:none;margin:18px 0 26px}
+    .pl li{padding:9px 0;border-top:1px solid var(--line);color:var(--mut);font-size:15px}
+    .pl li::before{content:"→ ";color:var(--acc)}
+    .cta-band{background:var(--acc);color:#fff;text-align:center;padding:80px 0}
+    .cta-band h2{font-size:clamp(34px,6vw,60px)}
+    .cta-band p{font-size:18px;margin:12px 0 28px;opacity:.95}
+    footer.rs{background:#08090b;color:var(--mut);padding:46px 0;font-size:14px;border-top:1px solid var(--line)}
+    footer.rs .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+    footer.rs .brand{font-family:'Anton';color:var(--fg);font-size:22px}
+    footer.rs .brand span{color:var(--acc)}
+  </style>
+</head>
+<body>
+{% include 'showcase/_back_bar.html' %}
+
+<nav class="rs">
+  <div class="wrap row">
+    <div class="brand">RIVERSIDE<span>/</span>STRENGTH</div>
+    <ul>
+      <li class="hide"><a href="#programmes">Programmes</a></li>
+      <li class="hide"><a href="#timetable">Timetable</a></li>
+      <li class="hide"><a href="#pricing">Membership</a></li>
+      <li><a class="btn" href="#join">Start free</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="ey">Maidenhead · Strength &amp; conditioning</span>
+    <h1>Get <span class="o">strong.</span><br>Stay strong.</h1>
+    <p>Coached small-group training for real people. No mirrors-and-ego nonsense — just barbells, a plan, and a room that actually wants you to turn up.</p>
+    <div class="cta">
+      <a class="btn" href="#join">Claim a free week</a>
+      <a class="btn line" href="#timetable">See the timetable</a>
+    </div>
+    <div class="stats">
+      <div><div class="n">38</div><div class="l">Classes / week</div></div>
+      <div><div class="n">6:1</div><div class="l">Max member-to-coach</div></div>
+      <div><div class="n">400+</div><div class="l">Members &amp; counting</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="pad" id="programmes">
+  <div class="wrap">
+    <div class="head"><span class="ey">What we run</span><h2>Pick your fight.</h2><p>Every session is coached start to finish, scaled to whatever you walked in with today.</p></div>
+    <div class="cards">
+      <div class="card"><div class="k">01</div><h3>Barbell Club</h3><p>Squat, press, deadlift. Technique-first strength on a progressive 12-week cycle.</p></div>
+      <div class="card"><div class="k">02</div><h3>Conditioning</h3><p>High-energy engine work — rowers, bikes, kettlebells. The fun kind of brutal.</p></div>
+      <div class="card"><div class="k">03</div><h3>Hybrid 45</h3><p>Strength then sweat in 45 minutes flat. Built for busy weekday lunchtimes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="timetable">
+  <div class="wrap">
+    <div class="head"><span class="ey">This week</span><h2>The timetable.</h2></div>
+    <div class="tt">
+      <div class="r hd"><div>Time</div><div>Monday</div><div>Wednesday</div><div>Saturday</div></div>
+      <div class="r"><div>06:15</div><div class="cls"><b>Barbell Club</b><span>Coach Dani</span></div><div class="cls"><b>Conditioning</b><span>Coach Sol</span></div><div class="cls"><b>Hybrid 45</b><span>Coach Dani</span></div></div>
+      <div class="r"><div>12:00</div><div class="cls"><b>Hybrid 45</b><span>Coach Sol</span></div><div class="cls"><b>Hybrid 45</b><span>Coach Dani</span></div><div class="cls"><b>Open Gym</b><span>Coached</span></div></div>
+      <div class="r"><div>18:30</div><div class="cls"><b>Conditioning</b><span>Coach Dani</span></div><div class="cls"><b>Barbell Club</b><span>Coach Sol</span></div><div class="cls"><b>—</b><span></span></div></div>
+    </div>
+    <p class="tt-note">Full timetable runs Mon–Sat, 6am to 8pm. Book any class from the member app.</p>
+  </div>
+</section>
+
+<section class="pad price" id="pricing">
+  <div class="wrap">
+    <div class="head"><span class="ey">No contracts</span><h2>Membership.</h2><p>Cancel any time. First week is on us — properly, not a trial-trap.</p></div>
+    <div class="prices">
+      <div class="pl"><div class="tag">Off-peak</div><div class="amt">£59<small>/mo</small></div><ul><li>Daytime classes</li><li>Member app + booking</li><li>Form-check sessions</li></ul><a class="btn line" href="#join">Choose off-peak</a></div>
+      <div class="pl feat"><div class="tag">Unlimited · most popular</div><div class="amt">£89<small>/mo</small></div><ul><li>Every class, any time</li><li>Open-gym access</li><li>Quarterly testing day</li><li>Nutrition starter plan</li></ul><a class="btn" href="#join">Go unlimited</a></div>
+      <div class="pl"><div class="tag">10-pack</div><div class="amt">£99<small>/10</small></div><ul><li>Ten classes, no expiry</li><li>Perfect for shift workers</li><li>Member app + booking</li></ul><a class="btn line" href="#join">Buy a pack</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="join">
+  <div class="wrap">
+    <h2>Your free week starts now.</h2>
+    <p>Drop your name in, we'll text you a start date. That's it.</p>
+    <a class="btn line" href="#join" style="border-color:#fff">Claim it →</a>
+  </div>
+</section>
+
+<footer class="rs">
+  <div class="wrap row">
+    <div>
+      <div class="brand">RIVERSIDE<span>/</span>STRENGTH</div>
+      <div style="margin-top:8px">Unit 4, Riverside Park, Maidenhead SL6 · train@riversidestrength.example</div>
+    </div>
+    <div style="opacity:.7">© Riverside Strength — demo website</div>
+  </div>
+</footer>
+</body>
+</html>

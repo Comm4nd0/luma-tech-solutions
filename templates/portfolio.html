@@ -35,5 +35,30 @@
   </div>
 </section>
 
+<section id="website-demos" class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Live website demos</span>
+      <h2>Click through to a real one.</h2>
+      <p class="lede">
+        Wondering what a site from us actually looks like? These are five
+        complete, one-page demo websites we've built for fictional local
+        businesses — each with its own look and feel. Open any of them in a new
+        tab and explore it exactly as your customers would.
+      </p>
+    </div>
+    <div class="grid grid-2">
+      {% for demo in website_demos %}
+        <a class="card demo-card fade-in" href="{% url 'showcase_demo' demo.slug %}" target="_blank" rel="noopener" style="--demo-accent: {{ demo.accent }};">
+          <span class="case-tag">{{ demo.industry }}</span>
+          <h3>{{ demo.name }}</h3>
+          <p>{{ demo.tagline }}</p>
+          <span class="demo-card-cta">View live site →</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 {% include 'partials/_cta_banner.html' with cta_title='Got a project of your own in mind?' cta_copy='Whether it is a network, an app, or a smart home — tell us what you are trying to achieve and we will tell you how we would approach it.' %}
 {% endblock %}
