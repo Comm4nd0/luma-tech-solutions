@@ -39,13 +39,11 @@
     (function () {
       try {
         var saved = localStorage.getItem('luma-theme');
-        // Default to light; honour an explicit user toggle (saved) above all.
-        var pref = (saved === 'dark') ? 'dark' : 'light';
-        if (pref === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        // Default to dark; honour an explicit user toggle (saved) above all.
+        if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
       } catch (e) {
-        // localStorage may throw in private mode — fall through to the light default
-        // (no data-theme set means dark, so set it explicitly for the fallback).
-        document.documentElement.setAttribute('data-theme', 'light');
+        // localStorage may throw in private mode — fall through to the dark default
+        // (no data-theme attribute means dark).
       }
     })();
   </script>
