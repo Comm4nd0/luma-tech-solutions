@@ -508,6 +508,7 @@ WEBSITE_DEMOS = [
         "industry": "Restaurant · Marlow",
         "tagline": "Seasonal British bistro on the high street — menus, story and table bookings.",
         "accent": "#9a3b2e",
+        "thumb": "https://images.pexels.com/photos/31517300/pexels-photo-31517300.jpeg?auto=compress&cs=tinysrgb&w=800",
         "template": "showcase/maple_and_vine.html",
     },
     {
@@ -516,6 +517,7 @@ WEBSITE_DEMOS = [
         "industry": "Fitness studio · Maidenhead",
         "tagline": "Bold strength-and-conditioning gym with class timetable and membership pricing.",
         "accent": "#e4572e",
+        "thumb": "https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=800",
         "template": "showcase/riverside_strength.html",
     },
     {
@@ -524,6 +526,7 @@ WEBSITE_DEMOS = [
         "industry": "Landscaping · Henley",
         "tagline": "Garden design and grounds care — services, planting gallery and free site visits.",
         "accent": "#3f7d4e",
+        "thumb": "https://images.pexels.com/photos/7174105/pexels-photo-7174105.jpeg?auto=compress&cs=tinysrgb&w=800",
         "template": "showcase/thames_valley_gardens.html",
     },
     {
@@ -532,6 +535,7 @@ WEBSITE_DEMOS = [
         "industry": "Dental practice · Marlow",
         "tagline": "Calm, modern dentistry — treatments, plans and online appointment requests.",
         "accent": "#2f80c2",
+        "thumb": "https://images.pexels.com/photos/3845553/pexels-photo-3845553.jpeg?auto=compress&cs=tinysrgb&w=800",
         "template": "showcase/marlow_dental_care.html",
     },
     {
@@ -540,6 +544,7 @@ WEBSITE_DEMOS = [
         "industry": "Photographer · Thames Valley",
         "tagline": "Minimal monochrome portfolio for a wedding and portrait photographer.",
         "accent": "#111111",
+        "thumb": "https://images.pexels.com/photos/18398510/pexels-photo-18398510.jpeg?auto=compress&cs=tinysrgb&w=800",
         "template": "showcase/frame_and_field.html",
     },
 ]

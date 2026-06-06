@@ -49,7 +49,8 @@
     </div>
     <div class="grid grid-2">
       {% for demo in website_demos %}
-        <a class="card demo-card fade-in" href="{% url 'showcase_demo' demo.slug %}" target="_blank" rel="noopener" style="--demo-accent: {{ demo.accent }};">
+        <a class="card demo-card fade-in" href="{% url 'showcase_demo' demo.slug %}" style="--demo-accent: {{ demo.accent }};">
+          <span class="demo-thumb" style="background-image:url('{{ demo.thumb }}');"></span>
           <span class="case-tag">{{ demo.industry }}</span>
           <h3>{{ demo.name }}</h3>
           <p>{{ demo.tagline }}</p>
