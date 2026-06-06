@@ -1,0 +1,184 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Marlow Dental Care — Calm, Modern Dentistry in Marlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f3f8fc;--card:#fff;--ink:#13283b;--mut:#5a7186;--blue:#2f80c2;--blue-d:#1f5e93;--mint:#3bc4b0;--soft:#e3f0fa;--line:rgba(19,40,59,.10)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.disp{font-family:'Poppins',sans-serif;font-weight:600;line-height:1.18}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+    .ey{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:600;color:var(--blue)}
+    .btn{display:inline-block;background:var(--blue);color:#fff;font-weight:600;padding:14px 28px;border-radius:12px;transition:background .2s,transform .12s;box-shadow:0 10px 22px -12px rgba(47,128,194,.7)}
+    .btn:hover{background:var(--blue-d);transform:translateY(-2px)}
+    .btn.ghost{background:#fff;color:var(--blue-d);box-shadow:none;border:1.5px solid var(--line)}
+    .btn.ghost:hover{border-color:var(--blue);background:var(--soft)}
+    /* nav */
+    nav.dc{position:sticky;top:44px;z-index:50;background:rgba(243,248,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    nav.dc .row{display:flex;align-items:center;justify-content:space-between;height:76px}
+    nav.dc .brand{display:flex;align-items:center;gap:10px;font-family:'Poppins';font-weight:700;font-size:20px}
+    nav.dc .mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--mint));display:grid;place-items:center;color:#fff;font-weight:700}
+    nav.dc ul{display:flex;gap:26px;list-style:none;align-items:center}
+    nav.dc ul a{font-weight:500;font-size:15px;color:var(--mut)}
+    nav.dc ul a:hover{color:var(--blue)}
+    @media(max-width:820px){nav.dc li.hide{display:none}}
+    /* hero */
+    .hero{padding:90px 0 96px}
+    .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+    @media(max-width:880px){.hero .grid{grid-template-columns:1fr;gap:38px}}
+    .pill{display:inline-flex;gap:8px;align-items:center;background:var(--soft);color:var(--blue-d);font-weight:600;font-size:13px;padding:7px 14px;border-radius:999px}
+    .hero h1{font-size:clamp(38px,6vw,64px);margin:18px 0}
+    .hero h1 span{color:var(--blue)}
+    .hero p{font-size:19px;color:var(--mut);max-width:480px;margin-bottom:30px}
+    .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+    .mini{display:flex;gap:26px;flex-wrap:wrap;color:var(--mut);font-size:14px;font-weight:500}
+    .mini b{color:var(--ink)}
+    .heroart{position:relative;aspect-ratio:1/1;border-radius:28px;background:
+      radial-gradient(120% 100% at 30% 10%,#bfe3f7,transparent 60%),
+      linear-gradient(160deg,#dcf1ee,#cfe6f7);box-shadow:0 40px 70px -40px rgba(31,94,147,.5);display:grid;place-items:center}
+    .heroart .tooth{font-size:120px}
+    .heroart .float{position:absolute;background:#fff;border-radius:16px;padding:12px 16px;font-size:13px;font-weight:600;box-shadow:0 16px 34px -18px rgba(0,0,0,.3);display:flex;gap:8px;align-items:center}
+    .heroart .f1{top:24px;right:20px;color:var(--mint)}
+    .heroart .f2{bottom:24px;left:20px;color:var(--blue)}
+    /* sections */
+    section.pad{padding:90px 0}
+    .head{text-align:center;max-width:600px;margin:0 auto}
+    .head h2{font-size:clamp(30px,5vw,46px);margin:12px 0}
+    .head p{color:var(--mut);font-size:18px}
+    .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+    @media(max-width:820px){.svc{grid-template-columns:1fr}}
+    .scard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;transition:transform .14s,box-shadow .2s}
+    .scard:hover{transform:translateY(-4px);box-shadow:0 30px 50px -32px rgba(31,94,147,.4)}
+    .scard .ic{width:52px;height:52px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:25px;margin-bottom:14px}
+    .scard h3{font-size:21px;margin-bottom:7px}
+    .scard p{color:var(--mut);font-size:15px}
+    .scard .from{margin-top:12px;font-weight:600;color:var(--blue-d);font-size:14px}
+    /* reassure */
+    .why{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .why .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:46px}
+    @media(max-width:820px){.why .grid{grid-template-columns:1fr 1fr}}
+    .why .n{font-family:'Poppins';font-size:38px;color:var(--blue);font-weight:700}
+    .why h4{margin:6px 0 4px;font-family:'Poppins';font-size:17px}
+    .why p{color:var(--mut);font-size:14px}
+    /* plan */
+    .plan{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px}
+    @media(max-width:760px){.plan{grid-template-columns:1fr}}
+    .pcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px}
+    .pcard.feat{background:linear-gradient(160deg,#eaf4fc,#fff);border-color:var(--blue)}
+    .pcard .amt{font-family:'Poppins';font-size:44px;font-weight:700;color:var(--ink)}
+    .pcard .amt small{font-size:16px;color:var(--mut);font-weight:500}
+    .pcard ul{list-style:none;margin:18px 0 24px}
+    .pcard li{padding:9px 0;border-top:1px solid var(--line);color:var(--mut);font-size:15px}
+    .pcard li::before{content:"✓ ";color:var(--mint);font-weight:700}
+    /* book */
+    .book{background:linear-gradient(150deg,var(--blue),var(--blue-d));color:#fff;text-align:center}
+    .book h2{color:#fff;font-size:clamp(30px,5vw,50px)}
+    .book p{max-width:480px;margin:14px auto 28px;color:#dcecf8}
+    .hours{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:40px;color:#dcecf8;font-size:14px}
+    .hours b{display:block;color:#fff;font-family:'Poppins';margin-bottom:3px}
+    footer.dc{background:#0f2233;color:#8fa6ba;padding:42px 0;text-align:center;font-size:14px}
+    footer.dc .brand{font-family:'Poppins';color:#fff;font-size:19px;margin-bottom:8px}
+  </style>
+</head>
+<body>
+{% include 'showcase/_back_bar.html' %}
+
+<nav class="dc">
+  <div class="wrap row">
+    <div class="brand"><span class="mark">M</span>Marlow Dental Care</div>
+    <ul>
+      <li class="hide"><a href="#services">Treatments</a></li>
+      <li class="hide"><a href="#why">Why us</a></li>
+      <li class="hide"><a href="#plan">Membership</a></li>
+      <li><a class="btn" href="#book">Book online</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <span class="pill">🦷 Accepting new patients</span>
+      <h1>Dentistry that feels <span>calm.</span></h1>
+      <p>Gentle, modern care for the whole family on Marlow high street. Nervous patient? You're in exactly the right place — we go at your pace, every time.</p>
+      <div class="cta">
+        <a class="btn" href="#book">Book an appointment</a>
+        <a class="btn ghost" href="#services">View treatments</a>
+      </div>
+      <div class="mini"><span><b>4.9★</b> from 600+ reviews</span><span><b>Same-week</b> emergency slots</span><span><b>0%</b> finance available</span></div>
+    </div>
+    <div class="heroart">
+      <div class="tooth">🦷</div>
+      <div class="float f1">✦ Pain-free guarantee</div>
+      <div class="float f2">🕑 Open Saturdays</div>
+    </div>
+  </div>
+</header>
+
+<section class="pad" id="services">
+  <div class="wrap">
+    <div class="head"><span class="ey">Treatments</span><h2>Everything under one calm roof.</h2><p>From routine check-ups to a full smile makeover, with clear pricing up front.</p></div>
+    <div class="svc">
+      <div class="scard"><div class="ic">🪥</div><h3>Check-ups &amp; hygiene</h3><p>Thorough exams and gentle hygienist visits to keep things healthy.</p><div class="from">From £49</div></div>
+      <div class="scard"><div class="ic">✨</div><h3>Teeth whitening</h3><p>Safe, dentist-supervised whitening with noticeable, natural results.</p><div class="from">From £299</div></div>
+      <div class="scard"><div class="ic">😁</div><h3>Invisible aligners</h3><p>Discreetly straighten your smile with clear, removable aligners.</p><div class="from">From £1,900</div></div>
+      <div class="scard"><div class="ic">🛡️</div><h3>Crowns &amp; fillings</h3><p>Tooth-coloured restorations that blend right in and last.</p><div class="from">From £160</div></div>
+      <div class="scard"><div class="ic">🦷</div><h3>Dental implants</h3><p>A permanent, natural-feeling replacement for missing teeth.</p><div class="from">From £2,400</div></div>
+      <div class="scard"><div class="ic">🚑</div><h3>Emergency care</h3><p>In pain today? We keep same-week slots for urgent problems.</p><div class="from">From £75</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad why" id="why">
+  <div class="wrap">
+    <div class="head"><span class="ey">Why patients stay</span><h2>Care worth coming back to.</h2></div>
+    <div class="grid">
+      <div><div class="n">25+</div><h4>Years in Marlow</h4><p>A familiar, friendly team you'll get to know.</p></div>
+      <div><div class="n">0%</div><h4>Finance options</h4><p>Spread the cost of bigger treatments interest-free.</p></div>
+      <div><div class="n">Sat</div><h4>Weekend hours</h4><p>Appointments that fit around work and school.</p></div>
+      <div><div class="n">100%</div><h4>Nervous-friendly</h4><p>No judgement, no rush — sedation available too.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="plan">
+  <div class="wrap">
+    <div class="head"><span class="ey">Membership plan</span><h2>Look after it for less.</h2><p>Spread your routine care across the year and save on everything else.</p></div>
+    <div class="plan">
+      <div class="pcard"><span class="ey">Pay as you go</span><div class="amt" style="margin-top:10px">£49<small>/ check-up</small></div><ul><li>Routine exam</li><li>X-rays as needed</li><li>Treatment quoted up front</li></ul><a class="btn ghost" href="#book">Book a check-up</a></div>
+      <div class="pcard feat"><span class="ey">Care Plan · best value</span><div class="amt" style="margin-top:10px">£18<small>/ month</small></div><ul><li>2 check-ups &amp; 2 hygiene visits a year</li><li>20% off all treatments</li><li>Worldwide dental emergency cover</li><li>No joining fee</li></ul><a class="btn" href="#book">Join the plan</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad book" id="book">
+  <div class="wrap">
+    <span class="ey" style="color:#bfe1f7">Quick &amp; easy</span>
+    <h2>Book in 60 seconds.</h2>
+    <p>Choose a time that suits you online, or call the practice — new and returning patients welcome.</p>
+    <a class="btn ghost" href="#book">Request an appointment →</a>
+    <div class="hours">
+      <div><b>Mon–Fri</b>08:00 – 18:00</div>
+      <div><b>Saturday</b>09:00 – 13:00</div>
+      <div><b>Find us</b>9 High Street, Marlow SL7</div>
+    </div>
+  </div>
+</section>
+
+<footer class="dc">
+  <div class="wrap">
+    <div class="brand">Marlow Dental Care</div>
+    <div>9 High Street, Marlow, Buckinghamshire SL7 · 01628 000 000 · smile@marlowdental.example</div>
+    <div style="margin-top:10px;opacity:.7">© Marlow Dental Care — demo website</div>
+  </div>
+</footer>
+</body>
+</html>

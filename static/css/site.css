@@ -2224,3 +2224,25 @@ footer.site-footer {
   .post-hero-illustration-inner { padding: 1.25rem; max-height: 240px; }
   .post-hero-illustration-inner .ill { max-height: 200px; }
 }
+
+/* --- Website demo cards (portfolio /#website-demos) --- */
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
+  border-top: 3px solid var(--demo-accent, var(--accent));
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.demo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.demo-card h3 { margin: 0; }
+.demo-card .case-tag { align-self: flex-start; }
+.demo-card .demo-card-cta {
+  margin-top: auto;
+  font-weight: 600;
+  color: var(--demo-accent, var(--accent));
+}
