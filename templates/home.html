@@ -205,11 +205,7 @@
 
     <div class="featured-case fade-in">
       <div>
-        <div class="featured-case-img mb-2">
-          {% include 'partials/_illustrations.html' with name='networking' %}
-          {% static_optional 'img/work/littlewick-hero.jpg' as hero_url %}
-          {% if hero_url %}<img src="{{ hero_url }}" alt="Whole-property UniFi install at LittleWick House" loading="lazy"/>{% endif %}
-        </div>
+        <div class="featured-case-img mb-2" style="background-image:url('https://images.pexels.com/photos/6466141/pexels-photo-6466141.jpeg?auto=compress&cs=tinysrgb&w=1100'),radial-gradient(ellipse at 30% 40%, rgba(20,184,166,0.1), transparent 60%),radial-gradient(ellipse at 80% 70%, rgba(14,165,233,0.08), transparent 60%);background-size:cover;background-position:center;" role="img" aria-label="Whole-property UniFi install at LittleWick House"></div>
         <h3>{{ featured_case.title }}</h3>
         <p class="muted">{{ featured_case.summary }}</p>
         <div class="stack-row">

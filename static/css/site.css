@@ -2259,3 +2259,28 @@ footer.site-footer {
   font-weight: 600;
   color: var(--demo-accent, var(--accent));
 }
+
+/* --- Stock photo blocks on marketing pages (service heroes, about) --- */
+.hero-photo {
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  background-color: var(--bg-3);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+.media-banner {
+  width: 100%;
+  aspect-ratio: 24 / 9;
+  border-radius: var(--radius);
+  background-color: var(--bg-3);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
