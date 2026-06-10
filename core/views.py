@@ -103,114 +103,6 @@ PILLARS = [
 ]
 
 
-HERO_SLIDES = [
-    {
-        "key": "intro",
-        "eyebrow": "Marlow · Maidenhead · the Thames Valley",
-        "headline_top": "Wi-Fi that actually",
-        "headline_bottom": "reaches every room.",
-        "lede": (
-            "If your home or office is too big for consumer routers — and the "
-            "mesh kit didn't fix it — we engineer efficient business-grade "
-            "networks for larger homes and small businesses that need it to "
-            "just work. Plus security, automation, development and support. "
-            "Based in Marlow, covering the Thames Valley."
-        ),
-        "primary_cta_text": "Get a quote",
-        "primary_cta_url_name": "quote",
-        "primary_cta_source": "home-wifi-hero",
-        "secondary_cta_text": "Explore services",
-        "secondary_cta_url_name": "services",
-        "illustration": "hero",
-    },
-    {
-        "key": "networking",
-        "eyebrow": "Wi-Fi & Networking",
-        "headline_top": "Built like office kit.",
-        "headline_bottom": "Sized for homes.",
-        "lede": (
-            "UniFi networks — surveyed, cabled and documented. PoE access "
-            "points placed from a real site survey, managed switches and "
-            "VLANs underneath. No mesh, no guesswork."
-        ),
-        "primary_cta_text": "Get a Wi-Fi quote",
-        "primary_cta_url_name": "quote",
-        "primary_cta_source": "home-networking-hero",
-        "secondary_cta_text": "See LittleWick House",
-        "secondary_cta_url_name": "portfolio",
-        "illustration": "networking",
-    },
-    {
-        "key": "security",
-        "eyebrow": "Physical Security",
-        "headline_top": "CCTV, access and alarms —",
-        "headline_bottom": "one integrated system.",
-        "lede": (
-            "CCTV, access control and alarms — professionally installed "
-            "and integrated with the same network we built. "
-            "Recorded on-site, not on someone else's cloud."
-        ),
-        "primary_cta_text": "Get a CCTV quote",
-        "primary_cta_url_name": "quote",
-        "primary_cta_source": "home-security-hero",
-        "secondary_cta_text": "How we do security",
-        "secondary_cta_url_name": "service_security",
-        "illustration": "security",
-    },
-    {
-        "key": "development",
-        "eyebrow": "App & Web Development",
-        "headline_top": "Apps and websites,",
-        "headline_bottom": "built and supported.",
-        "lede": (
-            "Custom websites, web apps and mobile apps — designed, shipped "
-            "and looked after by the same engineer. No agency hand-offs, "
-            "no offshore black-box."
-        ),
-        "primary_cta_text": "Scope a build",
-        "primary_cta_url_name": "quote",
-        "primary_cta_source": "home-development-hero",
-        "secondary_cta_text": "Recent work",
-        "secondary_cta_url_name": "portfolio",
-        "illustration": "development",
-    },
-    {
-        "key": "automation",
-        "eyebrow": "Home Automation",
-        "headline_top": "Smart homes that stay",
-        "headline_bottom": "smart offline.",
-        "lede": (
-            "Local-first Home Assistant setups for lighting, climate, scenes "
-            "and access. Private, fast, and still working when your "
-            "broadband isn't."
-        ),
-        "primary_cta_text": "Plan my smart home",
-        "primary_cta_url_name": "quote",
-        "primary_cta_source": "home-automation-hero",
-        "secondary_cta_text": "See a real install",
-        "secondary_cta_url_name": "portfolio",
-        "illustration": "automation",
-    },
-    {
-        "key": "support",
-        "eyebrow": "Support & Care Plans",
-        "headline_top": "Care plans from £75.",
-        "headline_bottom": "One engineer, every call.",
-        "lede": (
-            "Monitoring, response SLAs and the same person on the phone "
-            "every time. So your home or office tech keeps working long "
-            "after the install is finished."
-        ),
-        "primary_cta_text": "Talk to support",
-        "primary_cta_url_name": "contact",
-        "primary_cta_source": "home-support-hero",
-        "secondary_cta_text": "How support works",
-        "secondary_cta_url_name": "service_support",
-        "illustration": "support",
-    },
-]
-
-
 TESTIMONIALS = [
     {
         "name": "Helen R.",
@@ -855,7 +747,6 @@ def home(request):
             ),
             testimonials=TESTIMONIALS,
             featured_case=featured,
-            hero_slides=HERO_SLIDES,
             faqs=FAQS_GENERAL,
         ),
     )

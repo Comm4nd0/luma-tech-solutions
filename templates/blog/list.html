@@ -25,7 +25,7 @@
         {% for post in posts %}
           <article class="blog-card fade-in has-image">
             <a href="{{ post.get_absolute_url }}" class="blog-card-link">
-              <div class="blog-card-image"{% if not post.first_image %} style="background-image:url('{% pillar_photo post.pillar 800 %}'),linear-gradient(160deg,#155e63,#0f172a);background-size:cover;background-position:center;"{% endif %}>
+              <div class="blog-card-image"{% if not post.first_image %} style="background-image:url('{% pillar_photo post.pillar 800 %}'),linear-gradient(160deg,#0d9488,#155e63);background-size:cover;background-position:center;"{% endif %}>
                 {% if post.first_image %}
                   <img src="{{ post.first_image.src }}" alt="{{ post.first_image.alt }}" loading="lazy" decoding="async">
                 {% endif %}

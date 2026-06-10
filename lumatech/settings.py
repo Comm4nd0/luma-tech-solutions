@@ -181,11 +181,12 @@ SITE_FOUNDER = "Marco Baldanza"
 SITE_BASE_TOWN = "Marlow"
 # Bump when you ship a meaningful site-wide content change so the
 # static-page sitemap honestly reflects freshness.
-SITE_STATIC_LASTMOD = "2026-05-22"
+SITE_STATIC_LASTMOD = "2026-06-10"
 
 # --- WhatsApp click-to-chat ---
-# E.164 format (e.g. +447xxxxxxxxx). Empty hides the floating button.
-SITE_WHATSAPP_E164 = os.environ.get("SITE_WHATSAPP_E164", "")
+# E.164 format (e.g. +447xxxxxxxxx). Set to empty to hide the floating
+# button and the WhatsApp contact options.
+SITE_WHATSAPP_E164 = os.environ.get("SITE_WHATSAPP_E164", "+447500776311")
 
 # --- Analytics (cookieless) ---
 # When set, drops the Plausible snippet into base.html. Empty disables it.

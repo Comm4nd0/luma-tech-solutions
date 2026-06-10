@@ -17,6 +17,7 @@
       — no callbacks from sales people. Based in Marlow, covering
       Maidenhead, Henley, Beaconsfield and the rest of the Thames Valley.
     </p>
+    {% include 'partials/_trust_strip.html' %}
   </div>
 </section>
 
@@ -97,13 +98,20 @@
       <aside class="contact-info fade-in">
         <h2 style="font-size:1.25rem;">Other ways to reach us</h2>
 
-        <span class="label">Email</span>
-        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
+        {% if SITE_WHATSAPP_E164 %}
+        <span class="label">WhatsApp — fastest reply</span>
+        <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%20saw%20your%20website%20and%20wanted%20to%20chat..."
+           target="_blank" rel="noopener"
+           class="plausible-event-name=WhatsApp+Click">Message us on WhatsApp</a>
+        {% endif %}
 
         {% if SITE_PHONE %}
         <span class="label">Phone</span>
-        <a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a>
+        <a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Call+Click">{{ SITE_PHONE }}</a>
         {% endif %}
+
+        <span class="label">Email</span>
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
 
         <span class="label">Hours</span>
         <p style="margin:0;">Mon–Fri, 8am–5pm. Concierge care-plan customers get best-effort out-of-hours for genuine emergencies.</p>

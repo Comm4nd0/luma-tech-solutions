@@ -36,6 +36,7 @@
           within one working day. Free site survey, fixed-price quote on
           one page, no obligation.
         </p>
+        {% include 'partials/_trust_strip.html' %}
       </div>
       <div class="hero-illustration">
         {% include 'partials/_illustrations.html' with name='networking' %}
@@ -162,8 +163,13 @@
         <p class="muted" style="font-size:.78rem;margin:.35rem 0 0;">{{ SITE_TOWNS_DISPLAY }}</p>
 
         <span class="label" style="margin-top:1.5rem;">Or reach us directly</span>
+        {% if SITE_WHATSAPP_E164 %}
+        <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%27d%20like%20a%20quote..."
+           target="_blank" rel="noopener"
+           class="plausible-event-name=WhatsApp+Click">WhatsApp us — fastest reply</a>
+        {% endif %}
+        {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Call+Click">{{ SITE_PHONE }}</a>{% endif %}
         <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
-        {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a>{% endif %}
       </aside>
     </div>
   </div>

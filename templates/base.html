@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{% block title %}{{ page_title|default:SITE_NAME }}{% endblock %}</title>
   <meta name="description" content="{% block description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#f7f9fc" />
   <meta name="robots" content="index, follow" />
 
   <meta property="og:type" content="website" />
@@ -23,13 +23,17 @@
   <meta property="og:title" content="{% block og_title %}{{ page_title|default:SITE_NAME }}{% endblock %}" />
   <meta property="og:description" content="{% block og_description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
   <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}" />
-  <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'img/og-default.svg' %}{% endblock %}" />
+  <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'img/og-default.png' %}{% endblock %}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}" />
   <link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }} blog" href="{% url 'blog_feed' %}" />
   <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="{% static 'img/favicon.svg' %}" />
+  <link rel="icon" href="{% static 'img/favicon-32.png' %}" type="image/png" sizes="32x32" />
+  <link rel="icon" href="{% static 'img/favicon-16.png' %}" type="image/png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}" sizes="180x180" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,11 +43,11 @@
     (function () {
       try {
         var saved = localStorage.getItem('luma-theme');
-        // Default to dark; honour an explicit user toggle (saved) above all.
-        if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        // Default to light; honour an explicit user toggle (saved) above all.
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) {
-        // localStorage may throw in private mode — fall through to the dark default
-        // (no data-theme attribute means dark).
+        // localStorage may throw in private mode — fall through to the light
+        // default (no data-theme attribute means light).
       }
     })();
   </script>
@@ -158,8 +162,15 @@
         <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}">Portfolio</a></li>
         <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
         <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
-        <li><a href="{% url 'careers' %}" class="{% if active_nav == 'careers' %}active{% endif %}">Careers</a></li>
         <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}">Contact</a></li>
+        {% if SITE_PHONE %}
+        <li class="nav-phone">
+          <a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Nav+Call+Click" aria-label="Call us on {{ SITE_PHONE }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            <span>{{ SITE_PHONE }}</span>
+          </a>
+        </li>
+        {% endif %}
         <li class="nav-theme-toggle">
           <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle light/dark theme">
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -254,25 +265,7 @@
 
   {% include 'partials/_cookie_consent.html' %}
 
-  <div class="social-fab" role="group" aria-label="Contact and social links">
-    <a href="https://g.page/r/CVzZIQHfjwivEAI/review"
-       class="social-fab__btn social-fab__btn--google plausible-event-name=Google+Review+Click"
-       target="_blank" rel="noopener"
-       aria-label="Leave us a Google review">
-      {% include 'partials/_icons.html' with name='google-g' %}
-    </a>
-    <a href="https://www.instagram.com/luma_tech_solutions/"
-       class="social-fab__btn social-fab__btn--instagram plausible-event-name=Instagram+Click"
-       target="_blank" rel="noopener"
-       aria-label="Luma Tech on Instagram">
-      {% include 'partials/_icons.html' with name='instagram' %}
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61560720497065"
-       class="social-fab__btn social-fab__btn--facebook plausible-event-name=Facebook+Click"
-       target="_blank" rel="noopener"
-       aria-label="Luma Tech on Facebook">
-      {% include 'partials/_icons.html' with name='facebook' %}
-    </a>
+  <div class="social-fab" role="group" aria-label="Quick contact">
     {% if SITE_WHATSAPP_E164 %}
     <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%20saw%20your%20website%20and%20wanted%20to%20chat..."
        class="social-fab__btn social-fab__btn--whatsapp plausible-event-name=WhatsApp+Click"
@@ -281,6 +274,13 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.16 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/>
       </svg>
+    </a>
+    {% endif %}
+    {% if SITE_PHONE %}
+    <a href="tel:{{ SITE_PHONE_E164 }}"
+       class="social-fab__btn social-fab__btn--call plausible-event-name=Call+Click"
+       aria-label="Call us on {{ SITE_PHONE }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
     </a>
     {% endif %}
   </div>

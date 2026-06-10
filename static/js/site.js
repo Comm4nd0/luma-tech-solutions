@@ -1,19 +1,20 @@
-// Theme toggle (light / dark)
+// Theme toggle (light / dark). Light is the default; dark is opt-in via
+// [data-theme="dark"] on <html>, persisted in localStorage as 'luma-theme'.
 (function () {
   var btn = document.querySelector('[data-theme-toggle]');
   if (!btn) return;
   var SWEEP_MS = 600;
   var sweeping = false;
   function apply(theme) {
-    if (theme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
-    btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
   }
   // Initialise aria-pressed from whatever the inline head script applied.
-  apply(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
   function buttonCircleCoords() {
     var rect = btn.getBoundingClientRect();
     var x = rect.left + rect.width / 2;
@@ -25,8 +26,8 @@
 
   btn.addEventListener('click', function () {
     if (sweeping) return;
-    var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    var next = current === 'light' ? 'dark' : 'light';
+    var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('luma-theme', next); } catch (e) {}
     // Radial reveal: a circle of the destination colour grows from the toggle
     // button's centre out to the farthest viewport corner. When it covers the
@@ -47,43 +48,6 @@
       sweeping = false;
     }, SWEEP_MS);
   });
-
-  // One-time hint pulse: 3 seconds after load, a dark wave emanates from the
-  // toggle to showcase dark mode, then fades back to the current theme.
-  // Gated to once per session via sessionStorage.
-  function showThemeHintPulse() {
-    if (sweeping) return;
-    if (!document.body.animate) return; // very old browser without WAAPI
-    var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    // The pulse shows the opposite of the current theme — usually dark on light.
-    var pulseTheme = current === 'light' ? 'dark' : 'light';
-    var c = buttonCircleCoords();
-    var overlay = document.createElement('div');
-    overlay.className = 'theme-sweep theme-sweep--to-' + pulseTheme;
-    overlay.style.clipPath = 'circle(0px at ' + c.x + 'px ' + c.y + 'px)';
-    document.body.appendChild(overlay);
-    var anim = overlay.animate([
-      { clipPath: 'circle(0px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0 },
-      { clipPath: 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0.45, offset: 0.6 },
-      { clipPath: 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)', opacity: 0 },
-    ], {
-      duration: 1300,
-      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      fill: 'forwards',
-    });
-    anim.onfinish = function () { overlay.remove(); };
-  }
-
-  try {
-    if (!sessionStorage.getItem('luma-theme-hint-seen')) {
-      setTimeout(function () {
-        showThemeHintPulse();
-        try { sessionStorage.setItem('luma-theme-hint-seen', '1'); } catch (e) {}
-      }, 3000);
-    }
-  } catch (e) {
-    setTimeout(showThemeHintPulse, 3000);
-  }
 })();
 
 // Mobile nav toggle
@@ -149,163 +113,56 @@
   }
 })();
 
-// Hero slider (per-service rotation)
+// Inline form validation: highlight required fields that are empty/invalid on
+// submit, and clear the highlight as soon as the user fixes them. Native
+// validation messages are suppressed by `novalidate`; this restores a visible
+// cue without blocking the reCAPTCHA submit flow.
 (function () {
-  var slider = document.querySelector('[data-hero-slider]');
-  if (!slider) return;
+  var form = document.querySelector('[data-contact-form]');
+  if (!form) return;
 
-  var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-slide-index]'));
-  var dots = Array.prototype.slice.call(slider.querySelectorAll('[data-slide-to]'));
-  if (slides.length < 2) return;
+  function fieldWrap(el) { return el.closest('div') || el; }
 
-  var autoplayMs = parseInt(slider.getAttribute('data-autoplay-ms'), 10) || 3000;
-  slider.style.setProperty('--hero-progress-duration', autoplayMs + 'ms');
-  var progressBar = slider.querySelector('[data-hero-progress]');
-
-  var current = 0;
-  var timerId = null;
-  var paused = false;
-  var hidden = false;
-
-  function resetProgress() {
-    if (!progressBar) return;
-    // Restart the CSS animation by toggling animation: none, forcing a reflow,
-    // then letting it pick up the class-driven animation again.
-    progressBar.style.animation = 'none';
-    // eslint-disable-next-line no-unused-expressions
-    progressBar.offsetHeight;
-    progressBar.style.animation = '';
-  }
-
-  function go(n) {
-    n = ((n % slides.length) + slides.length) % slides.length;
-    slides.forEach(function (s, i) {
-      var active = i === n;
-      s.classList.toggle('is-active', active);
-      if (active) s.removeAttribute('aria-hidden');
-      else s.setAttribute('aria-hidden', 'true');
-    });
-    dots.forEach(function (d, i) {
-      var active = i === n;
-      d.classList.toggle('is-active', active);
-      d.setAttribute('aria-selected', active ? 'true' : 'false');
-    });
-    current = n;
-    resetProgress();
-  }
-  function next() { go(current + 1); }
-  function start() {
-    if (paused || hidden || timerId) return;
-    timerId = setInterval(next, autoplayMs);
-    slider.classList.add('is-playing');
-    slider.classList.remove('is-paused');
-  }
-  function stop() {
-    if (timerId) { clearInterval(timerId); timerId = null; }
-    slider.classList.add('is-paused');
-  }
-  function restart() { stop(); start(); }
-
-  slider.addEventListener('mouseenter', function () { paused = true; stop(); });
-  slider.addEventListener('mouseleave', function () { paused = false; start(); });
-  slider.addEventListener('focusin', function () { paused = true; stop(); });
-  slider.addEventListener('focusout', function (e) {
-    if (!slider.contains(e.relatedTarget)) { paused = false; start(); }
-  });
-  document.addEventListener('visibilitychange', function () {
-    hidden = document.hidden;
-    if (hidden) stop(); else start();
-  });
-
-  dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { go(i); restart(); });
-  });
-
-  var dotsRow = slider.querySelector('.hero-dots');
-  if (dotsRow) {
-    dotsRow.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      var delta = e.key === 'ArrowRight' ? 1 : -1;
-      var nextIdx = ((current + delta) % slides.length + slides.length) % slides.length;
-      go(nextIdx); restart();
-      dots[nextIdx].focus();
-    });
-  }
-
-  start();
-})();
-
-// Cursor-attracted ambient orbs
-(function () {
-  if (!window.matchMedia) return;
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  var ORB_COUNT = 14;
-  var ATTRACT_RADIUS = 260;
-  var PULL_STRENGTH = 0.55;
-  var EASE = 0.08;
-
-  var container = document.createElement('div');
-  container.className = 'cursor-orbs';
-  container.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(container);
-
-  var orbs = [];
-  for (var i = 0; i < ORB_COUNT; i++) {
-    var el = document.createElement('span');
-    el.className = 'cursor-orb';
-    var size = (3 + Math.random() * 6).toFixed(1);
-    el.style.width = size + 'px';
-    el.style.height = size + 'px';
-    el.style.opacity = (0.18 + Math.random() * 0.28).toFixed(2);
-    container.appendChild(el);
-    orbs.push({
-      el: el,
-      bx: 0.05 + Math.random() * 0.9,
-      by: 0.05 + Math.random() * 0.9,
-      ox: 0, oy: 0,
-      tx: 0, ty: 0,
-    });
-  }
-
-  var mx = -9999, my = -9999, hasMouse = false;
-  document.addEventListener('mousemove', function (e) {
-    mx = e.clientX;
-    my = e.clientY;
-    hasMouse = true;
-  }, { passive: true });
-  document.addEventListener('mouseleave', function () { hasMouse = false; });
-
-  var vw = window.innerWidth, vh = window.innerHeight;
-  window.addEventListener('resize', function () {
-    vw = window.innerWidth; vh = window.innerHeight;
-  });
-
-  function tick() {
-    for (var i = 0; i < orbs.length; i++) {
-      var o = orbs[i];
-      var px = o.bx * vw;
-      var py = o.by * vh;
-      if (hasMouse) {
-        var dx = mx - px;
-        var dy = my - py;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < ATTRACT_RADIUS) {
-          var strength = 1 - (dist / ATTRACT_RADIUS);
-          o.tx = dx * strength * PULL_STRENGTH;
-          o.ty = dy * strength * PULL_STRENGTH;
-        } else {
-          o.tx = 0; o.ty = 0;
-        }
-      } else {
-        o.tx = 0; o.ty = 0;
-      }
-      o.ox += (o.tx - o.ox) * EASE;
-      o.oy += (o.ty - o.oy) * EASE;
-      o.el.style.transform = 'translate3d(' + (px + o.ox).toFixed(1) + 'px,' + (py + o.oy).toFixed(1) + 'px,0)';
+  function setError(el, on) {
+    el.classList.toggle('field-error', on);
+    var wrap = fieldWrap(el);
+    var msg = wrap.querySelector('.field-error-msg');
+    if (on && !msg) {
+      msg = document.createElement('p');
+      msg.className = 'field-error-msg';
+      msg.textContent = el.type === 'email'
+        ? 'Please enter a valid email address.'
+        : 'Please fill in this field.';
+      wrap.appendChild(msg);
+    } else if (!on && msg) {
+      msg.remove();
     }
-    requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+
+  function validate(el) {
+    var bad = !el.checkValidity();
+    setError(el, bad);
+    return !bad;
+  }
+
+  var fields = Array.prototype.slice.call(
+    form.querySelectorAll('input[required], textarea[required], select[required]')
+  );
+  fields.forEach(function (el) {
+    el.addEventListener('input', function () { if (el.classList.contains('field-error')) validate(el); });
+    el.addEventListener('blur', function () { if (el.value !== '') validate(el); });
+  });
+
+  form.addEventListener('submit', function (e) {
+    var firstBad = null;
+    fields.forEach(function (el) {
+      if (!validate(el) && !firstBad) firstBad = el;
+    });
+    if (firstBad) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // don't run the reCAPTCHA submit handler
+      firstBad.focus();
+      firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, true); // capture so this runs before the reCAPTCHA handler
 })();

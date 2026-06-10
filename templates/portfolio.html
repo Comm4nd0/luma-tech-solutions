@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pillar_media %}
 
 {% block content %}
 <section class="hero">
@@ -20,7 +21,7 @@
       {% for case in case_studies %}
         <article class="case-card has-img fade-in">
           <div class="case-card-img">
-            {% include 'partials/_illustrations.html' with name=case.illustration %}
+            <img src="{% pillar_photo case.illustration 800 %}" alt="{{ case.title }}" loading="lazy" width="1600" height="1067">
           </div>
           <span class="case-tag">{{ case.tag }}</span>
           <h3>{{ case.title }}</h3>
