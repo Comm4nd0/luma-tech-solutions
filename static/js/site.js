@@ -1,3 +1,9 @@
+// Respect the user's reduced-motion preference for JS-driven animation.
+function prefersReducedMotion() {
+  return !!(window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
 // Theme toggle (light / dark). Light is the default; dark is opt-in via
 // [data-theme="dark"] on <html>, persisted in localStorage as 'luma-theme'.
 (function () {
@@ -29,6 +35,8 @@
     var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     var next = current === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('luma-theme', next); } catch (e) {}
+    // Reduced motion: swap instantly, skip the radial-reveal animation.
+    if (prefersReducedMotion()) { apply(next); return; }
     // Radial reveal: a circle of the destination colour grows from the toggle
     // button's centre out to the farthest viewport corner. When it covers the
     // viewport, swap the theme attribute and remove the overlay — the colour

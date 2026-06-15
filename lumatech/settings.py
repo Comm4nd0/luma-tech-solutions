@@ -1,8 +1,21 @@
 """Django settings for the Luma Tech Solutions website."""
 from pathlib import Path
 import os
+import sys
+
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Keys that must never reach production. The guard below refuses to boot with
+# DEBUG off if the secret key was never overridden — a misconfigured deploy
+# fails loud instead of running with a publicly-known key.
+_INSECURE_SECRET_KEYS = {
+    "dev-insecure-key-change-me-please-do-not-use-in-production-xyz123",
+    "change-me-in-production",
+    "build-only",
+    "",
+}
 
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
@@ -10,6 +23,13 @@ SECRET_KEY = os.environ.get(
 )
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+
+if not DEBUG and SECRET_KEY in _INSECURE_SECRET_KEYS:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY is unset or using an insecure default while "
+        "DJANGO_DEBUG is off. Generate one with: "
+        'python -c "import secrets; print(secrets.token_urlsafe(50))"'
+    )
 
 ALLOWED_HOSTS = [
     h.strip()
@@ -47,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "core.middleware.ContentSecurityPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -80,6 +101,13 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": Path(os.environ.get("DJANGO_DB_PATH", BASE_DIR / "data" / "db.sqlite3")),
+        # WAL lets readers and a writer work concurrently; the longer busy
+        # timeout stops "database is locked" errors when the blog API or a
+        # form submit collides with another worker writing.
+        "OPTIONS": {
+            "timeout": 20,
+            "init_command": "PRAGMA journal_mode=WAL; PRAGMA synchronous=NORMAL;",
+        },
     }
 }
 
@@ -104,6 +132,21 @@ STORAGES = {
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
 }
 
+# During tests, drop the hashed-manifest static storage so templates using
+# {% static %} render without a prior collectstatic.
+if "test" in sys.argv:
+    STORAGES["staticfiles"]["BACKEND"] = (
+        "django.contrib.staticfiles.storage.StaticFilesStorage"
+    )
+
+# --- Uploaded media (CVs) ---
+# Lives inside the persisted data volume, NOT under STATIC_ROOT, so it is
+# never served publicly by WhiteNoise. CVs are downloaded through a
+# staff-only admin view. Keeping the file means a failed notification email
+# no longer loses the application.
+MEDIA_ROOT = Path(os.environ.get("DJANGO_MEDIA_ROOT", BASE_DIR / "data" / "media"))
+MEDIA_URL = "/media/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- Email ---
@@ -126,8 +169,8 @@ CONTACT_FORM_RECIPIENT = os.environ.get(
 )
 # Falls back to CONTACT_FORM_RECIPIENT — set this if you want job applications
 # routed to a separate inbox (e.g. careers@).
-CAREERS_FORM_RECIPIENT = os.environ.get(
-    "CAREERS_FORM_RECIPIENT", CONTACT_FORM_RECIPIENT
+CAREERS_FORM_RECIPIENT = (
+    os.environ.get("CAREERS_FORM_RECIPIENT") or CONTACT_FORM_RECIPIENT
 )
 
 # CV uploads can run to ~5 MB. Django's default 2.5 MB cap on POST body and
@@ -198,6 +241,62 @@ PLAUSIBLE_DOMAIN = os.environ.get("PLAUSIBLE_DOMAIN", "")
 PLAUSIBLE_SCRIPT_SRC = os.environ.get(
     "PLAUSIBLE_SCRIPT_SRC", "https://plausible.io/js/script.tagged-events.js"
 )
+
+# --- Error reporting ---
+# Unhandled 500s are emailed to ADMINS (requires a real email backend). Set
+# DJANGO_ADMINS to a comma-separated list of addresses; SERVER_EMAIL is the
+# From address for those error mails.
+ADMINS = [
+    ("Luma Tech", addr.strip())
+    for addr in os.environ.get("DJANGO_ADMINS", "").split(",")
+    if addr.strip()
+]
+MANAGERS = ADMINS
+SERVER_EMAIL = os.environ.get("DJANGO_SERVER_EMAIL") or DEFAULT_FROM_EMAIL
+
+# --- Logging ---
+# Without an explicit config Django only surfaces WARNING+ from the `django`
+# logger, so our log.info() calls (reCAPTCHA rejections, etc.) never appear.
+# Route the app's own loggers to the console at INFO and mail unhandled
+# request errors to ADMINS.
+LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "INFO")
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {name}: {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "mail_admins": {
+            "class": "django.utils.log.AdminEmailHandler",
+            "level": "ERROR",
+            "include_html": True,
+        },
+    },
+    "root": {"handlers": ["console"], "level": "WARNING"},
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": False},
+        "django.request": {
+            "handlers": ["console", "mail_admins"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "core": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": False},
+    },
+}
+
+# --- Content Security Policy ---
+# Enforced by core.middleware.ContentSecurityPolicyMiddleware (nonce-based).
+# Flip DJANGO_CSP_REPORT_ONLY=1 to emit the report-only header instead —
+# useful when introducing a new third-party script before enforcing it.
+CSP_REPORT_ONLY = os.environ.get("DJANGO_CSP_REPORT_ONLY", "0") == "1"
 
 # --- Security in production ---
 if not DEBUG:

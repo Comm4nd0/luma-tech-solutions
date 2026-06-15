@@ -199,6 +199,7 @@ class QuoteRequestForm(forms.ModelForm):
             "property_type",
             "services",
             "timeline",
+            "budget",
             "notes",
             "source",
         ]

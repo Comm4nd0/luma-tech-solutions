@@ -16,8 +16,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-# Collect static at build-time so the image is self-contained.
-RUN DJANGO_SECRET_KEY=build-only DJANGO_DEBUG=0 python manage.py collectstatic --noinput
+# Collect static at build-time so the image is self-contained. Use a throwaway
+# random key so the production secret-key guard (settings.py) is satisfied
+# during the build without baking a real secret into the image.
+RUN DJANGO_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')" \
+    DJANGO_DEBUG=0 python manage.py collectstatic --noinput
 
 # Data dir for sqlite (mounted as a volume in docker-compose)
 RUN mkdir -p /app/data && chmod 777 /app/data

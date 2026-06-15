@@ -11,12 +11,12 @@ link. Wired up by static/js/cookie-consent.js.
   <div class="cookie-consent-inner" data-consent-stage="notice">
     <h3>Cookie preferences</h3>
     <p>
-      We use strictly-necessary cookies to keep the contact form working
-      and the site secure. The contact form is also protected by Google
-      reCAPTCHA, which sets cookies on its own domain to spot bots.
-      With your permission, we'd also like to use analytics cookies to
-      understand how the site is used. We don't run advertising trackers
-      — but the option is here for transparency.
+      We use strictly-necessary cookies to keep the forms working and the
+      site secure, and the forms are protected by Google reCAPTCHA, which
+      sets cookies on its own domain to spot bots. Our analytics (Plausible)
+      are cookieless. With your permission, we'd also like to use Google Ads
+      cookies to measure which adverts lead to enquiries — these are off
+      until you allow them.
       <a href="{% url 'privacy' %}">Read our Privacy Policy</a>.
     </p>
     <div class="cookie-consent-actions">
@@ -48,7 +48,7 @@ link. Wired up by static/js/cookie-consent.js.
     <div class="cookie-consent-cat">
       <div>
         <h4>Marketing</h4>
-        <p>Reserved for any future advertising or remarketing tools. We don't currently use any of these and have no plans to.</p>
+        <p>Google Ads conversion tracking — lets us see which adverts led to a quote or contact request, so we don't waste money on ads that don't work. No Google advertising cookies are set unless you switch this on.</p>
       </div>
       <label class="cookie-toggle">
         <input type="checkbox" data-consent-cat="marketing" aria-label="Allow marketing cookies"/>

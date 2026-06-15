@@ -5,7 +5,7 @@ import urllib.request
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -15,12 +15,10 @@ from django.views.decorators.http import require_http_methods
 from .forms import ContactForm, JobApplicationForm, QuoteRequestForm
 from .models import (
     BlogPost,
-    BUDGET_CHOICES,
     JOB_ROLE_CHOICES,
     PROPERTY_TYPE_CHOICES,
     QUOTE_SERVICE_CHOICES,
     SERVICE_CHOICES,
-    TIMELINE_CHOICES,
 )
 
 log = logging.getLogger(__name__)
@@ -62,6 +60,64 @@ def _verify_recaptcha(token, remote_ip=""):
     if score < settings.RECAPTCHA_MIN_SCORE:
         return False, score, f"low score {score:.2f}"
     return True, score, "ok"
+
+
+def _client_ip(request):
+    """Best-effort client IP, trusting the proxy's first X-Forwarded-For hop."""
+    return (
+        request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip()
+        or request.META.get("REMOTE_ADDR", "")
+    )
+
+
+def _passes_recaptcha(request, form, *, label):
+    """Verify reCAPTCHA for a POSTed form. On failure, attach a generic
+    non-field error to ``form`` and return False. Run before form.is_valid()
+    so a low score short-circuits the rest of the work.
+    """
+    token = request.POST.get("g-recaptcha-response", "")
+    passed, score, reason = _verify_recaptcha(token, _client_ip(request))
+    if not passed:
+        log.info(
+            "reCAPTCHA rejected %s form: score=%.2f reason=%s", label, score, reason
+        )
+        form.add_error(
+            None,
+            "We couldn't verify your submission. Please try again, or email "
+            "us directly.",
+        )
+    return passed
+
+
+# MIME type per validated CV extension — derived from the allowlisted
+# extension, never the browser-supplied content_type (which is user-controlled).
+_CV_MIME = {
+    ".pdf": "application/pdf",
+    ".doc": "application/msword",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+}
+
+
+def _notify(subject, body, *, recipient=None, reply_to=None, attachments=None):
+    """Send a plain-text notification email. Returns True on success, False on
+    failure (which is logged). Never raises: a delivery failure must not 500
+    the visitor's submission — the row is already saved and shows notified=False.
+    """
+    msg = EmailMessage(
+        subject=subject,
+        body=body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[recipient or settings.CONTACT_FORM_RECIPIENT],
+        reply_to=reply_to,
+    )
+    for fname, content, mime in attachments or []:
+        msg.attach(fname, content, mime)
+    try:
+        msg.send(fail_silently=False)
+        return True
+    except Exception:
+        log.exception("Failed to send notification email: %s", subject)
+        return False
 
 
 PILLARS = [
@@ -1023,36 +1079,24 @@ def showcase_demo(request, slug):
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
-        # Verify reCAPTCHA before trusting the rest of the form. We do this
-        # outside form.is_valid() so a low score short-circuits other work.
-        token = request.POST.get("g-recaptcha-response", "")
-        remote_ip = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip() or request.META.get("REMOTE_ADDR", "")
-        passed, score, reason = _verify_recaptcha(token, remote_ip)
-        if not passed:
-            log.info("reCAPTCHA rejected contact form: score=%.2f reason=%s", score, reason)
-            form.add_error(None, "We couldn't verify your submission. Please try again, or email us directly.")
-        elif form.is_valid():
+        if _passes_recaptcha(request, form, label="contact") and form.is_valid():
             submission = form.save()
-            try:
-                send_mail(
-                    subject=f"[Luma Tech] New enquiry from {submission.name}",
-                    message=(
-                        f"Name:     {submission.name}\n"
-                        f"Email:    {submission.email}\n"
-                        f"Phone:    {submission.phone or '—'}\n"
-                        f"Audience: {submission.get_audience_display() or '—'}\n"
-                        f"Service:  {submission.get_service_display()}\n"
-                        f"\n"
-                        f"{submission.message}\n"
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.CONTACT_FORM_RECIPIENT],
-                    fail_silently=False,
-                )
+            sent = _notify(
+                subject=f"[Luma Tech] New enquiry from {submission.name}",
+                body=(
+                    f"Name:     {submission.name}\n"
+                    f"Email:    {submission.email}\n"
+                    f"Phone:    {submission.phone or '—'}\n"
+                    f"Audience: {submission.get_audience_display() or '—'}\n"
+                    f"Service:  {submission.get_service_display()}\n"
+                    f"\n"
+                    f"{submission.message}\n"
+                ),
+                reply_to=[submission.email],
+            )
+            if sent:
                 submission.notified = True
                 submission.save(update_fields=["notified"])
-            except Exception:
-                log.exception("Failed to send contact notification email")
             messages.success(request, "Thanks — we'll be in touch shortly.")
             return redirect(reverse("contact_thanks"))
     else:
@@ -1123,53 +1167,46 @@ def contact_thanks(request):
 def careers(request):
     if request.method == "POST":
         form = JobApplicationForm(request.POST, request.FILES)
-        token = request.POST.get("g-recaptcha-response", "")
-        remote_ip = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip() or request.META.get("REMOTE_ADDR", "")
-        passed, score, reason = _verify_recaptcha(token, remote_ip)
-        if not passed:
-            log.info("reCAPTCHA rejected careers form: score=%.2f reason=%s", score, reason)
-            form.add_error(
-                None,
-                "We couldn't verify your submission. Please try again, or email us directly.",
-            )
-        elif form.is_valid():
+        if _passes_recaptcha(request, form, label="careers") and form.is_valid():
             cv = form.cleaned_data["cv"]
             application = form.save(commit=False)
             application.cv_filename = cv.name[:255]
             application.cv_size_bytes = cv.size
+            # Persist the CV to the data volume so a failed notification email
+            # doesn't lose the application — it stays recoverable from admin.
+            cv.seek(0)
+            application.cv_file = cv
             application.save()
+
+            ext = "." + cv.name.rsplit(".", 1)[-1].lower() if "." in cv.name else ""
+            mime = _CV_MIME.get(ext, "application/octet-stream")
+            # Attach from the stored copy so the email matches what we kept.
+            application.cv_file.open("rb")
             try:
-                msg = EmailMessage(
-                    subject=f"[Luma Tech] Job application — {application.get_role_display()} — {application.name}",
-                    body=(
-                        f"Role:    {application.get_role_display()}\n"
-                        f"Name:    {application.name}\n"
-                        f"Email:   {application.email}\n"
-                        f"Phone:   {application.phone or '—'}\n"
-                        f"\n"
-                        f"Cover note:\n{application.cover_note or '—'}\n"
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    to=[settings.CAREERS_FORM_RECIPIENT],
-                    reply_to=[application.email],
-                )
-                # Derive MIME type from the validated extension, not the
-                # browser-supplied content_type which is user-controlled.
-                _CV_MIME = {
-                    ".pdf": "application/pdf",
-                    ".doc": "application/msword",
-                    ".docx": "application/vnd.openxmlformats-officedocument"
-                            ".wordprocessingml.document",
-                }
-                ext = ("." + cv.name.rsplit(".", 1)[-1].lower()
-                       if "." in cv.name else "")
-                mime = _CV_MIME.get(ext, "application/octet-stream")
-                msg.attach(cv.name, cv.read(), mime)
-                msg.send(fail_silently=False)
+                cv_bytes = application.cv_file.read()
+            finally:
+                application.cv_file.close()
+
+            sent = _notify(
+                subject=(
+                    f"[Luma Tech] Job application — "
+                    f"{application.get_role_display()} — {application.name}"
+                ),
+                body=(
+                    f"Role:    {application.get_role_display()}\n"
+                    f"Name:    {application.name}\n"
+                    f"Email:   {application.email}\n"
+                    f"Phone:   {application.phone or '—'}\n"
+                    f"\n"
+                    f"Cover note:\n{application.cover_note or '—'}\n"
+                ),
+                recipient=settings.CAREERS_FORM_RECIPIENT,
+                reply_to=[application.email],
+                attachments=[(application.cv_filename, cv_bytes, mime)],
+            )
+            if sent:
                 application.notified = True
                 application.save(update_fields=["notified"])
-            except Exception:
-                log.exception("Failed to send job application notification email")
             messages.success(request, "Thanks — we've received your application.")
             return redirect(reverse("careers_thanks"))
     else:
@@ -1417,47 +1454,31 @@ def quote(request):
     """
     if request.method == "POST":
         form = QuoteRequestForm(request.POST)
-        token = request.POST.get("g-recaptcha-response", "")
-        remote_ip = (
-            request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip()
-            or request.META.get("REMOTE_ADDR", "")
-        )
-        passed, score, reason = _verify_recaptcha(token, remote_ip)
-        if not passed:
-            log.info(
-                "reCAPTCHA rejected quote form: score=%.2f reason=%s",
-                score,
-                reason,
-            )
-            form.add_error(
-                None,
-                "We couldn't verify your submission. Please try again, or email us directly.",
-            )
-        elif form.is_valid():
+        if _passes_recaptcha(request, form, label="quote") and form.is_valid():
             quote_req = form.save()
-            try:
-                send_mail(
-                    subject=f"[Luma Tech] Quote request from {quote_req.name} ({quote_req.postcode})",
-                    message=(
-                        f"Name:      {quote_req.name}\n"
-                        f"Email:     {quote_req.email}\n"
-                        f"Phone:     {quote_req.phone or '—'}\n"
-                        f"Postcode:  {quote_req.postcode}\n"
-                        f"Property:  {quote_req.get_property_type_display()}\n"
-                        f"Services:  {quote_req.services_display() or '—'}\n"
-                        f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
-                        f"Source:    {quote_req.source or '—'}\n"
-                        f"\n"
-                        f"Notes:\n{quote_req.notes or '—'}\n"
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.CONTACT_FORM_RECIPIENT],
-                    fail_silently=False,
-                )
+            sent = _notify(
+                subject=(
+                    f"[Luma Tech] Quote request from {quote_req.name} "
+                    f"({quote_req.postcode})"
+                ),
+                body=(
+                    f"Name:      {quote_req.name}\n"
+                    f"Email:     {quote_req.email}\n"
+                    f"Phone:     {quote_req.phone or '—'}\n"
+                    f"Postcode:  {quote_req.postcode}\n"
+                    f"Property:  {quote_req.get_property_type_display()}\n"
+                    f"Services:  {quote_req.services_display() or '—'}\n"
+                    f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
+                    f"Budget:    {quote_req.get_budget_display() or '—'}\n"
+                    f"Source:    {quote_req.source or '—'}\n"
+                    f"\n"
+                    f"Notes:\n{quote_req.notes or '—'}\n"
+                ),
+                reply_to=[quote_req.email],
+            )
+            if sent:
                 quote_req.notified = True
                 quote_req.save(update_fields=["notified"])
-            except Exception:
-                log.exception("Failed to send quote notification email")
             messages.success(request, "Thanks — we'll be in touch shortly.")
             return redirect(reverse("quote_thanks"))
     else:
@@ -1498,9 +1519,6 @@ def quote(request):
                 ("Get a quote", reverse("quote")),
             ],
             form=form,
-            property_type_choices=PROPERTY_TYPE_CHOICES,
-            timeline_choices=TIMELINE_CHOICES,
-            service_choices=QUOTE_SERVICE_CHOICES,
         ),
     )
 

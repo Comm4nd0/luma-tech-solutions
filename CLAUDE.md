@@ -9,15 +9,14 @@ reverse-proxy on the Hetzner box.
 ```
 .
 ├── manage.py
-├── requirements.txt           # Django, gunicorn, whitenoise
+├── requirements.txt           # Django 5.2 LTS, gunicorn, whitenoise, nh3
 ├── Dockerfile                 # python:3.12-slim → gunicorn on :8000
 ├── docker-compose.yml         # publishes host port 8005
 ├── lumatech/                  # Django project (settings, urls, wsgi/asgi)
 ├── core/                      # the only app — views, forms, models, sitemaps
 ├── templates/                 # all HTML templates (base, pages, partials/, services/)
-├── static/                    # css, js, img — collected to /staticfiles by collectstatic
-├── public/, nginx.conf        # legacy static holding page, kept for reference (not deployed)
-└── data/                      # sqlite DB (gitignored, mounted as volume in compose)
+├── static/                    # css, js, img, fonts — collected to /staticfiles by collectstatic
+└── data/                      # sqlite DB + uploaded media (gitignored, mounted as volume)
 ```
 
 ## Architecture
@@ -28,10 +27,37 @@ reverse-proxy on the Hetzner box.
   is the right call the moment they need to be edited by a non-developer.
 - **Server-rendered templates** under `templates/` extend `base.html`. The base
   template owns the nav, footer, OG/SEO meta and global stylesheet.
-- **Custom CSS** at `static/css/site.css` — no Tailwind, no build step. Dark theme:
-  `--bg #0f172a`, `--accent #14b8a6`, Inter from Google Fonts.
+- **Custom CSS** at `static/css/site.css` — no Tailwind, no build step. Dark/light
+  theme: `--bg #0f172a`, `--accent #14b8a6`, self-hosted Inter variable font
+  (`static/fonts/inter-latin-variable.woff2` — no Google Fonts request).
 - **Static files** are served by WhiteNoise via gunicorn — no separate nginx layer
   in the Docker image. Caddy in front handles TLS.
+
+### Security & front-end gotchas
+
+- **CSP nonce — every `<script>` you add to a template MUST carry
+  `nonce="{{ request.csp_nonce }}"`.** `core/middleware.py` emits a nonce-based
+  Content Security Policy (`script-src 'nonce-…' 'strict-dynamic'`); an
+  un-nonced inline or external script (including `application/ld+json` blocks)
+  is blocked by the browser. `500.html` is the exception — it renders without a
+  request context, so keep it script-free. Set `DJANGO_CSP_REPORT_ONLY=1` while
+  trialling a new third-party script.
+- **Blog HTML is sanitised with nh3** in `BlogPost.save()`
+  (`core.models.sanitize_blog_html`). Tags/attributes outside the allowlist are
+  stripped, so `{{ post.content|safe }}` is safe. Widen `ALLOWED_HTML_TAGS` /
+  `ALLOWED_HTML_ATTRS` if a post legitimately needs new markup.
+- **Marketing scripts are consent-gated.** Google Ads (`gtag.js`) is only loaded
+  by `static/js/cookie-consent.js` after the visitor opts into "marketing".
+  The `<head>` shim just queues events into the dataLayer (no cookies/network).
+  Any new advertising/remarketing tag must be wired into `loadGoogleAds()` /
+  `applyConsent()` the same way, and the banner copy in
+  `templates/partials/_cookie_consent.html` kept truthful.
+- **`DJANGO_SECRET_KEY` is mandatory in production** — settings raises
+  `ImproperlyConfigured` (and `docker compose` refuses to start) if it's unset
+  or left at an insecure default while `DJANGO_DEBUG=0`.
+- **CVs** uploaded via `/careers/` are stored under `MEDIA_ROOT` (the data
+  volume), never under `STATIC_ROOT`, and are downloaded through a staff-only
+  admin view — they are not publicly served.
 
 ## Running locally
 
@@ -207,12 +233,11 @@ A records (apex + `www`) must point to **178.104.29.66**. Until they do,
 Caddy will keep retrying ACME with backoff — the site will simply have no
 HTTPS until DNS propagates.
 
-## Migrating from the holding page
+## History: the old holding page
 
-The previous static-nginx setup (port 8004, files in `public/`) is preserved
-in-tree for reference but is no longer wired up. Cut-over steps:
-
-1. `docker compose up -d --build` on the new app (binds 8005)
-2. Edit `/root/caddy/Caddyfile`, change `172.17.0.1:8004` → `172.17.0.1:8005`
-3. `docker exec caddy-caddy-1 caddy reload --config /etc/caddy/Caddyfile`
-4. Stop and remove the old static container once you're confident.
+The site used to be a static-nginx holding page on port 8004 (files in
+`public/`, plus `nginx.conf`). That cut-over is complete and those legacy
+files have been removed from the tree — the Django app on **8005** is the
+only thing deployed. If Caddy ever still points at `172.17.0.1:8004`, change
+it to `172.17.0.1:8005` and `docker exec caddy-caddy-1 caddy reload
+--config /etc/caddy/Caddyfile`.

@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block head_extra %}
-<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" nonce="{{ request.csp_nonce }}" async defer></script>
 {% endblock %}
 
 {% block jsonld %}{{ block.super }}
-<script type="application/ld+json">
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
 {
   "@context": "https://schema.org",
   "@type": "ContactPage",
@@ -121,10 +121,18 @@
             {{ form.services.errors }}
           </div>
 
-          <div>
-            <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
-            {{ form.timeline }}
-            {{ form.timeline.errors }}
+          <div class="row two">
+            <div>
+              <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
+              {{ form.timeline }}
+              {{ form.timeline.errors }}
+            </div>
+            <div>
+              <label for="{{ form.budget.id_for_label }}">Rough budget <span class="muted" style="font-weight:400;">(optional)</span></label>
+              {{ form.budget }}
+              <p class="muted" style="font-size:.78rem;margin:.3rem 0 0;">Helps us scope the right solution. Never shared.</p>
+              {{ form.budget.errors }}
+            </div>
           </div>
 
           <div>

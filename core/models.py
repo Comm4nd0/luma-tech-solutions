@@ -1,9 +1,19 @@
 import re
+import uuid
 
+import nh3
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
+
+
+def cv_upload_to(instance, filename):
+    """Per-upload directory keeps sanitised filenames from colliding. Stored
+    under MEDIA_ROOT (the data volume), never under STATIC_ROOT, so CVs are
+    not publicly served — only downloadable via the staff-only admin view.
+    """
+    return f"cvs/{uuid.uuid4().hex}/{filename}"
 
 
 SERVICE_CHOICES = [
@@ -116,6 +126,7 @@ class JobApplication(models.Model):
     phone = models.CharField(max_length=40, blank=True)
     role = models.CharField(max_length=32, choices=JOB_ROLE_CHOICES)
     cover_note = models.TextField(blank=True)
+    cv_file = models.FileField(upload_to=cv_upload_to, blank=True, null=True)
     cv_filename = models.CharField(max_length=255, blank=True)
     cv_size_bytes = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -197,6 +208,35 @@ class PublishedBlogManager(models.Manager):
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 
 
+# Tags/attributes permitted in blog post HTML. nh3 strips everything else —
+# notably <script>, event-handler attributes (onclick=…) and javascript: URLs —
+# so author-supplied content stays safe to render with |safe even if the blog
+# API key ever leaked. Relative URLs (/static/…, /services/…) are preserved.
+ALLOWED_HTML_TAGS = {
+    "a", "abbr", "b", "blockquote", "br", "code", "em", "figure", "figcaption",
+    "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "li", "ol", "p",
+    "pre", "span", "strong", "sub", "sup", "table", "tbody", "td", "th",
+    "thead", "tr", "ul", "div",
+}
+ALLOWED_HTML_ATTRS = {
+    # nh3 manages <a rel> itself via link_rel, so it must not be listed here.
+    "a": {"href", "title", "target", "name", "id"},
+    "img": {"src", "alt", "title", "width", "height", "loading", "srcset",
+            "sizes", "class"},
+    "ol": {"start", "type"},
+    "td": {"colspan", "rowspan"},
+    "th": {"colspan", "rowspan", "scope"},
+    "*": {"class", "id"},
+}
+
+
+def sanitize_blog_html(html):
+    """Strip unsafe HTML from author-supplied blog content. Idempotent."""
+    if not html:
+        return html or ""
+    return nh3.clean(html, tags=ALLOWED_HTML_TAGS, attributes=ALLOWED_HTML_ATTRS)
+
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=240)
     slug = models.SlugField(max_length=260, unique=True, blank=True)
@@ -234,6 +274,7 @@ class BlogPost(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)[:260]
+        self.content = sanitize_blog_html(self.content)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

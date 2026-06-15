@@ -12,8 +12,6 @@ db.sqlite3
 data/
 staticfiles/
 node_modules/
-public/
-nginx.conf
 *.md
 .DS_Store
 Thumbs.db

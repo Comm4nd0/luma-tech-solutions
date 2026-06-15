@@ -3,7 +3,7 @@ Service JSON-LD for a single service page.
 Caller passes service_name, service_type, service_description, service_url
 (the URL path, not absolute) via the view context.
 {% endcomment %}
-<script type="application/ld+json">
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
 {
   "@context": "https://schema.org",
   "@type": "Service",

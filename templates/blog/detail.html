@@ -10,7 +10,7 @@
 <meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}" />
 <meta property="article:author" content="{{ post.author }}" />
 <meta property="article:section" content="{{ post.get_pillar_display }}" />
-<script type="application/ld+json">
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
