@@ -65,14 +65,6 @@
           {{ form.source }}
           <input type="hidden" name="g-recaptcha-response" value="">
 
-          <p class="muted" style="font-size:.78rem;margin:0;">
-            This form is protected by Google reCAPTCHA — the
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
-            and
-            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
-            apply.
-          </p>
-
           {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
 
           <div class="row two">
@@ -150,6 +142,14 @@
             <strong>Marco replies directly</strong> — no call centre, no
             sales chase, no upsell. If we're not the right fit, we'll tell
             you and point you somewhere better.
+          </p>
+
+          <p class="muted" style="font-size:.78rem;margin-top:.75rem;">
+            This form is protected by Google reCAPTCHA — the
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            and
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+            apply.
           </p>
         </form>
       </div>

@@ -264,6 +264,17 @@
 
   {% include 'partials/_cookie_consent.html' %}
 
+  {% with url_name=request.resolver_match.url_name %}
+  {% if url_name != 'quote' and url_name != 'quote_thanks' and url_name != 'contact_thanks' and url_name != 'careers_thanks' %}
+  <div class="sticky-cta" role="group" aria-label="Get a quote or call us">
+    <a href="{% url 'quote' %}?source=sticky-bar" class="btn btn-primary plausible-event-name=Sticky+Quote+Click">Get a fixed-price quote {% include 'partials/_icons.html' with name='arrow' %}</a>
+    {% if SITE_PHONE %}
+    <a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click" aria-label="Call us on {{ SITE_PHONE }}">{% include 'partials/_icons.html' with name='phone' %} Call</a>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
   <div class="social-fab" role="group" aria-label="Quick contact">
     {% if SITE_WHATSAPP_E164 %}
     <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%20saw%20your%20website%20and%20wanted%20to%20chat..."

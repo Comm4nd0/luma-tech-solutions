@@ -9,13 +9,13 @@
   <div class="container hero-content">
     <div class="hero-split">
       <div>
-        <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · the Thames Valley</span>
+        <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · Thames Valley</span>
         <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
         <p class="lede">
           Business-grade UniFi networks, CCTV and smart homes for larger
-          properties where the mesh kit didn't fix it — engineered from a
+          properties where the mesh kit didn't fix it<span class="lede-extra"> — engineered from a
           real site survey, installed properly, and supported by the same
-          engineer afterwards. Based in Marlow, covering the Thames Valley.
+          engineer afterwards</span>. Based in Marlow, covering the Thames Valley.
         </p>
         <div class="cta-row">
           <a href="{% url 'quote' %}?source=home-hero" class="btn btn-primary">Get a fixed-price quote {% include 'partials/_icons.html' with name='arrow' %}</a>
@@ -24,6 +24,13 @@
           {% endif %}
         </div>
         {% include 'partials/_trust_strip.html' %}
+        <div class="hero-service-links">
+          <span class="hero-service-links-label">Also here for:</span>
+          <a href="{% url 'service_security' %}">CCTV &amp; alarms</a>
+          <a href="{% url 'service_automation' %}">Smart home</a>
+          <a href="{% url 'service_development' %}">Apps &amp; websites</a>
+          <a href="{% url 'service_support' %}">IT support</a>
+        </div>
       </div>
       <div class="hero-illustration">
         <div class="hero-photo" style="background-image:url('{% pillar_photo 'hero' 900 %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Working comfortably on fast Wi-Fi at home"></div>

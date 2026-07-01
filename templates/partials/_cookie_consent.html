@@ -8,16 +8,12 @@ appears on first visit OR when triggered via the footer "Cookie preferences"
 link. Wired up by static/js/cookie-consent.js.
 {% endcomment %}
 <div class="cookie-consent" data-cookie-consent role="region" aria-label="Cookie preferences" hidden>
-  <div class="cookie-consent-inner" data-consent-stage="notice">
-    <h3>Cookie preferences</h3>
+  <div class="cookie-consent-inner cookie-consent-notice" data-consent-stage="notice">
     <p>
-      We use strictly-necessary cookies to keep the forms working and the
-      site secure, and the forms are protected by Google reCAPTCHA, which
-      sets cookies on its own domain to spot bots. Our analytics (Plausible)
-      are cookieless. With your permission, we'd also like to use Google Ads
-      cookies to measure which adverts lead to enquiries — these are off
-      until you allow them.
-      <a href="{% url 'privacy' %}">Read our Privacy Policy</a>.
+      Essential cookies keep the forms working. With your permission we'd
+      also use Google Ads cookies to see which adverts lead to enquiries —
+      off until you allow them.
+      <a href="{% url 'privacy' %}">Privacy Policy</a>.
     </p>
     <div class="cookie-consent-actions">
       <button type="button" class="btn btn-ghost btn-sm" data-consent-action="reject">Reject all</button>
@@ -33,7 +29,7 @@ link. Wired up by static/js/cookie-consent.js.
     <div class="cookie-consent-cat">
       <div>
         <h4>Strictly necessary <span class="muted" style="font-weight:normal;font-size:.8rem;">— always on</span></h4>
-        <p>Needed for the contact form and basic site security (Django CSRF and session cookies). Can't be turned off.</p>
+        <p>Needed for the contact form and basic site security (Django CSRF and session cookies). The forms are also protected by Google reCAPTCHA, which sets cookies on its own domain to spot bots. Can't be turned off.</p>
       </div>
       <span class="cookie-toggle is-disabled" aria-hidden="true"><span class="cookie-toggle-knob"></span></span>
     </div>

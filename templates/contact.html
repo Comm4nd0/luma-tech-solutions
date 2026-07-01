@@ -35,14 +35,6 @@
           {{ form.source }}
           <input type="hidden" name="g-recaptcha-response" value="">
 
-          <p class="muted" style="font-size:.78rem;margin:0;">
-            This form is protected by Google reCAPTCHA — the
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
-            and
-            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
-            apply.
-          </p>
-
           {% if form.non_field_errors %}<div class="alert">{{ form.non_field_errors }}</div>{% endif %}
 
           <div class="row two">
@@ -92,6 +84,14 @@
             <button type="submit" class="btn btn-primary plausible-event-name=Contact+Submit">Send enquiry {% include 'partials/_icons.html' with name='arrow' %}</button>
             <a href="mailto:{{ SITE_EMAIL }}" class="btn btn-ghost">Or email us directly</a>
           </div>
+
+          <p class="muted" style="font-size:.78rem;margin-top:1rem;">
+            This form is protected by Google reCAPTCHA — the
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            and
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+            apply.
+          </p>
         </form>
       </div>
 
