@@ -224,7 +224,15 @@ SITE_FOUNDER = "Marco Baldanza"
 SITE_BASE_TOWN = "Marlow"
 # Bump when you ship a meaningful site-wide content change so the
 # static-page sitemap honestly reflects freshness.
-SITE_STATIC_LASTMOD = "2026-06-10"
+SITE_STATIC_LASTMOD = "2026-07-04"
+
+# --- Commercial / B2B links ---
+# LinkedIn profile URL. When set, appears in the footer and in the
+# Organization sameAs schema. Empty hides it.
+SITE_LINKEDIN = os.environ.get("SITE_LINKEDIN", "")
+# Scheduling link (e.g. Calendly) for "book a call" CTAs aimed at
+# commercial buyers. Empty falls back to the phone number.
+SITE_BOOKING_URL = os.environ.get("SITE_BOOKING_URL", "")
 
 # --- WhatsApp click-to-chat ---
 # E.164 format (e.g. +447xxxxxxxxx). Set to empty to hide the floating

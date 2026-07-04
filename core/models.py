@@ -28,6 +28,7 @@ SERVICE_CHOICES = [
 AUDIENCE_CHOICES = [
     ("home", "Home"),
     ("business", "Business"),
+    ("trade", "Trade / contractor"),
 ]
 
 
@@ -59,6 +60,8 @@ PROPERTY_TYPE_CHOICES = [
     ("business_office", "Business — office"),
     ("business_retail", "Business — retail / hospitality"),
     ("business_other", "Business — something else"),
+    ("construction_site", "Construction site / builder's compound"),
+    ("new_build_dev", "New-build development (one or more plots)"),
     ("other", "Something else"),
 ]
 
@@ -69,6 +72,8 @@ PROPERTY_TYPE_CHOICES = [
 QUOTE_SERVICE_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
     ("security", "CCTV / Physical Security"),
+    ("site_security", "Site Security / ANPR"),
+    ("prewire", "Pre-wire / Structured Cabling"),
     ("automation", "Smart Home / Home Automation"),
     ("development", "App or Website Build"),
     ("support", "Ongoing Support / Care Plan"),
@@ -81,6 +86,7 @@ TIMELINE_CHOICES = [
     ("urgent", "Within 2 weeks"),
     ("soon", "Within the next month"),
     ("planned", "1–3 months"),
+    ("phased", "3+ months / phased project"),
     ("flexible", "Flexible / just exploring"),
 ]
 

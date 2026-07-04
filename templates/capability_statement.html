@@ -1,0 +1,155 @@
+{% comment %}
+One-page capability statement for commercial / construction buyers.
+Deliberately standalone (no base.html): prints and saves-to-PDF cleanly
+with no nav, footer or cookie banner. Script-free so it also renders
+fine with the CSP untouched. noindex — it duplicates /construction/
+content and exists to be forwarded, not found.
+
+TODO(Marco): add public-liability cover amount and any accreditations
+(CHAS / Constructionline / SafeContractor / Cyber Essentials) to the
+credentials list once confirmed.
+{% endcomment %}<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{{ page_title }}</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      color: #0f172a; background: #eef2f7; line-height: 1.5;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .page {
+      max-width: 210mm; margin: 1.5rem auto; background: #fff;
+      padding: 14mm 16mm; box-shadow: 0 2px 24px rgba(15, 23, 42, .12);
+    }
+    header { display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 3px solid #14b8a6; padding-bottom: .75rem; margin-bottom: 1rem; }
+    .brand { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; }
+    .brand small { display: block; font-size: .72rem; font-weight: 600;
+      color: #14b8a6; text-transform: uppercase; letter-spacing: .08em; }
+    .contact { text-align: right; font-size: .78rem; color: #334155; }
+    .contact a { color: #0f766e; text-decoration: none; }
+    h1 { font-size: 1.05rem; margin: .9rem 0 .35rem; }
+    h2 { font-size: .82rem; text-transform: uppercase; letter-spacing: .07em;
+      color: #0f766e; margin: 1rem 0 .4rem; }
+    p, li { font-size: .82rem; color: #1e293b; }
+    ul { padding-left: 1.05rem; }
+    li { margin-bottom: .22rem; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.6rem; }
+    .callout { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 6px;
+      padding: .6rem .75rem; margin-top: .9rem; }
+    .callout p { font-size: .78rem; }
+    footer { margin-top: 1.1rem; padding-top: .6rem; border-top: 1px solid #e2e8f0;
+      font-size: .72rem; color: #64748b; display: flex; justify-content: space-between; }
+    .print-hint { max-width: 210mm; margin: 0 auto 2rem; text-align: center;
+      font-size: .8rem; color: #475569; }
+    .print-hint a { color: #0f766e; }
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; max-width: none; padding: 10mm 12mm; }
+      .print-hint { display: none; }
+    }
+    @page { size: A4; margin: 8mm; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        {{ SITE_NAME }}
+        <small>Capability statement — construction &amp; commercial</small>
+      </div>
+      <div class="contact">
+        {{ SITE_BASE_TOWN }}, Buckinghamshire<br/>
+        {% if SITE_PHONE %}{{ SITE_PHONE }}<br/>{% endif %}
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a><br/>
+        <a href="{{ SITE_URL }}/construction/">{{ SITE_URL|cut:"https://" }}/construction/</a>
+      </div>
+    </header>
+
+    <h1>Site security, ANPR and new-build pre-wire for builders and developers across the Thames Valley.</h1>
+    <p>
+      Luma Tech Solutions is a {{ SITE_BASE_TOWN }}-based technology
+      engineering business founded by a Royal Marines Information Systems
+      veteran. We design, install and support networking, CCTV and
+      smart-building infrastructure for construction sites, new-build
+      developments, homes and small businesses across Marlow, Maidenhead,
+      Henley-on-Thames, Beaconsfield and the wider Thames Valley.
+    </p>
+
+    <div class="cols">
+      <div>
+        <h2>Construction site security &amp; ANPR</h2>
+        <ul>
+          <li>Gate ANPR — every vehicle in and out, timestamped, plate readable</li>
+          <li>Yard and perimeter CCTV, recorded on site in a lockable cabinet</li>
+          <li>4G failover before the fixed line goes in — recording never stops</li>
+          <li>Daily presence reports and out-of-hours-only alerts</li>
+          <li>Fixed monthly price for the programme; kit moved to your next site</li>
+          <li>DPIA drafted, compliant signage supplied, retention policy documented</li>
+        </ul>
+
+        <h2>New-build pre-wire (per plot)</h2>
+        <ul>
+          <li>Design from your drawings — data, AP, CCTV and door-entry positions</li>
+          <li>First-fix Cat6/Cat6a and containment coordinated with your electrician</li>
+          <li>Second-fix, testing, labelling and commissioning to your programme</li>
+          <li>Fixed price per house type, repeatable across the development</li>
+          <li>Per-plot handover pack — as-builts, test results, plain English</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Also delivered in-house</h2>
+        <ul>
+          <li>UniFi Wi-Fi and network design for large and period properties</li>
+          <li>CCTV, access control and alarms for premises of every kind</li>
+          <li>Smart-home / Home Assistant installation, local-first</li>
+          <li>Custom web and mobile app development</li>
+          <li>Ongoing support plans with monitoring and response targets</li>
+        </ul>
+
+        <h2>Credentials &amp; assurances</h2>
+        <ul>
+          <li>Site-specific RAMS issued for every job before arrival</li>
+          <li>Public liability insurance — certificate available on request</li>
+          <li>Veteran-founded; Royal Marines Information Systems background</li>
+          <li>Every install documented: labelled runs, as-builts, runbook</li>
+          <li>No vendor lock-in — any competent engineer can pick up our work</li>
+        </ul>
+
+        <h2>Recent relevant work</h2>
+        <ul>
+          <li><strong>Chiltern Yard, Maidenhead</strong> — gate ANPR + site CCTV on a 0.8-acre builder's compound; billing disputes resolved from footage, ~3 hrs/week saved on attendance reconciliation, zero out-of-hours intrusions.</li>
+          <li><strong>LittleWick House, Maidenhead</strong> — 11-AP whole-property network across four floors plus annex; structured cabling throughout.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>
+        <strong>Pricing a job?</strong> Send drawings or a site address to
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
+        {% if SITE_PHONE %} or call {{ SITE_PHONE }}{% endif %} — fixed
+        figures per plot or per month, with RAMS and insurance certificate
+        supplied alongside the quote.
+      </p>
+    </div>
+
+    <footer>
+      <span>{{ SITE_NAME }} · {{ SITE_BASE_TOWN }}, Buckinghamshire</span>
+      <span>{{ SITE_URL|cut:"https://" }}</span>
+    </footer>
+  </div>
+
+  <p class="print-hint">
+    To save this as a PDF: press <strong>Ctrl/Cmd&nbsp;+&nbsp;P</strong> and choose
+    "Save as PDF". <a href="{{ SITE_URL }}/construction/">&larr; Back to the construction page</a>
+  </p>
+</body>
+</html>

@@ -14,6 +14,7 @@ from django.views.decorators.http import require_http_methods
 
 from .forms import ContactForm, JobApplicationForm, QuoteRequestForm
 from .models import (
+    AUDIENCE_CHOICES,
     BlogPost,
     JOB_ROLE_CHOICES,
     PROPERTY_TYPE_CHOICES,
@@ -380,6 +381,46 @@ CASE_STUDIES = [
             "intrusions over the install period."
         ),
         "featured": False,
+        "detail": [
+            (
+                "The brief was blunt: the site manager was spending chunks of "
+                "every Friday arguing about who was on site, when, and for how "
+                "long. Sub-contractor invoices claimed days the gate log "
+                "didn't show; the gate log was a clipboard in a portacabin "
+                "that got filled in when someone remembered. Materials had "
+                "started disappearing from the yard, and the compound had "
+                "been walked twice out of hours in the month before we were "
+                "called."
+            ),
+            (
+                "We designed the system around the gate. Two UniFi AI LPR "
+                "cameras — one facing in, one facing out — capture every "
+                "plate in both directions at site-traffic speeds, with the "
+                "mounting angle and stand-off distance set during the survey "
+                "so plate captures stay readable in headlight glare and rain. "
+                "An AI 360 covers the material yard from a single ceiling "
+                "mount on the storage barn, and four G5 Bullets cover the "
+                "perimeter fencing. Everything records to a Dream Machine "
+                "Pro in a lockable comms cabinet inside the compound — "
+                "footage never leaves the site, and there is no monthly "
+                "cloud subscription."
+            ),
+            (
+                "The first six weeks ran entirely on 4G failover because the "
+                "fixed line hadn't been installed yet — recording is local, "
+                "so the cameras don't care, and alerts still reached the "
+                "site manager's phone over cellular. When the line went in, "
+                "the system switched over without a visit."
+            ),
+            (
+                "Because workplace ANPR is personal-data processing, the "
+                "install shipped with the paperwork done: a drafted Data "
+                "Protection Impact Assessment, compliant signage at the "
+                "gate, and a one-page summary of what is recorded, for how "
+                "long, and who can view it — filed with the site's H&S "
+                "documentation."
+            ),
+        ],
     },
     {
         "slug": "littlewick-house",
@@ -402,6 +443,29 @@ CASE_STUDIES = [
         ],
         "outcome": "Rock-solid Wi-Fi from loft to cellar to annex, with proper network segmentation and room to grow.",
         "featured": True,
+        "detail": [
+            (
+                "Four floors of solid-wall construction, a cellar, a garage "
+                "and a separate annex — the classic large-property problem. "
+                "The owners had been through two mesh systems, both of which "
+                "promised whole-home coverage and delivered a strong signal "
+                "in the rooms that already had it."
+            ),
+            (
+                "The survey drove the design: eleven access points (a mix of "
+                "ceiling-mount U7-Pros and in-wall U7-Pro-Walls), each fed "
+                "by its own Cat6 run back to one of three PoE distribution "
+                "switches, with a Dream Machine Pro at the core. Three VLANs "
+                "separate the family's devices, the smart-home kit and guest "
+                "traffic, so a compromised IoT gadget can't see a laptop."
+            ),
+            (
+                "Every run is labelled at both ends, the patch panel matches "
+                "the as-built diagram, and the handover pack documents every "
+                "AP location, VLAN and credential — so any competent "
+                "engineer could pick the system up cold."
+            ),
+        ],
     },
     {
         "slug": "paws-4-thought-dogs",
@@ -719,6 +783,77 @@ FAQS_AI_CAMERAS = [
 
 
 
+# Construction / trade FAQs, used on the builders & construction page.
+# NOTE for Marco: the insurance answer deliberately doesn't state a cover
+# figure — add the £ amount once you've confirmed it with the policy.
+FAQS_CONSTRUCTION = [
+    {
+        "q": "Can you install site cameras for just the duration of the build?",
+        "a": (
+            "Yes — that's the normal arrangement. We install at site "
+            "set-up, you pay a fixed monthly price for the duration of "
+            "the programme, and at the end we either decommission the "
+            "kit or move it straight to your next site. Multi-site "
+            "builders run the same system from compound to compound."
+        ),
+    },
+    {
+        "q": "Do you work alongside our electrician and other trades?",
+        "a": (
+            "All the time. On pre-wire jobs we issue first-fix drawings "
+            "and containment requirements so your electrician can pull "
+            "alongside their own runs if preferred, or we do the pull "
+            "ourselves and stay out of their way. Either way we "
+            "terminate, test and certify every run, and we fit around "
+            "the build programme — first fix before plasterboard, "
+            "second fix at decoration."
+        ),
+    },
+    {
+        "q": "How does per-plot pricing work on a development?",
+        "a": (
+            "We quote a fixed price per plot type from your drawings — "
+            "one figure for each house type covering cabling, "
+            "containment, comms enclosure, access points and any CCTV "
+            "or door-entry pre-wire. The same figure then repeats "
+            "across every plot of that type, so your QS can put a "
+            "clean number in the cost plan without re-quoting each unit."
+        ),
+    },
+    {
+        "q": "Who handles the ICO and DPIA paperwork for site ANPR?",
+        "a": (
+            "We do, as part of the install package. Workplace CCTV with "
+            "ANPR needs ICO registration, a Data Protection Impact "
+            "Assessment, compliant signage and a retention policy. We "
+            "draft the DPIA, supply the signage, and hand over a "
+            "one-page record of what's recorded, for how long, and who "
+            "can see it — ready for your H&S file."
+        ),
+    },
+    {
+        "q": "What do we get at handover?",
+        "a": (
+            "As-built documentation: labelled and tested cable runs, a "
+            "network diagram, camera schedules, credentials, and a "
+            "plain-English handover pack — per plot on developments. "
+            "Nothing is locked to us; any competent engineer could pick "
+            "the system up from the pack alone."
+        ),
+    },
+    {
+        "q": "Can you provide RAMS and proof of insurance?",
+        "a": (
+            "Yes. We produce site-specific risk assessments and method "
+            "statements for every job, and we carry public liability "
+            "insurance — certificates and RAMS are available for your "
+            "records before we arrive on site. If your procurement "
+            "process needs anything else, ask and we'll sort it."
+        ),
+    },
+]
+
+
 JOB_ROLES = [
     {
         "key": "network",
@@ -978,6 +1113,90 @@ def service_ai_cameras(request):
     )
 
 
+def construction(request):
+    """Landing page for builders, developers and site managers — site
+    security/ANPR for the duration of a build, new-build pre-wire packages,
+    and the trade-partner offer. Deliberately speaks procurement language
+    (per-plot pricing, RAMS, programme) rather than homeowner language.
+    """
+    chiltern_yard = next(
+        (c for c in CASE_STUDIES if c["slug"] == "chiltern-yard-anpr"), None
+    )
+    return render(
+        request,
+        "construction.html",
+        _base_context(
+            active="construction",
+            page_title="Construction Site Security, ANPR & New-Build Pre-Wire | Luma Tech",
+            page_description=(
+                "Site CCTV and ANPR for the duration of your build, plus "
+                "new-build pre-wire packages priced per plot. Builders and "
+                "developers across Marlow, Maidenhead, Henley and the "
+                "Thames Valley. DPIA and signage handled."
+            ),
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Builders & construction", reverse("construction")),
+            ],
+            service_name="Construction Site Security & Pre-Wire",
+            service_type="Security System Installation",
+            service_url=reverse("construction"),
+            service_description=(
+                "Construction site CCTV, gate ANPR and new-build structured "
+                "cabling pre-wire for builders and developers across Marlow, "
+                "Maidenhead, Henley and the Thames Valley. Fixed monthly "
+                "site-security pricing, per-plot pre-wire packages, DPIA "
+                "and signage included."
+            ),
+            faqs=FAQS_CONSTRUCTION,
+            featured_case=chiltern_yard,
+            whatsapp_prefill=(
+                "Hi, I'm a builder/site manager — I'd like to talk about "
+                "site security or pre-wire for a project."
+            ),
+        ),
+    )
+
+
+def capability_statement(request):
+    """Print-friendly one-page capability statement — the thing a site
+    manager forwards to a director. Standalone template (no site chrome)
+    so it prints/saves to PDF cleanly from the browser.
+    """
+    return render(
+        request,
+        "capability_statement.html",
+        {
+            "page_title": "Capability Statement — Luma Tech Solutions",
+        },
+    )
+
+
+def case_study(request, slug):
+    case = next((c for c in CASE_STUDIES if c["slug"] == slug), None)
+    if case is None:
+        raise Http404("Unknown case study")
+    related = [c for c in CASE_STUDIES if c["slug"] != slug][:3]
+    return render(
+        request,
+        "portfolio/case_detail.html",
+        _base_context(
+            active="portfolio",
+            page_title=f"Case Study: {case['title']} | Luma Tech",
+            page_description=(case["summary"][:157] + "…")
+            if len(case["summary"]) > 160
+            else case["summary"],
+            breadcrumbs=[
+                ("Home", reverse("home")),
+                ("Portfolio", reverse("portfolio")),
+                (case["title"], reverse("case_study", args=[slug])),
+            ],
+            case=case,
+            related=related,
+        ),
+    )
+
+
 def camera_privacy(request):
     return render(
         request,
@@ -1111,10 +1330,11 @@ def contact(request):
             initial["service"] = service
 
         # ?plan=essential → pre-populate the message with the chosen tier.
-        # ?audience=home|business → pre-select the audience on the form and
-        # tailor the message wording. Default behaviour (no param) leaves it blank.
+        # ?audience=home|business|trade → pre-select the audience on the form
+        # and tailor the message wording. Default behaviour (no param) leaves
+        # it blank.
         audience = request.GET.get("audience", "").strip().lower()
-        if audience in {"home", "business"}:
+        if audience in {key for key, _ in AUDIENCE_CHOICES}:
             initial["audience"] = audience
 
         # ?plan=essential|professional|concierge → pre-populate the message.

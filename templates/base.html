@@ -76,7 +76,8 @@
         },
         "sameAs": [
           "https://www.facebook.com/profile.php?id=61560720497065",
-          "https://www.instagram.com/luma_tech_solutions/"
+          "https://www.instagram.com/luma_tech_solutions/"{% if SITE_LINKEDIN %},
+          "{{ SITE_LINKEDIN|escapejs }}"{% endif %}
         ]
       },
       {
@@ -118,6 +119,7 @@
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UniFi Wi-Fi Installation", "url": "{{ SITE_URL }}{% url 'service_networking' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CCTV Installation", "url": "{{ SITE_URL }}{% url 'service_security' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Camera Systems & ANPR", "url": "{{ SITE_URL }}{% url 'service_ai_cameras' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Construction Site Security & New-Build Pre-Wire", "url": "{{ SITE_URL }}{% url 'construction' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Smart Home Installation", "url": "{{ SITE_URL }}{% url 'service_automation' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "App & Web Development", "url": "{{ SITE_URL }}{% url 'service_development' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "IT Support & Care Plans", "url": "{{ SITE_URL }}{% url 'service_support' %}" } }
@@ -158,6 +160,7 @@
       <ul class="nav-links" data-nav-links>
         <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}">Services</a></li>
         <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}">Physical Security</a></li>
+        <li><a href="{% url 'construction' %}" class="{% if active_nav == 'construction' %}active{% endif %}">Construction</a></li>
         <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}">Portfolio</a></li>
         <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
         <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
@@ -209,6 +212,7 @@
             <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
             <li><a href="{% url 'service_security' %}">Physical Security</a></li>
             <li><a href="{% url 'service_ai_cameras' %}">AI Camera Systems</a></li>
+            <li><a href="{% url 'construction' %}">Builders & Construction</a></li>
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
             <li><a href="{% url 'service_automation' %}">Home Automation</a></li>
             <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>
@@ -235,6 +239,7 @@
             <li><a href="{% url 'contact' %}">Send a message</a></li>
             <li><a class="footer-social" href="https://www.facebook.com/profile.php?id=61560720497065" target="_blank" rel="noopener" aria-label="Luma Tech on Facebook">{% include 'partials/_icons.html' with name='facebook' %} Facebook</a></li>
             <li><a class="footer-social" href="https://www.instagram.com/luma_tech_solutions/" target="_blank" rel="noopener" aria-label="Luma Tech on Instagram">{% include 'partials/_icons.html' with name='instagram' %} Instagram</a></li>
+            {% if SITE_LINKEDIN %}<li><a class="footer-social" href="{{ SITE_LINKEDIN }}" target="_blank" rel="noopener" aria-label="Luma Tech on LinkedIn">{% include 'partials/_icons.html' with name='linkedin' %} LinkedIn</a></li>{% endif %}
             <li><a class="footer-social" href="https://g.page/r/CVzZIQHfjwivEAI/review" target="_blank" rel="noopener" aria-label="Leave a Google review for Luma Tech">{% include 'partials/_icons.html' with name='star' %} Review us on Google</a></li>
           </ul>
         </div>
@@ -277,7 +282,7 @@
 
   <div class="social-fab" role="group" aria-label="Quick contact">
     {% if SITE_WHATSAPP_E164 %}
-    <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%20saw%20your%20website%20and%20wanted%20to%20chat..."
+    <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text={{ whatsapp_prefill|default:'Hi, I saw your website and wanted to chat...'|urlencode }}"
        class="social-fab__btn social-fab__btn--whatsapp plausible-event-name=WhatsApp+Click"
        target="_blank" rel="noopener"
        aria-label="Chat with us on WhatsApp">

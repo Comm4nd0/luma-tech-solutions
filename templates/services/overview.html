@@ -18,6 +18,26 @@
     {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
     <div class="media-banner fade-in" style="background-image:url('{% static 'img/services/support.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);margin-bottom:2rem;" role="img" aria-label="Team working with technology"></div>
     {% include 'partials/_pillars.html' %}
+
+    <div class="featured-case fade-in mt-4">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Working on a building site?</span>
+        <h3>Site security, ANPR &amp; new-build pre-wire.</h3>
+        <p class="muted">
+          For builders, developers and site managers we run a dedicated
+          offer: gate ANPR and site CCTV priced per month for the length of
+          the programme, and structured-cabling pre-wire priced per plot.
+          RAMS, DPIA and signage handled.
+        </p>
+        <div class="row-actions mt-3">
+          <a href="{% url 'construction' %}" class="btn btn-primary btn-sm">Builders &amp; construction {% include 'partials/_icons.html' with name='arrow' %}</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Priced for procurement</h4>
+        <p>One fixed figure per plot type or per site-month — numbers your QS can drop straight into the cost plan, with the paperwork supplied alongside the quote.</p>
+      </div>
+    </div>
   </div>
 </section>
 

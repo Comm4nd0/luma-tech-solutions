@@ -29,7 +29,7 @@
       <div>
         {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>Get a quote</span>
-        <h1>Tell us about your <span class="gradient">property.</span></h1>
+        <h1>Tell us about your <span class="gradient">property or site.</span></h1>
         <p class="lede">
           A few quick details so we can come back with something useful —
           not just a generic reply. We aim to confirm survey availability
@@ -95,7 +95,7 @@
           </div>
 
           <div>
-            <label for="{{ form.property_type.id_for_label }}">What's the property?</label>
+            <label for="{{ form.property_type.id_for_label }}">What's the property or site?</label>
             {{ form.property_type }}
             {{ form.property_type.errors }}
           </div>

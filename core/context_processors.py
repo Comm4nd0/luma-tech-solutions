@@ -17,6 +17,8 @@ def site(request):
         "SITE_FOUNDER": settings.SITE_FOUNDER,
         "SITE_BASE_TOWN": settings.SITE_BASE_TOWN,
         "SITE_WHATSAPP_E164": settings.SITE_WHATSAPP_E164,
+        "SITE_LINKEDIN": settings.SITE_LINKEDIN,
+        "SITE_BOOKING_URL": settings.SITE_BOOKING_URL,
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
         "PLAUSIBLE_DOMAIN": settings.PLAUSIBLE_DOMAIN,
         "PLAUSIBLE_SCRIPT_SRC": settings.PLAUSIBLE_SCRIPT_SRC,

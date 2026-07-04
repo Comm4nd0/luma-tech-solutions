@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .models import BlogPost
+from .views import CASE_STUDIES
 
 
 def _static_lastmod():
@@ -28,6 +29,7 @@ class StaticViewSitemap(Sitemap):
             ("service_networking", 0.8),
             ("service_security", 0.8),
             ("service_ai_cameras", 0.85),
+            ("construction", 0.9),
             ("camera_privacy", 0.6),
             ("service_development", 0.8),
             ("service_automation", 0.8),
@@ -55,6 +57,21 @@ class StaticViewSitemap(Sitemap):
         return priority
 
     def lastmod(self, item):
+        return _static_lastmod()
+
+
+class CaseStudySitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.7
+    protocol = "https"
+
+    def items(self):
+        return [c["slug"] for c in CASE_STUDIES]
+
+    def location(self, slug):
+        return reverse("case_study", args=[slug])
+
+    def lastmod(self, slug):
         return _static_lastmod()
 
 

@@ -30,6 +30,9 @@
             {% for tech in case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
           </div>
           <div class="outcome"><strong>Outcome —</strong>{{ case.outcome }}</div>
+          <div class="row-actions mt-3">
+            <a href="{% url 'case_study' case.slug %}" class="btn btn-ghost btn-sm">Read the full case study &rarr;</a>
+          </div>
         </article>
       {% endfor %}
     </div>

@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>For builders, developers &amp; site managers</span>
+        <h1>Site security &amp; pre-wire, <span class="gradient">priced for the programme.</span></h1>
+        <p class="lede">
+          Gate ANPR and site CCTV for the duration of your build — one fixed
+          monthly price, moved to your next compound when you're done. And
+          new-build pre-wire packages quoted per plot, so your QS gets one
+          clean number per house type. Marlow-based, working across
+          Maidenhead, Henley and the Thames Valley. RAMS, DPIA and signage
+          handled.
+        </p>
+        <div class="row-actions mt-3">
+          <a href="{% url 'quote' %}?service=site_security&amp;property=construction_site&amp;source=construction-hero" class="btn btn-primary plausible-event-name=Construction+Hero+Quote">Quote my site {% include 'partials/_icons.html' with name='arrow' %}</a>
+          {% if SITE_BOOKING_URL %}
+          <a href="{{ SITE_BOOKING_URL }}" target="_blank" rel="noopener" class="btn btn-ghost plausible-event-name=Book+Call+Click">Book a 15-minute call</a>
+          {% elif SITE_PHONE %}
+          <a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click">{% include 'partials/_icons.html' with name='phone' %} {{ SITE_PHONE }}</a>
+          {% endif %}
+        </div>
+        <div class="hero-service-links mt-3">
+          <span class="hero-service-links-label">On this page:</span>
+          <a href="#site-security">Site security &amp; ANPR</a>
+          <a href="#prewire">New-build pre-wire</a>
+          <a href="#trade">Trade partners</a>
+          <a href="#credentials">Credentials</a>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <div class="hero-photo" style="background-image:url('{% static 'img/services/security.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Site CCTV camera overlooking a construction compound gate"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="grid grid-3">
+      <article class="case-card fade-in">
+        <span class="case-tag">For the build</span>
+        <h3>Site security &amp; ANPR</h3>
+        <p>Every vehicle through the gate logged with a readable plate. Out-of-hours alerts only. Installed at site set-up, decommissioned — or moved to your next site — at handover.</p>
+        <a href="#site-security" class="btn btn-ghost btn-sm mt-3">How it works &rarr;</a>
+      </article>
+      <article class="case-card fade-in">
+        <span class="case-tag">For the plots</span>
+        <h3>New-build pre-wire</h3>
+        <p>Structured cabling, comms enclosure, AP and CCTV positions run while the walls are open — fixed price per plot type, repeated across the development.</p>
+        <a href="#prewire" class="btn btn-ghost btn-sm mt-3">What's in a package &rarr;</a>
+      </article>
+      <article class="case-card fade-in">
+        <span class="case-tag">For your quotes</span>
+        <h3>Trade partners</h3>
+        <p>Builders, electricians, architects and designers: fixed per-plot figures you can drop straight into your own tenders, and an engineer who turns up when the programme says.</p>
+        <a href="#trade" class="btn btn-ghost btn-sm mt-3">Work with us &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="site-security" class="section-orb">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Site security &amp; ANPR</span>
+      <h2>Who was on site, when — <span class="gradient">without the clipboard.</span></h2>
+      <p class="lede">
+        Sub-contractor billing disputes, RAMS compliance, H&amp;S audits,
+        insurance claims, out-of-hours gate breaches — all of it gets argued
+        from memory and a half-filled-in paper log. Gate ANPR and a handful
+        of well-placed cameras end the argument: timestamped footage and a
+        searchable vehicle log, recorded on your kit in a lockable site
+        cabinet.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>The commercial model</h3>
+        <ul class="bullets">
+          <li><strong>Installed at site set-up</strong> — gate ANPR, yard and perimeter coverage, recorder in a lockable cabinet, 4G failover until your fixed line goes in.</li>
+          <li><strong>One fixed monthly price for the duration</strong> — kit, monitoring config and support in a single figure your QS can put in the prelims. No per-camera surprises.</li>
+          <li><strong>End of programme, your choice</strong> — we decommission, or we move the system straight to your next compound. Multi-site builders run the same setup site after site under one arrangement.</li>
+        </ul>
+
+        <h3 class="mt-4">What the site manager gets</h3>
+        <ul class="bullets">
+          <li><strong>A daily presence report</strong> — vehicles on site and when, auto-emailed at the end of the working day.</li>
+          <li><strong>Searchable history</strong> — every visit by plate, with clips and timestamps, in seconds.</li>
+          <li><strong>Out-of-hours alerts only</strong> — quiet during the working day, a buzz for movement at the gate after the site closes.</li>
+          <li><strong>One phone dashboard</strong> — iOS and Android, two-factor, no public ports opened.</li>
+        </ul>
+
+        <h3 class="mt-4">The legal bit, handled</h3>
+        <p>
+          Workplace ANPR is personal-data processing, which means ICO
+          registration, a Data Protection Impact Assessment, compliant
+          signage and a retention policy. We draft the DPIA, supply the
+          signs, and hand over a one-page "what we record, how long for,
+          who can see it" sheet for your H&amp;S file — it's part of the
+          install package, not an extra.
+        </p>
+        <div class="row-actions mt-3">
+          <a href="{% url 'quote' %}?service=site_security&amp;property=construction_site&amp;source=construction-security-section" class="btn btn-primary btn-sm">Quote my site {% include 'partials/_icons.html' with name='arrow' %}</a>
+          <a href="{% url 'service_ai_cameras' %}" class="btn btn-ghost btn-sm">More on our AI cameras</a>
+        </div>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <span class="eyebrow"><span class="dot"></span>Case study</span>
+        <h4 style="margin-top:.5rem;">{{ featured_case.title }}</h4>
+        <p class="muted">{{ featured_case.summary }}</p>
+        <p style="margin-top:.75rem;"><strong>Outcome:</strong> {{ featured_case.outcome }}</p>
+        <a href="{% url 'case_study' featured_case.slug %}" class="btn btn-ghost btn-sm" style="margin-top:1rem;">Read the full case study &rarr;</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="prewire" class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>New-build pre-wire</span>
+      <h2>Run it before the plasterboard — <span class="gradient">or pay three times as much after.</span></h2>
+      <p class="lede">
+        Buyers of a new home in Marlow, Henley or Maidenhead expect Wi-Fi
+        that works in every room, CCTV that doesn't trail cables down the
+        render, and a house that's ready for whatever they plug in next.
+        The only cheap moment to make that true is first fix. We design and
+        install the low-voltage layer so your electrician can get on with
+        their own package.
+      </p>
+    </div>
+
+    <div class="service-grid">
+      <div>
+        <h3>How it runs on your programme</h3>
+        <ul class="bullets">
+          <li><strong>Design from your drawings</strong> — AP, camera, door-entry and data positions marked up per house type, with containment requirements issued to your electrician before first fix.</li>
+          <li><strong>First fix</strong> — Cat6/Cat6a pulled to every position and back to a comms enclosure, alongside the sparky's runs, before plasterboard. We work to your programme, not ours.</li>
+          <li><strong>Second fix &amp; commissioning</strong> — faceplates, patching, testing and labelling at decoration stage; access points, CCTV and gateway commissioned before completion if the plot is sold with them.</li>
+          <li><strong>Handover per plot</strong> — test results, as-built diagram and a plain-English pack the purchaser (or their own IT contractor) can pick up cold. A better spec sheet for your sales office, too.</li>
+        </ul>
+
+        <h3 class="mt-4">Why bother, commercially</h3>
+        <ul class="bullets">
+          <li><strong>A differentiator that costs hundreds, not thousands</strong> — "wired for whole-home Wi-Fi and CCTV" is a line on the sales particulars that the volume builders down the road don't have.</li>
+          <li><strong>No retrofit call-backs</strong> — the number-one post-completion tech complaint in a larger new-build is Wi-Fi that doesn't reach. Pre-wire kills it before it exists.</li>
+          <li><strong>One number per house type</strong> — quoted from drawings, fixed, repeatable across every plot of that type. Re-quoted only if the drawings change.</li>
+        </ul>
+        <div class="row-actions mt-3">
+          <a href="{% url 'quote' %}?service=prewire&amp;property=new_build_dev&amp;source=construction-prewire-section" class="btn btn-primary btn-sm">Price my plots {% include 'partials/_icons.html' with name='arrow' %}</a>
+          <a href="{% url 'service_networking' %}" class="btn btn-ghost btn-sm">How we do networking</a>
+        </div>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>What a per-plot package covers</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>Cat6/Cat6a runs to every AP, camera, TV and data position</li>
+          <li>Comms enclosure with power, patching and ventilation</li>
+          <li>Door-entry / gate intercom pre-wire where specified</li>
+          <li>Testing and labelling of every run, both ends</li>
+          <li>Optional commissioned kit: gateway, APs, CCTV before completion</li>
+          <li>Per-plot handover pack for the purchaser</li>
+        </ul>
+        <p class="muted" style="font-size:.85rem;margin-top:.75rem;">
+          Also available for one-off self-builds, extensions and deep
+          refurbs — same process, one plot.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="trade" class="section-orb">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Trade partners</span>
+      <h2>We make you look good <span class="gradient">on your own jobs.</span></h2>
+      <p class="lede">
+        A lot of our work arrives through other trades. If technology keeps
+        appearing on your projects and you'd rather hand it to someone who
+        owns it end-to-end, this is the arrangement.
+      </p>
+    </div>
+
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>Builders &amp; developers</h4>
+        <p>Fixed per-plot pre-wire figures for your tenders, site security for your compounds, and an engineer who turns up when the programme says — first fix, second fix, commissioning.</p>
+      </div>
+      <div class="feature">
+        <h4>Electricians</h4>
+        <p>We design the low-voltage layer and hand you clear containment and first-fix drawings — pull the runs yourself and we terminate, test and commission, or we do the lot and stay out of your way.</p>
+      </div>
+      <div class="feature">
+        <h4>Architects &amp; designers</h4>
+        <p>Connectivity, CCTV and smart-home provision specified properly at design stage — positions, containment and enclosures on the drawings before anyone's on site, without cloud lock-in for your client.</p>
+      </div>
+      <div class="feature">
+        <h4>How the relationship works</h4>
+        <p>Sub-contract to you or direct to your client, whichever suits the job. Your client stays yours — we don't market to them, and referrals flow both ways. One conversation to set it up.</p>
+      </div>
+    </div>
+
+    <div class="row-actions mt-3" style="justify-content:center;">
+      <a href="{% url 'contact' %}?audience=trade&amp;source=construction-trade-section" class="btn btn-primary">Talk about working together {% include 'partials/_icons.html' with name='arrow' %}</a>
+    </div>
+  </div>
+</section>
+
+<section id="credentials" class="tight">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Commercial credentials</span>
+      <h2>The paperwork your procurement <span class="gradient">actually asks for.</span></h2>
+    </div>
+
+    {# TODO(Marco): add the public-liability cover amount, and accreditation #}
+    {# badges (CHAS / Constructionline / SafeContractor / Cyber Essentials) #}
+    {# here as they're confirmed — procurement teams filter on them. #}
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>RAMS on every job</h4>
+        <p>Site-specific risk assessments and method statements, issued before we arrive. Public liability insurance in place — certificate available for your records on request.</p>
+      </div>
+      <div class="feature">
+        <h4>DPIA, ICO &amp; signage handled</h4>
+        <p>For any site ANPR or workplace CCTV we draft the Data Protection Impact Assessment, supply compliant signage and document the retention policy as part of the package.</p>
+      </div>
+      <div class="feature">
+        <h4>Military-grade discipline</h4>
+        <p>Founded by a Royal Marines Information Systems veteran who built networks where failure wasn't an option. Tidy work, labelled runs, tested and documented — every time.</p>
+      </div>
+      <div class="feature">
+        <h4>No key-person risk</h4>
+        <p>Every install ships with as-built documentation, test results and a plain-English runbook. Any competent engineer could pick our work up cold — you're never locked to us.</p>
+      </div>
+    </div>
+
+    <div class="row-actions mt-3" style="justify-content:center;">
+      <a href="{% url 'capability_statement' %}" class="btn btn-ghost plausible-event-name=Capability+Statement+Click">View our one-page capability statement &rarr;</a>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_faqs.html' with faqs=faqs faq_eyebrow='Straight answers' faq_title='What builders ask before working with us' %}
+
+{% include 'partials/_areas_served.html' %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Pricing a job right now?' cta_copy='Send the drawings or the site address and we will come back with a fixed figure — per plot for pre-wire, per month for site security. RAMS, insurance certificate and references available with the quote.' cta_source='construction-bottom' %}
+{% endblock %}
