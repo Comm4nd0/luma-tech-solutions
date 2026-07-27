@@ -14,7 +14,7 @@ reverse-proxy on the Hetzner box.
 ├── docker-compose.yml         # publishes host port 8005
 ├── .github/workflows/         # ci.yml (tests on every push) + deploy.yml (auto-deploy on main)
 ├── lumatech/                  # Django project (settings, urls, wsgi/asgi)
-├── core/                      # the only app — views, forms, models, api, feeds, sitemaps, tests/
+├── core/                      # the only app — views, content, forms, models, api, feeds, sitemaps, checks, tests/
 ├── templates/                 # all HTML (base, pages, partials/, services/, areas/, portfolio/, blog/, showcase/)
 ├── static/                    # css, js, img, fonts — collected to /staticfiles by collectstatic
 └── data/                      # sqlite DB + uploaded media (gitignored, mounted as volume)
@@ -22,14 +22,26 @@ reverse-proxy on the Hetzner box.
 
 ## Architecture
 
-- **One app, `core`**, holds every view (one function per page), the models
-  (`ContactSubmission`, `JobApplication`, `QuoteRequest`, `BlogPost`), forms,
-  the blog JSON API (`core/api.py`), RSS feed (`core/feeds.py`), sitemaps and
-  the CSP middleware. Marketing content — PILLARS, TESTIMONIALS,
-  HOME_CARE_PLANS / BUSINESS_CARE_PLANS, CASE_STUDIES, WEBSITE_DEMOS, the
-  FAQS_* blocks and JOB_ROLES — lives as module-level constants in
-  `core/views.py` — moving any of them to the database is the right call the
-  moment they need to be edited by a non-developer.
+- **One app, `core`**, holds the views, the models (`ContactSubmission`,
+  `JobApplication`, `QuoteRequest`, `BlogPost`), forms, the blog JSON API
+  (`core/api.py`), RSS feed (`core/feeds.py`), sitemaps and the CSP middleware.
+- **Marketing content lives in `core/content.py`**, not in views: PILLARS,
+  TESTIMONIALS, `CARE_TIERS` + `CARE_PLAN_AUDIENCES` (merged by
+  `care_plans(audience)`), CASE_STUDIES, WEBSITE_DEMOS, the FAQS_* blocks,
+  JOB_ROLES, plus the `SERVICE_PAGES` / `AREA_PAGES` / `THANKS_PAGES` tables
+  that drive the repetitive pages. Moving any of it to the database is the
+  right call the moment a non-developer needs to edit it.
+  **`core/content.py` must stay pure data** — no Django imports, no
+  `reverse()`, no models. `core.urls` imports `core.views` which imports it,
+  and `core.sitemaps` imports it directly; a module-level `reverse()` raises
+  `AppRegistryNotReady`. Store URL *names* and reverse them in the view.
+- **The service, area and thanks pages are data-driven**: `_render_service_page`,
+  `_render_area_page` and `_render_thanks_page` in `core/views.py` render from
+  those tables. `core/urls.py` still names every route individually, so
+  `{% url %}`, `reverse()` and the sitemap are unaffected. Watch out for the
+  non-uniform bits: `service_security` sits in its own `"security"` nav slot,
+  and three service pages deliberately have no FAQs (adding a default would
+  give them a FAQ section and a `FAQPage` JSON-LD node they've never had).
 - **Pages**: home, services overview + six service pages (networking, security,
   ai-cameras, development, automation, support), a **construction lead-gen
   funnel** (`/construction/` + capability statement), a **quote funnel**
@@ -48,6 +60,10 @@ reverse-proxy on the Hetzner box.
   `[data-theme="dark"]` on `<html>`, toggled by `static/js/site.js` and
   persisted in localStorage as `luma-theme`. Self-hosted Inter variable font
   (`static/fonts/inter-latin-variable.woff2` — no Google Fonts request).
+  **Colour tokens are split by contrast role**: `--link` (body links) and
+  `--on-accent` (foreground on the accent gradient) meet WCAG AA; `--accent`
+  is 3.55:1 and is for gradients, icons and focus rings only, where the bar is
+  3:1. Don't point body text at `--accent`.
 - **Static files** are served by WhiteNoise via gunicorn — no separate nginx layer
   in the Docker image. Caddy in front handles TLS.
 
@@ -81,6 +97,16 @@ reverse-proxy on the Hetzner box.
   (cookieless analytics) is *not* consent-gated — it loads from `base.html`
   whenever `PLAUSIBLE_DOMAIN` is set; CTAs carry
   `plausible-event-name=…` classes for goal tracking.
+- **Never `cache_page()` an HTML view.** Every page bakes `request.csp_nonce`
+  into its inline `<script>` tags and every `application/ld+json` block, and
+  the CSP middleware issues a fresh nonce per response — a cached body carries
+  a stale nonce and the browser blocks all of it. The test client doesn't
+  enforce CSP, so this fails silently. Only `sitemap.xml` and `/blog/feed/`
+  are cached (`CACHES` is LocMem; `DummyCache` under test).
+- **Emails must not default to the console backend.** `EMAIL_BACKEND` picks
+  SMTP whenever `DEBUG` is off. The console backend makes `_notify()` return
+  `True` and marks the row `notified=True`, so lead loss is completely silent.
+  `core/checks.py` warns at deploy time if it's ever configured in production.
 - **`DJANGO_SECRET_KEY` is mandatory in production** — settings raises
   `ImproperlyConfigured` (and `docker compose` refuses to start) if it's unset
   or left at an insecure default while `DJANGO_DEBUG=0`.
@@ -106,15 +132,23 @@ docker compose up -d --build       # http://localhost:8005
 ## Tests & CI
 
 The test suite lives in `core/tests/` (views, forms, models, API, security
-headers, sitemap/feed, construction funnel). Run it with:
+headers, sitemap/feed, construction funnel, plus page contracts, smoke tests,
+accessibility, SEO, config checks, reliability and query counts). Run it with:
 
 ```sh
 DJANGO_DEBUG=1 DJANGO_ALLOWED_HOSTS=localhost,testserver python manage.py test
 ```
 
+`core/tests/page_contract.json` pins every page's template, `active_nav`,
+breadcrumbs, Service-schema keys and FAQ list. **If you deliberately change
+one of those, update the fixture in the same commit** — if you didn't mean to,
+the failure is the bug. It exists because Django renders a missing context
+variable as an empty string, so a dropped context key is otherwise silent.
+
 `.github/workflows/ci.yml` runs on every push/PR: `makemigrations --check`
 (fail if a model change lacks a migration), the full test suite, and
-`manage.py check --deploy`. Keep all three green.
+`manage.py check --deploy`. Keep all three green. `deploy.yml` runs the same
+job and gates the deploy on it, so a red suite no longer ships.
 
 ## Server (Hetzner: Luma001 — 178.104.29.66)
 
@@ -161,9 +195,13 @@ Pick the next free port for any new site.
 ## Deploy workflow
 
 **Deploys are automatic**: every push to `main` triggers
-`.github/workflows/deploy.yml`, which SSHes into Luma001, runs
-`git pull --ff-only && docker compose up -d --build`, then smoke-tests
-`/healthz`, `/portfolio/` and a showcase demo. It needs the repo secrets
+`.github/workflows/deploy.yml`, which first runs the full test suite (the
+deploy job `needs:` it), backs up the sqlite database to
+`/root/backups/luma-tech-solutions/`, SSHes into Luma001, runs
+`git pull --ff-only && docker compose up -d --build`, then smoke-tests six
+paths. On failure it rolls the code back to the previous revision; it does
+*not* restore the database automatically, since leads submitted between the
+backup and the failure would be lost. It needs the repo secrets
 `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_SSH_KEY` (optional `DEPLOY_PORT`), and
 can also be run manually via *workflow_dispatch*.
 

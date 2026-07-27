@@ -6,7 +6,7 @@ The full marketing website for [lumatechsolutions.co.uk](https://lumatechsolutio
 
 - **Django 5.2 LTS** (server-rendered templates) — one app, `core`, with all pages.
 - **Custom CSS** — dark/light theme (slate/teal), self-hosted Inter variable font.
-- **WhiteNoise** — static-file serving, no separate CDN needed.
+- **WhiteNoise** — static-file serving (gzip + brotli), no separate CDN needed.
 - **nh3** — sanitises author-supplied blog HTML; a nonce-based CSP is the backstop.
 - **Gunicorn** in a Docker container, fronted by the shared Caddy reverse-proxy on Hetzner (port `8005`).
 
@@ -19,25 +19,28 @@ The full marketing website for [lumatechsolutions.co.uk](https://lumatechsolutio
 ├── Dockerfile
 ├── docker-compose.yml          # runs gunicorn on host port 8005
 ├── lumatech/                   # Django project (settings, urls, wsgi)
-├── core/                       # main app: views, forms, models, sitemaps
+├── core/                       # main app
+│   ├── views.py                # page views + form handling
+│   ├── content.py              # all marketing content + page tables (pure data)
+│   ├── forms.py                # contact / quote / careers, CV validation
+│   ├── models.py               # submissions + BlogPost
+│   ├── api.py, feeds.py, sitemaps.py
+│   ├── checks.py               # deploy-time config warnings
+│   ├── middleware.py           # nonce-based Content Security Policy
+│   └── tests/                  # 139 tests
 ├── templates/
-│   ├── base.html               # nav, footer, OG/SEO meta
-│   ├── home.html
-│   ├── about.html
-│   ├── portfolio.html
-│   ├── contact.html
-│   ├── contact_thanks.html
-│   ├── blog.html
-│   ├── robots.txt
-│   ├── partials/               # icons, pillars grid, CTA banner
-│   └── services/               # overview + 4 detail pages
-├── static/
-│   ├── css/site.css            # all styles
-│   ├── js/site.js              # nav toggle, theme, hero slider (reduced-motion aware)
-│   ├── js/cookie-consent.js    # consent banner + Google Ads gating
-│   ├── fonts/                  # self-hosted Inter variable woff2
-│   └── img/                    # favicon + OG image
-└── core/middleware.py          # nonce-based Content Security Policy
+│   ├── base.html               # nav, footer, OG/SEO meta, JSON-LD
+│   ├── partials/               # icons, pillars, CTA, breadcrumbs, area sidebar/schema
+│   ├── services/               # overview + 6 detail pages
+│   ├── areas/                  # index + 4 town landing pages
+│   ├── portfolio/, blog/, showcase/
+│   └── robots.txt
+└── static/
+    ├── css/site.css            # all styles
+    ├── js/site.js              # nav, theme, reveal, inline validation
+    ├── js/cookie-consent.js    # consent banner + Google Ads gating
+    ├── fonts/                  # self-hosted Inter variable woff2
+    └── img/                    # favicons, OG image, service + blog photos
 ```
 
 ## Local development
@@ -77,7 +80,8 @@ All optional in dev — sensible defaults are baked in.
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | comma-separated `https://...` |
 | `SITE_URL` | e.g. `https://lumatechsolutions.co.uk` |
 | `SITE_EMAIL`, `SITE_PHONE` | shown on the site |
-| `DJANGO_EMAIL_BACKEND` | default `console`; in prod use `django.core.mail.backends.smtp.EmailBackend` |
+| `DJANGO_EMAIL_BACKEND` | defaults to SMTP when `DJANGO_DEBUG` is off, console in dev — do not pin it to console in production |
+| `DJANGO_EMAIL_TIMEOUT` | SMTP socket timeout in seconds, default `10` |
 | `DJANGO_EMAIL_HOST` etc. | SMTP creds for the contact form |
 | `CONTACT_FORM_RECIPIENT` | where contact-form notifications go |
 | `CAREERS_FORM_RECIPIENT` | optional; careers inbox (falls back to `CONTACT_FORM_RECIPIENT`) |
@@ -117,7 +121,7 @@ docker exec caddy-caddy-1 caddy reload --config /etc/caddy/Caddyfile
 
 ## Pages
 
-`/`, `/services/`, `/services/{networking,security,ai-cameras,development,automation,support}/`, `/our-approach-to-camera-privacy/`, `/about/`, `/portfolio/`, `/areas/{,marlow,maidenhead,henley,beaconsfield}/`, `/quote/`, `/quote/thanks/`, `/contact/`, `/contact/thanks/`, `/careers/`, `/careers/thanks/`, `/blog/`, `/blog/feed/`, `/blog/<slug>/`, `/terms/`, `/privacy/`, `/api/blog/posts/`, `/healthz`, `/sitemap.xml`, `/robots.txt`, `/admin/`.
+`/`, `/services/`, `/services/{networking,security,ai-cameras,development,automation,support}/`, `/our-approach-to-camera-privacy/`, `/construction/`, `/construction/capability-statement/`, `/about/`, `/portfolio/`, `/portfolio/<slug>/`, `/showcase/<slug>/`, `/areas/{,marlow,maidenhead,henley,beaconsfield}/`, `/quote/`, `/quote/thanks/`, `/contact/`, `/contact/thanks/`, `/careers/`, `/careers/thanks/`, `/blog/`, `/blog/feed/`, `/blog/<slug>/`, `/terms/`, `/privacy/`, `/api/blog/posts/`, `/healthz`, `/sitemap.xml`, `/robots.txt`, `/admin/`.
 
 ## Contact form
 
