@@ -14,20 +14,20 @@ from django.views.decorators.http import require_http_methods
 
 from .content import (
     AREA_PAGES,
-    BUSINESS_CARE_PLANS,
+    CARE_TIERS,
     CASE_STUDIES,
     FAQS_AI_CAMERAS,
     FAQS_CONSTRUCTION,
     FAQS_GENERAL,
     FAQS_NETWORKING,
     FAQS_SECURITY,
-    HOME_CARE_PLANS,
     JOB_ROLES,
     PILLARS,
     SERVICE_PAGES,
     TESTIMONIALS,
     THANKS_PAGES,
     WEBSITE_DEMOS,
+    care_plans,
 )
 from .forms import ContactForm, JobApplicationForm, QuoteRequestForm
 from .models import (
@@ -403,8 +403,8 @@ def service_support(request):
         request,
         "support",
         plan_grids=[
-            {"audience": "home", "plans": HOME_CARE_PLANS},
-            {"audience": "business", "plans": BUSINESS_CARE_PLANS},
+            {"audience": "home", "plans": care_plans("home")},
+            {"audience": "business", "plans": care_plans("business")},
         ],
     )
 
@@ -497,10 +497,8 @@ def contact(request):
             initial["audience"] = audience
 
         # ?plan=essential|professional|concierge → pre-populate the message.
-        # Plan names are shared between home and business lists, so a single
-        # lookup off either list is enough to find the canonical capitalisation.
         plan = request.GET.get("plan", "").strip().lower()
-        plan_lookup = {p["name"].lower(): p["name"] for p in HOME_CARE_PLANS}
+        plan_lookup = {t["key"]: t["name"] for t in CARE_TIERS}
         if plan in plan_lookup:
             scope = (
                 "for our business" if audience == "business"

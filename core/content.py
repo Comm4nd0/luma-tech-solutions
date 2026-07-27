@@ -80,134 +80,157 @@ TESTIMONIALS = [
 ]
 
 
-HOME_CARE_PLANS = [
+# --- Care plans -----------------------------------------------------------
+#
+# HOME_CARE_PLANS and BUSINESS_CARE_PLANS were near-clones: the Essential
+# feature list was byte-identical between them, and name/min_term/highlighted
+# are the same across both audiences. Those live in CARE_TIERS once.
+#
+# Everything that genuinely differs — price, suffixes, tagline, and the
+# Professional/Concierge feature copy — stays verbatim per audience. The
+# differences are marketing claims ("smart-home product in the house" vs
+# "networked product on the premises"), not mechanical noun swaps, so they
+# are not generated.
+
+_ESSENTIAL_FEATURES = [
+    '24/7 automated network monitoring with alerts to us',
+    'Firmware, security patches and daily config backups managed for you',
+    'Email support — next business day for routine, same business day (best effort) for service-down',
+    'Quarterly health-check report',
+    'One-page network diagram, kept current with any changes we make',
+    '20% off our standard hourly rate for work outside the plan',
+    'Internet provider liaison when your line goes down — we make the calls',
+]
+
+
+CARE_TIERS = [
     {
-        "name": "Essential",
-        "price": "£75",
-        "price_suffix": "/mo +VAT",
-        "annual_price": "£810",
-        "annual_suffix": "/yr",
-        "min_term": "3-month rolling",
-        "tagline": "Quiet, reliable IT — we watch it, you forget about it.",
+        "key": 'essential',
+        "name": 'Essential',
         "highlighted": False,
-        "features": [
-            "24/7 automated network monitoring with alerts to us",
-            "Firmware, security patches and daily config backups managed for you",
-            "Email support — next business day for routine, same business day (best effort) for service-down",
-            "Quarterly health-check report",
-            "One-page network diagram, kept current with any changes we make",
-            "20% off our standard hourly rate for work outside the plan",
-            "Internet provider liaison when your line goes down — we make the calls",
-        ],
+        "min_term": '3-month rolling',
     },
     {
-        "name": "Professional",
-        "price": "£165",
-        "price_suffix": "/mo +VAT",
-        "annual_price": "£1,780",
-        "annual_suffix": "/yr",
-        "min_term": "6-month rolling",
-        "tagline": "Hands-on support for everything Luma installed — same engineer who built it.",
+        "key": 'professional',
+        "name": 'Professional',
         "highlighted": True,
-        "features": [
-            "Everything in Essential",
-            "Reactive support for any kit, app or integration we supplied or installed — networking, CCTV, smart-home, custom apps",
-            "Same business day for routine; target within 4 working hours for service-down",
-            "Phone, video and WhatsApp support",
-            "2 hours of remote moves-and-changes per year (rolls over up to 4)",
-            "One on-site visit per year included (tune-up, cable check, hardware audit)",
-            "Warranty management on hardware we supply — UI Care registered, RMAs handled by us",
-            "5% loyalty discount from year 2",
-        ],
+        "min_term": '6-month rolling',
     },
     {
-        "name": "Concierge",
-        "price": "£325",
-        "price_suffix": "/mo +VAT",
-        "annual_price": "£3,510",
-        "annual_suffix": "/yr",
-        "min_term": "12-month",
-        "tagline": "The whole smart home, whoever installed it — one engineer, one number, one bill.",
+        "key": 'concierge',
+        "name": 'Concierge',
         "highlighted": False,
-        "features": [
-            "Everything in Professional",
-            "We'll take a look at any smart-home product in the house, whoever installed it — Sonos, Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't warrant kit we didn't supply, but you've got one number to call.",
-            "Front of queue; target within 2 working hours for service-down",
-            "Best-effort out-of-hours for genuine emergencies",
-            "One on-site visit per quarter + monthly check-in call",
-            "6 hours of remote moves-and-changes per year (rolls over up to 12)",
-            "Full living documentation — network map, device inventory, credentials vault, runbook",
-            "Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf",
-            "Multi-site coverage — main home plus a holiday let or small office under one plan",
-            "10% loyalty discount from year 2",
-        ],
+        "min_term": '12-month',
     },
 ]
 
 
-BUSINESS_CARE_PLANS = [
-    {
-        "name": "Essential",
-        "price": "£25",
-        "price_suffix": "/user/mo +VAT",
-        "annual_price": "£270",
-        "annual_suffix": "/user/yr",
-        "min_term": "3-month rolling",
-        "tagline": "Quiet, reliable IT for small teams — we watch it, you focus on the work.",
-        "highlighted": False,
-        "features": [
-            "24/7 automated network monitoring with alerts to us",
-            "Firmware, security patches and daily config backups managed for you",
-            "Email support — next business day for routine, same business day (best effort) for service-down",
-            "Quarterly health-check report",
-            "One-page network diagram, kept current with any changes we make",
-            "20% off our standard hourly rate for work outside the plan",
-            "Internet provider liaison when your line goes down — we make the calls",
-        ],
+CARE_PLAN_AUDIENCES = {
+    'home': {
+        'essential': {
+            'price': '£75',
+            'price_suffix': '/mo +VAT',
+            'annual_price': '£810',
+            'annual_suffix': '/yr',
+            'tagline': 'Quiet, reliable IT — we watch it, you forget about it.',
+            "features": _ESSENTIAL_FEATURES,
+        },
+        'professional': {
+            'price': '£165',
+            'price_suffix': '/mo +VAT',
+            'annual_price': '£1,780',
+            'annual_suffix': '/yr',
+            'tagline': 'Hands-on support for everything Luma installed — same engineer who built it.',
+            "features": [
+                'Everything in Essential',
+                'Reactive support for any kit, app or integration we supplied or installed — networking, CCTV, smart-home, custom apps',
+                'Same business day for routine; target within 4 working hours for service-down',
+                'Phone, video and WhatsApp support',
+                '2 hours of remote moves-and-changes per year (rolls over up to 4)',
+                'One on-site visit per year included (tune-up, cable check, hardware audit)',
+                'Warranty management on hardware we supply — UI Care registered, RMAs handled by us',
+                '5% loyalty discount from year 2',
+            ],
+        },
+        'concierge': {
+            'price': '£325',
+            'price_suffix': '/mo +VAT',
+            'annual_price': '£3,510',
+            'annual_suffix': '/yr',
+            'tagline': 'The whole smart home, whoever installed it — one engineer, one number, one bill.',
+            "features": [
+                'Everything in Professional',
+                ("We'll take a look at any smart-home product in the house, whoever installed it — Sonos, Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't "
+ "warrant kit we didn't supply, but you've got one number to call."),
+                'Front of queue; target within 2 working hours for service-down',
+                'Best-effort out-of-hours for genuine emergencies',
+                'One on-site visit per quarter + monthly check-in call',
+                '6 hours of remote moves-and-changes per year (rolls over up to 12)',
+                'Full living documentation — network map, device inventory, credentials vault, runbook',
+                'Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf',
+                'Multi-site coverage — main home plus a holiday let or small office under one plan',
+                '10% loyalty discount from year 2',
+            ],
+        },
     },
-    {
-        "name": "Professional",
-        "price": "£55",
-        "price_suffix": "/user/mo +VAT",
-        "annual_price": "£595",
-        "annual_suffix": "/user/yr",
-        "min_term": "6-month rolling",
-        "tagline": "Hands-on support for everything Luma installed — same engineer who built it.",
-        "highlighted": True,
-        "features": [
-            "Everything in Essential",
-            "Reactive support for any kit, app or integration we supplied or installed — networking, CCTV, point-of-sale, custom apps",
-            "Same business day for routine; target within 4 working hours for service-down",
-            "Phone, video and WhatsApp support",
-            "2 hours of remote moves-and-changes per user per year (rolls over up to 4)",
-            "One on-site visit per quarter (cable check, hardware audit, team Q&A)",
-            "Warranty management on hardware we supply — UI Care registered, RMAs handled by us",
-            "5% loyalty discount from year 2",
-        ],
+    'business': {
+        'essential': {
+            'price': '£25',
+            'price_suffix': '/user/mo +VAT',
+            'annual_price': '£270',
+            'annual_suffix': '/user/yr',
+            'tagline': 'Quiet, reliable IT for small teams — we watch it, you focus on the work.',
+            "features": _ESSENTIAL_FEATURES,
+        },
+        'professional': {
+            'price': '£55',
+            'price_suffix': '/user/mo +VAT',
+            'annual_price': '£595',
+            'annual_suffix': '/user/yr',
+            'tagline': 'Hands-on support for everything Luma installed — same engineer who built it.',
+            "features": [
+                'Everything in Essential',
+                'Reactive support for any kit, app or integration we supplied or installed — networking, CCTV, point-of-sale, custom apps',
+                'Same business day for routine; target within 4 working hours for service-down',
+                'Phone, video and WhatsApp support',
+                '2 hours of remote moves-and-changes per user per year (rolls over up to 4)',
+                'One on-site visit per quarter (cable check, hardware audit, team Q&A)',
+                'Warranty management on hardware we supply — UI Care registered, RMAs handled by us',
+                '5% loyalty discount from year 2',
+            ],
+        },
+        'concierge': {
+            'price': '£110',
+            'price_suffix': '/user/mo +VAT',
+            'annual_price': '£1,190',
+            'annual_suffix': '/user/yr',
+            'tagline': 'The whole office, whoever installed it — one engineer, one number, one bill.',
+            "features": [
+                'Everything in Professional',
+                ("We'll take a look at any networked product on the premises, whoever installed it — printers, NAS, VOIP, point-of-sale, legacy kit from a previous IT company. Diagnose, advise and escalate to the "
+ "manufacturer; we don't warrant kit we didn't supply, but you've got one number to call."),
+                'Front of queue; target within 2 working hours for service-down',
+                'Best-effort out-of-hours for genuine emergencies',
+                'One on-site visit per month + monthly check-in call',
+                '6 hours of remote moves-and-changes per user per year (rolls over up to 12)',
+                'Full living documentation — network map, device inventory, credentials vault, runbook',
+                'Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf',
+                'Multi-site coverage — main office plus a satellite or warehouse under one plan',
+                '10% loyalty discount from year 2',
+            ],
+        },
     },
-    {
-        "name": "Concierge",
-        "price": "£110",
-        "price_suffix": "/user/mo +VAT",
-        "annual_price": "£1,190",
-        "annual_suffix": "/user/yr",
-        "min_term": "12-month",
-        "tagline": "The whole office, whoever installed it — one engineer, one number, one bill.",
-        "highlighted": False,
-        "features": [
-            "Everything in Professional",
-            "We'll take a look at any networked product on the premises, whoever installed it — printers, NAS, VOIP, point-of-sale, legacy kit from a previous IT company. Diagnose, advise and escalate to the manufacturer; we don't warrant kit we didn't supply, but you've got one number to call.",
-            "Front of queue; target within 2 working hours for service-down",
-            "Best-effort out-of-hours for genuine emergencies",
-            "One on-site visit per month + monthly check-in call",
-            "6 hours of remote moves-and-changes per user per year (rolls over up to 12)",
-            "Full living documentation — network map, device inventory, credentials vault, runbook",
-            "Loaner hardware where we have stock; otherwise we expedite the RMA on your behalf",
-            "Multi-site coverage — main office plus a satellite or warehouse under one plan",
-            "10% loyalty discount from year 2",
-        ],
-    },
-]
+}
+
+
+def care_plans(audience):
+    """Tier definitions merged with one audience's pricing and copy.
+
+    Returns the same dict shape templates/services/support.html already
+    reads, in canonical tier order (order is load-bearing on the page).
+    """
+    overlay = CARE_PLAN_AUDIENCES[audience]
+    return [{**tier, **overlay[tier["key"]]} for tier in CARE_TIERS]
 
 
 CASE_STUDIES = [

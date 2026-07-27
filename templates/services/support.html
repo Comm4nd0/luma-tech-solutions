@@ -52,9 +52,9 @@
           <div class="price-card {% if plan.highlighted %}popular{% endif %} fade-in">
             {% if plan.highlighted %}<span class="badge">Most popular</span>{% endif %}
             <h3>{{ plan.name }}</h3>
-            <p class="price">{% if plan.quoted %}<span class="price-prefix">From</span> {% endif %}{{ plan.price }}<span class="price-suffix">{{ plan.price_suffix }}</span></p>
-            <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">{% if plan.quoted %}from {% else %}or {% endif %}{{ plan.annual_price }}{{ plan.annual_suffix }} (save 10%)</p>
-            <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}{% if plan.quoted %} · Tailored quote{% endif %}</p>
+            <p class="price">{{ plan.price }}<span class="price-suffix">{{ plan.price_suffix }}</span></p>
+            <p class="muted" style="font-size:.85rem;margin:.25rem 0 .25rem;">or {{ plan.annual_price }}{{ plan.annual_suffix }} (save 10%)</p>
+            <p class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 1rem;">{{ plan.min_term }}</p>
             <p class="price-tag">{{ plan.tagline }}</p>
             <div class="features">
               <p class="features-label">Included in this plan</p>
@@ -63,18 +63,8 @@
                   <li>{% include 'partials/_icons.html' with name='check' %}<span>{{ feat }}</span></li>
                 {% endfor %}
               </ul>
-              {% if plan.not_included %}
-                <div class="extras">
-                  <p class="features-label">Not included — quoted separately</p>
-                  <ul>
-                    {% for item in plan.not_included %}
-                      <li>{% include 'partials/_icons.html' with name='minus' %}<span>{{ item }}</span></li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
             </div>
-            <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.name|lower }}&audience={{ grid.audience }}">{% if plan.quoted %}Get a tailored quote{% else %}Choose {{ plan.name }}{% endif %}</a>
+            <a class="btn {% if plan.highlighted %}btn-primary{% else %}btn-ghost{% endif %}" href="{% url 'contact' %}?service=support&plan={{ plan.key|lower }}&audience={{ grid.audience }}">Choose {{ plan.name }}</a>
           </div>
         {% endfor %}
       </div>
