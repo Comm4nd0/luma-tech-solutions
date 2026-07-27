@@ -3,6 +3,9 @@ name: Deploy to Luma001
 # Deploys luma-tech-solutions to the Hetzner box (Luma001) over SSH.
 # Runs automatically on every push to main, and can be triggered manually.
 #
+# The test job below duplicates ci.yml and gates the deploy. Without it a red
+# test suite still shipped to production.
+#
 # Required repository secrets (Settings → Secrets and variables → Actions):
 #   DEPLOY_HOST     server IP/hostname        e.g. 178.104.29.66
 #   DEPLOY_USER     SSH user                  e.g. root
@@ -21,9 +24,46 @@ concurrency:
   group: deploy-luma001
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check for missing migrations
+        env:
+          DJANGO_DEBUG: "1"
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Run tests
+        env:
+          DJANGO_DEBUG: "1"
+          DJANGO_ALLOWED_HOSTS: localhost,testserver
+        run: python manage.py test --verbosity=2
+
+      - name: Deployment checks
+        env:
+          DJANGO_DEBUG: "0"
+          DJANGO_SECRET_KEY: ci-non-default-secret-key-not-used-in-production-0123456789abcdef
+          DJANGO_ALLOWED_HOSTS: lumatechsolutions.co.uk
+        run: python manage.py check --deploy
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Set up SSH
         run: |
@@ -44,16 +84,73 @@ jobs:
             "$DEPLOY_USER@$DEPLOY_HOST" 'bash -se' <<'REMOTE'
           set -euo pipefail
           cd /root/luma-tech-solutions
+
+          # The container runs `migrate --noinput` on every start against the
+          # sqlite file in the luma-data volume. Back it up first — a bad
+          # migration is otherwise unrecoverable.
+          BACKUP_DIR=/root/backups/luma-tech-solutions
+          mkdir -p "$BACKUP_DIR"
+          STAMP=$(date -u +%Y%m%dT%H%M%SZ)
+          if docker ps --format '{{.Names}}' | grep -qx luma-tech-solutions-web; then
+            # .backup is WAL-safe on a live database; plain cp is not.
+            docker exec luma-tech-solutions-web \
+              python -c "import sqlite3,sys; src=sqlite3.connect('/app/data/db.sqlite3'); dst=sqlite3.connect(sys.argv[1]); src.backup(dst); dst.close(); src.close()" \
+              "/app/data/backup-$STAMP.sqlite3"
+            docker cp "luma-tech-solutions-web:/app/data/backup-$STAMP.sqlite3" \
+              "$BACKUP_DIR/db-$STAMP.sqlite3"
+            docker exec luma-tech-solutions-web rm -f "/app/data/backup-$STAMP.sqlite3"
+            echo "backed up to $BACKUP_DIR/db-$STAMP.sqlite3"
+            # Keep the 20 most recent.
+            ls -1t "$BACKUP_DIR"/db-*.sqlite3 2>/dev/null | tail -n +21 | xargs -r rm -f
+          else
+            echo "no running container — skipping backup (first deploy?)"
+          fi
+
+          # Remember what we're rolling back to.
+          PREVIOUS_SHA=$(git rev-parse HEAD)
+          echo "$PREVIOUS_SHA" > "$BACKUP_DIR/previous-sha"
+          echo "previous revision: $PREVIOUS_SHA"
+
           git pull --ff-only
           docker compose up -d --build
           # container runs `migrate --noinput` on start; give it a moment to boot
           sleep 5
           echo "--- healthz ---"
-          curl -fsS http://127.0.0.1:8005/healthz
+          curl -fsS --retry 5 --retry-delay 3 --retry-all-errors http://127.0.0.1:8005/healthz
           echo
-          echo "--- showcase smoke test ---"
-          curl -fsS -o /dev/null -w 'portfolio: %{http_code}\n' http://127.0.0.1:8005/portfolio/
-          curl -fsS -o /dev/null -w 'demo:      %{http_code}\n' http://127.0.0.1:8005/showcase/maple-and-vine/
+          echo "--- smoke test ---"
+          for path in /portfolio/ /services/support/ /blog/ /areas/marlow/ /showcase/maple-and-vine/; do
+            curl -fsS -o /dev/null -w "$path %{http_code}\n" "http://127.0.0.1:8005$path"
+          done
+          REMOTE
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
+      - name: Roll back on failure
+        if: failure()
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_PORT:-22}" \
+            -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" 'bash -se' <<'REMOTE'
+          set -euo pipefail
+          BACKUP_DIR=/root/backups/luma-tech-solutions
+          cd /root/luma-tech-solutions
+          if [ ! -f "$BACKUP_DIR/previous-sha" ]; then
+            echo "no previous revision recorded — not rolling back" >&2
+            exit 1
+          fi
+          PREVIOUS_SHA=$(cat "$BACKUP_DIR/previous-sha")
+          echo "rolling back to $PREVIOUS_SHA"
+          git checkout --force "$PREVIOUS_SHA"
+          docker compose up -d --build
+          sleep 5
+          curl -fsS --retry 5 --retry-delay 3 --retry-all-errors http://127.0.0.1:8005/healthz
+          echo
+          echo "Rolled back to $PREVIOUS_SHA."
+          echo "NOTE: the database was NOT restored. If the failed deploy applied a"
+          echo "migration, restore manually from the newest file in $BACKUP_DIR."
           REMOTE
         env:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
