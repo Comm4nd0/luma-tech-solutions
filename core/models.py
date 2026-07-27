@@ -292,9 +292,27 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
 
+    def _unique_slug(self, base):
+        """Append -2, -3 … until the slug is free.
+
+        slug is unique=True, so two posts sharing a title used to raise
+        IntegrityError — a 500 through the admin, and a 400 with a raw
+        database error in the body through the JSON API.
+        """
+        base = base or "post"
+        slug = base
+        suffix = 2
+        while (
+            BlogPost.objects.filter(slug=slug).exclude(pk=self.pk).exists()
+        ):
+            tail = "-%d" % suffix
+            slug = "%s%s" % (base[: 260 - len(tail)], tail)
+            suffix += 1
+        return slug
+
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)[:260]
+            self.slug = self._unique_slug(slugify(self.title)[:260])
         self.content = sanitize_blog_html(self.content)
         super().save(*args, **kwargs)
 

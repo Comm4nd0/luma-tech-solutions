@@ -5,6 +5,7 @@ import urllib.request
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.cache import cache
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
@@ -86,6 +87,44 @@ def _client_ip(request):
         request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0].strip()
         or request.META.get("REMOTE_ADDR", "")
     )
+
+
+# Submissions allowed per IP per window, per worker process.
+RATE_LIMIT_MAX = 5
+RATE_LIMIT_WINDOW = 600  # seconds
+
+
+def _rate_limited(request, form, *, bucket):
+    """Throttle repeat submissions from one IP.
+
+    Deliberately modest in what it claims: the cache is per-process, so with
+    three gunicorn workers the effective ceiling is 3x RATE_LIMIT_MAX, and it
+    resets on deploy. This is spam friction, not a security control —
+    reCAPTCHA and the honeypot are the controls. Storing the IP on the model
+    instead would be a new category of personal data and would need the
+    privacy page updating, so it stays in the cache.
+    """
+    ip = _client_ip(request)
+    if not ip:
+        return False
+    key = "ratelimit:%s:%s" % (bucket, ip)
+    count = cache.get(key, 0)
+    if count >= RATE_LIMIT_MAX:
+        log.info("Rate-limited %s submission from %s", bucket, ip)
+        form.add_error(
+            None,
+            "That's a few submissions in a short space of time. Please wait a "
+            "few minutes and try again, or email us directly.",
+        )
+        return True
+    # add() only sets when absent, so the window starts at the first hit and
+    # doesn't slide forward with every subsequent one.
+    if not cache.add(key, 1, RATE_LIMIT_WINDOW):
+        try:
+            cache.incr(key)
+        except ValueError:
+            cache.add(key, 1, RATE_LIMIT_WINDOW)
+    return False
 
 
 def _passes_recaptcha(request, form, *, label):
@@ -457,7 +496,11 @@ def showcase_demo(request, slug):
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
-        if _passes_recaptcha(request, form, label="contact") and form.is_valid():
+        if (
+            not _rate_limited(request, form, bucket="contact")
+            and _passes_recaptcha(request, form, label="contact")
+            and form.is_valid()
+        ):
             submission = form.save()
             sent = _notify(
                 subject=f"[Luma Tech] New enquiry from {submission.name}",
@@ -536,7 +579,11 @@ def contact_thanks(request):
 def careers(request):
     if request.method == "POST":
         form = JobApplicationForm(request.POST, request.FILES)
-        if _passes_recaptcha(request, form, label="careers") and form.is_valid():
+        if (
+            not _rate_limited(request, form, bucket="careers")
+            and _passes_recaptcha(request, form, label="careers")
+            and form.is_valid()
+        ):
             cv = form.cleaned_data["cv"]
             application = form.save(commit=False)
             application.cv_filename = cv.name[:255]
@@ -767,7 +814,11 @@ def quote(request):
     """
     if request.method == "POST":
         form = QuoteRequestForm(request.POST)
-        if _passes_recaptcha(request, form, label="quote") and form.is_valid():
+        if (
+            not _rate_limited(request, form, bucket="quote")
+            and _passes_recaptcha(request, form, label="quote")
+            and form.is_valid()
+        ):
             quote_req = form.save()
             sent = _notify(
                 subject=(
