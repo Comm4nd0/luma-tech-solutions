@@ -2,18 +2,7 @@
 {% load static %}
 
 {% block jsonld %}{{ block.super }}
-<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Wi-Fi, CCTV and IT Support in Henley-on-Thames",
-  "serviceType": "Wi-Fi Installation",
-  "description": "Wi-Fi, CCTV and smart-home design for period homes and riverside properties across Henley-on-Thames, Remenham, Hambleden and Mill End.",
-  "url": "{{ SITE_URL }}{% url 'area_henley' %}",
-  "provider": { "@id": "{{ SITE_URL }}#business" },
-  "areaServed": { "@type": "City", "name": "Henley-on-Thames" }
-}
-</script>
+{% include 'partials/_area_schema.html' %}
 {% endblock %}
 
 {% block content %}
@@ -116,28 +105,7 @@
         </ul>
       </div>
 
-      <aside class="sidebar fade-in">
-        <h4>Local engineer</h4>
-        <p><strong>Marco Baldanza</strong> — based 15 minutes away in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
-        <p class="mt-2">Site surveys typically within 5 working days for Henley postcodes (RG9 and surrounding).</p>
-        <a href="{% url 'quote' %}?source=area-henley" class="btn btn-primary">Get a Henley quote</a>
-
-        <h4 style="margin-top:1.5rem;">Always included</h4>
-        <ul class="bullets" style="margin-top:.5rem;">
-          <li>On-site survey</li>
-          <li>Fixed-price proposal</li>
-          <li>Plain-English documentation</li>
-          <li>30 days post-install support</li>
-        </ul>
-
-        <h4 style="margin-top:1.5rem;">Also serving</h4>
-        <p style="margin:.25rem 0;">
-          <a href="{% url 'area_marlow' %}">Marlow</a>,
-          <a href="{% url 'area_maidenhead' %}">Maidenhead</a>,
-          <a href="{% url 'area_beaconsfield' %}">Beaconsfield</a>,
-          Cookham, Bourne End, High Wycombe.
-        </p>
-      </aside>
+      {% include 'partials/_area_sidebar.html' %}
     </div>
   </div>
 </section>

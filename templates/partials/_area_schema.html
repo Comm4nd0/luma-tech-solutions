@@ -1,0 +1,23 @@
+{% comment %}
+Service JSON-LD for a single-town area landing page.
+
+Deliberately NOT partials/_service_schema.html: that one declares areaServed
+as every SITE_TOWNS entry plus both counties, which is right for a service
+page and wrong here. An area page's whole purpose is to rank for one town, so
+it declares exactly one City.
+
+Caller passes area_schema_name, area_schema_description, area_url (a path)
+and town via the view context.
+{% endcomment %}
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ area_schema_name|escapejs }}",
+  "serviceType": "Wi-Fi Installation",
+  "description": "{{ area_schema_description|escapejs }}",
+  "url": "{{ SITE_URL }}{{ area_url }}",
+  "provider": { "@id": "{{ SITE_URL }}#business" },
+  "areaServed": { "@type": "City", "name": "{{ town|escapejs }}" }
+}
+</script>

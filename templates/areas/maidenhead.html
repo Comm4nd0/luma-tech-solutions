@@ -2,18 +2,7 @@
 {% load static %}
 
 {% block jsonld %}{{ block.super }}
-<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Wi-Fi, CCTV and IT Support in Maidenhead",
-  "serviceType": "Wi-Fi Installation",
-  "description": "Whole-property UniFi networks, CCTV and smart-home design for larger homes in Maidenhead — Furze Platt, Boyn Hill, Cox Green, Bray and Holyport.",
-  "url": "{{ SITE_URL }}{% url 'area_maidenhead' %}",
-  "provider": { "@id": "{{ SITE_URL }}#business" },
-  "areaServed": { "@type": "City", "name": "Maidenhead" }
-}
-</script>
+{% include 'partials/_area_schema.html' %}
 {% endblock %}
 
 {% block content %}
@@ -130,28 +119,7 @@
         </ul>
       </div>
 
-      <aside class="sidebar fade-in">
-        <h4>Local engineer</h4>
-        <p><strong>Marco Baldanza</strong> — based 15 minutes away in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
-        <p class="mt-2">Site surveys typically within 5 working days for Maidenhead postcodes.</p>
-        <a href="{% url 'quote' %}?source=area-maidenhead" class="btn btn-primary">Get a Maidenhead quote</a>
-
-        <h4 style="margin-top:1.5rem;">Always included</h4>
-        <ul class="bullets" style="margin-top:.5rem;">
-          <li>On-site survey</li>
-          <li>Fixed-price proposal</li>
-          <li>Plain-English documentation</li>
-          <li>30 days post-install support</li>
-        </ul>
-
-        <h4 style="margin-top:1.5rem;">Also serving</h4>
-        <p style="margin:.25rem 0;">
-          <a href="{% url 'area_marlow' %}">Marlow</a>,
-          <a href="{% url 'area_henley' %}">Henley-on-Thames</a>,
-          <a href="{% url 'area_beaconsfield' %}">Beaconsfield</a>,
-          Cookham, Bourne End, High Wycombe.
-        </p>
-      </aside>
+      {% include 'partials/_area_sidebar.html' %}
     </div>
   </div>
 </section>

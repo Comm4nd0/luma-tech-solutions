@@ -946,6 +946,30 @@ AREA_PAGES = {
     "marlow": {
         "template": "areas/marlow.html",
         "url_name": "area_marlow",
+        "source": "area-marlow",
+        "quote_label": "Marlow",
+        "engineer_note": "based in Marlow",
+        "survey_note": (
+            "Site surveys typically within 5 working days for Marlow postcodes."
+        ),
+        "included": [
+            "On-site survey",
+            "Fixed-price proposal",
+            "Plain-English documentation",
+            "30 days post-install support",
+        ],
+        "also_serving": [
+            {"url_name": "area_maidenhead", "label": "Maidenhead"},
+            {"url_name": "area_henley", "label": "Henley-on-Thames"},
+            {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+        ],
+        "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
+        "schema_name": "Wi-Fi, CCTV and IT Support in Marlow",
+        "schema_description": (
+            "Local Marlow engineer for Wi-Fi installation, CCTV, smart-home "
+            "design and ongoing IT support — for homes and small businesses "
+            "across Marlow and Marlow Bottom."
+        ),
         "town": "Marlow",
         "page_title": "Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
         "page_description": (
@@ -956,6 +980,30 @@ AREA_PAGES = {
     "maidenhead": {
         "template": "areas/maidenhead.html",
         "url_name": "area_maidenhead",
+        "source": "area-maidenhead",
+        "quote_label": "Maidenhead",
+        "engineer_note": "based 15 minutes away in Marlow",
+        "survey_note": (
+            "Site surveys typically within 5 working days for Maidenhead postcodes."
+        ),
+        "included": [
+            "On-site survey",
+            "Fixed-price proposal",
+            "Plain-English documentation",
+            "30 days post-install support",
+        ],
+        "also_serving": [
+            {"url_name": "area_marlow", "label": "Marlow"},
+            {"url_name": "area_henley", "label": "Henley-on-Thames"},
+            {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+        ],
+        "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
+        "schema_name": "Wi-Fi, CCTV and IT Support in Maidenhead",
+        "schema_description": (
+            "Whole-property UniFi networks, CCTV and smart-home design for "
+            "larger homes in Maidenhead — Furze Platt, Boyn Hill, Cox Green, "
+            "Bray and Holyport."
+        ),
         "town": "Maidenhead",
         "page_title": "Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
         "page_description": (
@@ -968,6 +1016,31 @@ AREA_PAGES = {
     "henley": {
         "template": "areas/henley.html",
         "url_name": "area_henley",
+        "source": "area-henley",
+        "quote_label": "Henley",
+        "engineer_note": "based 15 minutes away in Marlow",
+        "survey_note": (
+            "Site surveys typically within 5 working days for Henley "
+            "postcodes (RG9 and surrounding)."
+        ),
+        "included": [
+            "On-site survey",
+            "Fixed-price proposal",
+            "Plain-English documentation",
+            "30 days post-install support",
+        ],
+        "also_serving": [
+            {"url_name": "area_marlow", "label": "Marlow"},
+            {"url_name": "area_maidenhead", "label": "Maidenhead"},
+            {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+        ],
+        "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
+        "schema_name": "Wi-Fi, CCTV and IT Support in Henley-on-Thames",
+        "schema_description": (
+            "Wi-Fi, CCTV and smart-home design for period homes and riverside "
+            "properties across Henley-on-Thames, Remenham, Hambleden and "
+            "Mill End."
+        ),
         "town": "Henley-on-Thames",
         "page_title": (
             "Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech"
@@ -981,6 +1054,32 @@ AREA_PAGES = {
     "beaconsfield": {
         "template": "areas/beaconsfield.html",
         "url_name": "area_beaconsfield",
+        "source": "area-beaconsfield",
+        "quote_label": "Beaconsfield",
+        "engineer_note": "based 15 minutes away in Marlow",
+        "survey_note": (
+            "Site surveys typically within 5 working days for Beaconsfield "
+            "postcodes (HP9 and surrounding)."
+        ),
+        # Beaconsfield alone promises a free survey and a 48h proposal.
+        "included": [
+            "Free on-site survey",
+            "Fixed-price proposal in 48h",
+            "Plain-English documentation",
+            "30 days post-install support",
+        ],
+        "also_serving": [
+            {"url_name": "area_marlow", "label": "Marlow"},
+            {"url_name": "area_maidenhead", "label": "Maidenhead"},
+            {"url_name": "area_henley", "label": "Henley-on-Thames"},
+        ],
+        "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
+        "schema_name": "Wi-Fi, CCTV and IT Support in Beaconsfield",
+        "schema_description": (
+            "UniFi Wi-Fi, CCTV and smart-home installation for the larger "
+            "homes and small businesses around Beaconsfield, Knotty Green, "
+            "Holtspur and Forty Green."
+        ),
         "town": "Beaconsfield",
         "page_title": "Wi-Fi, CCTV & Smart Home Installation in Beaconsfield | Luma Tech",
         "page_description": (

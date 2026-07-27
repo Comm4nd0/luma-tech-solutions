@@ -202,6 +202,16 @@ def _render_area_page(request, key):
             (page["town"], page["url_name"]),
         ),
         town=page["town"],
+        area_url=reverse(page["url_name"]),
+        area_source=page["source"],
+        area_quote_label=page["quote_label"],
+        area_engineer_note=page["engineer_note"],
+        area_survey_note=page["survey_note"],
+        area_included=page["included"],
+        area_also_serving=page["also_serving"],
+        area_also_serving_tail=page["also_serving_tail"],
+        area_schema_name=page["schema_name"],
+        area_schema_description=page["schema_description"],
     )
     if "featured_case_slug" in page:
         ctx["featured_case"] = _featured_case(page["featured_case_slug"])

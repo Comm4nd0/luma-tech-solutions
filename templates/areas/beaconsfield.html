@@ -2,18 +2,7 @@
 {% load static %}
 
 {% block jsonld %}{{ block.super }}
-<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Wi-Fi, CCTV and IT Support in Beaconsfield",
-  "serviceType": "Wi-Fi Installation",
-  "description": "UniFi Wi-Fi, CCTV and smart-home installation for the larger homes and small businesses around Beaconsfield, Knotty Green, Holtspur and Forty Green.",
-  "url": "{{ SITE_URL }}{% url 'area_beaconsfield' %}",
-  "provider": { "@id": "{{ SITE_URL }}#business" },
-  "areaServed": { "@type": "City", "name": "Beaconsfield" }
-}
-</script>
+{% include 'partials/_area_schema.html' %}
 {% endblock %}
 
 {% block content %}
@@ -111,28 +100,7 @@
         </ul>
       </div>
 
-      <aside class="sidebar fade-in">
-        <h4>Local engineer</h4>
-        <p><strong>Marco Baldanza</strong> — based 15 minutes away in Marlow. Veteran-owned, ex-Royal Marines IT.</p>
-        <p class="mt-2">Site surveys typically within 5 working days for Beaconsfield postcodes (HP9 and surrounding).</p>
-        <a href="{% url 'quote' %}?source=area-beaconsfield" class="btn btn-primary">Get a Beaconsfield quote</a>
-
-        <h4 style="margin-top:1.5rem;">Always included</h4>
-        <ul class="bullets" style="margin-top:.5rem;">
-          <li>Free on-site survey</li>
-          <li>Fixed-price proposal in 48h</li>
-          <li>Plain-English documentation</li>
-          <li>30 days post-install support</li>
-        </ul>
-
-        <h4 style="margin-top:1.5rem;">Also serving</h4>
-        <p style="margin:.25rem 0;">
-          <a href="{% url 'area_marlow' %}">Marlow</a>,
-          <a href="{% url 'area_maidenhead' %}">Maidenhead</a>,
-          <a href="{% url 'area_henley' %}">Henley-on-Thames</a>,
-          Bourne End, Cookham, High Wycombe.
-        </p>
-      </aside>
+      {% include 'partials/_area_sidebar.html' %}
     </div>
   </div>
 </section>

@@ -21,6 +21,21 @@ CONTRACT_PATH = Path(__file__).parent / "page_contract.json"
 CONTRACT = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
 
 
+def ld_blocks(html):
+    """Raw text of every application/ld+json block on the page."""
+    blocks = []
+    marker = 'type="application/ld+json"'
+    pos = 0
+    while True:
+        idx = html.find(marker, pos)
+        if idx == -1:
+            return blocks
+        start = html.index(">", idx) + 1
+        end = html.index("</script>", start)
+        blocks.append(html[start:end])
+        pos = end
+
+
 class PageContractTests(TestCase):
     """Each page still renders the same template with the same context."""
 
@@ -102,28 +117,53 @@ class PageContractTests(TestCase):
                 self.assertNotContains(resp, '"@type": "FAQPage"')
 
 
+class AreaPageTests(TestCase):
+    """The four town pages share a sidebar and a schema partial but must not
+    converge on the same content — that is the point of local landing pages."""
+
+    def test_beaconsfield_keeps_its_distinct_offer(self):
+        # Beaconsfield is the only town promising a free survey and a 48h
+        # proposal. Hard-coding the Marlow wording in the shared sidebar would
+        # silently rewrite it.
+        resp = self.client.get(reverse("area_beaconsfield"))
+        self.assertContains(resp, "Free on-site survey")
+        self.assertContains(resp, "Fixed-price proposal in 48h")
+
+        for name in ("area_marlow", "area_maidenhead", "area_henley"):
+            with self.subTest(page=name):
+                other = self.client.get(reverse(name))
+                self.assertNotContains(other, "Free on-site survey")
+                self.assertNotContains(other, "Fixed-price proposal in 48h")
+
+    def test_each_town_declares_only_its_own_city(self):
+        # The shared _service_schema.html declares every SITE_TOWNS entry plus
+        # both counties. Reusing it here would broaden each town page's
+        # areaServed to the whole region and undo the local-SEO targeting.
+        expected = {
+            "area_marlow": "Marlow",
+            "area_maidenhead": "Maidenhead",
+            "area_henley": "Henley-on-Thames",
+            "area_beaconsfield": "Beaconsfield",
+        }
+        for name, town in expected.items():
+            with self.subTest(page=name):
+                resp = self.client.get(reverse(name))
+                blocks = [json.loads(b) for b in ld_blocks(resp.content.decode())]
+                services = [b for b in blocks if b.get("@type") == "Service"]
+                self.assertEqual(len(services), 1)
+                self.assertEqual(
+                    services[0]["areaServed"], {"@type": "City", "name": town}
+                )
+
+
 class StructuredDataTests(TestCase):
     """Every JSON-LD block on every page is valid JSON with sane URLs."""
-
-    @staticmethod
-    def _ld_blocks(html):
-        blocks = []
-        marker = 'type="application/ld+json"'
-        pos = 0
-        while True:
-            idx = html.find(marker, pos)
-            if idx == -1:
-                return blocks
-            start = html.index(">", idx) + 1
-            end = html.index("</script>", start)
-            blocks.append(html[start:end])
-            pos = end
 
     def test_every_jsonld_block_parses(self):
         for name in CONTRACT:
             resp = self.client.get(reverse(name))
             html = resp.content.decode()
-            blocks = self._ld_blocks(html)
+            blocks = ld_blocks(html)
             self.assertTrue(blocks, msg=f"{name} has no JSON-LD at all")
             for i, raw in enumerate(blocks):
                 with self.subTest(page=name, block=i):
@@ -143,7 +183,7 @@ class StructuredDataTests(TestCase):
                 )
                 resp = self.client.get(reverse(name))
                 html = resp.content.decode()
-                for raw in self._ld_blocks(html):
+                for raw in ld_blocks(html):
                     data = json.loads(raw)
                     if data.get("@type") != "Service":
                         continue

@@ -1,0 +1,30 @@
+{% comment %}
+Shared sidebar for the four town landing pages.
+
+Everything that varies comes from AREA_PAGES in core/content.py via the view:
+  town, area_source, area_engineer_note, area_survey_note,
+  area_included (list), area_also_serving (list of {url, label} + tail text).
+
+Note the "Always included" list is data, not fixed markup: Beaconsfield
+promises a *free* survey and a proposal in 48h where the other three towns
+promise neither. Hard-coding the Marlow wording here would silently rewrite
+Beaconsfield's offer.
+{% endcomment %}
+<aside class="sidebar fade-in">
+  <h4>Local engineer</h4>
+  <p><strong>Marco Baldanza</strong> — {{ area_engineer_note }}. Veteran-owned, ex-Royal Marines IT.</p>
+  <p class="mt-2">{{ area_survey_note }}</p>
+  <a href="{% url 'quote' %}?source={{ area_source }}" class="btn btn-primary">Get a {{ area_quote_label }} quote</a>
+
+  <h4 style="margin-top:1.5rem;">Always included</h4>
+  <ul class="bullets" style="margin-top:.5rem;">
+    {% for item in area_included %}<li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+
+  <h4 style="margin-top:1.5rem;">Also serving</h4>
+  <p style="margin:.25rem 0;">
+    {% for other in area_also_serving %}<a href="{% url other.url_name %}">{{ other.label }}</a>,
+    {% endfor %}{{ area_also_serving_tail }}
+  </p>
+</aside>
