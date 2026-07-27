@@ -615,11 +615,19 @@ def blog(request):
     posts = BlogPost.published.all()
     paginator = Paginator(posts, 10)
     page_obj = paginator.get_page(request.GET.get("page"))
+    # Page 2+ must self-canonicalise. Previously every page canonicalised to
+    # /blog/, telling Google page 2 was a duplicate of page 1 and hiding the
+    # only entry point to older posts. Built from the validated page number,
+    # never request.get_full_path, so arbitrary query strings can't leak in.
+    canonical_path = reverse("blog")
+    if page_obj.number > 1:
+        canonical_path = f"{canonical_path}?page={page_obj.number}"
     return render(
         request,
         "blog/list.html",
         _base_context(
             active="blog",
+            canonical_path=canonical_path,
             page_title="Notes on Wi-Fi, Smart Home & IT | Luma Tech",
             page_description=(
                 "Practical write-ups on networking, security, smart-home "

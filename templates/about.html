@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block jsonld %}{{ block.super }}
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "{{ SITE_URL }}#founder",
+  "name": "{{ SITE_FOUNDER|escapejs }}",
+  "jobTitle": "Founder & Lead Engineer",
+  "worksFor": { "@id": "{{ SITE_URL }}#org" },
+  "url": "{{ SITE_URL }}{% url 'about' %}",
+  "homeLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ SITE_BASE_TOWN|escapejs }}",
+      "addressRegion": "{{ SITE_REGION|escapejs }}",
+      "addressCountry": "GB"
+    }
+  }{% if SITE_LINKEDIN %},
+  "sameAs": ["{{ SITE_LINKEDIN|escapejs }}"]{% endif %}
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <section class="hero">
   <div class="container hero-content">

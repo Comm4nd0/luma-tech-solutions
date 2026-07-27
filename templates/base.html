@@ -17,19 +17,26 @@
   <title>{% block title %}{{ page_title|default:SITE_NAME }}{% endblock %}</title>
   <meta name="description" content="{% block description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
   <meta name="theme-color" content="#f7f9fc" />
-  <meta name="robots" content="index, follow" />
+  {% block robots %}<meta name="robots" content="index, follow" />{% endblock %}
 
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
   <meta property="og:site_name" content="{{ SITE_NAME }}" />
   <meta property="og:title" content="{% block og_title %}{{ page_title|default:SITE_NAME }}{% endblock %}" />
   <meta property="og:description" content="{% block og_description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
-  <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}" />
+  <meta property="og:url" content="{{ SITE_URL }}{% block og_url %}{{ canonical_path|default:request.path }}{% endblock %}" />
   <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'img/og-default.png' %}{% endblock %}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{% block twitter_title %}{{ page_title|default:SITE_NAME }}{% endblock %}" />
+  <meta name="twitter:description" content="{% block twitter_description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
+  <meta name="twitter:image" content="{% block twitter_image %}{{ SITE_URL }}{% static 'img/og-default.png' %}{% endblock %}" />
 
-  <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}" />
+  {% comment %}canonical_path is set by views that paginate; everything else
+       self-canonicalises on request.path. Never request.get_full_path — that
+       would reflect arbitrary query strings into an indexable URL space.
+  {% endcomment %}
+  <link rel="canonical" href="{{ SITE_URL }}{{ canonical_path|default:request.path }}" />
   <link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }} blog" href="{% url 'blog_feed' %}" />
   <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml" />
   <link rel="icon" href="{% static 'img/favicon-32.png' %}" type="image/png" sizes="32x32" />
@@ -70,10 +77,7 @@
         "email": "{{ SITE_EMAIL|escapejs }}",
         "telephone": "{{ SITE_PHONE_E164|escapejs }}",
         "logo": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
-        "founder": {
-          "@type": "Person",
-          "name": "{{ SITE_FOUNDER|escapejs }}"
-        },
+        "founder": { "@id": "{{ SITE_URL }}#founder" },
         "sameAs": [
           "https://www.facebook.com/profile.php?id=61560720497065",
           "https://www.instagram.com/luma_tech_solutions/"{% if SITE_LINKEDIN %},
