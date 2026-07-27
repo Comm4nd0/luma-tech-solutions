@@ -13,6 +13,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .content import (
+    AREA_PAGES,
     BUSINESS_CARE_PLANS,
     CASE_STUDIES,
     FAQS_AI_CAMERAS,
@@ -23,7 +24,9 @@ from .content import (
     HOME_CARE_PLANS,
     JOB_ROLES,
     PILLARS,
+    SERVICE_PAGES,
     TESTIMONIALS,
+    THANKS_PAGES,
     WEBSITE_DEMOS,
 )
 from .forms import ContactForm, JobApplicationForm, QuoteRequestForm
@@ -144,8 +147,83 @@ def _base_context(active=None, **extra):
     return ctx
 
 
+def _crumbs(*trail):
+    """Breadcrumbs from (label, url_name) pairs, reversed at request time."""
+    return [(label, reverse(url_name)) for label, url_name in trail]
+
+
+def _featured_case(slug=None):
+    """The flagged case study, or a specific one by slug."""
+    if slug is None:
+        return next((c for c in CASE_STUDIES if c["featured"]), CASE_STUDIES[0])
+    return next((c for c in CASE_STUDIES if c["slug"] == slug), None)
+
+
+def _render_service_page(request, key, **extra):
+    """Render one of the SERVICE_PAGES entries.
+
+    ``faqs`` is only added when the page actually defines it — defaulting it
+    would give three service pages a FAQ section and a FAQPage JSON-LD block
+    they have never had.
+    """
+    page = SERVICE_PAGES[key]
+    ctx = _base_context(
+        active=page["active"],
+        page_title=page["page_title"],
+        page_description=page["page_description"],
+        breadcrumbs=_crumbs(
+            ("Home", "home"),
+            ("Services", "services"),
+            (page["crumb"], page["url_name"]),
+        ),
+        service_name=page["service_name"],
+        service_type=page["service_type"],
+        # A path, not the URL name: _service_schema.html renders
+        # "{{ SITE_URL }}{{ service_url }}" straight into JSON-LD.
+        service_url=reverse(page["url_name"]),
+        service_description=page["service_description"],
+        **extra,
+    )
+    if page.get("faqs"):
+        ctx["faqs"] = page["faqs"]
+    return render(request, page["template"], ctx)
+
+
+def _render_area_page(request, key):
+    """Render one of the AREA_PAGES entries."""
+    page = AREA_PAGES[key]
+    ctx = _base_context(
+        active="services",
+        page_title=page["page_title"],
+        page_description=page["page_description"],
+        breadcrumbs=_crumbs(
+            ("Home", "home"),
+            ("Areas", "areas"),
+            (page["town"], page["url_name"]),
+        ),
+        town=page["town"],
+    )
+    if "featured_case_slug" in page:
+        ctx["featured_case"] = _featured_case(page["featured_case_slug"])
+    return render(request, page["template"], ctx)
+
+
+def _render_thanks_page(request, key):
+    """Render one of the THANKS_PAGES entries."""
+    page = THANKS_PAGES[key]
+    return render(
+        request,
+        page["template"],
+        _base_context(
+            active=page["active"],
+            page_title=page["page_title"],
+            page_description=page["page_description"],
+        ),
+    )
+
+
 def home(request):
-    featured = next((c for c in CASE_STUDIES if c["featured"]), CASE_STUDIES[0])
+    featured = _featured_case()
     return render(
         request,
         "home.html",
@@ -176,162 +254,32 @@ def services_overview(request):
                 "automation and IT support for homes and small businesses "
                 "across Marlow, Maidenhead, Henley and the Thames Valley."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Services", "services"),
+            ),
         ),
     )
 
 
 def service_networking(request):
-    return render(
-        request,
-        "services/networking.html",
-        _base_context(
-            active="services",
-            page_title="UniFi Wi-Fi Installation, Marlow & Henley | Luma Tech",
-            page_description=(
-                "Professionally engineered UniFi Wi-Fi for large and period "
-                "homes — Marlow, Maidenhead, Henley-on-Thames and the Thames "
-                "Valley. Wired access points, fixed-price quotes, no mesh."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("Wi-Fi & Networking", reverse("service_networking")),
-            ],
-            service_name="Wi-Fi & Networking",
-            service_type="Wi-Fi Installation",
-            service_url=reverse("service_networking"),
-            service_description=(
-                "UniFi Wi-Fi and network design, installation and management "
-                "for homes and small businesses across Marlow, Maidenhead, "
-                "Henley-on-Thames and the wider Thames Valley."
-            ),
-            faqs=FAQS_NETWORKING,
-        ),
-    )
+    return _render_service_page(request, "networking")
 
 
 def service_security(request):
-    return render(
-        request,
-        "services/security.html",
-        _base_context(
-            active="security",
-            page_title="CCTV Installation Marlow, Maidenhead & Henley | Luma Tech",
-            page_description=(
-                "UniFi Protect CCTV, access control and alarms across Marlow, "
-                "Maidenhead, Henley-on-Thames and the Thames Valley. Footage "
-                "stays on your kit — no cloud subscription required."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("Physical Security", reverse("service_security")),
-            ],
-            service_name="Physical Security",
-            service_type="CCTV Installation",
-            service_url=reverse("service_security"),
-            service_description=(
-                "UniFi Protect CCTV, access control, alarms and "
-                "network hardening for homes and businesses across Marlow, "
-                "Maidenhead, Beaconsfield and the Thames Valley."
-            ),
-            faqs=FAQS_SECURITY,
-        ),
-    )
+    return _render_service_page(request, "security")
 
 
 def service_development(request):
-    return render(
-        request,
-        "services/development.html",
-        _base_context(
-            active="services",
-            page_title="Mobile App & Website Development | Luma Tech",
-            page_description=(
-                "Custom websites, web apps and iOS/Android apps built and "
-                "supported by one engineer in Marlow, Buckinghamshire."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("App & Web Development", reverse("service_development")),
-            ],
-            service_name="App & Web Development",
-            service_type="Software Development",
-            service_url=reverse("service_development"),
-            service_description=(
-                "Custom websites, web applications and mobile apps built and "
-                "supported by an engineer in Marlow, Buckinghamshire."
-            ),
-        ),
-    )
+    return _render_service_page(request, "development")
 
 
 def service_automation(request):
-    return render(
-        request,
-        "services/automation.html",
-        _base_context(
-            active="services",
-            page_title="Smart Home Installer — Marlow, Henley, Maidenhead | Luma Tech",
-            page_description=(
-                "Local-first Home Assistant smart-home installation. Lighting, "
-                "climate, scenes and security across Marlow, Henley-on-Thames, "
-                "Maidenhead and the Thames Valley. No cloud lock-in."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("Home Automation", reverse("service_automation")),
-            ],
-            service_name="Home Automation",
-            service_type="Home Automation",
-            service_url=reverse("service_automation"),
-            service_description=(
-                "Local-first smart-home design with Home Assistant — lighting, "
-                "climate, security and scenes across Marlow, Henley-on-Thames "
-                "and the Thames Valley."
-            ),
-        ),
-    )
+    return _render_service_page(request, "automation")
 
 
 def service_ai_cameras(request):
-    return render(
-        request,
-        "services/ai_cameras.html",
-        _base_context(
-            active="services",
-            page_title="AI Camera Systems — ANPR, Smart CCTV, Privacy-First | Luma Tech",
-            page_description=(
-                "AI cameras done right across Marlow, Maidenhead, "
-                "Henley and the Thames Valley. ANPR for construction "
-                "sites, smart home & family monitoring, scheduled and "
-                "geofenced recording. Footage stays on your kit."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("AI Camera Systems", reverse("service_ai_cameras")),
-            ],
-            service_name="AI Camera Systems",
-            service_type="CCTV Installation",
-            service_url=reverse("service_ai_cameras"),
-            service_description=(
-                "AI camera systems with on-device person, vehicle, package, "
-                "animal and number-plate recognition. Designed for "
-                "construction sites, homes and small businesses across "
-                "Marlow, Maidenhead, Henley and the Thames Valley. "
-                "Scheduled recording, geofenced arming, on-site storage — "
-                "no third-party cloud."
-            ),
-            faqs=FAQS_AI_CAMERAS,
-        ),
-    )
+    return _render_service_page(request, "ai_cameras")
 
 
 def construction(request):
@@ -355,10 +303,10 @@ def construction(request):
                 "developers across Marlow, Maidenhead, Henley and the "
                 "Thames Valley. DPIA and signage handled."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Builders & construction", reverse("construction")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Builders & construction", "construction"),
+            ),
             service_name="Construction Site Security & Pre-Wire",
             service_type="Security System Installation",
             service_url=reverse("construction"),
@@ -432,42 +380,22 @@ def camera_privacy(request):
                 "The full write-up — useful before you commission us, "
                 "and as a DPIA artefact."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Our approach to camera privacy", reverse("camera_privacy")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Our approach to camera privacy", "camera_privacy"),
+            ),
         ),
     )
 
 
 def service_support(request):
-    return render(
+    return _render_service_page(
         request,
-        "services/support.html",
-        _base_context(
-            active="services",
-            page_title="IT Support & Care Plans, Bucks & Berks | Luma Tech",
-            page_description=(
-                "Three care-plan tiers with monitoring, response SLAs and a "
-                "real human. Serving homes and businesses across the Thames Valley."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Services", reverse("services")),
-                ("Support & Maintenance", reverse("service_support")),
-            ],
-            service_name="Support & Maintenance",
-            service_type="IT Support",
-            service_url=reverse("service_support"),
-            service_description=(
-                "Ongoing IT support and care plans for homes and small "
-                "businesses across Marlow, Maidenhead and the Thames Valley."
-            ),
-            plan_grids=[
-                {"audience": "home", "plans": HOME_CARE_PLANS},
-                {"audience": "business", "plans": BUSINESS_CARE_PLANS},
-            ],
-        ),
+        "support",
+        plan_grids=[
+            {"audience": "home", "plans": HOME_CARE_PLANS},
+            {"audience": "business", "plans": BUSINESS_CARE_PLANS},
+        ],
     )
 
 
@@ -593,15 +521,7 @@ def contact(request):
 
 
 def contact_thanks(request):
-    return render(
-        request,
-        "contact_thanks.html",
-        _base_context(
-            active="contact",
-            page_title="Thanks — we'll be in touch | Luma Tech",
-            page_description="Your enquiry has been received. We reply within one working day.",
-        ),
-    )
+    return _render_thanks_page(request, "contact_thanks")
 
 
 @require_http_methods(["GET", "POST"])
@@ -669,10 +589,10 @@ def careers(request):
                 "We're hiring a UniFi Network Engineer and an Infrastructure "
                 "Engineer (cable installations) to join Luma Tech in Marlow."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Careers", reverse("careers")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Careers", "careers"),
+            ),
             roles=JOB_ROLES,
             form=form,
         ),
@@ -680,15 +600,7 @@ def careers(request):
 
 
 def careers_thanks(request):
-    return render(
-        request,
-        "careers_thanks.html",
-        _base_context(
-            active="careers",
-            page_title="Application received — thanks | Luma Tech",
-            page_description="Your job application has been received. We'll be in touch shortly.",
-        ),
-    )
+    return _render_thanks_page(request, "careers_thanks")
 
 
 def blog(request):
@@ -749,40 +661,20 @@ def areas_index(request):
                 "Where we work: Marlow, Maidenhead, Henley-on-Thames, "
                 "Beaconsfield, Bourne End, Cookham and High Wycombe."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Areas", reverse("areas")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Areas", "areas"),
+            ),
         ),
     )
 
 
 def area_marlow(request):
-    return render(
-        request,
-        "areas/marlow.html",
-        _base_context(
-            active="services",
-            page_title="Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
-            page_description=(
-                "Marlow-based engineer for Wi-Fi installation, CCTV, smart-home "
-                "and IT support. Local response, fixed-price proposals."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Areas", reverse("areas")),
-                ("Marlow", reverse("area_marlow")),
-            ],
-            town="Marlow",
-        ),
-    )
+    return _render_area_page(request, "marlow")
 
 
 def area_maidenhead(request):
-    featured = next(
-        (c for c in CASE_STUDIES if c["slug"] == "littlewick-house"),
-        None,
-    )
+    return _render_area_page(request, "maidenhead")
     return render(
         request,
         "areas/maidenhead.html",
@@ -793,11 +685,11 @@ def area_maidenhead(request):
                 "Whole-property UniFi networks, CCTV and smart-home design "
                 "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Areas", reverse("areas")),
-                ("Maidenhead", reverse("area_maidenhead")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Areas", "areas"),
+                ("Maidenhead", "area_maidenhead"),
+            ),
             town="Maidenhead",
             featured_case=featured,
         ),
@@ -814,10 +706,10 @@ def terms(request):
             page_description=(
                 "Website terms and conditions for Luma Tech Solutions."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Terms", reverse("terms")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Terms", "terms"),
+            ),
         ),
     )
 
@@ -833,56 +725,20 @@ def privacy(request):
                 "How Luma Tech Solutions collects, uses and protects your "
                 "personal data — UK GDPR-compliant."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Privacy", reverse("privacy")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Privacy", "privacy"),
+            ),
         ),
     )
 
 
 def area_henley(request):
-    return render(
-        request,
-        "areas/henley.html",
-        _base_context(
-            active="services",
-            page_title="Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech",
-            page_description=(
-                "UniFi Wi-Fi, CCTV and smart-home installation for period "
-                "homes and riverside properties in Henley-on-Thames, "
-                "Remenham, Hambleden and Mill End. Local Marlow engineer."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Areas", reverse("areas")),
-                ("Henley-on-Thames", reverse("area_henley")),
-            ],
-            town="Henley-on-Thames",
-        ),
-    )
+    return _render_area_page(request, "henley")
 
 
 def area_beaconsfield(request):
-    return render(
-        request,
-        "areas/beaconsfield.html",
-        _base_context(
-            active="services",
-            page_title="Wi-Fi, CCTV & Smart Home Installation in Beaconsfield | Luma Tech",
-            page_description=(
-                "UniFi Wi-Fi, CCTV and smart-home installation for the larger "
-                "homes and businesses around Beaconsfield, Knotty Green and "
-                "Holtspur. Local Marlow engineer, fixed-price quotes."
-            ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Areas", reverse("areas")),
-                ("Beaconsfield", reverse("area_beaconsfield")),
-            ],
-            town="Beaconsfield",
-        ),
-    )
+    return _render_area_page(request, "beaconsfield")
 
 
 # --- Quote request ---
@@ -955,28 +811,17 @@ def quote(request):
                 "fixed-price quote. Marlow-based engineer, covering the "
                 "Thames Valley. Most surveys booked within the week."
             ),
-            breadcrumbs=[
-                ("Home", reverse("home")),
-                ("Get a quote", reverse("quote")),
-            ],
+            breadcrumbs=_crumbs(
+                ("Home", "home"),
+                ("Get a quote", "quote"),
+            ),
             form=form,
         ),
     )
 
 
 def quote_thanks(request):
-    return render(
-        request,
-        "quote_thanks.html",
-        _base_context(
-            active="quote",
-            page_title="Quote request received — thanks | Luma Tech",
-            page_description=(
-                "Your quote request has been received. We'll be in touch "
-                "within one working day to book your free site survey."
-            ),
-        ),
-    )
+    return _render_thanks_page(request, "quote_thanks")
 
 
 def healthz(request):
