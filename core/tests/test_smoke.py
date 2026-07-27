@@ -10,8 +10,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from core.content import CASE_STUDIES, WEBSITE_DEMOS
 from core.models import BlogPost
-from core.views import CASE_STUDIES, WEBSITE_DEMOS
 
 # Routes that take no arguments and render HTML.
 SIMPLE_ROUTES = [

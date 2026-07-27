@@ -5,8 +5,8 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils import timezone
 
+from .content import CASE_STUDIES
 from .models import BlogPost
-from .views import CASE_STUDIES
 
 
 def _static_lastmod():
