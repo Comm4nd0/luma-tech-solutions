@@ -26,9 +26,19 @@
   --fg-strong: #0f172a;
   --muted:     #475569;   /* slate-600 */
   --muted-2:   #64748b;
-  --accent:    #0d9488;   /* teal-600 — strong contrast on white */
+  --accent:    #0d9488;   /* teal-600 — decorative/focus use only, 3.55:1 */
   --accent-2:  #0284c7;   /* sky-600 */
   --accent-hover: #0f766e;
+  /* Body-link colour. --accent is 3.55:1 on --bg, below the 4.5:1 AA floor
+     for normal text; this is 5.19:1. Kept separate so the brand accent can
+     stay put in gradients, icons and focus rings. */
+  --link:      #0f766e;
+  --link-hover: #115e59;
+  /* Foreground on the teal->sky accent gradient. The old var(--on-accent) was 3.86:1
+     at the teal end and 3.53:1 at the sky end, below AA for the 0.95rem/600
+     button label. This is 5.02:1 / 4.59:1. White would be worse (3.74:1 on
+     teal), so the fix is a darker foreground, not a lighter one. */
+  --on-accent: #001513;
   --accent-glow: rgba(13, 148, 136, 0.18);
   --danger:    #e11d48;
   --warning:   #d97706;
@@ -50,10 +60,12 @@
   --fg:        #e2e8f0;
   --fg-strong: #f8fafc;
   --muted:     #94a3b8;
-  --muted-2:   #64748b;
+  --muted-2:   #7d8ea3;   /* was #64748b — 3.75:1 on --bg, below AA */
   --accent:    #14b8a6;   /* teal-500 */
   --accent-2:  #0ea5e9;   /* sky-500 */
   --accent-hover: #2dd4bf;
+  --link:      #2dd4bf;   /* 9.59:1 on --bg */
+  --link-hover: #5eead4;
   --accent-glow: rgba(20, 184, 166, 0.35);
   --danger:    #f43f5e;
   --warning:   #f59e0b;
@@ -89,8 +101,39 @@ body {
 
 img, svg { max-width: 100%; display: block; }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { color: var(--accent-hover); }
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); }
+
+/* Global keyboard focus indicator. Matches the per-component rules that
+   already existed on the theme toggle, audience pills and social buttons. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link. The markup has always been there; the CSS never was, so it sat
+   at left:-9999px permanently and keyboard users had no way to reach main
+   content — a WCAG 2.4.1 failure. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg-3);
+  color: var(--fg-strong);
+  border: 1px solid var(--border-strong);
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 h1, h2, h3, h4 {
   color: var(--fg-strong);
@@ -181,7 +224,7 @@ section.tight { padding: clamp(2rem, 4vw, 3rem) 0; }
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   box-shadow: 0 0 24px var(--accent-glow);
   display: grid; place-items: center;
-  color: #042f2e;
+  color: var(--on-accent);
   font-weight: 800;
   font-size: 0.95rem;
 }
@@ -203,8 +246,8 @@ section.tight { padding: clamp(2rem, 4vw, 3rem) 0; }
 }
 .nav-links a:hover { color: var(--fg-strong); background: var(--surface); }
 .nav-links a.active { color: var(--fg-strong); background: var(--surface-2); }
-.nav-links .btn-primary { color: #042f2e; }
-.nav-links .btn-primary:hover { color: #042f2e; background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%); }
+.nav-links .btn-primary { color: var(--on-accent); }
+.nav-links .btn-primary:hover { color: var(--on-accent); background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%); }
 .nav-cta {
   margin-left: 0.5rem;
 }
@@ -278,10 +321,10 @@ section.tight { padding: clamp(2rem, 4vw, 3rem) 0; }
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  color: #042f2e;
+  color: var(--on-accent);
   box-shadow: 0 10px 30px -12px var(--accent-glow);
 }
-.btn-primary:hover { transform: translateY(-1px); color: #042f2e; box-shadow: 0 14px 34px -10px var(--accent-glow); }
+.btn-primary:hover { transform: translateY(-1px); color: var(--on-accent); box-shadow: 0 14px 34px -10px var(--accent-glow); }
 .btn-ghost {
   color: var(--fg);
   border-color: var(--border-strong);
@@ -547,7 +590,7 @@ a.card:hover { color: inherit; }
   top: -12px; left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #042f2e;
+  color: var(--on-accent);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -673,7 +716,7 @@ a.card:hover { color: inherit; }
 }
 .audience-toggle label:hover { color: var(--fg); }
 .audience-toggle input[type="radio"]:checked + label {
-  color: #042f2e;
+  color: var(--on-accent);
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   box-shadow: 0 4px 14px -4px rgba(20, 184, 166, 0.5);
 }
@@ -752,13 +795,39 @@ a.card:hover { color: inherit; }
   border-color: var(--accent);
   color: var(--fg-strong);
 }
+/* Radio/checkbox groups are fieldsets so the group has an accessible name.
+   Reset the UA chrome so they look identical to the plain <div> they replaced. */
+.form .field-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.form .field-group > legend {
+  display: block;
+  padding: 0;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.form input:focus-visible,
+.form select:focus-visible,
+.form textarea:focus-visible,
+.form input[type=file]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+/* Mouse focus keeps the softer treatment. */
 .form input:focus,
 .form select:focus,
 .form textarea:focus,
 .form input[type=file]:focus {
-  outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 /* ---- collapsible role cards ---- */
@@ -931,6 +1000,16 @@ footer.site-footer {
   color: var(--muted);
   margin: 1.5rem 0;
 }
+/* Semantic <ol> markup, laid out inline so it reads as a breadcrumb trail. */
+.crumbs ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.crumbs li { display: inline-flex; align-items: center; }
 .crumbs a { color: var(--muted); }
 .crumbs a:hover { color: var(--fg-strong); }
 .crumbs .sep { margin: 0 0.5rem; opacity: 0.6; }
@@ -1008,7 +1087,7 @@ footer.site-footer {
 .step-num {
   counter-increment: step;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #042f2e;
+  color: var(--on-accent);
   width: 32px; height: 32px;
   border-radius: 8px;
   font-weight: 700;
@@ -1937,7 +2016,7 @@ footer.site-footer {
   height: 32px;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  color: #042f2e;
+  color: var(--on-accent);
   font-weight: 800;
   font-size: 0.95rem;
   box-shadow: 0 0 16px var(--accent-glow);

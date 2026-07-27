@@ -140,7 +140,7 @@
   {% block head_extra %}{% endblock %}
 </head>
 <body>
-  <a class="skip-link" href="#main" style="position:absolute;left:-9999px;">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <nav class="nav" aria-label="Primary">
     <div class="container nav-inner">
@@ -149,7 +149,7 @@
         <span>{{ SITE_NAME }}</span>
       </a>
 
-      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Toggle navigation" aria-expanded="false">
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
@@ -157,14 +157,14 @@
         </svg>
       </button>
 
-      <ul class="nav-links" data-nav-links>
-        <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}">Services</a></li>
-        <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}">Physical Security</a></li>
-        <li><a href="{% url 'construction' %}" class="{% if active_nav == 'construction' %}active{% endif %}">Construction</a></li>
-        <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}">Portfolio</a></li>
-        <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}">About</a></li>
-        <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}">Blog</a></li>
-        <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}">Contact</a></li>
+      <ul class="nav-links" id="nav-links" data-nav-links>
+        <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}"{% if active_nav == 'services' %} aria-current="page"{% endif %}>Services</a></li>
+        <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}"{% if active_nav == 'security' %} aria-current="page"{% endif %}>Physical Security</a></li>
+        <li><a href="{% url 'construction' %}" class="{% if active_nav == 'construction' %}active{% endif %}"{% if active_nav == 'construction' %} aria-current="page"{% endif %}>Construction</a></li>
+        <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}"{% if active_nav == 'portfolio' %} aria-current="page"{% endif %}>Portfolio</a></li>
+        <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}"{% if active_nav == 'about' %} aria-current="page"{% endif %}>About</a></li>
+        <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}"{% if active_nav == 'blog' %} aria-current="page"{% endif %}>Blog</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}"{% if active_nav == 'contact' %} aria-current="page"{% endif %}>Contact</a></li>
         {% if SITE_PHONE %}
         <li class="nav-phone">
           <a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Nav+Call+Click" aria-label="Call us on {{ SITE_PHONE }}">

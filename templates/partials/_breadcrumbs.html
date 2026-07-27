@@ -3,10 +3,12 @@ Renders both the visible <nav class="crumbs"> markup and a BreadcrumbList JSON-L
 Pass `crumbs` as a list of (label, url) tuples. The last entry's url is rendered
 plain text (it's the current page).
 {% endcomment %}
-<nav class="crumbs">
-  {% for label, url in crumbs %}
-    {% if forloop.last %}{{ label }}{% else %}<a href="{{ url }}">{{ label }}</a><span class="sep">/</span> {% endif %}
-  {% endfor %}
+<nav class="crumbs" aria-label="Breadcrumb">
+  <ol>
+    {% for label, url in crumbs %}
+      <li>{% if forloop.last %}<span aria-current="page">{{ label }}</span>{% else %}<a href="{{ url }}">{{ label }}</a><span class="sep" aria-hidden="true">/</span>{% endif %}</li>
+    {% endfor %}
+  </ol>
 </nav>
 <script type="application/ld+json" nonce="{{ request.csp_nonce }}">
 {

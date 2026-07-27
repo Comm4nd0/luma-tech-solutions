@@ -87,13 +87,23 @@
     if (marketing) marketing.checked = !!current.consent.marketing;
   }
 
+  // Where focus was before the banner opened, so it can be handed back.
+  var lastFocused = null;
+
   function showBanner(banner, stage) {
     setStage(banner, stage || 'notice');
     banner.hidden = false;
+    lastFocused = document.activeElement;
+    // Move focus in, otherwise a keyboard user activating "Cookie
+    // preferences" gets no indication anything happened.
+    var target = banner.querySelector('[data-consent-action]');
+    if (target) target.focus();
   }
 
   function hideBanner(banner) {
     banner.hidden = true;
+    if (lastFocused && document.contains(lastFocused)) lastFocused.focus();
+    lastFocused = null;
   }
 
   function init() {
@@ -137,6 +147,11 @@
         });
         hideBanner(banner);
       }
+    });
+
+    // Escape dismisses the banner without changing stored consent.
+    banner.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !banner.hidden) hideBanner(banner);
     });
 
     // Footer "Cookie preferences" trigger

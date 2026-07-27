@@ -63,12 +63,38 @@ function prefersReducedMotion() {
   var toggle = document.querySelector('[data-nav-toggle]');
   var links = document.querySelector('[data-nav-links]');
   if (toggle && links) {
-    toggle.addEventListener('click', function () {
-      var open = links.classList.toggle('open');
+    var setOpen = function (open, returnFocus) {
+      links.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        var first = links.querySelector('a');
+        if (first) first.focus();
+      } else if (returnFocus) {
+        toggle.focus();
+      }
+    };
+
+    toggle.addEventListener('click', function () {
+      setOpen(!links.classList.contains('open'), true);
     });
+
+    // closest('a'), not e.target.tagName: the phone link wraps an <svg> and a
+    // <span>, so a tap lands on the child and the menu never closed.
     links.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') links.classList.remove('open');
+      if (e.target.closest('a')) setOpen(false, false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && links.classList.contains('open')) {
+        setOpen(false, true);
+      }
+    });
+
+    // Tabbing out of the open menu should close it rather than leaving an
+    // open panel over content the user is now focused on.
+    document.addEventListener('focusin', function (e) {
+      if (!links.classList.contains('open')) return;
+      if (!links.contains(e.target) && e.target !== toggle) setOpen(false, false);
     });
   }
 
@@ -131,19 +157,30 @@ function prefersReducedMotion() {
 
   function fieldWrap(el) { return el.closest('div') || el; }
 
+  var errorSeq = 0;
+
   function setError(el, on) {
     el.classList.toggle('field-error', on);
     var wrap = fieldWrap(el);
     var msg = wrap.querySelector('.field-error-msg');
     if (on && !msg) {
+      if (!el.id) el.id = 'field-' + (++errorSeq);
       msg = document.createElement('p');
       msg.className = 'field-error-msg';
+      msg.id = el.id + '-error';
+      // role=alert so screen readers announce it; without this the message is
+      // visible to sighted users only.
+      msg.setAttribute('role', 'alert');
       msg.textContent = el.type === 'email'
         ? 'Please enter a valid email address.'
         : 'Please fill in this field.';
       wrap.appendChild(msg);
+      el.setAttribute('aria-invalid', 'true');
+      el.setAttribute('aria-describedby', msg.id);
     } else if (!on && msg) {
       msg.remove();
+      el.removeAttribute('aria-invalid');
+      el.removeAttribute('aria-describedby');
     }
   }
 
@@ -170,7 +207,10 @@ function prefersReducedMotion() {
       e.preventDefault();
       e.stopImmediatePropagation(); // don't run the reCAPTCHA submit handler
       firstBad.focus();
-      firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstBad.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'center'
+      });
     }
   }, true); // capture so this runs before the reCAPTCHA handler
 })();

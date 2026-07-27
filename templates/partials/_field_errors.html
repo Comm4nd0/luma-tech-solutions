@@ -1,0 +1,9 @@
+{% comment %}
+Field validation errors, announced to assistive tech.
+
+Usage: {% include 'partials/_field_errors.html' with field=form.email %}
+
+The id matches AccessibleErrorsMixin.errors_id(), which the form points
+aria-describedby at, and role="alert" makes the message announce when it
+appears. Renders nothing when the field is clean.
+{% endcomment %}{% if field.errors %}<ul class="errorlist" id="{{ field.html_name }}-errors" role="alert">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}

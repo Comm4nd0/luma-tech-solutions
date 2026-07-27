@@ -12,6 +12,32 @@ from .models import (
 )
 
 
+class AccessibleErrorsMixin:
+    """Associate validation errors with their field for assistive tech.
+
+    Django renders {{ form.x.errors }} as a plain <ul class="errorlist"> next
+    to the input, with nothing tying the two together — a screen reader user
+    hears the field and never the error. This sets aria-invalid and points
+    aria-describedby at the id that templates/partials/_field_errors.html
+    renders.
+    """
+
+    def errors_id(self, name):
+        return "%s-errors" % self.add_prefix(name)
+
+    def full_clean(self):
+        super().full_clean()
+        for name in self.fields:
+            if name in self.errors:
+                attrs = self.fields[name].widget.attrs
+                attrs["aria-invalid"] = "true"
+                # Append: a field may already point at its help text.
+                described = attrs.get("aria-describedby", "").split()
+                if self.errors_id(name) not in described:
+                    described.append(self.errors_id(name))
+                attrs["aria-describedby"] = " ".join(described)
+
+
 ALLOWED_CV_EXTENSIONS = {".pdf", ".doc", ".docx"}
 MAX_CV_SIZE_BYTES = 5 * 1024 * 1024
 
@@ -28,7 +54,7 @@ _MAGIC_OLE = b"\xd0\xcf\x11\xe0"  # .doc OLE2 header
 _SAFE_FILENAME_RE = re.compile(r"[^\w\s\-\.]", re.ASCII)
 
 
-class ContactForm(forms.ModelForm):
+class ContactForm(AccessibleErrorsMixin, forms.ModelForm):
     # Honeypot — bots fill it, humans don't see it.
     website = forms.CharField(required=False, widget=forms.HiddenInput)
     source = forms.CharField(required=False, widget=forms.HiddenInput)
@@ -67,7 +93,7 @@ class ContactForm(forms.ModelForm):
         return ""
 
 
-class JobApplicationForm(forms.ModelForm):
+class JobApplicationForm(AccessibleErrorsMixin, forms.ModelForm):
     # Honeypot — bots fill it, humans don't see it.
     website = forms.CharField(required=False, widget=forms.HiddenInput)
 
@@ -171,7 +197,7 @@ _UK_POSTCODE_RE = re.compile(
 )
 
 
-class QuoteRequestForm(forms.ModelForm):
+class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
     """Structured quote request form. Captures property type, postcode,
     selected services, timeline and (optional) budget — enough qualifying
     detail to reply with a real survey slot rather than a generic 'tell us
@@ -219,6 +245,8 @@ class QuoteRequestForm(forms.ModelForm):
                     "autocomplete": "postal-code",
                     "autocapitalize": "characters",
                     "maxlength": "16",
+                    # Points at the visible help text in templates/quote.html.
+                    "aria-describedby": "postcode-help",
                 }
             ),
             "notes": forms.Textarea(
@@ -228,6 +256,12 @@ class QuoteRequestForm(forms.ModelForm):
                 }
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Budget renders as a Select from the model choices, so there is no
+        # widgets entry to hang this on.
+        self.fields["budget"].widget.attrs["aria-describedby"] = "budget-help"
 
     def clean_website(self):
         if self.cleaned_data.get("website"):
