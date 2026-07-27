@@ -5,6 +5,7 @@ import nh3
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.functional import cached_property
 from django.utils.text import slugify
 
 
@@ -273,6 +274,20 @@ class BlogPost(models.Model):
 
     class Meta:
         ordering = ["-published_at", "-created_at"]
+        indexes = [
+            # PublishedBlogManager filters on published_at AND Meta.ordering
+            # sorts by it — blog list, RSS feed, sitemap and the JSON API all
+            # hit this. Previously a full table scan plus a filesort.
+            models.Index(
+                fields=["-published_at", "-created_at"],
+                name="blogpost_pub_created_idx",
+            ),
+            # Related-posts lookup in blog_post(), and ?pillar= in the API.
+            models.Index(
+                fields=["pillar", "-published_at"],
+                name="blogpost_pillar_pub_idx",
+            ),
+        ]
 
     def __str__(self):
         return self.title
@@ -286,12 +301,12 @@ class BlogPost(models.Model):
     def get_absolute_url(self):
         return reverse("blog_post", kwargs={"slug": self.slug})
 
-    @property
+    @cached_property
     def reading_time_minutes(self):
         words = len(_HTML_TAG_RE.sub(" ", self.content or "").split())
         return max(1, round(words / 220))
 
-    @property
+    @cached_property
     def first_image(self):
         if not self.content:
             return None

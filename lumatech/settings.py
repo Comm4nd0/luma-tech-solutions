@@ -67,8 +67,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "core.middleware.ContentSecurityPolicyMiddleware",
+    # WhiteNoise ahead of the CSP middleware: it short-circuits static-file
+    # requests, so every image/CSS/JS response was otherwise generating a
+    # CSPRNG nonce and rebuilding the policy string for a response that
+    # cannot execute script anyway.
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "core.middleware.ContentSecurityPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -110,6 +114,32 @@ DATABASES = {
         },
     }
 }
+
+# --- Cache ---
+# LocMemCache: three gunicorn workers means three copies, which is fine for the
+# only two things cached here (the RSS feed and sitemap.xml) — both are
+# identical for every visitor and small. Not DatabaseCache: that would put
+# write traffic on the same sqlite file three WAL-mode workers already contend
+# on, which is backwards. Not FileBasedCache: fsync per write on the data
+# volume, plus stale-file cleanup.
+#
+# NOTE: do not cache_page() any HTML. Every page bakes request.csp_nonce into
+# its inline <script> tags and every JSON-LD block, and the CSP middleware
+# issues a fresh nonce per response — a cached body carries a stale nonce and
+# the browser blocks all of them. That failure is invisible to the test client,
+# which does not enforce CSP.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "luma-default",
+        "TIMEOUT": 600,
+        "OPTIONS": {"MAX_ENTRIES": 500},
+    }
+}
+
+# Caching must never make a test's outcome depend on ordering.
+if "test" in sys.argv:
+    CACHES["default"] = {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

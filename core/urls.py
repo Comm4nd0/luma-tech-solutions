@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from . import api, views
 from .feeds import BlogFeed
@@ -37,7 +38,8 @@ urlpatterns = [
     path("terms/", views.terms, name="terms"),
     path("privacy/", views.privacy, name="privacy"),
     path("blog/", views.blog, name="blog"),
-    path("blog/feed/", BlogFeed(), name="blog_feed"),
+    # Cacheable for the same reason as sitemap.xml — no per-request tokens.
+    path("blog/feed/", cache_page(900)(BlogFeed()), name="blog_feed"),
     path("blog/<slug:slug>/", views.blog_post, name="blog_post"),
     path("api/blog/posts/", api.posts_collection, name="api_blog_posts"),
     path("api/blog/posts/<slug:slug>/", api.post_detail, name="api_blog_post"),
