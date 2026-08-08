@@ -53,6 +53,11 @@ CSRF_TRUSTED_ORIGINS = [
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
+# 301 www.* to the bare domain (core.middleware.CanonicalHostMiddleware).
+# Both hostnames resolve to this app, so without it every page is reachable
+# twice and Google crawls both. Keep the stripped host in ALLOWED_HOSTS.
+REDIRECT_WWW_TO_APEX = os.environ.get("DJANGO_REDIRECT_WWW", "1") == "1"
+
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
@@ -67,6 +72,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # Before WhiteNoise and CommonMiddleware so a www request is answered with
+    # exactly one 301, whatever it asked for.
+    "core.middleware.CanonicalHostMiddleware",
     # WhiteNoise ahead of the CSP middleware: it short-circuits static-file
     # requests, so every image/CSS/JS response was otherwise generating a
     # CSPRNG nonce and rebuilding the policy string for a response that
@@ -261,7 +269,7 @@ SITE_FOUNDER = "Marco Baldanza"
 SITE_BASE_TOWN = "Marlow"
 # Bump when you ship a meaningful site-wide content change so the
 # static-page sitemap honestly reflects freshness.
-SITE_STATIC_LASTMOD = "2026-07-04"
+SITE_STATIC_LASTMOD = "2026-08-08"
 
 # --- Commercial / B2B links ---
 # LinkedIn profile URL. When set, appears in the footer and in the

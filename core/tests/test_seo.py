@@ -3,7 +3,7 @@
 import json
 
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -27,6 +27,45 @@ class RobotsTests(TestCase):
                 resp = self.client.get(reverse(name))
                 self.assertContains(resp, 'content="index, follow"')
                 self.assertNotContains(resp, "noindex")
+
+
+@override_settings(ALLOWED_HOSTS=["testserver", "www.testserver"])
+class CanonicalHostTests(TestCase):
+    """www.* must 301 to the apex, not serve a second copy of every page."""
+
+    def test_www_redirects_permanently_to_apex(self):
+        resp = self.client.get("/services/", HTTP_HOST="www.testserver")
+        self.assertEqual(resp.status_code, 301)
+        self.assertEqual(resp["Location"], "http://testserver/services/")
+
+    def test_query_string_survives_the_redirect(self):
+        # Dropping ?page=2 here would send every paginated www URL to /blog/.
+        resp = self.client.get("/blog/?page=2", HTTP_HOST="www.testserver")
+        self.assertEqual(resp["Location"], "http://testserver/blog/?page=2")
+
+    def test_https_is_preserved(self):
+        # Redirecting to http:// would add a second hop via Caddy's TLS
+        # redirect, which is exactly the redirect chain we're removing.
+        resp = self.client.get("/", HTTP_HOST="www.testserver", secure=True)
+        self.assertEqual(resp["Location"], "https://testserver/")
+
+    def test_apex_is_served_directly(self):
+        resp = self.client.get(reverse("home"))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_one_hop_only_for_slashless_www_urls(self):
+        # Running after CommonMiddleware would cost www + APPEND_SLASH two
+        # hops; this must land on the canonical URL in a single 301.
+        resp = self.client.get("/services", HTTP_HOST="www.testserver")
+        self.assertEqual(resp["Location"], "http://testserver/services")
+        self.assertEqual(
+            self.client.get("/services").status_code, 301  # APPEND_SLASH, apex
+        )
+
+    @override_settings(REDIRECT_WWW_TO_APEX=False)
+    def test_can_be_switched_off(self):
+        resp = self.client.get("/", HTTP_HOST="www.testserver")
+        self.assertEqual(resp.status_code, 200)
 
 
 class CanonicalTests(TestCase):
@@ -136,3 +175,60 @@ class FounderSchemaTests(TestCase):
             n for n in graphs[0]["@graph"] if n.get("@type") == "Organization"
         )
         self.assertTrue(org["founder"]["@id"].endswith("#founder"))
+
+
+class InternalLinkingTests(TestCase):
+    """Every article links into the service and town pages.
+
+    Post bodies come from the JSON API and live in the database, so the
+    codebase cannot put links inside them. This block is the guaranteed
+    floor — the town pages in particular need the inbound links, being the
+    likeliest to sit in "Crawled - currently not indexed".
+    """
+
+    def _post(self, pillar):
+        return BlogPost.objects.create(
+            title=f"Linking {pillar}",
+            slug=f"linking-{pillar}",
+            content="<p>Body.</p>",
+            excerpt="Body.",
+            pillar=pillar,
+            published_at=timezone.now(),
+        )
+
+    def test_post_links_to_its_pillar_services(self):
+        cases = {
+            "networking": ["/services/networking/", "/services/support/"],
+            "security": ["/services/security/", "/services/ai-cameras/"],
+            "automation": ["/services/automation/", "/services/networking/"],
+        }
+        for pillar, paths in cases.items():
+            with self.subTest(pillar=pillar):
+                resp = self.client.get(self._post(pillar).get_absolute_url())
+                for path in paths:
+                    self.assertContains(resp, f'href="{path}"')
+
+    def test_unknown_pillar_falls_back_to_the_general_set(self):
+        # A pillar with no explicit mapping must not drop the block entirely.
+        resp = self.client.get(self._post("general").get_absolute_url())
+        for path in ("/services/networking/", "/services/security/",
+                     "/services/support/"):
+            self.assertContains(resp, f'href="{path}"')
+
+    def test_post_links_to_every_town_page(self):
+        resp = self.client.get(self._post("support").get_absolute_url())
+        for name in ("area_marlow", "area_maidenhead", "area_henley",
+                     "area_beaconsfield"):
+            with self.subTest(area=name):
+                self.assertContains(resp, f'href="{reverse(name)}"')
+
+    def test_service_titles_are_not_duplicated_in_the_content_table(self):
+        # The block reads its labels out of SERVICE_PAGES rather than
+        # restating them, so a renamed service page renames the link too.
+        from core.content import BLOG_PILLAR_SERVICES, SERVICE_PAGES
+
+        for pillar, keys in BLOG_PILLAR_SERVICES.items():
+            with self.subTest(pillar=pillar):
+                self.assertTrue(keys)
+                for key in keys:
+                    self.assertIn(key, SERVICE_PAGES)

@@ -60,6 +60,30 @@ would override the parent with an empty value.{% endcomment %}
         {{ post.content|safe }}
       </div>
 
+      {% comment %}Post bodies are written elsewhere (the JSON API) and stored
+      in the database, so this block is the only internal linking the codebase
+      can guarantee on every article: out to the services the post's pillar
+      belongs to, and out to the four town pages.{% endcomment %}
+      {% if related_services %}
+      <aside class="post-services">
+        <h2>Services this article touches</h2>
+        <ul>
+          {% for s in related_services %}
+          <li>
+            <a href="{{ s.url }}">{{ s.title }}</a>
+            <span class="muted">{{ s.blurb|truncatewords:24 }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% if area_links %}
+        <p class="muted post-areas">
+          We work across the Thames Valley — including
+          {% for a in area_links %}<a href="{{ a.url }}">{{ a.label }}</a>{% if not forloop.last %}{% if forloop.revcounter == 2 %} and {% else %}, {% endif %}{% endif %}{% endfor %}.
+        </p>
+        {% endif %}
+      </aside>
+      {% endif %}
+
       <footer class="post-footer">
         <div class="post-author">
           <span class="muted">Written by</span>

@@ -55,12 +55,16 @@
 
         <h3 class="mt-3">Wi-Fi that reaches every room</h3>
         <p>
-          Properly engineered UniFi networks — multiple wired access
-          points, sized from a thorough on-site survey, fed by Cat6 to a
-          tidy comms cupboard. One managed dashboard, no mesh, no
-          boosters, no rebooting the router every Sunday morning.
-          Typical Marlow projects run to between three and eleven access
-          points depending on the size and shape of the property.
+          Every Marlow install starts with a walk round the property
+          rather than a guess over the phone — we're ten minutes away,
+          so there's no excuse for skipping it. What comes back is a
+          wired UniFi design: ceiling access points where the survey
+          says they need to be, Cat6 home to a tidy comms cupboard,
+          one dashboard that shows what the network is actually doing.
+          Typical Marlow projects run to between three and eleven
+          access points depending on the size and shape of the
+          property. No mesh, no boosters, no rebooting the router
+          every Sunday morning.
           <a href="{% url 'service_networking' %}">More about networking →</a>
         </p>
 
@@ -76,18 +80,22 @@
 
         <h3 class="mt-3">Smart home that works without the internet</h3>
         <p>
-          Home Assistant at the core — lighting, climate, security,
-          scenes — running on a small box at your house. Voice control
-          locally if you want it, no Amazon or Google recordings going
-          anywhere. Works when the broadband is down.
+          Home Assistant on a small box in your own house, so the
+          lighting, heating and door locks answer to hardware you own
+          rather than a subscription. Local voice control if you want
+          it, with no Amazon or Google recordings leaving the property
+          — and the scenes still fire on the mornings the broadband
+          doesn't.
           <a href="{% url 'service_automation' %}">More about automation →</a>
         </p>
 
         <h3 class="mt-3">Ongoing care, not hit-and-run</h3>
         <p>
-          The same engineer takes the call every time. Optional care
-          plans cover monitoring, firmware updates, quarterly health
-          checks and a known response time when something does break.
+          You get the same engineer every time you call: the one who
+          designed the system and knows where the cables run. Care
+          plans are optional and cover monitoring, firmware updates,
+          quarterly health checks and a response time you can hold us
+          to — which for SL7 often means the same day.
           <a href="{% url 'service_support' %}">More about support →</a>
         </p>
 
@@ -96,7 +104,7 @@
           <li><strong>Quick site surveys</strong> — most surveys happen the same week you ask. We walk the property and write up a fixed-price proposal before we leave the driveway.</li>
           <li><strong>Same-day response on care plans</strong> — when something breaks, we're not flying down from Manchester. Often in the same day for Marlow postcodes.</li>
           <li><strong>We know what's in the walls</strong> — Edwardian and Georgian builds, the foil-backed insulation, the cast-iron radiators. We've worked around all of it before.</li>
-          <li><strong>Honest quotes</strong> — fixed price, no day rates, no scope creep. Hardware, cabling, labour and timeline written down on one page.</li>
+          <li><strong>One-page fixed quotes</strong> — hardware, cabling, labour and timeline, priced before we start. No day rates, no scope creep, no surprises on the final invoice.</li>
         </ul>
       </div>
 
@@ -104,6 +112,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_faqs.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Marlow project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — same week if we can.' %}
 {% endblock %}

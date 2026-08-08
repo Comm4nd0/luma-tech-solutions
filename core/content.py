@@ -1114,6 +1114,201 @@ AREA_PAGES = {
 }
 
 
+# Which service pages a blog post should link out to, keyed by the post's
+# pillar (see PILLAR_CHOICES in core.models; "general" is the fallback).
+# Values are SERVICE_PAGES keys — the view reverses them and pulls the name
+# and description from that table, so there is one copy of each.
+#
+# Blog bodies live in the database, so the codebase can't put internal links
+# inside them. This is the part we *can* guarantee: every article, whoever
+# writes it, links back into the services it belongs to and out to the town
+# pages, which are the pages most in need of inbound links.
+BLOG_PILLAR_SERVICES = {
+    "networking": ["networking", "support"],
+    "security": ["security", "ai_cameras"],
+    "development": ["development", "support"],
+    "automation": ["automation", "networking"],
+    "support": ["support", "networking"],
+    "general": ["networking", "security", "support"],
+}
+
+
+# Per-town FAQs. Deliberately NOT shared: four town pages that differ only in
+# the place-name are a set of near-duplicates, and Google answers those with
+# "Crawled - currently not indexed". Every answer here restates a claim the
+# site already makes elsewhere (survey lead times, AP counts, the Beaconsfield
+# free-survey offer) — nothing new is promised on a visitor's behalf.
+AREA_FAQS = {
+    "marlow": [
+        {
+            "q": "Do you cover Marlow Bottom, Little Marlow and Bisham too?",
+            "a": (
+                "Yes. Most of our work happens within a twenty-minute drive of "
+                "the town centre — Marlow itself, Marlow Bottom, Little Marlow, "
+                "Bourne End and across the bridge into Bisham. We're based in "
+                "Marlow, so SL7 is genuinely local rather than a postcode on a "
+                "coverage map."
+            ),
+        },
+        {
+            "q": "How many access points does a Marlow house usually need?",
+            "a": (
+                "Typical Marlow projects run to between three and eleven wired "
+                "access points, depending on the size and shape of the "
+                "property. A four-bed terrace near the High Street sits at the "
+                "bottom of that range; a larger detached up Marlow Bottom with "
+                "a garden office sits at the top. The number comes out of the "
+                "on-site survey, not a guess over the phone."
+            ),
+        },
+        {
+            "q": "Can you install CCTV on a period property near the High Street?",
+            "a": (
+                "Yes, and it's most of what we do in central Marlow. Cameras "
+                "are planned to be discreet on period façades, with cable runs "
+                "worked out before anything is drilled. If the building is "
+                "listed or in the conservation area, check whether consent is "
+                "needed for external fixings — we'll flag it at survey stage "
+                "rather than after the install."
+            ),
+        },
+        {
+            "q": "How quickly can you get to a fault in an SL7 postcode?",
+            "a": (
+                "Site surveys are typically within five working days for Marlow "
+                "postcodes. For customers on a care plan we're often out the "
+                "same day when something breaks — being ten minutes away is the "
+                "whole point of using a local engineer."
+            ),
+        },
+    ],
+    "maidenhead": [
+        {
+            "q": "Do you cover Bray, Holyport, Cox Green and Furze Platt?",
+            "a": (
+                "Yes — all of them, plus Boyn Hill and the riverside "
+                "properties. Marlow is about fifteen minutes from the centre of "
+                "Maidenhead, so SL6 surveys are typically booked within the "
+                "week."
+            ),
+        },
+        {
+            "q": "How many access points does a larger Maidenhead home need?",
+            "a": (
+                "Typical Maidenhead installs run from five to eleven wired "
+                "access points. The town has more 200 m²-plus houses than most "
+                "of the Thames Valley, and floor area is only half the story — "
+                "layout, wall construction and whether the garden office needs "
+                "coverage all change the count. The survey settles it."
+            ),
+        },
+        {
+            "q": "Can you add number-plate recognition on the driveway?",
+            "a": (
+                "Yes, where it's useful. UniFi Protect cameras do on-device "
+                "person, vehicle and package detection, and number-plate "
+                "recognition can be added on a drive. Recordings live on a "
+                "small NVR at your house — no monthly cloud subscription, no "
+                "third party looking through your footage."
+            ),
+        },
+        {
+            "q": "We've just had full-fibre installed. Do we still need a new network?",
+            "a": (
+                "Often, yes. FTTP fixes the pipe into the house; it does "
+                "nothing about getting that speed to the far bedroom through "
+                "three solid walls. If you have gigabit at the router and 20 "
+                "Mbps upstairs, the bottleneck is the Wi-Fi, not the line — "
+                "that's a cabling and access-point problem."
+            ),
+        },
+    ],
+    "henley": [
+        {
+            "q": "Do you cover Remenham, Hambleden, Mill End and Aston?",
+            "a": (
+                "Yes. Henley is fifteen minutes from us down the A4155, and we "
+                "work across RG9 — the town centre, Remenham, Hambleden, Aston "
+                "and up the hill toward Bix. Surveys usually happen within the "
+                "week."
+            ),
+        },
+        {
+            "q": "Can you get Wi-Fi to a boathouse or garden office?",
+            "a": (
+                "Yes — it's a common ask in Henley. Outbuildings get their own "
+                "wired access point fed by buried Cat6 or a fibre run, rather "
+                "than a repeater bounced off the house, which is why the signal "
+                "still works when the garden is full of people. Henley installs "
+                "typically run from four to ten access points once the "
+                "outbuildings are counted."
+            ),
+        },
+        {
+            "q": "Will cameras be visible on a Georgian façade?",
+            "a": (
+                "Not if we plan them properly. Mounts and cable runs are "
+                "designed to be discreet on period frontages — no nineties "
+                "burglar-alarm boxes bolted to the brickwork. Period-property "
+                "owners care about kerb appeal, so camera positions are chosen "
+                "to be invisible from the street while still covering the "
+                "approach."
+            ),
+        },
+        {
+            "q": "Our house is listed. Can you still run cabling?",
+            "a": (
+                "Usually, yes — but the route matters more than in a modern "
+                "house. We plan runs to use existing voids, floor lifts and "
+                "service routes rather than cutting new chases, and we'll tell "
+                "you at survey stage where consent may be needed for anything "
+                "fixed to the exterior."
+            ),
+        },
+    ],
+    "beaconsfield": [
+        {
+            "q": "Do you cover the old town as well as Knotty Green and Holtspur?",
+            "a": (
+                "Yes — HP9 and the surrounding villages, including Knotty "
+                "Green, Holtspur and Forty Green. Beaconsfield is about fifteen "
+                "minutes up the A40 from us in Marlow."
+            ),
+        },
+        {
+            "q": "Is the site survey really free in Beaconsfield?",
+            "a": (
+                "Yes. Beaconsfield projects get a free on-site survey and a "
+                "fixed-price proposal back within 48 hours — hardware, cabling, "
+                "labour and timeline on one page. No day rates and no scope "
+                "creep after the fact."
+            ),
+        },
+        {
+            "q": "How many access points does a large Beaconsfield detached need?",
+            "a": (
+                "Typical Beaconsfield installs run from four to ten wired "
+                "access points, depending on size, layout and whether an "
+                "outbuilding or pool house needs covering. The larger "
+                "new-builds toward Knotty Green sit at the top of that range — "
+                "they're simply too big for one router, whatever the box "
+                "claims."
+            ),
+        },
+        {
+            "q": "Can CCTV go on a building in the conservation area?",
+            "a": (
+                "In most cases yes, with the mounts planned to be discreet. "
+                "Conservation areas and listed buildings mean exterior changes "
+                "get noticed, so we design camera positions to be invisible "
+                "from the street and flag anything that may need consent before "
+                "we quote, not after."
+            ),
+        },
+    ],
+}
+
+
 # Confirmation pages: no breadcrumbs, no schema, just a title and a nav slot.
 THANKS_PAGES = {
     "contact_thanks": {

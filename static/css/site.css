@@ -1361,6 +1361,21 @@ footer.site-footer {
 .post-author { font-size: 0.95rem; color: var(--fg); }
 .post-author strong { display: inline-block; margin-left: 0.4rem; color: var(--fg-strong); }
 
+/* Service links appended to every article (see blog/detail.html). */
+.post-services {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.post-services h2 { font-size: 1.15rem; margin: 0 0 1rem; }
+.post-services ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.post-services li { display: flex; flex-direction: column; gap: 0.15rem; }
+.post-services li a { font-weight: 600; }
+.post-services li .muted { font-size: 0.9rem; line-height: 1.5; }
+.post-areas { margin: 1.25rem 0 0; font-size: 0.9rem; }
+
 /* ---------- illustrations ---------- */
 .ill { width: 100%; height: auto; max-width: 420px; }
 .ill-hero { max-width: 500px; }

@@ -1,4 +1,4 @@
-"""Content Security Policy middleware.
+"""Request/response middleware: canonical host, then Content Security Policy.
 
 A nonce-based CSP is the defense-in-depth backstop behind nh3 sanitisation of
 blog content: even if unsanitised HTML reached a page, an injected
@@ -18,6 +18,42 @@ from __future__ import annotations
 import secrets
 
 from django.conf import settings
+from django.http import HttpResponsePermanentRedirect
+
+
+class CanonicalHostMiddleware:
+    """301 ``www.example.com`` → ``example.com``.
+
+    Caddy serves both hostnames from one site block, so without this every
+    page exists twice with a 200. Google folds the pair using our
+    ``<link rel="canonical">`` (which always points at ``SITE_URL``) and files
+    the www copy under "Alternative page with proper canonical tag" — nothing
+    is lost, but every www URL is crawled and then discarded. A 301 spends the
+    crawl budget once instead.
+
+    Belt and braces with the ``redir`` block in the server's Caddyfile: this
+    one ships through the normal deploy, so the site is right even if the
+    proxy config drifts. Runs ahead of WhiteNoise so static-file URLs redirect
+    too, and ahead of CommonMiddleware so a www request for a slash-less path
+    makes one hop here rather than two.
+
+    Set ``DJANGO_REDIRECT_WWW=0`` to disable (e.g. if the apex ever stops
+    being the canonical host).
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if getattr(settings, "REDIRECT_WWW_TO_APEX", True):
+            # get_host() is already validated against ALLOWED_HOSTS, so the
+            # host we echo into Location can't be attacker-controlled.
+            host = request.get_host()
+            if host.lower().startswith("www."):
+                return HttpResponsePermanentRedirect(
+                    f"{request.scheme}://{host[4:]}{request.get_full_path()}"
+                )
+        return self.get_response(request)
 
 
 def _build_policy(nonce: str) -> str:

@@ -53,12 +53,13 @@
 
         <h3 class="mt-3">Wi-Fi installation for larger properties</h3>
         <p>
-          Properly engineered UniFi networks — multiple wired access
-          points, sized from an on-site survey, fed by Cat6 to a tidy
-          comms cupboard. One managed dashboard, no mesh, no boosters.
-          Typical Beaconsfield installs run from four to ten access
-          points depending on size, layout and whether the outbuilding
-          or pool house needs coverage too.
+          The design work is the same whichever end of Beaconsfield
+          you're at: survey first, then wired UniFi access points
+          placed where the coverage actually has to land, Cat6 back to
+          one comms cupboard, and a managed dashboard with real
+          diagnostics behind it. Typical Beaconsfield installs run
+          from four to ten access points depending on size, layout and
+          whether the outbuilding or pool house needs coverage too.
           <a href="{% url 'service_networking' %}">More about networking →</a>
         </p>
 
@@ -75,19 +76,20 @@
 
         <h3 class="mt-3">Smart home that works without the cloud</h3>
         <p>
-          Home Assistant at the core — lighting, climate, security,
-          scenes — running on a small box at your house. Local voice
-          control if you want it; no Amazon or Google recordings going
-          anywhere. Keeps working when the BT exchange takes a Sunday
-          off.
+          Home Assistant on a small box at the house, owning the
+          lighting, climate, security and scenes. Local voice control
+          if you want it, no third-party account needed to dim a
+          light, and nothing that stops working because a vendor
+          retired an app or the exchange took a Sunday off.
           <a href="{% url 'service_automation' %}">More about automation →</a>
         </p>
 
-        <h3 class="mt-3">Ongoing care, by the same engineer</h3>
+        <h3 class="mt-3">Care plans, not call-centre tickets</h3>
         <p>
-          Optional care plans cover monitoring, firmware updates,
-          quarterly health checks and a known response time. Same
-          engineer takes the call every time — no tier-one call centre.
+          Monitoring, firmware updates, quarterly health checks and an
+          agreed response time — optional, and priced up front. The
+          same engineer takes every call, so nobody has to be told the
+          history of your network twice.
           <a href="{% url 'service_support' %}">More about support →</a>
         </p>
 
@@ -96,7 +98,7 @@
           <li><strong>15 minutes from Marlow</strong> — quick on-site surveys, same-day response on care plans for HP9 postcodes and around.</li>
           <li><strong>We know the housing stock</strong> — Knotty Green new-builds, the Forty Green farmland houses, and the period stock around the old town. We've designed Wi-Fi and CCTV for all of it.</li>
           <li><strong>Discreet by default</strong> — conservation areas and listed buildings mean exterior changes get noticed. We plan camera positions and AP mounts to be invisible from the street.</li>
-          <li><strong>Honest, fixed-price quotes</strong> — hardware, cabling, labour, timeline. One page. No day rates, no scope creep.</li>
+          <li><strong>Priced before we start</strong> — hardware, cabling, labour and timeline on one page, fixed. No day rates, and no revision once the van is on the drive.</li>
         </ul>
       </div>
 
@@ -104,6 +106,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_faqs.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Beaconsfield project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — usually within the week — and reply with a fixed-price quote on one page.' cta_source='area-beaconsfield-bottom' %}
 {% endblock %}

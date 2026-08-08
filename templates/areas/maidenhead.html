@@ -70,13 +70,14 @@
 
         <h3 class="mt-3">Wi-Fi for larger and older properties</h3>
         <p>
-          Maidenhead has more 200+ m² houses than most of the Thames
-          Valley, and a fair number of older period builds with thick
-          walls. The standard mesh-and-booster recipe doesn't cope.
-          We design wired UniFi networks with multiple ceiling-mounted
-          access points, sized from a thorough on-site survey, fed by
-          Cat6 to a tidy comms cupboard. Typical Maidenhead installs
-          run from five to eleven access points depending on size and
+          Maidenhead has more 200 m²-plus houses than most of the
+          Thames Valley, and a fair number of older period builds with
+          thick walls. The standard mesh-and-booster recipe copes with
+          neither. We design wired networks instead: ceiling-mounted
+          UniFi access points positioned from an on-site survey, Cat6
+          back to a single comms cupboard, and VLANs keeping home,
+          work and IoT traffic apart. Typical Maidenhead installs run
+          from five to eleven access points depending on size and
           shape.
           <a href="{% url 'service_networking' %}">More about networking →</a>
         </p>
@@ -95,18 +96,21 @@
 
         <h3 class="mt-3">Smart home that stays in your house</h3>
         <p>
-          Home Assistant at the core — lighting, climate, scenes,
-          and a local voice assistant if you want one. Runs on a small
-          box at your house, works without the internet, no cloud lock-in.
+          Home Assistant on a small box in the house, holding the
+          lighting, climate and scene logic locally. Nothing round-
+          trips to a data centre to turn a lamp on, there's no cloud
+          subscription to cancel later, and the automations carry on
+          running on the days the broadband doesn't.
           <a href="{% url 'service_automation' %}">More about automation →</a>
         </p>
 
         <h3 class="mt-3">Ongoing care, by the same engineer</h3>
         <p>
-          Optional care plans cover monitoring, firmware updates,
-          quarterly health checks and a known response time. Same
-          engineer takes the call every time — no tier-one call centre
-          between you and someone who knows the system.
+          Care plans are optional and cover monitoring, firmware
+          updates, quarterly health checks and an agreed response
+          time. The engineer who designed your network is the one who
+          picks up — there's no tier-one script standing between you
+          and somebody who knows the system.
           <a href="{% url 'service_support' %}">More about support →</a>
         </p>
 
@@ -123,6 +127,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_faqs.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Maidenhead project on your mind?' cta_copy='Tell us roughly what you are trying to do and where in town. We will come and look — usually within the week.' %}
 {% endblock %}

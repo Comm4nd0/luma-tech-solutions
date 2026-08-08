@@ -14,7 +14,9 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .content import (
+    AREA_FAQS,
     AREA_PAGES,
+    BLOG_PILLAR_SERVICES,
     CARE_TIERS,
     CASE_STUDIES,
     FAQS_AI_CAMERAS,
@@ -191,6 +193,27 @@ def _crumbs(*trail):
     return [(label, reverse(url_name)) for label, url_name in trail]
 
 
+def _related_services(pillar):
+    """Service pages a post in this pillar should link to."""
+    keys = BLOG_PILLAR_SERVICES.get(pillar) or BLOG_PILLAR_SERVICES["general"]
+    return [
+        {
+            "title": SERVICE_PAGES[k]["service_name"],
+            "blurb": SERVICE_PAGES[k]["service_description"],
+            "url": reverse(SERVICE_PAGES[k]["url_name"]),
+        }
+        for k in keys
+    ]
+
+
+def _area_links():
+    """The four town pages, for the 'where we work' line on article pages."""
+    return [
+        {"label": page["town"], "url": reverse(page["url_name"])}
+        for page in AREA_PAGES.values()
+    ]
+
+
 def _featured_case(slug=None):
     """The flagged case study, or a specific one by slug."""
     if slug is None:
@@ -251,6 +274,9 @@ def _render_area_page(request, key):
         area_also_serving_tail=page["also_serving_tail"],
         area_schema_name=page["schema_name"],
         area_schema_description=page["schema_description"],
+        faqs=AREA_FAQS[key],
+        faq_title=f"{page['town']} — common questions.",
+        faq_eyebrow=f"Asked in {page['town']}",
     )
     if "featured_case_slug" in page:
         ctx["featured_case"] = _featured_case(page["featured_case_slug"])
@@ -707,6 +733,8 @@ def blog_post(request, slug):
             ],
             post=post,
             related=related,
+            related_services=_related_services(post.pillar),
+            area_links=_area_links(),
         ),
     )
 
@@ -738,25 +766,6 @@ def area_marlow(request):
 
 def area_maidenhead(request):
     return _render_area_page(request, "maidenhead")
-    return render(
-        request,
-        "areas/maidenhead.html",
-        _base_context(
-            active="services",
-            page_title="Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
-            page_description=(
-                "Whole-property UniFi networks, CCTV and smart-home design "
-                "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green."
-            ),
-            breadcrumbs=_crumbs(
-                ("Home", "home"),
-                ("Areas", "areas"),
-                ("Maidenhead", "area_maidenhead"),
-            ),
-            town="Maidenhead",
-            featured_case=featured,
-        ),
-    )
 
 
 def terms(request):

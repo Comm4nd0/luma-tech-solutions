@@ -56,11 +56,11 @@
 
         <h3 class="mt-3">Wi-Fi that reaches the river end of the garden</h3>
         <p>
-          Properly engineered UniFi networks — multiple wired access
-          points, sized from a thorough on-site survey, fed by Cat6 to
-          a tidy comms cupboard. One managed dashboard, no mesh, no
-          boosters, no rebooting the router every Sunday. Henley
-          installs typically run from four to ten access points
+          Henley properties rarely offer a convenient middle to
+          broadcast from, so access points get placed from the survey
+          rather than the floor plan — one per zone, wired back over
+          Cat6 to a single comms position, managed from one dashboard.
+          Henley installs typically run from four to ten access points
           depending on size, layout and whether the boathouse or
           garden office needs coverage too.
           <a href="{% url 'service_networking' %}">More about networking →</a>
@@ -77,22 +77,25 @@
           <a href="{% url 'service_security' %}">More about physical security →</a>
         </p>
 
-        <h3 class="mt-3">Smart home that works without the internet</h3>
+        <h3 class="mt-3">Smart home control that stays local</h3>
         <p>
-          Home Assistant at the core — lighting, climate, security,
-          scenes — running on a small box at your house. Local voice
-          control if you want it; no Amazon or Google recordings going
-          anywhere. Carries on working when the Henley exchange has a
-          wobble.
+          Home Assistant on a small box at the house runs the
+          lighting, heating and scenes without asking permission from
+          a server in another country. Local voice control is
+          optional; either way no Amazon or Google recording leaves
+          the building, and the automations outlive the Henley
+          exchange having a wobble.
           <a href="{% url 'service_automation' %}">More about automation →</a>
         </p>
 
-        <h3 class="mt-3">Ongoing care, by the same engineer</h3>
+        <h3 class="mt-3">Ongoing care from a named engineer</h3>
         <p>
           Optional care plans cover monitoring, firmware updates,
-          quarterly health checks and a known response time. Same
-          engineer takes the call every time — no tier-one call centre
-          between you and someone who knows the system.
+          quarterly health checks and an agreed response time. You
+          deal with the engineer who built the system rather than
+          whoever picks up — which matters when the fault is "the
+          boathouse AP has dropped off" rather than "have you tried
+          turning it off and on again".
           <a href="{% url 'service_support' %}">More about support →</a>
         </p>
 
@@ -101,7 +104,7 @@
           <li><strong>15 minutes from Marlow</strong> — the A4155 puts us at your door faster than a national chain dispatching from Reading or Slough. Most surveys happen the same week you ask.</li>
           <li><strong>We've worked the Henley housing stock</strong> — Georgian and Victorian period builds, the thick stone, the foil-backed loft insulation in the 70s extensions. We've designed around all of it.</li>
           <li><strong>Discreet on the outside</strong> — period-property owners care about kerb appeal. We plan AP and camera positions to be invisible from the street.</li>
-          <li><strong>Honest quotes</strong> — fixed price, no day rates, no scope creep. Hardware, cabling, labour and timeline written down on one page.</li>
+          <li><strong>Quotes you can read in one sitting</strong> — hardware, cabling, labour and timeline on a single page, priced up front. No day rates and no scope creep once we're on site.</li>
         </ul>
       </div>
 
@@ -109,6 +112,8 @@
     </div>
   </div>
 </section>
+
+{% include 'partials/_faqs.html' %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Henley project on your mind?' cta_copy='Tell us what you are trying to fix and whereabouts in Henley you are. We will come and look — usually within the week.' %}
 {% endblock %}

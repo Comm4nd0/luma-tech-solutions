@@ -16,6 +16,7 @@ from pathlib import Path
 from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.html import escape
 
 CONTRACT_PATH = Path(__file__).parent / "page_contract.json"
 CONTRACT = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
@@ -134,6 +135,32 @@ class AreaPageTests(TestCase):
                 other = self.client.get(reverse(name))
                 self.assertNotContains(other, "Free on-site survey")
                 self.assertNotContains(other, "Fixed-price proposal in 48h")
+
+    def test_no_faq_is_shared_between_towns(self):
+        # Four town pages answering the same four questions in the same words
+        # is the near-duplicate set these pages exist to avoid. Copying one
+        # town's FAQ block to another is the easy way to recreate it.
+        from core.content import AREA_FAQS
+
+        seen = {}
+        for town, faqs in AREA_FAQS.items():
+            for faq in faqs:
+                for field in ("q", "a"):
+                    text = faq[field]
+                    self.assertNotIn(
+                        text, seen, msg=f"{town} repeats {seen.get(text)}: {text!r}"
+                    )
+                    seen[text] = town
+
+    def test_every_town_page_renders_its_own_faqs(self):
+        from core.content import AREA_FAQS
+
+        for key, faqs in AREA_FAQS.items():
+            with self.subTest(town=key):
+                resp = self.client.get(reverse(f"area_{key}"))
+                self.assertContains(resp, '"@type": "FAQPage"')
+                for faq in faqs:
+                    self.assertContains(resp, escape(faq["q"]))
 
     def test_each_town_declares_only_its_own_city(self):
         # The shared _service_schema.html declares every SITE_TOWNS entry plus

@@ -42,6 +42,21 @@ reverse-proxy on the Hetzner box.
   non-uniform bits: `service_security` sits in its own `"security"` nav slot,
   and three service pages deliberately have no FAQs (adding a default would
   give them a FAQ section and a `FAQPage` JSON-LD node they've never had).
+  All four area pages *do* have FAQs (`AREA_FAQS`), and they must stay
+  town-specific — see below.
+- **The four town pages must not converge.** They share a sidebar, a schema
+  partial and a page skeleton, so it is easy to end up with four pages that
+  differ only in the place-name — which is what Google files under "Crawled -
+  currently not indexed". Each one carries its own `AREA_FAQS` block plus
+  hand-written copy about that town's housing stock; `core/tests/test_pages.py`
+  pins the parts that must stay distinct. If you touch one town's wording,
+  don't paste it into the other three.
+- **Blog posts get their internal links from the template, not the body.**
+  Post HTML arrives through the JSON API and lives in the database, so the
+  repo can't put links inside it. `BLOG_PILLAR_SERVICES` maps each pillar to
+  the service pages an article should link to, and `blog/detail.html` renders
+  those plus all four town pages under every post. That is the guaranteed
+  floor — individual posts should still link out from their body copy.
 - **Pages**: home, services overview + six service pages (networking, security,
   ai-cameras, development, automation, support), a **construction lead-gen
   funnel** (`/construction/` + capability statement), a **quote funnel**
@@ -163,11 +178,23 @@ Caddy runs as a separate Docker container (`caddy-caddy-1`) and owns ports 80/44
 for **every** site on this server. Its config lives at `/root/caddy/Caddyfile`:
 
 ```caddyfile
-lumatechsolutions.co.uk, www.lumatechsolutions.co.uk {
+www.lumatechsolutions.co.uk {
+    redir https://lumatechsolutions.co.uk{uri} permanent
+}
+
+lumatechsolutions.co.uk {
     reverse_proxy 172.17.0.1:8005
     encode gzip
 }
 ```
+
+**The `www` host must redirect, not proxy.** Both hostnames pointed at the
+same site block for a while, so every page existed twice with a 200 and
+Search Console filed the www copies under "Alternative page with proper
+canonical tag" — harmless, but it doubles the crawl. Django enforces the same
+redirect itself (`core.middleware.CanonicalHostMiddleware`, disable with
+`DJANGO_REDIRECT_WWW=0`), so the site is right even if this file drifts; keep
+both, they agree.
 
 Reload after editing:
 

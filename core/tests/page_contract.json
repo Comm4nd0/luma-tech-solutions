@@ -21,6 +21,12 @@
         "/areas/beaconsfield/"
       ]
     ],
+    "faqs": [
+      "Do you cover the old town as well as Knotty Green and Holtspur?",
+      "Is the site survey really free in Beaconsfield?",
+      "How many access points does a large Beaconsfield detached need?",
+      "Can CCTV go on a building in the conservation area?"
+    ],
     "page_description": "UniFi Wi-Fi, CCTV and smart-home installation for the larger homes and businesses around Beaconsfield, Knotty Green and Holtspur. Local Marlow engineer, fixed-price quotes.",
     "page_title": "Wi-Fi, CCTV & Smart Home Installation in Beaconsfield | Luma Tech",
     "template": "areas/beaconsfield.html"
@@ -40,6 +46,12 @@
         "Henley-on-Thames",
         "/areas/henley/"
       ]
+    ],
+    "faqs": [
+      "Do you cover Remenham, Hambleden, Mill End and Aston?",
+      "Can you get Wi-Fi to a boathouse or garden office?",
+      "Will cameras be visible on a Georgian fa\u00e7ade?",
+      "Our house is listed. Can you still run cabling?"
     ],
     "page_description": "UniFi Wi-Fi, CCTV and smart-home installation for period homes and riverside properties in Henley-on-Thames, Remenham, Hambleden and Mill End. Local Marlow engineer.",
     "page_title": "Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech",
@@ -61,6 +73,12 @@
         "/areas/maidenhead/"
       ]
     ],
+    "faqs": [
+      "Do you cover Bray, Holyport, Cox Green and Furze Platt?",
+      "How many access points does a larger Maidenhead home need?",
+      "Can you add number-plate recognition on the driveway?",
+      "We've just had full-fibre installed. Do we still need a new network?"
+    ],
     "featured_case": "littlewick-house",
     "page_description": "Whole-property UniFi networks, CCTV and smart-home design for larger homes in Maidenhead, Bray, Furze Platt and Cox Green.",
     "page_title": "Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
@@ -81,6 +99,12 @@
         "Marlow",
         "/areas/marlow/"
       ]
+    ],
+    "faqs": [
+      "Do you cover Marlow Bottom, Little Marlow and Bisham too?",
+      "How many access points does a Marlow house usually need?",
+      "Can you install CCTV on a period property near the High Street?",
+      "How quickly can you get to a fault in an SL7 postcode?"
     ],
     "page_description": "Marlow-based engineer for Wi-Fi installation, CCTV, smart-home and IT support. Local response, fixed-price proposals.",
     "page_title": "Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
