@@ -38,6 +38,11 @@ urlpatterns = [
     path("areas/maidenhead/", views.area_maidenhead, name="area_maidenhead"),
     path("areas/henley/", views.area_henley, name="area_henley"),
     path("areas/beaconsfield/", views.area_beaconsfield, name="area_beaconsfield"),
+    path(
+        "areas/high-wycombe/",
+        views.area_high_wycombe,
+        name="area_high_wycombe",
+    ),
     path("contact/", views.contact, name="contact"),
     path("contact/thanks/", views.contact_thanks, name="contact_thanks"),
     path("quote/", views.quote, name="quote"),

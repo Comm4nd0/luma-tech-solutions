@@ -42,11 +42,12 @@ reverse-proxy on the Hetzner box.
   non-uniform bits: `service_security` sits in its own `"security"` nav slot,
   and three service pages deliberately have no FAQs (adding a default would
   give them a FAQ section and a `FAQPage` JSON-LD node they've never had).
-- **Pages**: home, services overview + six service pages (networking, security,
-  ai-cameras, development, automation, support), a **construction lead-gen
-  funnel** (`/construction/` + capability statement), a **quote funnel**
+- **Pages**: home, services overview + service pages (networking, security hub
+  + its cctv / access-control / alarms children, ai-cameras, development,
+  automation, support), a **construction lead-gen funnel**
+  (`/construction/` + capability statement), a **quote funnel**
   (`/quote/`, backed by `QuoteRequest`), local-SEO area pages (`/areas/` —
-  Marlow, Maidenhead, Henley, Beaconsfield), portfolio + case-study details,
+  Marlow, Maidenhead, Henley, Beaconsfield, High Wycombe), portfolio + case-study details,
   live website demos under `/showcase/<slug>/`, blog (+ RSS at `/blog/feed/`),
   about, careers, contact, camera-privacy, terms, privacy. See `core/urls.py`
   for the full map.
@@ -66,6 +67,74 @@ reverse-proxy on the Hetzner box.
   3:1. Don't point body text at `--accent`.
 - **Static files** are served by WhiteNoise via gunicorn — no separate nginx layer
   in the Docker image. Caddy in front handles TLS.
+
+### Local SEO: the search-intent rule
+
+The single rule that governs every page title, H1 and internal anchor:
+
+> **`/areas/<town>/` owns "[service] [town]". `/services/<x>/` owns the
+> ungeographic head term. The homepage owns the brand and the region.**
+
+It exists because breaking it cost real rankings: `/services/automation/`
+(titled "Smart Home Installer — Marlow, Henley, Maidenhead") sat at position
+44 for a query `/areas/henley/` was ranking 15.8 for, and the homepage
+("Wi-Fi Installation Marlow, …") outcompeted `/areas/marlow/` into invisibility.
+
+Practical consequences when editing:
+
+- **No `page_title` or `page_description` in `SERVICE_PAGES` may name a town.**
+  "the Thames Valley" is fine; counties are fine (no page targets them).
+- **Every `page_title` in `AREA_PAGES` names its town**, on the pattern
+  "Wi-Fi, CCTV & Smart Home Installation in <Town> | Luma Tech".
+- **Area → service anchors are ungeographic** ("CCTV Installation"), built by
+  `_area_service_links()`. **Service → area anchors carry the town**
+  ("CCTV installation in Marlow"), built by `_area_links()` from each service's
+  `area_anchor` format string. Reversing these puts the two page types back
+  into competition.
+- **H1s live in `AREA_PAGES["…"]["h1_lead"]`**, not in the template, so they
+  can't drift from the title.
+
+### Area pages must carry real local copy
+
+`AREA_PAGES` requires four town-specific fields — `local_areas`,
+`housing_stock`, `service_emphasis`, `example_jobs`. A page whose only
+difference from its neighbours is the town name is a doorway page, and Google
+treats it as one.
+
+- A field may hold a `"TODO:"` placeholder while copy is being written.
+- `example_jobs` placeholders are **dropped from the render**, so an unwritten
+  section never ships. **Never invent a job, client or testimonial to clear
+  one.**
+- If `local_areas`, `housing_stock` or `service_emphasis` is still `TODO:`,
+  `content.area_is_draft()` is true and the page is served **noindex** and
+  kept out of `sitemap.xml` — it flips live by itself once the copy lands.
+  `example_jobs` is deliberately *not* part of that gate: three area pages
+  have been live for months without it, and gating on it would deindex them.
+- `manage.py check --deploy` reports every outstanding placeholder
+  (`core.W005`), as it does for the missing GBP URL (`core.W006`).
+
+### We are a service-area business
+
+There is no premises a client visits. The `ProfessionalService` JSON-LD
+therefore stops at `addressLocality` / `addressRegion` / `addressCountry`
+(Marlow, Buckinghamshire, GB) and publishes **no street address, postcode or
+geo point**. `SITE_STREET_ADDRESS`, `SITE_POSTAL_CODE` and the two geo
+settings exist and the template honours them, but leaving them empty is the
+correct configuration, not an outstanding task — Google expects schema to
+corroborate the Google Business Profile, and a service-area GBP hides its
+address, so publishing one here would contradict it.
+
+Entity disambiguation is carried by `sameAs` instead, which matters because
+"Luma Tech Solutions Canada Ltd" (LED lighting, Burnaby BC) outranks this site
+for its own brand. `SITE_GOOGLE_BUSINESS_URL` and a Companies House URL in
+`SITE_EXTRA_SAME_AS` are the two highest-value entries.
+
+### Sitemap lastmod
+
+`PAGE_LASTMOD` in `core/content.py` carries a per-URL-name date; anything
+absent falls back to `settings.SITE_STATIC_LASTMOD`. **Bump the entry for a
+page when you change that page**, not the global value — stamping every URL
+with one shared date is what teaches Google the field carries no information.
 
 ### Security & front-end gotchas
 

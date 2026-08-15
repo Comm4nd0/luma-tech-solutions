@@ -45,6 +45,26 @@
     "page_title": "Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech",
     "template": "areas/henley.html"
   },
+  "area_high_wycombe": {
+    "active_nav": "services",
+    "breadcrumbs": [
+      [
+        "Home",
+        "/"
+      ],
+      [
+        "Areas",
+        "/areas/"
+      ],
+      [
+        "High Wycombe",
+        "/areas/high-wycombe/"
+      ]
+    ],
+    "page_description": "UniFi Wi-Fi, CCTV and smart-home installation for homes and small businesses in High Wycombe, Hazlemere and Downley. Local Marlow engineer, fixed-price quotes.",
+    "page_title": "Wi-Fi, CCTV & Smart Home Installation in High Wycombe | Luma Tech",
+    "template": "areas/high_wycombe.html"
+  },
   "area_maidenhead": {
     "active_nav": "services",
     "breadcrumbs": [

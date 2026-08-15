@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %}
+High Wycombe town landing page.
+
+Structurally this follows areas/henley.html — the page pattern that
+demonstrably ranks. What it deliberately does NOT do is copy Henley's prose
+with the town name swapped: Google treats that as a doorway page, and it is
+the fastest way to lose the rankings this whole exercise is trying to win.
+
+The prose sections below are marked TODO and need writing before this page
+earns its place. `manage.py check --deploy` lists every outstanding field
+(core.W005), and the local-detail block sourced from AREA_PAGES renders its
+placeholders visibly here rather than silently shipping filler.
+
+Nothing on this page should be invented. If a claim is not true of High
+Wycombe specifically, cut it rather than soften it.
+{% endcomment %}
+
+{% block jsonld %}{{ block.super }}
+{% include 'partials/_area_schema.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>20 minutes up the A404</span>
+        <h1>{{ area_h1_lead }} <span class="gradient">{{ town }}.</span></h1>
+        <p class="lede">
+          {# TODO: rewrite this lede. It must say something true of High #}
+          {# Wycombe that is not equally true of Marlow or Beaconsfield — #}
+          {# the valley, the post-war estates, the business parks, the #}
+          {# ridge villages. Two or three sentences, no filler. #}
+          TODO — write the High Wycombe lede.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        {# TODO: swap in a photograph that actually reads as High Wycombe. #}
+        {# The other area pages use Pexels URLs; a real photo of your own #}
+        {# work in the town would be better than a stock house. #}
+        <div class="hero-photo" style="background-image:linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="TODO: describe the High Wycombe hero image"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Wi-Fi, CCTV and smart home installation across High Wycombe</h2>
+        <p>
+          {# TODO: two paragraphs on why High Wycombe networks are their own #}
+          {# problem. What do you actually run into here that you do not run #}
+          {# into in Marlow? Be specific — this is the paragraph that decides #}
+          {# whether the page reads as original or as boilerplate. #}
+          TODO — write the opening section.
+        </p>
+
+        <h2 class="mt-4">What we do for High Wycombe homes and businesses</h2>
+
+        <h3 class="mt-3">Wi-Fi that reaches every room</h3>
+        <p>
+          Properly engineered UniFi networks — multiple wired access points,
+          sized from a thorough on-site survey, fed by Cat6 to a tidy comms
+          cupboard. One managed dashboard, no mesh, no boosters.
+          {# TODO: add the High Wycombe specific — typical AP counts here, #}
+          {# or the property types you most often survey in the town. #}
+          <a href="{% url 'service_networking' %}">More about networking →</a>
+        </p>
+
+        <h3 class="mt-3">CCTV that records to your property</h3>
+        <p>
+          UniFi Protect cameras with on-device person, vehicle and package
+          detection, recording to an NVR at your property — no monthly cloud
+          subscription, footage stays on your kit.
+          <a href="{% url 'service_cctv' %}">More about CCTV installation →</a>
+        </p>
+
+        <h3 class="mt-3">Smart home that works without the internet</h3>
+        <p>
+          Home Assistant at the core — lighting, climate, security, scenes —
+          running on a small box at your house. Local voice control if you
+          want it, and it carries on working when the broadband doesn't.
+          <a href="{% url 'service_automation' %}">More about automation →</a>
+        </p>
+
+        <h3 class="mt-3">Ongoing care, by the same engineer</h3>
+        <p>
+          Optional care plans cover monitoring, firmware updates, quarterly
+          health checks and a known response time. The same engineer takes the
+          call every time.
+          <a href="{% url 'service_support' %}">More about support →</a>
+        </p>
+
+        <h2 class="mt-4">Why local matters in High Wycombe</h2>
+        <ul class="bullets">
+          <li><strong>20 minutes up the A404</strong> — close enough to survey the same week and to turn up the same day on a care plan.</li>
+          {# TODO: three more bullets, each true of High Wycombe specifically. #}
+          {# Do not reuse the Marlow or Henley bullets verbatim. #}
+          <li>TODO — second reason.</li>
+          <li>TODO — third reason.</li>
+          <li><strong>Honest quotes</strong> — fixed price, no day rates, no scope creep. Hardware, cabling, labour and timeline written down on one page.</li>
+        </ul>
+
+        {% include 'partials/_area_local_detail.html' %}
+        {% include 'partials/_area_service_links.html' %}
+      </div>
+
+      {% include 'partials/_area_sidebar.html' %}
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_cta_banner.html' with cta_title='High Wycombe project on your mind?' cta_copy='Tell us what you are trying to fix and whereabouts in Wycombe you are. We will come and look — usually within the week.' %}
+{% endblock %}

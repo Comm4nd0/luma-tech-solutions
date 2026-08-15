@@ -243,6 +243,60 @@ SITE_PHONE = os.environ.get("SITE_PHONE", "07500 776311")
 SITE_PHONE_E164 = os.environ.get("SITE_PHONE_E164", "+447500776311")
 SITE_EMAIL = os.environ.get("SITE_EMAIL", "hello@lumatechsolutions.co.uk")
 SITE_REGION = "the Thames Valley"
+
+# --- LocalBusiness entity signals ---
+# "Luma Tech Solutions Canada Ltd" (an LED lighting firm in Burnaby BC)
+# outranks this site for its own brand name, so the JSON-LD needs to say
+# clearly that the UK company is a distinct organisation.
+#
+# We are a SERVICE-AREA business: no premises a client would ever visit. So
+# the address block deliberately stops at locality + region + country
+# (Marlow, Buckinghamshire, GB — set above and always emitted). We do not
+# publish a street address, postcode or geo point, because:
+#
+#   1. There is no public location. The only candidate is a private one.
+#   2. Google expects schema to corroborate the Google Business Profile. A
+#      service-area GBP hides its address; publishing one here would
+#      contradict it, and a contradiction is a weaker signal than silence.
+#
+# The settings below stay available for the day that changes (the template
+# omits each one until it is set), but leaving them empty is the correct
+# configuration today, not an outstanding task.
+SITE_STREET_ADDRESS = os.environ.get("SITE_STREET_ADDRESS", "")
+SITE_POSTAL_CODE = os.environ.get("SITE_POSTAL_CODE", "")
+SITE_GEO_LATITUDE = os.environ.get("SITE_GEO_LATITUDE", "")
+SITE_GEO_LONGITUDE = os.environ.get("SITE_GEO_LONGITUDE", "")
+
+# Google Business Profile, in stable ?cid= form. Derived from the CID encoded
+# in the g.page/r/CVzZIQHfjwivEAI/review shortlink used in the footer — the
+# review shortlink itself is the review form, not the profile, and a
+# google.com/search?q=… URL is a results page rather than a page about the
+# entity, so neither belongs in sameAs. The ?cid= form has no session or
+# tracking parameters and does not rotate the way a stick= token does.
+SITE_GOOGLE_BUSINESS_URL = os.environ.get(
+    "SITE_GOOGLE_BUSINESS_URL",
+    "https://maps.google.com/?cid=12612488944410548572",
+)
+
+# Other profiles that prove the entity, comma-separated to override.
+# Companies House is the strongest: a UK company number is unambiguous proof
+# this is not "Luma Tech Solutions Canada Ltd" of Burnaby BC. Worth adding
+# later: Checkatrade, Which? Trusted Traders, Trustpilot, LinkedIn company page.
+SITE_EXTRA_SAME_AS = [
+    url.strip()
+    for url in os.environ.get(
+        "SITE_EXTRA_SAME_AS",
+        "https://find-and-update.company-information.service.gov.uk/company/12644409",
+    ).split(",")
+    if url.strip()
+]
+
+# Registered name and number, emitted as legalName + a Companies House
+# identifier on the Organization node. The trading name ("Luma Tech
+# Solutions") and the registered name differ only by the suffix, but stating
+# both explicitly is what lets a crawler tie the site to the filing.
+SITE_LEGAL_NAME = "Luma Tech Solutions Ltd"
+SITE_COMPANY_NUMBER = os.environ.get("SITE_COMPANY_NUMBER", "12644409")
 SITE_TOWNS = [
     "Marlow",
     "Maidenhead",

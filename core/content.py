@@ -1011,8 +1011,6 @@ SERVICE_PAGES = {
             "and geofenced recording. Footage stays on your kit."
         ),
         "service_name": "AI Camera Systems",
-        # Was "CCTV Installation" — identical to the security page's, which
-        # told crawlers the two pages offer the same service.
         "service_type": "AI Camera & ANPR Installation",
         "service_description": (
             "AI camera systems with on-device person, vehicle, package, "
@@ -1045,6 +1043,28 @@ SERVICE_PAGES = {
 }
 
 
+# Town landing pages.
+#
+# Search-intent rule, applied here and in SERVICE_PAGES: an area page owns the
+# "[service] [town]" queries; the matching /services/<x>/ page owns the
+# ungeographic head term. That is why no page_title in SERVICE_PAGES names a
+# town any more, and why every page_title here does.
+#
+# Google treats town-name-swapped boilerplate as doorway pages, so four fields
+# below are required to be genuinely town-specific and are enforced by
+# ``core.checks.area_pages_have_local_detail``:
+#
+#   local_areas       — named neighbourhoods, villages and roads we actually
+#                       cover from this town. Not the town itself.
+#   housing_stock     — what the building fabric here does to a network, in
+#                       terms that only apply to this town.
+#   service_emphasis  — which service leads in this town and why.
+#   example_jobs      — real jobs, described without naming the client.
+#                       NEVER invent these. A "TODO:" entry is skipped by the
+#                       template and reported by the deploy check.
+#
+# A "TODO:" prefix on any of these is a placeholder awaiting real local copy.
+
 AREA_PAGES = {
     "marlow": {
         "template": "areas/marlow.html",
@@ -1065,8 +1085,9 @@ AREA_PAGES = {
             {"url_name": "area_maidenhead", "label": "Maidenhead"},
             {"url_name": "area_henley", "label": "Henley-on-Thames"},
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+            {"url_name": "area_high_wycombe", "label": "High Wycombe"},
         ],
-        "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
+        "also_serving_tail": "Bourne End, Cookham.",
         "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Marlow",
         "schema_description": (
             "Local Marlow engineer for Wi-Fi installation, CCTV, smart-home "
@@ -1084,6 +1105,28 @@ AREA_PAGES = {
             "Local engineer, fixed-price quotes."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
+        "local_areas": [
+            "Marlow High Street",
+            "Marlow Bottom",
+            "Munday Dean",
+            "Quarry Wood",
+            "Little Marlow",
+            "Bisham",
+        ],
+        "housing_stock": (
+            "Period stock around the High Street and Quarry Wood — thick "
+            "walls, lath-and-plaster, foil-backed insulation — alongside "
+            "larger modern detached houses up the hill that are simply too "
+            "big for a single router to cover."
+        ),
+        "service_emphasis": (
+            "Whole-property Wi-Fi leads here, typically three to eleven "
+            "access points depending on the size and shape of the property."
+        ),
+        "example_jobs": [
+            "TODO: describe a real Marlow job — property type, what was "
+            "wrong, what we installed, what changed. No client names.",
+        ],
     },
     "maidenhead": {
         "template": "areas/maidenhead.html",
@@ -1104,8 +1147,9 @@ AREA_PAGES = {
             {"url_name": "area_marlow", "label": "Marlow"},
             {"url_name": "area_henley", "label": "Henley-on-Thames"},
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+            {"url_name": "area_high_wycombe", "label": "High Wycombe"},
         ],
-        "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
+        "also_serving_tail": "Cookham, Bourne End.",
         "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Maidenhead",
         "schema_description": (
             "Whole-property UniFi networks, CCTV and smart-home design for "
@@ -1120,6 +1164,31 @@ AREA_PAGES = {
             "Fixed-price quotes from a local engineer."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
+        "local_areas": [
+            "Furze Platt",
+            "Boyn Hill",
+            "Cox Green",
+            "Bray",
+            "Holyport",
+        ],
+        "housing_stock": (
+            "A lot of larger detached properties across Furze Platt, Boyn "
+            "Hill, Cox Green, Bray and Holyport, plus a stock of period stone "
+            "and brick around the High Street. Both punish consumer mesh kit "
+            "for different reasons — floor area in one case, wall fabric in "
+            "the other."
+        ),
+        "service_emphasis": (
+            "Whole-property networks for large floorplans — the biggest "
+            "installs we do, running to eleven access points and multiple "
+            "distribution switches."
+        ),
+        "example_jobs": [
+            "LittleWick House — four floors plus cellar, garage and a "
+            "separate annex. Eleven access points, three distribution "
+            "switches, a Dream Machine Pro at the core and three VLANs "
+            "separating home, IoT and guest traffic.",
+        ],
         # The only area page with a case study.
         "featured_case_slug": "littlewick-house",
     },
@@ -1143,8 +1212,9 @@ AREA_PAGES = {
             {"url_name": "area_marlow", "label": "Marlow"},
             {"url_name": "area_maidenhead", "label": "Maidenhead"},
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+            {"url_name": "area_high_wycombe", "label": "High Wycombe"},
         ],
-        "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
+        "also_serving_tail": "Cookham, Bourne End.",
         "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Henley-on-Thames",
         "schema_description": (
             "Wi-Fi, CCTV and smart-home design for period homes and riverside "
@@ -1161,6 +1231,30 @@ AREA_PAGES = {
             "Hambleden and Mill End. Local Marlow engineer."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
+        "local_areas": [
+            "Remenham",
+            "Hambleden",
+            "Mill End",
+            "Aston",
+            "Bix",
+            "Hart Street",
+        ],
+        "housing_stock": (
+            "Georgian townhouses, Victorian semis and listed riverside "
+            "boathouses in the town centre, where double-skin stone and "
+            "cast-iron radiators absorb everything a single router puts out. "
+            "Push out toward Remenham, Hambleden, Aston or up toward Bix and "
+            "the houses get bigger and the floor plans more rambling."
+        ),
+        "service_emphasis": (
+            "Period-property Wi-Fi where mounts and cable runs have to stay "
+            "discreet on the façade — typically four to ten access points, "
+            "often including a boathouse or garden office."
+        ),
+        "example_jobs": [
+            "TODO: describe a real Henley job — property type, what was "
+            "wrong, what we installed, what changed. No client names.",
+        ],
     },
     "beaconsfield": {
         "template": "areas/beaconsfield.html",
@@ -1183,8 +1277,9 @@ AREA_PAGES = {
             {"url_name": "area_marlow", "label": "Marlow"},
             {"url_name": "area_maidenhead", "label": "Maidenhead"},
             {"url_name": "area_henley", "label": "Henley-on-Thames"},
+            {"url_name": "area_high_wycombe", "label": "High Wycombe"},
         ],
-        "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
+        "also_serving_tail": "Bourne End, Cookham.",
         "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Beaconsfield",
         "schema_description": (
             "UniFi Wi-Fi, CCTV and smart-home installation for the larger "
@@ -1199,7 +1294,172 @@ AREA_PAGES = {
             "Holtspur. Local Marlow engineer, fixed-price quotes."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
+        "local_areas": [
+            "Beaconsfield Old Town",
+            "Beaconsfield New Town",
+            "Knotty Green",
+            "Holtspur",
+            "Forty Green",
+        ],
+        "housing_stock": (
+            "Two distinct halves: the Old Town's period and listed stock, and "
+            "the larger inter-war and modern detached houses spreading out "
+            "through Knotty Green, Holtspur and Forty Green. The Old Town "
+            "constrains where kit can go; the New Town simply has more floor "
+            "area than one router can reach."
+        ),
+        "service_emphasis": (
+            "An even split between homes and small businesses — networking "
+            "and security together, with ongoing support behind them."
+        ),
+        "example_jobs": [
+            "TODO: describe a real Beaconsfield job — property type, what was "
+            "wrong, what we installed, what changed. No client names.",
+        ],
     },
+    "high_wycombe": {
+        "template": "areas/high_wycombe.html",
+        "url_name": "area_high_wycombe",
+        "source": "area-high-wycombe",
+        "quote_label": "High Wycombe",
+        "engineer_note": "based 20 minutes away in Marlow",
+        "survey_note": (
+            "Site surveys typically within 5 working days for High Wycombe "
+            "postcodes (HP10–HP15 and surrounding)."
+        ),
+        "included": [
+            "On-site survey",
+            "Fixed-price proposal",
+            "Plain-English documentation",
+            "30 days post-install support",
+        ],
+        "also_serving": [
+            {"url_name": "area_marlow", "label": "Marlow"},
+            {"url_name": "area_maidenhead", "label": "Maidenhead"},
+            {"url_name": "area_henley", "label": "Henley-on-Thames"},
+            {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
+        ],
+        "also_serving_tail": "Bourne End, Cookham.",
+        "schema_name": "Wi-Fi, CCTV and Smart Home Installation in High Wycombe",
+        "schema_description": (
+            "UniFi Wi-Fi, CCTV and smart-home installation for homes and "
+            "small businesses across High Wycombe, Hazlemere, Downley and "
+            "the surrounding Chiltern villages."
+        ),
+        "town": "High Wycombe",
+        "page_title": "Wi-Fi, CCTV & Smart Home Installation in High Wycombe | Luma Tech",
+        "page_description": (
+            "UniFi Wi-Fi, CCTV and smart-home installation for homes and "
+            "small businesses in High Wycombe, Hazlemere and Downley. Local "
+            "Marlow engineer, fixed-price quotes."
+        ),
+        "h1_lead": "Wi-Fi, CCTV and smart home installation in",
+        # TODO: replace the placeholders below with real local detail before
+        # this page goes live. `manage.py check --deploy` reports every one.
+        "local_areas": [
+            "Hazlemere",
+            "Downley",
+            "TODO: add the other High Wycombe areas you actually cover — "
+            "e.g. Tylers Green, Loudwater, Sands, Totteridge, Booker.",
+        ],
+        "housing_stock": (
+            "TODO: describe what High Wycombe's building fabric does to a "
+            "network, in terms that do not also apply to Marlow or "
+            "Beaconsfield. The valley topography, the post-war estates, the "
+            "Chiltern villages on the ridges — whatever you actually see on "
+            "site. This paragraph is what stops the page reading as a "
+            "town-name-swapped copy of another one."
+        ),
+        "service_emphasis": (
+            "TODO: which service leads in High Wycombe, and why? If it is "
+            "small-business IT support rather than large-home Wi-Fi, say so "
+            "— a genuine difference in emphasis is the point."
+        ),
+        "example_jobs": [
+            "TODO: describe a real High Wycombe job — property or business "
+            "type, what was wrong, what we installed, what changed. No "
+            "client names. Do not publish this page without at least one.",
+        ],
+    },
+}
+
+
+# The AREA_PAGES fields that must be genuinely town-specific. Swap the town
+# name in and these are what stop the page reading as boilerplate.
+AREA_LOCAL_DETAIL_FIELDS = (
+    "local_areas",
+    "housing_stock",
+    "service_emphasis",
+    "example_jobs",
+)
+
+# The subset that decides whether a page is fit to be indexed at all.
+#
+# example_jobs is deliberately NOT in here. Named example jobs are the best
+# proof a town page can carry and the check nags for them, but three of these
+# pages have been live and indexed for months without any — gating indexing on
+# a field they have never had would deindex working pages to enforce a
+# standard invented after they shipped. These three are what actually
+# distinguish one town page from another.
+AREA_INDEXABILITY_FIELDS = (
+    "local_areas",
+    "housing_stock",
+    "service_emphasis",
+)
+
+
+def _placeholders_in(page, fields):
+    outstanding = []
+    for field in fields:
+        value = page[field]
+        values = value if isinstance(value, list) else [value]
+        if any(v.startswith("TODO:") for v in values):
+            outstanding.append(field)
+    return outstanding
+
+
+def area_placeholder_fields(page):
+    """Which local-detail fields on an AREA_PAGES entry are still TODO."""
+    return _placeholders_in(page, AREA_LOCAL_DETAIL_FIELDS)
+
+
+def area_is_draft(page):
+    """True while a town page has no real local copy to distinguish it.
+
+    A draft area page is served (so it can be previewed and linked) but is
+    noindexed and kept out of sitemap.xml. Publishing a page whose local
+    detail is unwritten is exactly the doorway-page pattern this rework
+    exists to avoid — and it flips live automatically once the copy lands,
+    with no second deploy step to forget.
+    """
+    return bool(_placeholders_in(page, AREA_INDEXABILITY_FIELDS))
+
+
+# Per-page sitemap lastmod, keyed by URL name. Anything absent falls back to
+# settings.SITE_STATIC_LASTMOD, which is the right answer for pages that only
+# move when the whole site does (/terms/, /privacy/, /careers/).
+#
+# Bump the entry for a page when you meaningfully change *that page's*
+# content. Stamping every page with one shared date is what makes lastmod
+# worthless — Google learns the field carries no information and ignores it.
+PAGE_LASTMOD = {
+    # Local-SEO overhaul: retitled, relinked, security hub split out.
+    "home": "2026-08-15",
+    "service_security": "2026-08-15",
+    "service_cctv": "2026-08-15",
+    "service_access_control": "2026-08-15",
+    "service_alarms": "2026-08-15",
+    "service_networking": "2026-08-15",
+    "service_automation": "2026-08-15",
+    "service_ai_cameras": "2026-08-15",
+    "service_support": "2026-08-15",
+    "service_development": "2026-08-15",
+    "areas": "2026-08-15",
+    "area_marlow": "2026-08-15",
+    "area_maidenhead": "2026-08-15",
+    "area_henley": "2026-08-15",
+    "area_beaconsfield": "2026-08-15",
+    "area_high_wycombe": "2026-08-15",
 }
 
 

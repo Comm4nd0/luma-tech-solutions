@@ -17,7 +17,14 @@
   <title>{% block title %}{{ page_title|default:SITE_NAME }}{% endblock %}</title>
   <meta name="description" content="{% block description %}{{ page_description|default:SITE_TAGLINE }}{% endblock %}" />
   <meta name="theme-color" content="#f7f9fc" />
-  {% block robots %}<meta name="robots" content="index, follow" />{% endblock %}
+  {% comment %}
+  `page_noindex` is for pages that exist and are linked but are not ready to
+  be indexed — e.g. an area page still carrying placeholder local copy.
+  Pages that must NEVER be indexed (the thanks pages) override the whole
+  block instead. Django only strips {# #} comments that fit on one line, so
+  this has to be a {% comment %} block or it renders into the <head>.
+  {% endcomment %}
+  {% block robots %}<meta name="robots" content="{% if page_noindex %}noindex, follow{% else %}index, follow{% endif %}" />{% endblock %}
 
   <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
   <meta property="og:site_name" content="{{ SITE_NAME }}" />
@@ -72,16 +79,32 @@
       {
         "@type": "Organization",
         "@id": "{{ SITE_URL }}#org",
-        "name": "{{ SITE_NAME|escapejs }}",
+        "name": "{{ SITE_NAME|escapejs }}",{% if SITE_LEGAL_NAME %}
+        "legalName": "{{ SITE_LEGAL_NAME|escapejs }}",{% endif %}{% if SITE_COMPANY_NUMBER %}
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "GB-COH",
+          "name": "Companies House company number",
+          "value": "{{ SITE_COMPANY_NUMBER|escapejs }}"
+        },{% endif %}
         "url": "{{ SITE_URL }}",
         "email": "{{ SITE_EMAIL|escapejs }}",
         "telephone": "{{ SITE_PHONE_E164|escapejs }}",
         "logo": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
         "founder": { "@id": "{{ SITE_URL }}#founder" },
+        {% comment %}
+        sameAs is the entity-disambiguation list. "Luma Tech Solutions Canada
+        Ltd" (LED lighting, Burnaby BC) outranks this site for its own brand,
+        so the Google Business Profile URL matters more than the socials do —
+        set SITE_GOOGLE_BUSINESS_URL. Empty settings are skipped rather than
+        emitted blank; `manage.py check --deploy` reports what is missing.
+        {% endcomment %}
         "sameAs": [
           "https://www.facebook.com/profile.php?id=61560720497065",
           "https://www.instagram.com/luma_tech_solutions/"{% if SITE_LINKEDIN %},
-          "{{ SITE_LINKEDIN|escapejs }}"{% endif %}
+          "{{ SITE_LINKEDIN|escapejs }}"{% endif %}{% if SITE_GOOGLE_BUSINESS_URL %},
+          "{{ SITE_GOOGLE_BUSINESS_URL|escapejs }}"{% endif %}{% for url in SITE_EXTRA_SAME_AS %},
+          "{{ url|escapejs }}"{% endfor %}
         ]
       },
       {
@@ -94,12 +117,27 @@
         "image": "{{ SITE_URL }}{% static 'img/favicon.svg' %}",
         "parentOrganization": { "@id": "{{ SITE_URL }}#org" },
         "priceRange": "££",
+        {% comment %}
+        Service-area business: no premises a client visits, so the address
+        stops at locality/region/country and the street, postcode and geo
+        fields stay unset. See the note in settings.py — publishing an
+        address that contradicts a service-area Google Business Profile is
+        worse than publishing none.
+        {% endcomment %}
         "address": {
-          "@type": "PostalAddress",
+          "@type": "PostalAddress",{% if SITE_STREET_ADDRESS %}
+          "streetAddress": "{{ SITE_STREET_ADDRESS|escapejs }}",{% endif %}
           "addressLocality": "{{ SITE_BASE_TOWN|escapejs }}",
-          "addressRegion": "Buckinghamshire",
+          "addressRegion": "Buckinghamshire",{% if SITE_POSTAL_CODE %}
+          "postalCode": "{{ SITE_POSTAL_CODE|escapejs }}",{% endif %}
           "addressCountry": "GB"
-        },
+        },{% if SITE_GEO_LATITUDE and SITE_GEO_LONGITUDE %}
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "{{ SITE_GEO_LATITUDE|escapejs }}",
+          "longitude": "{{ SITE_GEO_LONGITUDE|escapejs }}"
+        },{% endif %}{% if SITE_GOOGLE_BUSINESS_URL %}
+        "hasMap": "{{ SITE_GOOGLE_BUSINESS_URL|escapejs }}",{% endif %}
         "areaServed": [{% for town in SITE_TOWNS %}
           { "@type": "City", "name": "{{ town|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}{% for county in SITE_COUNTIES %},
           { "@type": "AdministrativeArea", "name": "{{ county|escapejs }}" }{% endfor %}

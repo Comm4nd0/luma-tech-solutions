@@ -16,6 +16,7 @@ from django.views.decorators.http import require_http_methods
 from .content import (
     AREA_PAGES,
     CARE_TIERS,
+    area_is_draft,
     CASE_STUDIES,
     FAQS_AI_CAMERAS,
     FAQS_CONSTRUCTION,
@@ -278,7 +279,19 @@ def _render_area_page(request, key):
         ),
         town=page["town"],
         area_url=reverse(page["url_name"]),
+        area_h1_lead=page["h1_lead"],
+        area_local_areas=page["local_areas"],
+        area_housing_stock=page["housing_stock"],
+        area_service_emphasis=page["service_emphasis"],
+        # Placeholders are dropped rather than published. core.checks reports
+        # every one that is still outstanding at deploy time.
+        area_example_jobs=[
+            job for job in page["example_jobs"] if not job.startswith("TODO:")
+        ],
         area_service_links=_area_service_links(),
+        # Served, linkable and previewable — but not offered to Google until
+        # the local copy is real. Flips by itself when the TODOs are cleared.
+        page_noindex=area_is_draft(page),
         area_source=page["source"],
         area_quote_label=page["quote_label"],
         area_engineer_note=page["engineer_note"],
@@ -795,25 +808,6 @@ def area_marlow(request):
 
 def area_maidenhead(request):
     return _render_area_page(request, "maidenhead")
-    return render(
-        request,
-        "areas/maidenhead.html",
-        _base_context(
-            active="services",
-            page_title="Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
-            page_description=(
-                "Whole-property UniFi networks, CCTV and smart-home design "
-                "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green."
-            ),
-            breadcrumbs=_crumbs(
-                ("Home", "home"),
-                ("Areas", "areas"),
-                ("Maidenhead", "area_maidenhead"),
-            ),
-            town="Maidenhead",
-            featured_case=featured,
-        ),
-    )
 
 
 def terms(request):
@@ -859,6 +853,10 @@ def area_henley(request):
 
 def area_beaconsfield(request):
     return _render_area_page(request, "beaconsfield")
+
+
+def area_high_wycombe(request):
+    return _render_area_page(request, "high_wycombe")
 
 
 # --- Quote request ---

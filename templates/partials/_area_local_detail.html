@@ -1,0 +1,33 @@
+{% comment %}
+The town-specific block every area page carries.
+
+This exists because the fields it renders are the ones that have to be
+genuinely different per town — swap the town name into a page and if this
+block still reads the same, Google is looking at a doorway page. They come
+from AREA_PAGES in core/content.py and are policed by
+core.checks.area_pages_have_local_detail.
+
+`area_example_jobs` arrives with TODO placeholders already filtered out by the
+view, so the section simply does not render until real jobs are written. That
+is deliberate: an empty section is honest, an invented one is not.
+
+The reciprocal service links live in _area_service_links.html — that block is
+part of the internal-linking mesh and changes for different reasons than this.
+{% endcomment %}
+<h2 class="mt-4">Where we work in {{ town }}</h2>
+<p>{{ area_housing_stock }}</p>
+<ul class="bullets">
+  {% for place in area_local_areas %}
+  <li>{{ place }}</li>
+  {% endfor %}
+</ul>
+<p class="mt-3">{{ area_service_emphasis }}</p>
+
+{% if area_example_jobs %}
+<h2 class="mt-4">Recent {{ town }} work</h2>
+<ul class="bullets">
+  {% for job in area_example_jobs %}
+  <li>{{ job }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
