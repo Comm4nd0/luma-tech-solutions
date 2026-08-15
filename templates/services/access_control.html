@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %}
+Access control — split out of the /services/security/ hub, where it was one
+h2 among five and had no chance of ranking for "access control installer".
+The bullet list moved verbatim; the surrounding framing is new.
+{% endcomment %}
+
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>One dashboard, with the network and CCTV</span>
+        <h1>Access control that <span class="gradient">knows who came in.</span></h1>
+        <p class="lede">
+          Door readers, gate intercoms, phone-based unlocks and visitor codes
+          for businesses, shared sites and larger homes — installed on the
+          same managed dashboard as your network and cameras, so an entry
+          event and the footage of it sit side by side.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        <div class="hero-photo" style="background-image:url('{% static 'img/services/security.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Door entry reader beside a commercial entrance"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Access control</h2>
+        <p>
+          For businesses and shared sites we install commercial-grade access
+          control — door readers, phone-based unlocks and tap-to-enter
+          cards, all on the same dashboard as your network and CCTV.
+        </p>
+        <ul class="bullets">
+          <li><strong>Gate intercoms</strong> — video doorbells or commercial intercoms with two-way audio and remote unlock.</li>
+          <li><strong>Visitor management</strong> — temporary access codes for tradespeople and Airbnb guests, with a photo at entry and a record of who came in when.</li>
+          <li><strong>Time-based rules</strong> — the cleaner gets 8–10am Monday only, automatically.</li>
+          <li><strong>Phone-based keys</strong> — your phone unlocks the door; fobs as backup. Revoke instantly when staff leave.</li>
+        </ul>
+
+        <h2 class="mt-4">Where it earns its keep</h2>
+        <ul class="bullets">
+          <li><strong>Staff turnover</strong> — revoking a phone key takes seconds. Recovering a lost fob, or rekeying a lock, does not.</li>
+          <li><strong>Shared and multi-tenant sites</strong> — each tenant, contractor and cleaner gets their own credential and their own audit trail.</li>
+          <li><strong>Gated properties</strong> — remote unlock from your phone whether you are upstairs or abroad, with two-way audio at the gate.</li>
+          <li><strong>Deliveries</strong> — a time-limited code and a photo at entry, instead of a key under a plant pot.</li>
+        </ul>
+
+        <h2 class="mt-4">Integrated, not bolted on</h2>
+        <p>
+          Access control installed in isolation gives you a second app, a
+          second login and a second set of logs that never quite line up with
+          the cameras. We put entry events and camera footage on one system,
+          so "who opened the back door at 6:40" is one search rather than a
+          reconciliation exercise. The network segmentation that keeps the
+          readers off your office LAN is part of the same design —
+          <a href="{% url 'service_networking' %}">see how we build the network</a>.
+        </p>
+
+        <h2 class="mt-4">How a project comes together</h2>
+        <p>
+          Every install is quoted from a site visit. We walk the doors and
+          gates, work out what needs a reader and what needs an intercom, and
+          write up a fixed-price proposal covering hardware, labour, cabling
+          and timeline — no day rates, no scope creep.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Start here</h4>
+        <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>On-site survey</li>
+          <li>Fixed-price proposal</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also in physical security</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li><a href="{% url 'service_cctv' %}">CCTV installation</a></li>
+          <li><a href="{% url 'service_alarms' %}">Intruder alarms</a></li>
+          <li><a href="{% url 'service_ai_cameras' %}">AI cameras &amp; ANPR</a></li>
+          <li><a href="{% url 'service_security' %}">Security overview</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_areas_served.html' %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Need to control who gets in?' cta_copy='Tell us which doors and gates matter and who needs access to what. We will walk the site and quote it fixed-price.' cta_source='service-access-control-bottom' %}
+{% endblock %}

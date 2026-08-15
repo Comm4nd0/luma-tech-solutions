@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %}
+Intruder alarms — split out of the /services/security/ hub. The bullet list
+moved verbatim; the surrounding framing is new.
+{% endcomment %}
+
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>Arms itself, and tells you why</span>
+        <h1>Intruder alarms that <span class="gradient">send you the picture.</span></h1>
+        <p class="lede">
+          Contacts, motion and glass-break sensors wired into the same
+          dashboard as your cameras — so when the alarm fires you get a
+          camera still with the notification and can tell a fox from a
+          footprint before you call anyone.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        <div class="hero-photo" style="background-image:url('{% static 'img/services/security.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Alarm sensor mounted beside a door frame"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>Intruder alarms</h2>
+        <p>
+          Ring Alarm Pro for residential, commercial-grade panels for
+          businesses. Wired into the same Home Assistant or UniFi dashboard
+          your CCTV runs on, so events flow together.
+        </p>
+        <ul class="bullets">
+          <li>Door / window contacts, motion sensors, glass-break sensors.</li>
+          <li><strong>Auto-arm on leave</strong> — when the last phone leaves the geofence, the system arms itself.</li>
+          <li><strong>Notifications with snapshots</strong> — you get a camera still at the moment the alarm fires, so you know whether it's a fox or a foot.</li>
+          <li>Cellular backup keeps it working even if the internet is down.</li>
+        </ul>
+
+        <h2 class="mt-4">Why false alarms matter</h2>
+        <p>
+          An alarm that cries wolf gets switched off, and an alarm that is
+          switched off protects nothing. Most of the work in a good install is
+          in sensor placement and in pairing every trigger with a camera view,
+          so the notification carries enough information to act on. That is
+          also why we arm on geofence rather than on a keypad routine nobody
+          keeps up — the system does the remembering.
+        </p>
+
+        <h2 class="mt-4">Alongside the cameras, not instead of them</h2>
+        <p>
+          An alarm tells you something happened. A camera tells you what.
+          Installed together on one dashboard they answer both questions in
+          one place — see <a href="{% url 'service_cctv' %}">CCTV installation</a>
+          for how we design the camera side, and
+          <a href="{% url 'service_access_control' %}">access control</a> if
+          entry credentials are part of the picture.
+        </p>
+
+        <h2 class="mt-4">How a project comes together</h2>
+        <p>
+          Every install is quoted from a site visit. We walk the property,
+          work out which openings and zones actually need covering, and write
+          up a fixed-price proposal covering hardware, labour, cabling and
+          timeline — no day rates, no scope creep.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Start here</h4>
+        <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>On-site survey</li>
+          <li>Fixed-price proposal</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also in physical security</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li><a href="{% url 'service_cctv' %}">CCTV installation</a></li>
+          <li><a href="{% url 'service_access_control' %}">Access control</a></li>
+          <li><a href="{% url 'service_ai_cameras' %}">AI cameras &amp; ANPR</a></li>
+          <li><a href="{% url 'service_security' %}">Security overview</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_areas_served.html' %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Alarm going off for no reason?' cta_copy='Tell us what you have and what keeps triggering it. We will look at placement, pair it with the cameras and quote the fix fixed-price.' cta_source='service-alarms-bottom' %}
+{% endblock %}

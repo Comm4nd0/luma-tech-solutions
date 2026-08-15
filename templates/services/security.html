@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% comment %}
+Physical security hub.
+
+This page used to carry CCTV, access control, alarms, cyber security and
+camera placement in one scroll, under a title naming three towns. It was the
+site's top page by impressions and its worst by position — one URL bidding
+for "cctv installation", "access control installer" and every town variant of
+both. The specifics now live on child pages; this page keeps the URL, the
+inbound links and the job of routing people to the right one.
+
+The cyber-security section stays here deliberately: it has no child page, and
+it is the part that explains why the physical and network sides are designed
+together.
+{% endcomment %}
+
 {% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
 
 {% block content %}
@@ -26,80 +41,62 @@
 
 <section class="tight">
   <div class="container">
+    <div class="section-head fade-in">
+      <span class="eyebrow"><span class="dot"></span>Where to start</span>
+      <h2>Four ways in, one design.</h2>
+      <p class="lede">
+        Most projects start with one of these and grow into two or three.
+        Whichever you come for, the survey covers the lot — it is cheaper to
+        pull the cable once.
+      </p>
+    </div>
+
+    <div class="feature-grid fade-in">
+      <div class="feature">
+        <h4>CCTV installation</h4>
+        <p>
+          UniFi Protect cameras recording to a box at your property, with
+          on-device person, vehicle and package detection and no monthly
+          cloud subscription.
+          <a href="{% url 'service_cctv' %}">More about CCTV installation →</a>
+        </p>
+      </div>
+      <div class="feature">
+        <h4>Access control</h4>
+        <p>
+          Door readers, gate intercoms, phone-based keys and time-limited
+          visitor codes — with an audit trail that lines up with the camera
+          footage.
+          <a href="{% url 'service_access_control' %}">More about access control →</a>
+        </p>
+      </div>
+      <div class="feature">
+        <h4>Intruder alarms</h4>
+        <p>
+          Contacts, motion and glass-break sensors that arm themselves on
+          geofence and send a camera still with every alert, with cellular
+          backup behind them.
+          <a href="{% url 'service_alarms' %}">More about intruder alarms →</a>
+        </p>
+      </div>
+      <div class="feature">
+        <h4>AI cameras &amp; ANPR</h4>
+        <p>
+          Number-plate capture, scheduled recording and geofenced arming for
+          construction sites, families and small businesses — with the
+          privacy controls documented up front.
+          <a href="{% url 'service_ai_cameras' %}">More about AI camera systems →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
     <div class="service-grid">
       <div>
-        <h2>CCTV &amp; video surveillance</h2>
-        <div class="tech-inline">
-          <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='ubiquiti' %} UniFi Protect</span>
-          <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='home-assistant' %} Home Assistant</span>
-        </div>
-        <p>
-          We design and install <strong>UniFi Protect</strong> CCTV — a
-          local-recording system with no monthly cloud subscription. Footage
-          stays on your kit, and you keep full control.
-        </p>
-
-        <div class="media-banner" style="background-image:url('https://images.pexels.com/photos/9739769/pexels-photo-9739769.jpeg?auto=compress&cs=tinysrgb&w=1200'),linear-gradient(160deg,#0d9488,#155e63);margin:1.25rem 0 .5rem;" role="img" aria-label="UniFi Protect CCTV camera"></div>
-
-        <h3 class="mt-3">Cameras we typically install</h3>
-        <ul class="bullets">
-          <li><strong>UniFi G5 Bullet</strong> — the workhorse exterior camera. Discreet, weatherproof, sharp.</li>
-          <li><strong>UniFi AI Pro</strong> — 4K with on-device person, vehicle and package detection. Fewer false alerts, smarter notifications.</li>
-          <li><strong>UniFi AI 360</strong> — panoramic ceiling-mount for forecourts, large rooms or open courtyards.</li>
-          <li><strong>UniFi G4 Instant</strong> — small, magnetic interior camera for blind-spots, garages or workshops.</li>
-        </ul>
-
-        <h3 class="mt-3">What you get</h3>
-        <ul class="bullets">
-          <li><strong>Carefully planned camera placement</strong> — coverage angles checked on site before a single hole is drilled.</li>
-          <li><strong>A recorder that lives in your house</strong> — small for homes, rack-mount for larger sites. Footage stays with you.</li>
-          <li><strong>Smart detection</strong> — the cameras tell person from vehicle from delivery, on the camera itself, so notifications mean something.</li>
-          <li><strong>View from anywhere</strong> — secure phone, tablet or web access. Your footage never goes through a third-party cloud.</li>
-        </ul>
-
-        <h3 class="mt-4">On-device AI, no cloud needed</h3>
-        <p>
-          The newer UniFi cameras run their detection AI on the camera
-          itself — there's a small neural processor inside each unit.
-          That means notifications are smart from day one, your footage
-          never leaves your network so an AI can "look at it", and
-          there's no monthly cloud bill paying for it.
-        </p>
-        <ul class="bullets">
-          <li><strong>Person, vehicle, package</strong> — the most useful classes, on every AI-capable camera. So the doorbell stops alerting on every leaf that blows past.</li>
-          <li><strong>Number plate recognition</strong> on AI Pro and AI LPR units — log every vehicle that comes up the drive, with the plate searchable later.</li>
-          <li><strong>Smart Detection Search</strong> — "show me every person who came through the gate yesterday between 4 and 6pm" returns a few clips, not three hours of footage.</li>
-          <li><strong>Face recognition (optional, opt-in)</strong> — the system learns the people who live there and stops alerting on them, so the alerts that <em>do</em> come through are meaningful.</li>
-          <li><strong>Animal detection</strong> — useful if you'd rather not get woken up because the fox is back.</li>
-        </ul>
-
-        <h2 class="mt-4">Access control</h2>
-        <p>
-          For businesses and shared sites we install commercial-grade access
-          control — door readers, phone-based unlocks and tap-to-enter
-          cards, all on the same dashboard as your network and CCTV.
-        </p>
-        <ul class="bullets">
-          <li><strong>Gate intercoms</strong> — video doorbells or commercial intercoms with two-way audio and remote unlock.</li>
-          <li><strong>Visitor management</strong> — temporary access codes for tradespeople and Airbnb guests, with a photo at entry and a record of who came in when.</li>
-          <li><strong>Time-based rules</strong> — the cleaner gets 8–10am Monday only, automatically.</li>
-          <li><strong>Phone-based keys</strong> — your phone unlocks the door; fobs as backup. Revoke instantly when staff leave.</li>
-        </ul>
-
-        <h2 class="mt-4">Intruder alarms</h2>
-        <p>
-          Ring Alarm Pro for residential, commercial-grade panels for
-          businesses. Wired into the same Home Assistant or UniFi dashboard
-          your CCTV runs on, so events flow together.
-        </p>
-        <ul class="bullets">
-          <li>Door / window contacts, motion sensors, glass-break sensors.</li>
-          <li><strong>Auto-arm on leave</strong> — when the last phone leaves the geofence, the system arms itself.</li>
-          <li><strong>Notifications with snapshots</strong> — you get a camera still at the moment the alarm fires, so you know whether it's a fox or a foot.</li>
-          <li>Cellular backup keeps it working even if the internet is down.</li>
-        </ul>
-
-        <h2 class="mt-4">Cyber security</h2>
+        <h2>Cyber security</h2>
         <p>
           Most "smart home" break-ins don't come through a window — they
           come through a forgotten smart bulb or doorbell that shares
@@ -114,20 +111,11 @@
           <li><strong>Secure remote access</strong> — a private encrypted tunnel lets you reach things at home from anywhere, without opening any doors to the wider internet.</li>
           <li><strong>For businesses: every cable port authenticated</strong> — an unknown laptop plugged into an empty socket gets exactly nothing.</li>
         </ul>
-
-        <h2 class="mt-4">Camera placement, done right</h2>
-        <p>
-          Cameras are easy to mount, hard to <em>place</em>. Before we drill,
-          we walk the property, sketch coverage zones, check sightlines and
-          identify blind spots — so cameras are positioned to actually see
-          what matters and not just the back of a hedge.
+        <p class="mt-3">
+          The segmentation that does this is part of the network design, not
+          an add-on afterwards —
+          <a href="{% url 'service_networking' %}">see how we build the network</a>.
         </p>
-        <ul class="bullets">
-          <li>Coverage zones planned with line-of-sight verified room-by-room.</li>
-          <li>Blind spots identified <em>before</em> the install, not after.</li>
-          <li>Cable runs pre-planned, so install day is shorter and tidier.</li>
-          <li>A written placement plan handed over with the runbook.</li>
-        </ul>
 
         <h2 class="mt-4">How a project comes together</h2>
         <p>
@@ -139,11 +127,7 @@
       </div>
 
       <aside class="sidebar fade-in">
-        <h4>Looking for AI cameras &amp; ANPR?</h4>
-        <p>Smart cameras with on-device person, vehicle, package and number-plate recognition — for homes, families and construction sites. Privacy controls built in.</p>
-        <a href="{% url 'service_ai_cameras' %}" class="btn btn-ghost btn-sm">Read about AI Camera Systems &rarr;</a>
-
-        <h4 style="margin-top:1.5rem;">Start here</h4>
+        <h4>Start here</h4>
         <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
         <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
 
@@ -154,14 +138,16 @@
           <li>Plain-English documentation</li>
           <li>30 days post-install support</li>
         </ul>
+
+        <h4 style="margin-top:1.5rem;">Building something?</h4>
+        <p>Site CCTV and gate ANPR for the duration of a build, plus per-plot pre-wire packages.</p>
+        <a href="{% url 'construction' %}" class="btn btn-ghost btn-sm">Builders &amp; construction &rarr;</a>
       </aside>
     </div>
   </div>
 </section>
 
 {% include 'partials/_areas_served.html' %}
-
-{% include 'partials/_faqs.html' with faqs=faqs %}
 
 {% include 'partials/_cta_banner.html' with cta_title='Worried about a specific risk?' cta_copy='Tell us what you are trying to protect — a property, a business, a server room. We will tell you, honestly, what is worth doing and what is theatre. Free site survey, fixed-price quote.' cta_source='service-security-bottom' %}
 {% endblock %}

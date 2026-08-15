@@ -8,7 +8,16 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("services/", views.services_overview, name="services"),
     path("services/networking/", views.service_networking, name="service_networking"),
+    # /services/security/ stays put as a hub — it keeps every inbound link it
+    # has earned. The three children below are new URLs, so nothing 301s.
     path("services/security/", views.service_security, name="service_security"),
+    path("services/cctv/", views.service_cctv, name="service_cctv"),
+    path(
+        "services/access-control/",
+        views.service_access_control,
+        name="service_access_control",
+    ),
+    path("services/alarms/", views.service_alarms, name="service_alarms"),
     path("services/ai-cameras/", views.service_ai_cameras, name="service_ai_cameras"),
     path("our-approach-to-camera-privacy/", views.camera_privacy, name="camera_privacy"),
     path("services/development/", views.service_development, name="service_development"),

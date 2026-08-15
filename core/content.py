@@ -887,7 +887,77 @@ SERVICE_PAGES = {
             "hardening for homes and businesses across the Thames Valley."
         ),
         "area_anchor": "CCTV installation in {town}",
+        # No FAQs on the hub: FAQS_SECURITY is entirely about CCTV and now
+        # lives on the /services/cctv/ child. Two pages emitting the same
+        # FAQPage schema would compete for the same rich result.
+    },
+    # --- Children of the /services/security/ hub -------------------------
+    # The hub keeps its URL and its inbound links; these three take the
+    # specific head terms it was trying to hold all at once. No existing URL
+    # moves, so no redirects are needed.
+    "cctv": {
+        "template": "services/cctv.html",
+        "active": "security",
+        "url_name": "service_cctv",
+        "crumb": "CCTV Installation",
+        "parent": "security",
+        "page_title": "CCTV Installation — UniFi Protect, No Cloud Fees | Luma Tech",
+        "page_description": (
+            "UniFi Protect CCTV installation for homes and businesses across "
+            "the Thames Valley. Footage records to your property, on-device "
+            "smart detection, no monthly cloud subscription."
+        ),
+        "service_name": "CCTV Installation",
+        "service_type": "CCTV Installation",
+        "service_description": (
+            "UniFi Protect CCTV design and installation with local recording "
+            "and on-device person, vehicle and package detection, for homes "
+            "and businesses across the Thames Valley."
+        ),
+        "area_anchor": "CCTV installation in {town}",
         "faqs": FAQS_SECURITY,
+    },
+    "access_control": {
+        "template": "services/access_control.html",
+        "active": "security",
+        "url_name": "service_access_control",
+        "crumb": "Access Control",
+        "parent": "security",
+        "page_title": "Access Control Installation — Door Entry & Gates | Luma Tech",
+        "page_description": (
+            "Commercial-grade access control across the Thames Valley: door "
+            "readers, phone-based unlocks, gate intercoms and visitor codes, "
+            "on the same dashboard as your network and CCTV."
+        ),
+        "service_name": "Access Control",
+        "service_type": "Access Control Installation",
+        "service_description": (
+            "Door entry, gate intercoms, phone-based unlocks and visitor "
+            "management for businesses and shared sites across the Thames "
+            "Valley, integrated with the network and CCTV."
+        ),
+        "area_anchor": "Access control installation in {town}",
+    },
+    "alarms": {
+        "template": "services/alarms.html",
+        "active": "security",
+        "url_name": "service_alarms",
+        "crumb": "Intruder Alarms",
+        "parent": "security",
+        "page_title": "Intruder Alarm Installation & Monitoring | Luma Tech",
+        "page_description": (
+            "Intruder alarm installation across the Thames Valley — door and "
+            "window contacts, motion and glass-break sensors, auto-arming, "
+            "camera snapshots on alarm and cellular backup."
+        ),
+        "service_name": "Intruder Alarms",
+        "service_type": "Alarm Installation",
+        "service_description": (
+            "Intruder alarm design, installation and monitoring for homes and "
+            "businesses across the Thames Valley, integrated with the same "
+            "dashboard as the CCTV and network."
+        ),
+        "area_anchor": "Intruder alarm installation in {town}",
     },
     "development": {
         "template": "services/development.html",

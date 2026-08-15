@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %}
+CCTV installation — split out of the /services/security/ hub.
+
+The prose here moved verbatim from services/security.html; the hub was one
+page trying to hold "cctv installation", "access control installer" and
+"alarm installation" at once, which is why it sat at position 50 while
+absorbing every town CCTV query on the site. The hub keeps its URL and its
+inbound links, so nothing 301s.
+{% endcomment %}
+
+{% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-inner">
+      <div>
+        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+        <span class="eyebrow"><span class="dot"></span>Records to your property, not the cloud</span>
+        <h1>CCTV installation, <span class="gradient">recorded at your property.</span></h1>
+        <p class="lede">
+          UniFi Protect CCTV designed, installed and documented by the
+          engineer who surveyed the site. Footage records to a recorder in
+          your building, smart detection runs on the camera itself, and there
+          is no monthly cloud subscription attached to any of it.
+        </p>
+      </div>
+      <div class="hero-illustration">
+        <div class="hero-photo" style="background-image:url('{% static 'img/services/security.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Security camera against a clear sky"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="service-grid">
+      <div>
+        <h2>CCTV &amp; video surveillance</h2>
+        <div class="tech-inline">
+          <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='ubiquiti' %} UniFi Protect</span>
+          <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='home-assistant' %} Home Assistant</span>
+        </div>
+        <p>
+          We design and install <strong>UniFi Protect</strong> CCTV — a
+          local-recording system with no monthly cloud subscription. Footage
+          stays on your kit, and you keep full control.
+        </p>
+
+        <div class="media-banner" style="background-image:url('https://images.pexels.com/photos/9739769/pexels-photo-9739769.jpeg?auto=compress&cs=tinysrgb&w=1200'),linear-gradient(160deg,#0d9488,#155e63);margin:1.25rem 0 .5rem;" role="img" aria-label="UniFi Protect CCTV camera"></div>
+
+        <h3 class="mt-3">Cameras we typically install</h3>
+        <ul class="bullets">
+          <li><strong>UniFi G5 Bullet</strong> — the workhorse exterior camera. Discreet, weatherproof, sharp.</li>
+          <li><strong>UniFi AI Pro</strong> — 4K with on-device person, vehicle and package detection. Fewer false alerts, smarter notifications.</li>
+          <li><strong>UniFi AI 360</strong> — panoramic ceiling-mount for forecourts, large rooms or open courtyards.</li>
+          <li><strong>UniFi G4 Instant</strong> — small, magnetic interior camera for blind-spots, garages or workshops.</li>
+        </ul>
+
+        <h3 class="mt-3">What you get</h3>
+        <ul class="bullets">
+          <li><strong>Carefully planned camera placement</strong> — coverage angles checked on site before a single hole is drilled.</li>
+          <li><strong>A recorder that lives in your house</strong> — small for homes, rack-mount for larger sites. Footage stays with you.</li>
+          <li><strong>Smart detection</strong> — the cameras tell person from vehicle from delivery, on the camera itself, so notifications mean something.</li>
+          <li><strong>View from anywhere</strong> — secure phone, tablet or web access. Your footage never goes through a third-party cloud.</li>
+        </ul>
+
+        <h3 class="mt-4">On-device AI, no cloud needed</h3>
+        <p>
+          The newer UniFi cameras run their detection AI on the camera
+          itself — there's a small neural processor inside each unit.
+          That means notifications are smart from day one, your footage
+          never leaves your network so an AI can "look at it", and
+          there's no monthly cloud bill paying for it.
+        </p>
+        <ul class="bullets">
+          <li><strong>Person, vehicle, package</strong> — the most useful classes, on every AI-capable camera. So the doorbell stops alerting on every leaf that blows past.</li>
+          <li><strong>Number plate recognition</strong> on AI Pro and AI LPR units — log every vehicle that comes up the drive, with the plate searchable later.</li>
+          <li><strong>Smart Detection Search</strong> — "show me every person who came through the gate yesterday between 4 and 6pm" returns a few clips, not three hours of footage.</li>
+          <li><strong>Face recognition (optional, opt-in)</strong> — the system learns the people who live there and stops alerting on them, so the alerts that <em>do</em> come through are meaningful.</li>
+          <li><strong>Animal detection</strong> — useful if you'd rather not get woken up because the fox is back.</li>
+        </ul>
+        <p class="mt-3">
+          If number-plate capture, scheduled recording or geofenced arming is
+          the reason you're here, that has its own page:
+          <a href="{% url 'service_ai_cameras' %}">AI camera systems and ANPR</a>.
+        </p>
+
+        <h2 class="mt-4">Camera placement, done right</h2>
+        <p>
+          Cameras are easy to mount, hard to <em>place</em>. Before we drill,
+          we walk the property, sketch coverage zones, check sightlines and
+          identify blind spots — so cameras are positioned to actually see
+          what matters and not just the back of a hedge.
+        </p>
+        <ul class="bullets">
+          <li>Coverage zones planned with line-of-sight verified room-by-room.</li>
+          <li>Blind spots identified <em>before</em> the install, not after.</li>
+          <li>Cable runs pre-planned, so install day is shorter and tidier.</li>
+          <li>A written placement plan handed over with the runbook.</li>
+        </ul>
+
+        <h2 class="mt-4">How a project comes together</h2>
+        <p>
+          Every install is quoted from a site visit. We walk the property,
+          listen to what you're trying to protect, and write up a fixed-price
+          proposal covering hardware, labour, cabling and timeline — no day
+          rates, no scope creep.
+        </p>
+      </div>
+
+      <aside class="sidebar fade-in">
+        <h4>Start here</h4>
+        <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+
+        <h4 style="margin-top:1.5rem;">Always included</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li>On-site survey</li>
+          <li>Recordings stored at your property</li>
+          <li>Plain-English documentation</li>
+          <li>30 days post-install support</li>
+        </ul>
+
+        <h4 style="margin-top:1.5rem;">Also in physical security</h4>
+        <ul class="bullets" style="margin-top:.5rem;">
+          <li><a href="{% url 'service_access_control' %}">Access control</a></li>
+          <li><a href="{% url 'service_alarms' %}">Intruder alarms</a></li>
+          <li><a href="{% url 'service_ai_cameras' %}">AI cameras &amp; ANPR</a></li>
+          <li><a href="{% url 'service_security' %}">Security overview</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/_areas_served.html' %}
+
+{% include 'partials/_faqs.html' with faqs=faqs %}
+
+{% include 'partials/_cta_banner.html' with cta_title='Want cameras that actually cover the property?' cta_copy='Tell us what you are trying to see and we will walk the site, sketch the coverage and quote it fixed-price. No day rates, no scope creep.' cta_source='service-cctv-bottom' %}
+{% endblock %}

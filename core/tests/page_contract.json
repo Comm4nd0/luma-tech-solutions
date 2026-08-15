@@ -247,6 +247,34 @@
     "page_title": "Quote request received \u2014 thanks | Luma Tech",
     "template": "quote_thanks.html"
   },
+  "service_access_control": {
+    "active_nav": "security",
+    "breadcrumbs": [
+      [
+        "Home",
+        "/"
+      ],
+      [
+        "Services",
+        "/services/"
+      ],
+      [
+        "Physical Security",
+        "/services/security/"
+      ],
+      [
+        "Access Control",
+        "/services/access-control/"
+      ]
+    ],
+    "page_description": "Commercial-grade access control across the Thames Valley: door readers, phone-based unlocks, gate intercoms and visitor codes, on the same dashboard as your network and CCTV.",
+    "page_title": "Access Control Installation \u2014 Door Entry & Gates | Luma Tech",
+    "service_description": "Door entry, gate intercoms, phone-based unlocks and visitor management for businesses and shared sites across the Thames Valley, integrated with the network and CCTV.",
+    "service_name": "Access Control",
+    "service_type": "Access Control Installation",
+    "service_url": "/services/access-control/",
+    "template": "services/access_control.html"
+  },
   "service_ai_cameras": {
     "active_nav": "services",
     "breadcrumbs": [
@@ -280,6 +308,34 @@
     "service_url": "/services/ai-cameras/",
     "template": "services/ai_cameras.html"
   },
+  "service_alarms": {
+    "active_nav": "security",
+    "breadcrumbs": [
+      [
+        "Home",
+        "/"
+      ],
+      [
+        "Services",
+        "/services/"
+      ],
+      [
+        "Physical Security",
+        "/services/security/"
+      ],
+      [
+        "Intruder Alarms",
+        "/services/alarms/"
+      ]
+    ],
+    "page_description": "Intruder alarm installation across the Thames Valley \u2014 door and window contacts, motion and glass-break sensors, auto-arming, camera snapshots on alarm and cellular backup.",
+    "page_title": "Intruder Alarm Installation & Monitoring | Luma Tech",
+    "service_description": "Intruder alarm design, installation and monitoring for homes and businesses across the Thames Valley, integrated with the same dashboard as the CCTV and network.",
+    "service_name": "Intruder Alarms",
+    "service_type": "Alarm Installation",
+    "service_url": "/services/alarms/",
+    "template": "services/alarms.html"
+  },
   "service_automation": {
     "active_nav": "services",
     "breadcrumbs": [
@@ -303,6 +359,39 @@
     "service_type": "Home Automation",
     "service_url": "/services/automation/",
     "template": "services/automation.html"
+  },
+  "service_cctv": {
+    "active_nav": "security",
+    "breadcrumbs": [
+      [
+        "Home",
+        "/"
+      ],
+      [
+        "Services",
+        "/services/"
+      ],
+      [
+        "Physical Security",
+        "/services/security/"
+      ],
+      [
+        "CCTV Installation",
+        "/services/cctv/"
+      ]
+    ],
+    "faqs": [
+      "Is the CCTV recorded in the cloud?",
+      "Do the cameras work in the dark?",
+      "Can I view it on my phone?"
+    ],
+    "page_description": "UniFi Protect CCTV installation for homes and businesses across the Thames Valley. Footage records to your property, on-device smart detection, no monthly cloud subscription.",
+    "page_title": "CCTV Installation \u2014 UniFi Protect, No Cloud Fees | Luma Tech",
+    "service_description": "UniFi Protect CCTV design and installation with local recording and on-device person, vehicle and package detection, for homes and businesses across the Thames Valley.",
+    "service_name": "CCTV Installation",
+    "service_type": "CCTV Installation",
+    "service_url": "/services/cctv/",
+    "template": "services/cctv.html"
   },
   "service_development": {
     "active_nav": "services",
@@ -372,11 +461,6 @@
         "Physical Security",
         "/services/security/"
       ]
-    ],
-    "faqs": [
-      "Is the CCTV recorded in the cloud?",
-      "Do the cameras work in the dark?",
-      "Can I view it on my phone?"
     ],
     "page_description": "UniFi Protect CCTV, access control and intruder alarms for homes and businesses across the Thames Valley. Footage stays on your kit \u2014 no cloud subscription required.",
     "page_title": "CCTV, Access Control & Alarm Installation | Luma Tech",

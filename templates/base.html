@@ -121,7 +121,9 @@
           "name": "Luma Tech Services",
           "itemListElement": [
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UniFi Wi-Fi Installation", "url": "{{ SITE_URL }}{% url 'service_networking' %}" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CCTV Installation", "url": "{{ SITE_URL }}{% url 'service_security' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CCTV Installation", "url": "{{ SITE_URL }}{% url 'service_cctv' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Access Control Installation", "url": "{{ SITE_URL }}{% url 'service_access_control' %}" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Intruder Alarm Installation", "url": "{{ SITE_URL }}{% url 'service_alarms' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Camera Systems & ANPR", "url": "{{ SITE_URL }}{% url 'service_ai_cameras' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Construction Site Security & New-Build Pre-Wire", "url": "{{ SITE_URL }}{% url 'construction' %}" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Smart Home Installation", "url": "{{ SITE_URL }}{% url 'service_automation' %}" } },
@@ -215,6 +217,9 @@
           <ul>
             <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
             <li><a href="{% url 'service_security' %}">Physical Security</a></li>
+            <li><a href="{% url 'service_cctv' %}">CCTV Installation</a></li>
+            <li><a href="{% url 'service_access_control' %}">Access Control</a></li>
+            <li><a href="{% url 'service_alarms' %}">Intruder Alarms</a></li>
             <li><a href="{% url 'service_ai_cameras' %}">AI Camera Systems</a></li>
             <li><a href="{% url 'construction' %}">Builders & Construction</a></li>
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>

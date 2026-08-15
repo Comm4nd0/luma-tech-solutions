@@ -237,15 +237,19 @@ def _render_service_page(request, key, **extra):
     they have never had.
     """
     page = SERVICE_PAGES[key]
+    # Child pages of the /services/security/ hub sit a level deeper, so the
+    # trail reads Home / Services / Physical Security / CCTV Installation.
+    trail = [("Home", "home"), ("Services", "services")]
+    if "parent" in page:
+        parent = SERVICE_PAGES[page["parent"]]
+        trail.append((parent["crumb"], parent["url_name"]))
+    trail.append((page["crumb"], page["url_name"]))
+
     ctx = _base_context(
         active=page["active"],
         page_title=page["page_title"],
         page_description=page["page_description"],
-        breadcrumbs=_crumbs(
-            ("Home", "home"),
-            ("Services", "services"),
-            (page["crumb"], page["url_name"]),
-        ),
+        breadcrumbs=_crumbs(*trail),
         service_area_links=_area_links(page["area_anchor"]),
         service_name=page["service_name"],
         service_type=page["service_type"],
@@ -356,6 +360,18 @@ def service_networking(request):
 
 def service_security(request):
     return _render_service_page(request, "security")
+
+
+def service_cctv(request):
+    return _render_service_page(request, "cctv")
+
+
+def service_access_control(request):
+    return _render_service_page(request, "access_control")
+
+
+def service_alarms(request):
+    return _render_service_page(request, "alarms")
 
 
 def service_development(request):

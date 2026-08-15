@@ -41,7 +41,7 @@ class PageContractTests(TestCase):
 
     def test_contract_covers_every_expected_page(self):
         # Guards against a page quietly dropping out of the fixture.
-        self.assertEqual(len(CONTRACT), 26)
+        self.assertEqual(len(CONTRACT), 29)
 
     def test_pages_match_pinned_contract(self):
         for name, expected in CONTRACT.items():
