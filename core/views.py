@@ -311,7 +311,13 @@ def home(request):
         "home.html",
         _base_context(
             active="home",
-            page_title="Wi-Fi Installation Marlow, CCTV & IT Support | Luma Tech",
+            # Brand first, deliberately. Two reasons: "Luma Tech Solutions
+            # Canada Ltd" currently outranks us for our own name, and the old
+            # title ("Wi-Fi Installation Marlow, …") had the strongest page on
+            # the site bidding against /areas/marlow/ for every Marlow query.
+            page_title=(
+                "Luma Tech Solutions — Wi-Fi, CCTV & Smart Homes, Thames Valley"
+            ),
             page_description=(
                 "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and "
                 "smart-home installation across Marlow, Maidenhead, Henley "

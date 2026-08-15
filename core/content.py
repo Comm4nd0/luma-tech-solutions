@@ -849,11 +849,11 @@ SERVICE_PAGES = {
         "active": "services",
         "url_name": "service_networking",
         "crumb": "Wi-Fi & Networking",
-        "page_title": "UniFi Wi-Fi Installation, Marlow & Henley | Luma Tech",
+        "page_title": "UniFi Wi-Fi Installation for Large Homes | Luma Tech",
         "page_description": (
-            "Professionally engineered UniFi Wi-Fi for large and period "
-            "homes — Marlow, Maidenhead, Henley-on-Thames and the Thames "
-            "Valley. Wired access points, fixed-price quotes, no mesh."
+            "Professionally engineered UniFi Wi-Fi for large and period homes "
+            "across the Thames Valley. Wired access points, fixed-price "
+            "quotes, no mesh."
         ),
         "service_name": "Wi-Fi & Networking",
         "service_type": "Wi-Fi Installation",
@@ -871,18 +871,20 @@ SERVICE_PAGES = {
         "active": "security",
         "url_name": "service_security",
         "crumb": "Physical Security",
-        "page_title": "CCTV Installation Marlow, Maidenhead & Henley | Luma Tech",
+        # No town names: /areas/<town>/ owns "[service] [town]" queries, this
+        # page owns the ungeographic head term. Naming three towns here had it
+        # bidding against three area pages at once — see docs in CLAUDE.md.
+        "page_title": "CCTV, Access Control & Alarm Installation | Luma Tech",
         "page_description": (
-            "UniFi Protect CCTV, access control and alarms across Marlow, "
-            "Maidenhead, Henley-on-Thames and the Thames Valley. Footage "
-            "stays on your kit — no cloud subscription required."
+            "UniFi Protect CCTV, access control and intruder alarms for homes "
+            "and businesses across the Thames Valley. Footage stays on your "
+            "kit — no cloud subscription required."
         ),
         "service_name": "Physical Security",
         "service_type": "CCTV Installation",
         "service_description": (
-            "UniFi Protect CCTV, access control, alarms and "
-            "network hardening for homes and businesses across Marlow, "
-            "Maidenhead, Beaconsfield and the Thames Valley."
+            "UniFi Protect CCTV, access control, intruder alarms and network "
+            "hardening for homes and businesses across the Thames Valley."
         ),
         "area_anchor": "CCTV installation in {town}",
         "faqs": FAQS_SECURITY,
@@ -910,18 +912,20 @@ SERVICE_PAGES = {
         "active": "services",
         "url_name": "service_automation",
         "crumb": "Home Automation",
-        "page_title": "Smart Home Installer — Marlow, Henley, Maidenhead | Luma Tech",
+        # Was "Smart Home Installer — Marlow, Henley, Maidenhead": that title
+        # put this page at position 44 for "smart home company henley on
+        # thames" while /areas/henley/ sat at 15.8 for the same query.
+        "page_title": "Smart Home Installation, Local & Private | Luma Tech",
         "page_description": (
-            "Local-first Home Assistant smart-home installation. Lighting, "
-            "climate, scenes and security across Marlow, Henley-on-Thames, "
-            "Maidenhead and the Thames Valley. No cloud lock-in."
+            "Local-first Home Assistant smart-home installation across the "
+            "Thames Valley. Lighting, climate, scenes and security that keep "
+            "working when the internet doesn't. No cloud lock-in."
         ),
         "service_name": "Home Automation",
         "service_type": "Home Automation",
         "service_description": (
             "Local-first smart-home design with Home Assistant — lighting, "
-            "climate, security and scenes across Marlow, Henley-on-Thames "
-            "and the Thames Valley."
+            "climate, security and scenes for homes across the Thames Valley."
         ),
         "area_anchor": "Smart home installation in {town}",
     },
@@ -932,20 +936,20 @@ SERVICE_PAGES = {
         "crumb": "AI Camera Systems",
         "page_title": "AI Camera Systems — ANPR, Smart CCTV, Privacy-First | Luma Tech",
         "page_description": (
-            "AI cameras done right across Marlow, Maidenhead, "
-            "Henley and the Thames Valley. ANPR for construction "
-            "sites, smart home & family monitoring, scheduled and "
-            "geofenced recording. Footage stays on your kit."
+            "AI cameras done right across the Thames Valley. ANPR for "
+            "construction sites, smart home & family monitoring, scheduled "
+            "and geofenced recording. Footage stays on your kit."
         ),
         "service_name": "AI Camera Systems",
-        "service_type": "CCTV Installation",
+        # Was "CCTV Installation" — identical to the security page's, which
+        # told crawlers the two pages offer the same service.
+        "service_type": "AI Camera & ANPR Installation",
         "service_description": (
             "AI camera systems with on-device person, vehicle, package, "
             "animal and number-plate recognition. Designed for "
-            "construction sites, homes and small businesses across "
-            "Marlow, Maidenhead, Henley and the Thames Valley. "
-            "Scheduled recording, geofenced arming, on-site storage — "
-            "no third-party cloud."
+            "construction sites, homes and small businesses across the "
+            "Thames Valley. Scheduled recording, geofenced arming, on-site "
+            "storage — no third-party cloud."
         ),
         "area_anchor": "AI cameras and ANPR in {town}",
         "faqs": FAQS_AI_CAMERAS,
@@ -964,7 +968,7 @@ SERVICE_PAGES = {
         "service_type": "IT Support",
         "service_description": (
             "Ongoing IT support and care plans for homes and small "
-            "businesses across Marlow, Maidenhead and the Thames Valley."
+            "businesses across the Thames Valley."
         ),
         "area_anchor": "IT support in {town}",
     },
@@ -993,18 +997,23 @@ AREA_PAGES = {
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
         ],
         "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
-        "schema_name": "Wi-Fi, CCTV and IT Support in Marlow",
+        "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Marlow",
         "schema_description": (
             "Local Marlow engineer for Wi-Fi installation, CCTV, smart-home "
             "design and ongoing IT support — for homes and small businesses "
             "across Marlow and Marlow Bottom."
         ),
         "town": "Marlow",
-        "page_title": "Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
+        # Was "Wi-Fi, CCTV & IT Support in Marlow", which omitted "smart home"
+        # entirely while /areas/henley/ ranked 15.8 for a smart-home query on
+        # the strength of having it in the title.
+        "page_title": "Wi-Fi, CCTV & Smart Home Installation in Marlow | Luma Tech",
         "page_description": (
-            "Marlow-based engineer for Wi-Fi installation, CCTV, smart-home "
-            "and IT support. Local response, fixed-price proposals."
+            "UniFi Wi-Fi, CCTV and smart-home installation for period and "
+            "larger homes in Marlow, Marlow Bottom, Little Marlow and Bisham. "
+            "Local engineer, fixed-price quotes."
         ),
+        "h1_lead": "Wi-Fi, CCTV and smart home installation in",
     },
     "maidenhead": {
         "template": "areas/maidenhead.html",
@@ -1027,18 +1036,20 @@ AREA_PAGES = {
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
         ],
         "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
-        "schema_name": "Wi-Fi, CCTV and IT Support in Maidenhead",
+        "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Maidenhead",
         "schema_description": (
             "Whole-property UniFi networks, CCTV and smart-home design for "
             "larger homes in Maidenhead — Furze Platt, Boyn Hill, Cox Green, "
             "Bray and Holyport."
         ),
         "town": "Maidenhead",
-        "page_title": "Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
+        "page_title": "Wi-Fi, CCTV & Smart Home Installation in Maidenhead | Luma Tech",
         "page_description": (
-            "Whole-property UniFi networks, CCTV and smart-home design "
-            "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green."
+            "Whole-property UniFi networks, CCTV and smart-home installation "
+            "for larger homes in Maidenhead, Bray, Furze Platt and Cox Green. "
+            "Fixed-price quotes from a local engineer."
         ),
+        "h1_lead": "Wi-Fi, CCTV and smart home installation in",
         # The only area page with a case study.
         "featured_case_slug": "littlewick-house",
     },
@@ -1064,7 +1075,7 @@ AREA_PAGES = {
             {"url_name": "area_beaconsfield", "label": "Beaconsfield"},
         ],
         "also_serving_tail": "Cookham, Bourne End, High Wycombe.",
-        "schema_name": "Wi-Fi, CCTV and IT Support in Henley-on-Thames",
+        "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Henley-on-Thames",
         "schema_description": (
             "Wi-Fi, CCTV and smart-home design for period homes and riverside "
             "properties across Henley-on-Thames, Remenham, Hambleden and "
@@ -1079,6 +1090,7 @@ AREA_PAGES = {
             "and riverside properties in Henley-on-Thames, Remenham, "
             "Hambleden and Mill End. Local Marlow engineer."
         ),
+        "h1_lead": "Wi-Fi, CCTV and smart home installation in",
     },
     "beaconsfield": {
         "template": "areas/beaconsfield.html",
@@ -1103,7 +1115,7 @@ AREA_PAGES = {
             {"url_name": "area_henley", "label": "Henley-on-Thames"},
         ],
         "also_serving_tail": "Bourne End, Cookham, High Wycombe.",
-        "schema_name": "Wi-Fi, CCTV and IT Support in Beaconsfield",
+        "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Beaconsfield",
         "schema_description": (
             "UniFi Wi-Fi, CCTV and smart-home installation for the larger "
             "homes and small businesses around Beaconsfield, Knotty Green, "
@@ -1116,6 +1128,7 @@ AREA_PAGES = {
             "homes and businesses around Beaconsfield, Knotty Green and "
             "Holtspur. Local Marlow engineer, fixed-price quotes."
         ),
+        "h1_lead": "Wi-Fi, CCTV and smart home installation in",
     },
 }
 

@@ -62,8 +62,8 @@
       ]
     ],
     "featured_case": "littlewick-house",
-    "page_description": "Whole-property UniFi networks, CCTV and smart-home design for larger homes in Maidenhead, Bray, Furze Platt and Cox Green.",
-    "page_title": "Wi-Fi, CCTV & IT Support in Maidenhead | Luma Tech",
+    "page_description": "Whole-property UniFi networks, CCTV and smart-home installation for larger homes in Maidenhead, Bray, Furze Platt and Cox Green. Fixed-price quotes from a local engineer.",
+    "page_title": "Wi-Fi, CCTV & Smart Home Installation in Maidenhead | Luma Tech",
     "template": "areas/maidenhead.html"
   },
   "area_marlow": {
@@ -82,8 +82,8 @@
         "/areas/marlow/"
       ]
     ],
-    "page_description": "Marlow-based engineer for Wi-Fi installation, CCTV, smart-home and IT support. Local response, fixed-price proposals.",
-    "page_title": "Wi-Fi, CCTV & IT Support in Marlow | Luma Tech",
+    "page_description": "UniFi Wi-Fi, CCTV and smart-home installation for period and larger homes in Marlow, Marlow Bottom, Little Marlow and Bisham. Local engineer, fixed-price quotes.",
+    "page_title": "Wi-Fi, CCTV & Smart Home Installation in Marlow | Luma Tech",
     "template": "areas/marlow.html"
   },
   "areas": {
@@ -200,7 +200,7 @@
     ],
     "featured_case": "littlewick-house",
     "page_description": "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and smart-home installation across Marlow, Maidenhead, Henley and the Thames Valley. Fixed-price quotes, no mesh.",
-    "page_title": "Wi-Fi Installation Marlow, CCTV & IT Support | Luma Tech",
+    "page_title": "Luma Tech Solutions \u2014 Wi-Fi, CCTV & Smart Homes, Thames Valley",
     "template": "home.html"
   },
   "portfolio": {
@@ -210,6 +210,7 @@
     "template": "portfolio.html"
   },
   "privacy": {
+    "active_nav": null,
     "breadcrumbs": [
       [
         "Home",
@@ -271,11 +272,11 @@
       "Will the cameras work if the internet goes down?",
       "Can you do fall detection or medical alerts?"
     ],
-    "page_description": "AI cameras done right across Marlow, Maidenhead, Henley and the Thames Valley. ANPR for construction sites, smart home & family monitoring, scheduled and geofenced recording. Footage stays on your kit.",
+    "page_description": "AI cameras done right across the Thames Valley. ANPR for construction sites, smart home & family monitoring, scheduled and geofenced recording. Footage stays on your kit.",
     "page_title": "AI Camera Systems \u2014 ANPR, Smart CCTV, Privacy-First | Luma Tech",
-    "service_description": "AI camera systems with on-device person, vehicle, package, animal and number-plate recognition. Designed for construction sites, homes and small businesses across Marlow, Maidenhead, Henley and the Thames Valley. Scheduled recording, geofenced arming, on-site storage \u2014 no third-party cloud.",
+    "service_description": "AI camera systems with on-device person, vehicle, package, animal and number-plate recognition. Designed for construction sites, homes and small businesses across the Thames Valley. Scheduled recording, geofenced arming, on-site storage \u2014 no third-party cloud.",
     "service_name": "AI Camera Systems",
-    "service_type": "CCTV Installation",
+    "service_type": "AI Camera & ANPR Installation",
     "service_url": "/services/ai-cameras/",
     "template": "services/ai_cameras.html"
   },
@@ -295,9 +296,9 @@
         "/services/automation/"
       ]
     ],
-    "page_description": "Local-first Home Assistant smart-home installation. Lighting, climate, scenes and security across Marlow, Henley-on-Thames, Maidenhead and the Thames Valley. No cloud lock-in.",
-    "page_title": "Smart Home Installer \u2014 Marlow, Henley, Maidenhead | Luma Tech",
-    "service_description": "Local-first smart-home design with Home Assistant \u2014 lighting, climate, security and scenes across Marlow, Henley-on-Thames and the Thames Valley.",
+    "page_description": "Local-first Home Assistant smart-home installation across the Thames Valley. Lighting, climate, scenes and security that keep working when the internet doesn't. No cloud lock-in.",
+    "page_title": "Smart Home Installation, Local & Private | Luma Tech",
+    "service_description": "Local-first smart-home design with Home Assistant \u2014 lighting, climate, security and scenes for homes across the Thames Valley.",
     "service_name": "Home Automation",
     "service_type": "Home Automation",
     "service_url": "/services/automation/",
@@ -348,8 +349,8 @@
       "Do I need to run cables everywhere?",
       "Can you cover the garden and outbuildings?"
     ],
-    "page_description": "Professionally engineered UniFi Wi-Fi for large and period homes \u2014 Marlow, Maidenhead, Henley-on-Thames and the Thames Valley. Wired access points, fixed-price quotes, no mesh.",
-    "page_title": "UniFi Wi-Fi Installation, Marlow & Henley | Luma Tech",
+    "page_description": "Professionally engineered UniFi Wi-Fi for large and period homes across the Thames Valley. Wired access points, fixed-price quotes, no mesh.",
+    "page_title": "UniFi Wi-Fi Installation for Large Homes | Luma Tech",
     "service_description": "UniFi Wi-Fi and network design, installation and management for homes and small businesses across Marlow, Maidenhead, Henley-on-Thames and the wider Thames Valley.",
     "service_name": "Wi-Fi & Networking",
     "service_type": "Wi-Fi Installation",
@@ -377,9 +378,9 @@
       "Do the cameras work in the dark?",
       "Can I view it on my phone?"
     ],
-    "page_description": "UniFi Protect CCTV, access control and alarms across Marlow, Maidenhead, Henley-on-Thames and the Thames Valley. Footage stays on your kit \u2014 no cloud subscription required.",
-    "page_title": "CCTV Installation Marlow, Maidenhead & Henley | Luma Tech",
-    "service_description": "UniFi Protect CCTV, access control, alarms and network hardening for homes and businesses across Marlow, Maidenhead, Beaconsfield and the Thames Valley.",
+    "page_description": "UniFi Protect CCTV, access control and intruder alarms for homes and businesses across the Thames Valley. Footage stays on your kit \u2014 no cloud subscription required.",
+    "page_title": "CCTV, Access Control & Alarm Installation | Luma Tech",
+    "service_description": "UniFi Protect CCTV, access control, intruder alarms and network hardening for homes and businesses across the Thames Valley.",
     "service_name": "Physical Security",
     "service_type": "CCTV Installation",
     "service_url": "/services/security/",
@@ -421,7 +422,7 @@
         ]
       }
     ],
-    "service_description": "Ongoing IT support and care plans for homes and small businesses across Marlow, Maidenhead and the Thames Valley.",
+    "service_description": "Ongoing IT support and care plans for homes and small businesses across the Thames Valley.",
     "service_name": "Support & Maintenance",
     "service_type": "IT Support",
     "service_url": "/services/support/",
@@ -444,6 +445,7 @@
     "template": "services/overview.html"
   },
   "terms": {
+    "active_nav": null,
     "breadcrumbs": [
       [
         "Home",
