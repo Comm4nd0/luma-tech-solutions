@@ -198,6 +198,37 @@ def _featured_case(slug=None):
     return next((c for c in CASE_STUDIES if c["slug"] == slug), None)
 
 
+def _area_links(anchor):
+    """One link per town for a service page's "areas we cover" block.
+
+    ``anchor`` is a format string like "CCTV installation in {town}", so the
+    anchor text describes *this* service in *that* town rather than repeating
+    a bare town name six times. Descriptive anchor text is the whole point:
+    /areas/marlow/ previously had four inbound links and could not rank.
+    """
+    return [
+        {
+            "url": reverse(page["url_name"]),
+            "label": anchor.format(town=page["town"]),
+        }
+        for page in AREA_PAGES.values()
+    ]
+
+
+def _area_service_links():
+    """One link per service, for the reciprocal block on every area page.
+
+    The anchor text is deliberately *ungeographic* — "CCTV Installation", not
+    "CCTV Installation in Marlow". Service pages own the head term and area
+    pages own "[service] [town]"; town-flavoured anchors pointing at a service
+    page would push the two back into competing for the same query.
+    """
+    return [
+        {"url": reverse(page["url_name"]), "label": page["service_name"]}
+        for page in SERVICE_PAGES.values()
+    ]
+
+
 def _render_service_page(request, key, **extra):
     """Render one of the SERVICE_PAGES entries.
 
@@ -215,6 +246,7 @@ def _render_service_page(request, key, **extra):
             ("Services", "services"),
             (page["crumb"], page["url_name"]),
         ),
+        service_area_links=_area_links(page["area_anchor"]),
         service_name=page["service_name"],
         service_type=page["service_type"],
         # A path, not the URL name: _service_schema.html renders
@@ -242,6 +274,7 @@ def _render_area_page(request, key):
         ),
         town=page["town"],
         area_url=reverse(page["url_name"]),
+        area_service_links=_area_service_links(),
         area_source=page["source"],
         area_quote_label=page["quote_label"],
         area_engineer_note=page["engineer_note"],
@@ -356,6 +389,8 @@ def construction(request):
                 ("Home", "home"),
                 ("Builders & construction", "construction"),
             ),
+            # Not a SERVICE_PAGES entry, so the area links are built here.
+            service_area_links=_area_links("Site security and pre-wire in {town}"),
             service_name="Construction Site Security & Pre-Wire",
             service_type="Security System Installation",
             service_url=reverse("construction"),

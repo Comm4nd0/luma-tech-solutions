@@ -1,0 +1,24 @@
+{% comment %}
+Reciprocal service links on an area page.
+
+Deliberately separate from _area_local_detail.html: this block is part of the
+internal-linking mesh (it exists so each town page points at every service
+page and vice versa), while that one is about the town's own copy. They change
+for different reasons.
+
+The anchor text is ungeographic on purpose — "CCTV Installation", not "CCTV
+Installation in Marlow". Service pages own the head term, area pages own
+"[service] [town]"; town-flavoured anchors pointing at a service page would
+push the two back into competing for the same query. See CLAUDE.md.
+{% endcomment %}
+<h2 class="mt-4">Services we provide in {{ town }}</h2>
+<p>
+  Every service below is available across {{ town }} and the surrounding
+  villages. Each page covers how we approach the work; the quote is always
+  written after an on-site survey.
+</p>
+<ul class="area-link-grid">
+  {% for service in area_service_links %}
+  <li><a href="{{ service.url }}">{{ service.label }}</a></li>
+  {% endfor %}
+</ul>

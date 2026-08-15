@@ -224,12 +224,25 @@
           </ul>
         </div>
         <div>
+          {% comment %}
+          Every town page linked sitewide. Before this block /areas/marlow/
+          had four inbound links in total and could not rank for queries it
+          was the best page on the site to answer.
+          {% endcomment %}
+          <h5>Areas we cover</h5>
+          <ul>
+            {% for area in SITE_AREA_LINKS %}
+            <li><a href="{{ area.url }}">Wi-Fi &amp; CCTV in {{ area.town }}</a></li>
+            {% endfor %}
+            <li><a href="{% url 'areas' %}">All areas &amp; coverage map</a></li>
+          </ul>
+        </div>
+        <div>
           <h5>Company</h5>
           <ul>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
             <li><a href="{% url 'portfolio' %}#website-demos">Website demos</a></li>
-            <li><a href="{% url 'areas' %}">Areas we cover</a></li>
             <li><a href="{% url 'blog' %}">Blog</a></li>
             <li><a href="{% url 'careers' %}">Careers</a></li>
             <li><a href="https://support.lumatechsolutions.co.uk/" target="_blank" rel="noopener">Client portal ↗</a></li>

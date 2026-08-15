@@ -862,6 +862,7 @@ SERVICE_PAGES = {
             "for homes and small businesses across Marlow, Maidenhead, "
             "Henley-on-Thames and the wider Thames Valley."
         ),
+        "area_anchor": "Wi-Fi installation in {town}",
         "faqs": FAQS_NETWORKING,
     },
     "security": {
@@ -883,6 +884,7 @@ SERVICE_PAGES = {
             "network hardening for homes and businesses across Marlow, "
             "Maidenhead, Beaconsfield and the Thames Valley."
         ),
+        "area_anchor": "CCTV installation in {town}",
         "faqs": FAQS_SECURITY,
     },
     "development": {
@@ -901,6 +903,7 @@ SERVICE_PAGES = {
             "Custom websites, web applications and mobile apps built and "
             "supported by an engineer in Marlow, Buckinghamshire."
         ),
+        "area_anchor": "Website and app development in {town}",
     },
     "automation": {
         "template": "services/automation.html",
@@ -920,6 +923,7 @@ SERVICE_PAGES = {
             "climate, security and scenes across Marlow, Henley-on-Thames "
             "and the Thames Valley."
         ),
+        "area_anchor": "Smart home installation in {town}",
     },
     "ai_cameras": {
         "template": "services/ai_cameras.html",
@@ -943,6 +947,7 @@ SERVICE_PAGES = {
             "Scheduled recording, geofenced arming, on-site storage — "
             "no third-party cloud."
         ),
+        "area_anchor": "AI cameras and ANPR in {town}",
         "faqs": FAQS_AI_CAMERAS,
     },
     "support": {
@@ -961,6 +966,7 @@ SERVICE_PAGES = {
             "Ongoing IT support and care plans for homes and small "
             "businesses across Marlow, Maidenhead and the Thames Valley."
         ),
+        "area_anchor": "IT support in {town}",
     },
 }
 

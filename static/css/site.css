@@ -491,6 +491,22 @@ a.card:hover { color: inherit; }
 
 /* ---------- "why us" features ---------- */
 .feature-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+/* Town links at the foot of each service page — "CCTV installation in Marlow". */
+.area-link-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.6rem 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.area-link-grid li { padding-left: 1rem; position: relative; }
+.area-link-grid li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
 .feature {
   padding: 1.25rem;
   border-left: 2px solid var(--accent);
@@ -951,9 +967,11 @@ footer.site-footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr repeat(3, 1fr);
+  /* Brand blurb, then Services / Areas / Company / Contact. */
+  grid-template-columns: 1.4fr repeat(4, 1fr);
   gap: 2rem;
 }
+@media (max-width: 1080px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
 @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
 .footer-grid h5 {

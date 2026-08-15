@@ -1,4 +1,20 @@
 from django.conf import settings
+from django.urls import reverse
+
+from .content import AREA_PAGES
+
+
+def _area_links():
+    """Town pages for the sitewide footer.
+
+    /areas/marlow/ had exactly one inbound link outside the area cluster —
+    "Areas we cover" on the footer, pointing at /areas/ rather than at any
+    town. A sitewide link per town is the single highest-value fix available.
+    """
+    return [
+        {"url": reverse(page["url_name"]), "town": page["town"]}
+        for page in AREA_PAGES.values()
+    ]
 
 
 def site(request):
@@ -18,6 +34,7 @@ def site(request):
         "SITE_BASE_TOWN": settings.SITE_BASE_TOWN,
         "SITE_WHATSAPP_E164": settings.SITE_WHATSAPP_E164,
         "SITE_LINKEDIN": settings.SITE_LINKEDIN,
+        "SITE_AREA_LINKS": _area_links(),
         "SITE_BOOKING_URL": settings.SITE_BOOKING_URL,
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
         "PLAUSIBLE_DOMAIN": settings.PLAUSIBLE_DOMAIN,

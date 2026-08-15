@@ -1,6 +1,14 @@
 {% comment %}
-Small "areas we cover" callout used at the bottom of every service page,
-above the CTA banner. One source of truth for the town list.
+"Areas we cover" block at the bottom of every service page, above the CTA.
+
+`service_area_links` comes from the view (_area_links in core/views.py) and
+carries anchor text describing *this* service in *that* town — "CCTV
+installation in Marlow", not a bare town name. That anchor text is the point:
+the town pages own "[service] [town]" queries and need descriptive inbound
+links from the service pages to say so.
+
+Falls back to the old single /areas/ link if a page includes this partial
+without setting service_area_links, so nothing breaks silently.
 {% endcomment %}
 <section class="tight">
   <div class="container">
@@ -9,8 +17,19 @@ above the CTA banner. One source of truth for the town list.
       <h2>Local engineer, on the doorstep.</h2>
       <p class="lede">
         Based in {{ SITE_BASE_TOWN }} — we work across {{ SITE_TOWNS_DISPLAY }},
-        and the rest of the Thames Valley by arrangement. <a href="{% url 'areas' %}">See where we work</a>.
+        and the rest of the Thames Valley by arrangement.
       </p>
     </div>
+
+    {% if service_area_links %}
+    <ul class="area-link-grid fade-in">
+      {% for area in service_area_links %}
+      <li><a href="{{ area.url }}">{{ area.label }}</a></li>
+      {% endfor %}
+      <li><a href="{% url 'areas' %}">See the full coverage map</a></li>
+    </ul>
+    {% else %}
+    <p class="lede"><a href="{% url 'areas' %}">See where we work</a>.</p>
+    {% endif %}
   </div>
 </section>
