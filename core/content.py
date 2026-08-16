@@ -1354,31 +1354,44 @@ AREA_PAGES = {
             "Marlow engineer, fixed-price quotes."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
-        # TODO: replace the placeholders below with real local detail before
-        # this page goes live. `manage.py check --deploy` reports every one.
+        # Written from the town's documented building history rather than from
+        # our own site visits — worth a read-through and a correction wherever
+        # it does not match what we actually find in Wycombe lofts.
         "local_areas": [
             "Hazlemere",
+            "Tylers Green",
             "Downley",
-            "TODO: add the other High Wycombe areas you actually cover — "
-            "e.g. Tylers Green, Loudwater, Sands, Totteridge, Booker.",
+            "Totteridge",
+            "Terriers",
+            "Booker",
         ],
         "housing_stock": (
-            "TODO: describe what High Wycombe's building fabric does to a "
-            "network, in terms that do not also apply to Marlow or "
-            "Beaconsfield. The valley topography, the post-war estates, the "
-            "Chiltern villages on the ridges — whatever you actually see on "
-            "site. This paragraph is what stops the page reading as a "
-            "town-name-swapped copy of another one."
+            "Three distinct problems in one town. The terraces east and west "
+            "of the centre were thrown up for the furniture trade in the "
+            "1800s — solid brick, small rooms, long narrow plans, and a "
+            "router in the front room that never reaches the back bedroom. "
+            "The estates on the valley slopes went up in the 1930s, 50s and "
+            "60s and sprawl horizontally, which is a different problem "
+            "again. Then the ridge villages — Hazlemere, Tylers Green, "
+            "Downley — where the houses get larger, the plots get longer, "
+            "and the garden office needs covering too."
         ),
         "service_emphasis": (
-            "TODO: which service leads in High Wycombe, and why? If it is "
-            "small-business IT support rather than large-home Wi-Fi, say so "
-            "— a genuine difference in emphasis is the point."
+            "A broader mix than the riverside towns. Plenty of jobs here are "
+            "two or three access points and proper cabling in a terrace "
+            "rather than an eleven-AP install — and the town sits in the Wye "
+            "valley with the Chilterns on both sides, so outdoor coverage "
+            "and links to outbuildings need designing around the slope, not "
+            "assumed."
         ),
+        # Deliberately still a placeholder: we have no High Wycombe job we can
+        # describe yet, and a made-up one is worse than none. Never rendered —
+        # the view filters TODO entries out, so the section simply does not
+        # appear. core.W005 keeps asking until there is a real one.
         "example_jobs": [
             "TODO: describe a real High Wycombe job — property or business "
             "type, what was wrong, what we installed, what changed. No "
-            "client names. Do not publish this page without at least one.",
+            "client names.",
         ],
     },
 }

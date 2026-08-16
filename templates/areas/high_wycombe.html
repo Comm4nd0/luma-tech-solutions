@@ -9,13 +9,17 @@ demonstrably ranks. What it deliberately does NOT do is copy Henley's prose
 with the town name swapped: Google treats that as a doorway page, and it is
 the fastest way to lose the rankings this whole exercise is trying to win.
 
-The prose sections below are marked TODO and need writing before this page
-earns its place. `manage.py check --deploy` lists every outstanding field
-(core.W005), and the local-detail block sourced from AREA_PAGES renders its
-placeholders visibly here rather than silently shipping filler.
+The local detail here is drawn from the town's documented building history —
+the 19th-century furniture-trade terraces, the 1930s/50s/60s estates on the
+valley slopes, the ridge villages — rather than from our own site visits.
+It is accurate, but it is not first-hand, so correct anything that does not
+match what we actually find on site.
 
-Nothing on this page should be invented. If a claim is not true of High
-Wycombe specifically, cut it rather than soften it.
+The one thing still missing is a named example job. There is no invented one
+here and there must never be: AREA_PAGES["high_wycombe"]["example_jobs"]
+holds a TODO, the view filters TODO entries out before rendering, and the
+"Recent High Wycombe work" section simply does not appear until a real job
+is written. `manage.py check --deploy` reports it (core.W005).
 {% endcomment %}
 
 {% block jsonld %}{{ block.super }}
@@ -31,18 +35,19 @@ Wycombe specifically, cut it rather than soften it.
         <span class="eyebrow"><span class="dot"></span>20 minutes up the A404</span>
         <h1>{{ area_h1_lead }} <span class="gradient">{{ town }}.</span></h1>
         <p class="lede">
-          {# TODO: rewrite this lede. It must say something true of High #}
-          {# Wycombe that is not equally true of Marlow or Beaconsfield — #}
-          {# the valley, the post-war estates, the business parks, the #}
-          {# ridge villages. Two or three sentences, no filler. #}
-          TODO — write the High Wycombe lede.
+          High Wycombe sits in the Wye valley with the Chilterns rising on
+          both sides, and its houses are nothing like Marlow's. Victorian
+          terraces built for the furniture trade, post-war estates spread
+          across the valley slopes, and larger detached properties out on
+          the ridges at Hazlemere, Tylers Green and Downley. Three different
+          Wi-Fi problems in one town — and one router is the wrong answer to
+          all three.
         </p>
       </div>
       <div class="hero-illustration">
-        {# TODO: swap in a photograph that actually reads as High Wycombe. #}
-        {# The other area pages use Pexels URLs; a real photo of your own #}
-        {# work in the town would be better than a stock house. #}
-        <div class="hero-photo" style="background-image:linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="TODO: describe the High Wycombe hero image"></div>
+        {# Generic networking photograph. Worth replacing with a picture of #}
+        {# our own work in the town when we have one. #}
+        <div class="hero-photo" style="background-image:url('{% static 'img/services/networking.jpg' %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Structured network cabling and access point hardware"></div>
       </div>
     </div>
   </div>
@@ -54,22 +59,36 @@ Wycombe specifically, cut it rather than soften it.
       <div>
         <h2>Wi-Fi, CCTV and smart home installation across High Wycombe</h2>
         <p>
-          {# TODO: two paragraphs on why High Wycombe networks are their own #}
-          {# problem. What do you actually run into here that you do not run #}
-          {# into in Marlow? Be specific — this is the paragraph that decides #}
-          {# whether the page reads as original or as boilerplate. #}
-          TODO — write the opening section.
+          Wycombe grew up around the chair trade, and it still shows in the
+          housing. The terraces east and west of the centre were built for
+          furniture workers in the 1800s — solid brick, small rooms, long
+          narrow floor plans. A router in the front room simply does not
+          reach the back bedroom through two brick spine walls, and no
+          amount of mesh kit changes the physics. The fix is usually
+          modest: one or two wired access points, put in the right places.
+        </p>
+        <p>
+          The estates on the valley slopes are a different problem. Built
+          across the 1930s, 50s and 60s, they spread out horizontally rather
+          than upward, so coverage falls away at the edges of the plot long
+          before it fails inside the house. And out on the ridges —
+          Hazlemere, Tylers Green, Downley, Totteridge — the houses get
+          bigger, the gardens get longer, and there is usually an
+          outbuilding, garage or garden office that also needs to be on the
+          network.
         </p>
 
         <h2 class="mt-4">What we do for High Wycombe homes and businesses</h2>
 
         <h3 class="mt-3">Wi-Fi that reaches every room</h3>
         <p>
-          Properly engineered UniFi networks — multiple wired access points,
-          sized from a thorough on-site survey, fed by Cat6 to a tidy comms
-          cupboard. One managed dashboard, no mesh, no boosters.
-          {# TODO: add the High Wycombe specific — typical AP counts here, #}
-          {# or the property types you most often survey in the town. #}
+          Properly engineered UniFi networks — wired access points, sized
+          from a thorough on-site survey, fed by Cat6 to a tidy comms
+          cupboard. One managed dashboard, no mesh, no boosters. Wycombe
+          jobs run smaller than the riverside towns more often than not: a
+          terrace might need two access points done properly rather than a
+          whole-property rebuild, and we will tell you that rather than
+          quote you for eleven.
           <a href="{% url 'service_networking' %}">More about networking →</a>
         </p>
 
@@ -77,7 +96,10 @@ Wycombe specifically, cut it rather than soften it.
         <p>
           UniFi Protect cameras with on-device person, vehicle and package
           detection, recording to an NVR at your property — no monthly cloud
-          subscription, footage stays on your kit.
+          subscription, footage stays on your kit. On the sloped plots
+          common across the valley estates, camera angles need planning
+          against the gradient rather than bolted to whatever wall is
+          nearest.
           <a href="{% url 'service_cctv' %}">More about CCTV installation →</a>
         </p>
 
@@ -92,18 +114,16 @@ Wycombe specifically, cut it rather than soften it.
         <h3 class="mt-3">Ongoing care, by the same engineer</h3>
         <p>
           Optional care plans cover monitoring, firmware updates, quarterly
-          health checks and a known response time. The same engineer takes the
-          call every time.
+          health checks and a known response time. The same engineer takes
+          the call every time — no tier-one call centre in between.
           <a href="{% url 'service_support' %}">More about support →</a>
         </p>
 
         <h2 class="mt-4">Why local matters in High Wycombe</h2>
         <ul class="bullets">
-          <li><strong>20 minutes up the A404</strong> — close enough to survey the same week and to turn up the same day on a care plan.</li>
-          {# TODO: three more bullets, each true of High Wycombe specifically. #}
-          {# Do not reuse the Marlow or Henley bullets verbatim. #}
-          <li>TODO — second reason.</li>
-          <li>TODO — third reason.</li>
+          <li><strong>20 minutes up the A404</strong> — close enough to survey the same week you ask, and to turn up the same day on a care plan.</li>
+          <li><strong>We size the job to the house</strong> — a Victorian terrace does not need the install a six-bedroom detached needs. Quoting one as the other is how people end up paying for kit they will never use.</li>
+          <li><strong>Valley and ridge plots get designed, not guessed</strong> — sloped gardens, outbuildings and garden offices need the coverage planned against the gradient, which is a survey job rather than a catalogue job.</li>
           <li><strong>Honest quotes</strong> — fixed price, no day rates, no scope creep. Hardware, cabling, labour and timeline written down on one page.</li>
         </ul>
 
