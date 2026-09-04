@@ -160,7 +160,7 @@ CARE_PLAN_AUDIENCES = {
             'tagline': 'The whole smart home, whoever installed it — one engineer, one number, one bill.',
             "features": [
                 'Everything in Professional',
-                ("We'll take a look at any smart-home product in the house, whoever installed it — Sonos, Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't "
+                ("We'll take a look at any smart-home product in the house, whoever installed it — Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't "
  "warrant kit we didn't supply, but you've got one number to call."),
                 'Front of queue; target within 2 working hours for service-down',
                 'Best-effort out-of-hours for genuine emergencies',
@@ -1463,9 +1463,9 @@ PAGE_LASTMOD = {
     "service_access_control": "2026-08-15",
     "service_alarms": "2026-08-15",
     "service_networking": "2026-08-15",
-    "service_automation": "2026-08-15",
+    "service_automation": "2026-09-04",
     "service_ai_cameras": "2026-08-15",
-    "service_support": "2026-08-15",
+    "service_support": "2026-09-04",
     "service_development": "2026-08-15",
     "areas": "2026-08-15",
     "area_marlow": "2026-08-15",

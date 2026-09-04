@@ -53,7 +53,7 @@ _OLD_HOME = [{'name': 'Essential',
   'highlighted': False,
   'features': ['Everything in Professional',
                "We'll take a look at any smart-home product in the house, whoever installed it — "
-               'Sonos, Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate '
+               'Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate '
                "to the manufacturer; we don't warrant kit we didn't supply, but you've got one "
                'number to call.',
                'Front of queue; target within 2 working hours for service-down',
