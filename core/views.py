@@ -19,6 +19,7 @@ from .content import (
     area_is_draft,
     CASE_STUDIES,
     FAQS_AI_CAMERAS,
+    FAQS_AUTOMATION,
     FAQS_CONSTRUCTION,
     FAQS_GENERAL,
     FAQS_NETWORKING,
@@ -234,8 +235,8 @@ def _render_service_page(request, key, **extra):
     """Render one of the SERVICE_PAGES entries.
 
     ``faqs`` is only added when the page actually defines it — defaulting it
-    would give three service pages a FAQ section and a FAQPage JSON-LD block
-    they have never had.
+    would give the development and support pages a FAQ section and a FAQPage
+    JSON-LD block they have never had.
     """
     page = SERVICE_PAGES[key]
     # Child pages of the /services/security/ hub sit a level deeper, so the

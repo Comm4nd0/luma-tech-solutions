@@ -357,7 +357,7 @@
     "template": "services/alarms.html"
   },
   "service_automation": {
-    "active_nav": "services",
+    "active_nav": "automation",
     "breadcrumbs": [
       [
         "Home",
@@ -368,15 +368,22 @@
         "/services/"
       ],
       [
-        "Home Automation",
+        "Smart Home",
         "/services/automation/"
       ]
     ],
-    "page_description": "Local-first Home Assistant smart-home installation across the Thames Valley. Lighting, climate, scenes and security that keep working when the internet doesn't. No cloud lock-in.",
-    "page_title": "Smart Home Installation, Local & Private | Luma Tech",
-    "service_description": "Local-first smart-home design with Home Assistant \u2014 lighting, climate, security and scenes for homes across the Thames Valley.",
-    "service_name": "Home Automation",
-    "service_type": "Home Automation",
+    "faqs": [
+      "I've moved into a house with smart kit I don't understand. Can you help?",
+      "Do you only work with Home Assistant?",
+      "Can you set up smart thermostats and underfloor heating controls?",
+      "Something that used to work has stopped. Is that the kind of thing you fix?",
+      "Do I need a full smart home to use you?"
+    ],
+    "page_description": "Smart home help across the Thames Valley: new local-first systems, thermostat and underfloor heating setup, fixing what's stopped working, and taking over the kit the last owners left.",
+    "page_title": "Smart Home Installation, Setup & Repair | Luma Tech",
+    "service_description": "Smart home installation, setup and repair for homes across the Thames Valley \u2014 new local-first systems built around Home Assistant, plus setup, troubleshooting and takeover of any existing thermostats, heating controls, lighting and hubs.",
+    "service_name": "Smart Home Installation & Support",
+    "service_type": "Smart Home Installation",
     "service_url": "/services/automation/",
     "template": "services/automation.html"
   },

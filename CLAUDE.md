@@ -39,9 +39,11 @@ reverse-proxy on the Hetzner box.
   `_render_area_page` and `_render_thanks_page` in `core/views.py` render from
   those tables. `core/urls.py` still names every route individually, so
   `{% url %}`, `reverse()` and the sitemap are unaffected. Watch out for the
-  non-uniform bits: `service_security` sits in its own `"security"` nav slot,
-  and three service pages deliberately have no FAQs (adding a default would
-  give them a FAQ section and a `FAQPage` JSON-LD node they've never had).
+  non-uniform bits: `service_security` and `automation` sit in their own
+  `"security"` / `"automation"` nav slots,
+  and two service pages (development, support) deliberately have no FAQs
+  (adding a default would give them a FAQ section and a `FAQPage` JSON-LD
+  node they've never had).
 - **Pages**: home, services overview + service pages (networking, security hub
   + its cctv / access-control / alarms children, ai-cameras, development,
   automation, support), a **construction lead-gen funnel**

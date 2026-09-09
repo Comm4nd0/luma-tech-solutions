@@ -110,7 +110,7 @@ class PageContractTests(TestCase):
         self.assertEqual(resp.context["active_nav"], "security")
 
     def test_pages_without_faqs_stay_without_faqs(self):
-        for name in ("service_development", "service_automation", "service_support"):
+        for name in ("service_development", "service_support"):
             with self.subTest(page=name):
                 resp = self.client.get(reverse(name))
                 self.assertIsNone(resp.context.get("faqs"))

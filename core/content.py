@@ -34,8 +34,8 @@ PILLARS = [
     },
     {
         "key": "automation",
-        "title": "Home Automation",
-        "tagline": "Smart homes that are private, fast and keep working when the internet doesn't.",
+        "title": "Smart Home",
+        "tagline": "New systems, fixes and takeovers — thermostats, lighting, hubs and whatever the last owners left behind.",
         "url_name": "service_automation",
         "icon": "home",
     },
@@ -415,6 +415,81 @@ CASE_STUDIES = [
         "outcome": "Live on the App Store. iPhone, iPad, Mac (M1+) and Apple Vision supported.",
         "featured": False,
     },
+    {
+        "slug": "mojo-and-co",
+        "title": "Mojo and Co — dog grooming business app",
+        "tag": "Mobile app",
+        "illustration": "development",
+        "summary": (
+            "A bespoke iOS and Android app for a one-groomer dog grooming "
+            "business. Staff get the whole business in one place: client and "
+            "dog records, a searchable dog list, a time-axis diary, groom "
+            "phase timers, photos, invoicing and an equipment register. "
+            "Clients get their own details and bookings, can request an "
+            "appointment and fill in the intake form online instead of on "
+            "paper."
+        ),
+        "stack": [
+            "Flutter",
+            "Django REST Framework",
+            "PostgreSQL",
+            "Face ID / fingerprint unlock",
+            "Docker + Caddy on Hetzner",
+        ],
+        "outcome": (
+            "Live on iOS and Android, with a backend that deploys itself on "
+            "every push. Paper client cards, dog cards and intake forms "
+            "retired in favour of one app the groomer and her clients share."
+        ),
+        "featured": False,
+        "detail": [
+            (
+                "Mojo and Co is a one-person grooming business run from three "
+                "paper forms: a client card, a dog card and an intake sheet "
+                "with the policies a new owner agrees to. The brief was to "
+                "put the whole thing on the groomer's phone without losing "
+                "the working notes that make a small business run — which "
+                "dogs need a firm hand, which owners like a chat, who still "
+                "needs a leaflet — and to give clients a way to see their "
+                "own bookings and ask for new ones without a phone call."
+            ),
+            (
+                "The staff side is built around the diary: a time-axis day "
+                "and week view you swipe through, with every breed's typical "
+                "groom time and price seeded as a reference sheet the "
+                "groomer can edit. Blocked-out time (lunch, a vet run, a "
+                "week away) draws as a hatched band under the bookings and "
+                "refuses client requests that land on it. Booking two dogs "
+                "from one household goes in as a single visit with one "
+                "length, so the diary shows how long the groomer will really "
+                "be with them. Groom phase timers, per-visit photos and a "
+                "groom report for every appointment sit on the dog's "
+                "profile, alongside a five-grade handling scale whose "
+                "wording the groomer owns."
+            ),
+            (
+                "Two audiences share one codebase, so the access rules got "
+                "the most attention. A client can only ever reach their own "
+                "records; staff-only fields such as temperament notes and "
+                "private client notes are stripped from every client-facing "
+                "payload at the serializer layer, and clients can read but "
+                "never edit or delete the rows they can see. Each of those "
+                "is a separate layer with its own tests, because one of them "
+                "on its own was found wanting during development."
+            ),
+            (
+                "Signing in works with a username or an email, password "
+                "resets are self-service, and the app can lock behind Face "
+                "ID or a fingerprint per account. The backend runs in Docker "
+                "behind Caddy on a Hetzner host and deploys itself on every "
+                "push to main once the test suite passes, with an automatic "
+                "rollback if the health check fails. App releases are cut "
+                "from a git tag: Xcode Cloud builds it, and a workflow "
+                "writes the release notes from the changelog and submits it "
+                "for review."
+            ),
+        ],
+    },
 ]
 
 
@@ -698,6 +773,62 @@ FAQS_AI_CAMERAS = [
 # Construction / trade FAQs, used on the builders & construction page.
 # NOTE for Marco: the insurance answer deliberately doesn't state a cover
 # figure — add the £ amount once you've confirmed it with the policy.
+FAQS_AUTOMATION = [
+    {
+        "q": "I've moved into a house with smart kit I don't understand. Can you help?",
+        "a": (
+            "Yes — this is one of the most common calls we get. We come "
+            "out, work out what's actually installed (thermostats, "
+            "underfloor heating controllers, lighting, blinds, cameras, "
+            "hubs), get it under your control, and leave you a plain-"
+            "English note of what everything is and how to use it. If the "
+            "previous owners took a hub or a controller with them, we "
+            "source a replacement and set it up."
+        ),
+    },
+    {
+        "q": "Do you only work with Home Assistant?",
+        "a": (
+            "No. We build new systems around Home Assistant because it's "
+            "local, private and doesn't lock you into one brand, but we "
+            "set up, fix and take over whatever is already in the house — "
+            "Heatmiser, Hive, Nest, Tado, Hue, Lutron, SmartThings, Ring, "
+            "Sonos, and plenty more. You don't have to rip anything out to "
+            "get our help."
+        ),
+    },
+    {
+        "q": "Can you set up smart thermostats and underfloor heating controls?",
+        "a": (
+            "Yes. Zoned underfloor heating and multi-room thermostats are a "
+            "regular job for us — pairing the thermostats to the wiring "
+            "centre or hub, naming the zones sensibly, setting schedules "
+            "that match how you live, and adding app control where the "
+            "system supports it. We'll also tell you honestly if the "
+            "controller you've got isn't worth keeping."
+        ),
+    },
+    {
+        "q": "Something that used to work has stopped. Is that the kind of thing you fix?",
+        "a": (
+            "Yes. Automations that stopped firing after a firmware update, "
+            "a hub that's been discontinued, a voice assistant that can't "
+            "see the lights any more, devices that dropped off the Wi-Fi — "
+            "we diagnose the cause and fix it, and where the honest answer "
+            "is \"replace it\", we say so before spending your money."
+        ),
+    },
+    {
+        "q": "Do I need a full smart home to use you?",
+        "a": (
+            "No. A single thermostat, one room of lighting, or a doorbell "
+            "that won't pair is a perfectly good reason to call. Small "
+            "jobs are quoted as small jobs."
+        ),
+    },
+]
+
+
 FAQS_CONSTRUCTION = [
     {
         "q": "Can you install site cameras for just the duration of the build?",
@@ -833,11 +964,13 @@ JOB_ROLES = [
 # helpers in views.py.
 #
 # Values that look derivable but are NOT:
-#   * "active" — service_security has its own top-level nav slot ("security"),
-#     every other service page is "services".
+#   * "active" — service_security and automation have their own top-level
+#     nav slots ("security", "automation"); every other service page is
+#     "services".
 #   * "service_type" — ai_cameras and security both use "CCTV Installation".
 #   * "template" — services/overview.html doesn't fit services/<key>.html.
-#   * "faqs" — three service pages deliberately have none. Omit the key; do not
+#   * "faqs" — two service pages (development, support) deliberately have
+#     none. Omit the key; do not
 #     default it, or those pages grow a visible FAQ block and a FAQPage
 #     JSON-LD node.
 #
@@ -979,25 +1112,29 @@ SERVICE_PAGES = {
     },
     "automation": {
         "template": "services/automation.html",
-        "active": "services",
+        # Own top-level nav slot, like service_security.
+        "active": "automation",
         "url_name": "service_automation",
-        "crumb": "Home Automation",
+        "crumb": "Smart Home",
         # Was "Smart Home Installer — Marlow, Henley, Maidenhead": that title
         # put this page at position 44 for "smart home company henley on
         # thames" while /areas/henley/ sat at 15.8 for the same query.
-        "page_title": "Smart Home Installation, Local & Private | Luma Tech",
+        "page_title": "Smart Home Installation, Setup & Repair | Luma Tech",
         "page_description": (
-            "Local-first Home Assistant smart-home installation across the "
-            "Thames Valley. Lighting, climate, scenes and security that keep "
-            "working when the internet doesn't. No cloud lock-in."
+            "Smart home help across the Thames Valley: new local-first "
+            "systems, thermostat and underfloor heating setup, fixing what's "
+            "stopped working, and taking over the kit the last owners left."
         ),
-        "service_name": "Home Automation",
-        "service_type": "Home Automation",
+        "service_name": "Smart Home Installation & Support",
+        "service_type": "Smart Home Installation",
         "service_description": (
-            "Local-first smart-home design with Home Assistant — lighting, "
-            "climate, security and scenes for homes across the Thames Valley."
+            "Smart home installation, setup and repair for homes across the "
+            "Thames Valley — new local-first systems built around Home "
+            "Assistant, plus setup, troubleshooting and takeover of any "
+            "existing thermostats, heating controls, lighting and hubs."
         ),
         "area_anchor": "Smart home installation in {town}",
+        "faqs": FAQS_AUTOMATION,
     },
     "ai_cameras": {
         "template": "services/ai_cameras.html",
@@ -1457,22 +1594,22 @@ def area_is_draft(page):
 # worthless — Google learns the field carries no information and ignores it.
 PAGE_LASTMOD = {
     # Local-SEO overhaul: retitled, relinked, security hub split out.
-    "home": "2026-08-15",
+    "home": "2026-09-09",
     "service_security": "2026-08-15",
     "service_cctv": "2026-08-15",
     "service_access_control": "2026-08-15",
     "service_alarms": "2026-08-15",
     "service_networking": "2026-08-15",
-    "service_automation": "2026-09-04",
+    "service_automation": "2026-09-09",
     "service_ai_cameras": "2026-08-15",
-    "service_support": "2026-09-04",
+    "service_support": "2026-09-09",
     "service_development": "2026-08-15",
     "areas": "2026-08-15",
-    "area_marlow": "2026-08-15",
-    "area_maidenhead": "2026-08-15",
-    "area_henley": "2026-08-15",
-    "area_beaconsfield": "2026-08-15",
-    "area_high_wycombe": "2026-08-15",
+    "area_marlow": "2026-09-09",
+    "area_maidenhead": "2026-09-09",
+    "area_henley": "2026-09-09",
+    "area_beaconsfield": "2026-09-09",
+    "area_high_wycombe": "2026-09-09",
 }
 
 

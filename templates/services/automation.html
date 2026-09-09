@@ -9,12 +9,13 @@
     <div class="service-hero-inner">
       <div>
         {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
-        <span class="eyebrow"><span class="dot"></span>Smart homes done right</span>
-        <h1>A smart home that's <span class="gradient">yours, private, and keeps working.</span></h1>
+        <span class="eyebrow"><span class="dot"></span>Smart home help, whatever's installed</span>
+        <h1>Smart home installation, setup <span class="gradient">and fixing what's already there.</span></h1>
         <p class="lede">
-          We build smart homes around <strong>Home Assistant</strong> — fast,
-          private, and not at the mercy of a vendor changing the rules or
-          having a bad afternoon with their cloud servers.
+          Thermostats that won't pair, underfloor heating with no controller,
+          lights that stopped listening, a hub the last owners took with them
+          &mdash; or a brand-new system built properly from scratch. One
+          engineer, any brand, plain-English handover.
         </p>
       </div>
       <div class="hero-illustration">
@@ -28,26 +29,69 @@
   <div class="container">
     <div class="service-grid">
       <div>
-        <h2>Why it matters where the brain lives</h2>
+        <h2>Three ways we help</h2>
+        <div class="grid grid-3">
+          <div class="card card-glow fade-in">
+            <h3>Set it up properly</h3>
+            <p>You've bought the kit, or the developer fitted it, and it's never quite worked. We pair it, name it, schedule it and put it on the right network, then show you how to use it.</p>
+          </div>
+          <div class="card card-glow fade-in">
+            <h3>Fix or take over</h3>
+            <p>Moved into a house full of smart gear nobody explained? Something stopped working after an update? We work out what's there, get it under your control and replace what's missing.</p>
+          </div>
+          <div class="card card-glow fade-in">
+            <h3>Build it from scratch</h3>
+            <p>For a new system we build around Home Assistant: fast, private, no monthly fees, and it keeps working when the internet doesn't. You own the hardware and the data.</p>
+          </div>
+        </div>
+
+        <h3 class="mt-4">Just moved in? We sort out what the last owners left behind</h3>
+        <p>
+          A very common call: new house, underfloor heating in every room,
+          thermostats on the walls, and no idea how any of it works. Sometimes
+          the manual is missing. Sometimes the app is still logged into the
+          previous owner's account. Sometimes the hub that made it all talk
+          went in a removal box by mistake.
+        </p>
+        <p>
+          We visit, map what's installed, and get it working for you. That
+          includes sourcing and fitting a replacement hub or controller when
+          one has gone missing or been discontinued, re-pairing every
+          thermostat and zone, resetting accounts so the system is yours, and
+          leaving a one-page guide so you never have to guess again.
+        </p>
+
+        <h3 class="mt-4">What we work on</h3>
+        <ul class="bullets">
+          <li><strong>Heating &amp; hot water</strong> &mdash; smart thermostats, zoned underfloor heating controllers, wiring centres, smart radiator valves. Heatmiser, Hive, Nest, Tado, Honeywell, Warmup and others.</li>
+          <li><strong>Lighting</strong> &mdash; Hue, Lutron, Lightwave, Shelly, in-wall Zigbee modules. Scenes, dimming, motion and daylight-aware control.</li>
+          <li><strong>Blinds, gates &amp; doors</strong> &mdash; motorised blinds, garage doors, gate intercoms and smart locks, integrated so they respond to schedules and "leaving the house" routines.</li>
+          <li><strong>Hubs &amp; platforms</strong> &mdash; Home Assistant, SmartThings, Hubitat, Apple Home, Google Home and Alexa. Migrations off discontinued hubs included.</li>
+          <li><strong>Security tie-ins</strong> &mdash; cameras, door and window sensors and alarms wired into the same dashboard, so the house arms itself when you leave.</li>
+          <li><strong>Energy</strong> &mdash; solar, battery and EV charger monitoring, plus automations that shift heavy loads into cheap-rate windows.</li>
+          <li><strong>Voice</strong> &mdash; Apple, Google, Alexa, or a fully local assistant that never sends a recording anywhere.</li>
+        </ul>
+
+        <h3 class="mt-4">Things we fix every week</h3>
+        <ul class="bullets">
+          <li>Thermostats showing "no connection" or controlling the wrong zone.</li>
+          <li>Devices that fell off the Wi-Fi when the router was changed.</li>
+          <li>Automations that stopped firing after a firmware or app update.</li>
+          <li>A hub or bridge that's been discontinued and needs a like-for-like or better replacement.</li>
+          <li>Voice assistants that can no longer see half the lights.</li>
+          <li>Kit tied to an old owner's account that can't be reset without the right procedure.</li>
+        </ul>
+
+        <h3 class="mt-4">When you want a system built properly</h3>
         <p>
           Most "smart home" platforms send every flick of a light switch
           through somebody else's servers. That's slow, fragile, and a
-          privacy choice you didn't consciously make. With Home Assistant,
-          the brain lives in your house — your scenes work even when the
-          internet drops, your data stays put, and you can change anything
-          without asking a vendor's permission.
+          privacy choice you didn't consciously make. For a new system we
+          put the brain in your house with <strong>Home Assistant</strong>:
+          scenes keep working when the broadband drops, your data stays put,
+          nothing depends on a vendor's subscription, and you can change
+          anything without asking permission.
         </p>
-
-        <h3 class="mt-3">What we automate</h3>
-        <ul class="bullets">
-          <li><strong>Lighting</strong> — circadian-tuned, scene-controlled, motion-aware. Hue, Lutron, Shelly or in-wall Zigbee modules.</li>
-          <li><strong>Climate</strong> — thermostats, underfloor zones, and per-room heating logic that actually saves you money.</li>
-          <li><strong>Security</strong> — UniFi Protect cameras, door & window sensors, "leaving the house" routines that arm everything.</li>
-          <li><strong>Energy</strong> — solar / battery / EV monitoring, plus automations that shift loads to cheap-rate windows.</li>
-          <li><strong>Access</strong> — intercom integrations and time-bounded access codes for trades.</li>
-        </ul>
-
-        <h3 class="mt-4">Equipment we trust</h3>
         <div class="tech-inline mb-2">
           <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='home-assistant' %} Home Assistant</span>
           <span class="tech-inline-item">{% include 'partials/_tech_logos.html' with name='zigbee' %} Zigbee</span>
@@ -58,42 +102,37 @@
         <div class="grid grid-2">
           <div class="card card-glow fade-in">
             <h3>The brain</h3>
-            <p>A dedicated smart-home hub — purpose-built hardware with enterprise storage and encrypted off-site backups. The thing that runs your house deserves better than a hobby board with a flaky memory card.</p>
+            <p>A dedicated hub on proper hardware with encrypted off-site backups. The thing that runs your house deserves better than a hobby board with a flaky memory card.</p>
           </div>
           <div class="card card-glow fade-in">
             <h3>Wireless protocols</h3>
-            <p>Zigbee for sensors and lighting, Z-Wave for door and window kit, Matter where it fits. We'll mix the right ones for your home, not whatever's on offer this week.</p>
+            <p>Zigbee for sensors and lighting, Z-Wave for door and window kit, Matter where it fits. We mix the right ones for your home, not whatever's on offer this week.</p>
           </div>
           <div class="card card-glow fade-in">
             <h3>How you control it</h3>
-            <p>Wall tablets, your voice (Apple Home, Alexa or Google), or a tidy mobile dashboard. Whatever actually fits how you live — not how the vendor thinks you should.</p>
+            <p>Wall tablets, your voice, or a tidy mobile dashboard. Whatever actually fits how you live, not how the vendor thinks you should.</p>
           </div>
           <div class="card card-glow fade-in">
             <h3>Network</h3>
-            <p>Your smart-home devices get their own private network, kept away from your laptops and phones. Done right, you get reliability your gadget vendors didn't promise — and a much smaller security risk.</p>
+            <p>Smart-home devices get their own private network, kept away from your laptops and phones. More reliable, and a much smaller security risk.</p>
           </div>
         </div>
 
-        <h3 class="mt-4">AI assistants that don't phone home</h3>
+        <h3 class="mt-4">Voice control that doesn't phone home</h3>
         <p>
-          Voice control, done right. Home Assistant's Assist runs
-          speech recognition, language understanding and the response
-          itself — all on the box in your house. You can ask "turn off
-          everything upstairs", "is the back door locked?", "set the
-          heating to 19 in the morning" and the answer comes from your
-          own kit, not Amazon's.
+          If you'd like to talk to the house without Amazon or Google
+          listening, Home Assistant's Assist runs speech recognition and the
+          response itself on the box in your house. "Turn off everything
+          upstairs", "is the back door locked?", "set the heating to 19 in
+          the morning" &mdash; answered locally, no recordings going anywhere.
+          Prefer Alexa, Siri or Google? We set those up too. You choose, we
+          configure.
         </p>
-        <ul class="bullets">
-          <li><strong>Local speech-to-text</strong> with Whisper, and text-to-speech with Piper — fast, private, and works without an internet connection.</li>
-          <li><strong>Optional local LLM</strong> — for households that want natural-language control ("when I say goodnight, dim the bedroom and arm the alarm"), we wire up a small open-weights model that turns plain English into automations.</li>
-          <li><strong>Voice hardware around the house</strong> — Home Assistant's Voice Preview Edition is a tidy little tabletop puck that does all of the above; we set them up in the rooms you actually use them, replacing the Echo or Nest you've been side-eyeing for years.</li>
-          <li><strong>Cloud LLMs only when you ask for them</strong> — if you'd rather have a much smarter assistant and don't mind queries going to Claude or OpenAI, we can wire that in too. You choose, we configure.</li>
-        </ul>
 
         <h3 class="mt-4">We run it ourselves</h3>
         <p>
           Every product we recommend is running in our own home, every
-          day. Same network. Same smart-home hub. Same lights and
+          day. Same network. Same hub. Same lights, thermostats and
           sensors. If something isn't reliable enough for our family,
           it doesn't make it onto your quote.
         </p>
@@ -103,29 +142,31 @@
           When the off-the-shelf bracket doesn't fit your wall, your
           architrave or that awkward corner above the porch, we design
           and 3D print custom mounts, enclosures and cable-tidy parts
-          ourselves. It's a small thing — but it's the difference
-          between a clean install and a sensor dangling on cable ties.
+          ourselves. Small thing, but it's the difference between a clean
+          install and a sensor dangling on cable ties.
         </p>
       </div>
 
       <aside class="sidebar fade-in">
         <h4>How to start</h4>
-        <p>A short consultation to scope what you actually want automated. Then a fixed-price quote covering hardware, install and configuration — no day rates, no scope creep.</p>
+        <p>Tell us what's in the house and what's annoying you. Small fixes get a small quote; bigger projects get a short visit and a fixed price covering hardware, install and setup. No day rates, no scope creep.</p>
         <a href="{% url 'contact' %}" class="btn btn-primary">Book a chat</a>
         <h4 style="margin-top:1.5rem;">Always included</h4>
         <ul class="bullets" style="margin-top:.5rem;">
-          <li>Works without the internet</li>
-          <li>You own the hardware</li>
-          <li>Encrypted backups</li>
-          <li>Plain-English documentation</li>
-          <li>No vendor lock-in</li>
+          <li>Any brand, any age of kit</li>
+          <li>You own the hardware and accounts</li>
+          <li>Plain-English handover notes</li>
+          <li>Honest "replace it" advice</li>
+          <li>Same engineer afterwards</li>
         </ul>
       </aside>
     </div>
   </div>
 </section>
 
+{% include 'partials/_faqs.html' with faqs=faqs faq_title='Smart home questions we get asked' %}
+
 {% include 'partials/_areas_served.html' %}
 
-{% include 'partials/_cta_banner.html' with cta_title='Curious what your home could do?' cta_copy='Tell us what frustrates you most about your current setup. Often a 30-minute call is enough to know exactly what would help — and what to leave alone.' %}
+{% include 'partials/_cta_banner.html' with cta_title='Got smart kit that needs sorting?' cta_copy='Tell us what is installed and what it is not doing. Often a 30-minute call is enough to know exactly what would help, and what to leave alone.' %}
 {% endblock %}

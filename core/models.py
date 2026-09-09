@@ -20,7 +20,7 @@ def cv_upload_to(instance, filename):
 SERVICE_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
     ("development", "App & Web Development"),
-    ("automation", "Home Automation"),
+    ("automation", "Smart Home (install, setup or fix)"),
     ("support", "Support & Maintenance"),
     ("other", "Something else"),
 ]
@@ -44,7 +44,7 @@ PILLAR_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
     ("security", "Physical Security"),
     ("development", "App & Web Development"),
-    ("automation", "Home Automation"),
+    ("automation", "Smart Home"),
     ("support", "Support & Maintenance"),
     ("general", "General"),
 ]
@@ -75,7 +75,7 @@ QUOTE_SERVICE_CHOICES = [
     ("security", "CCTV / Physical Security"),
     ("site_security", "Site Security / ANPR"),
     ("prewire", "Pre-wire / Structured Cabling"),
-    ("automation", "Smart Home / Home Automation"),
+    ("automation", "Smart Home (install, setup or fix)"),
     ("development", "App or Website Build"),
     ("support", "Ongoing Support / Care Plan"),
     ("survey", "Site Survey only"),
