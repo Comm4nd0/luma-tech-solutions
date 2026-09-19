@@ -157,7 +157,7 @@ CARE_PLAN_AUDIENCES = {
             'price_suffix': '/mo +VAT',
             'annual_price': '£3,510',
             'annual_suffix': '/yr',
-            'tagline': 'The whole smart home, whoever installed it — one engineer, one number, one bill.',
+            'tagline': 'The whole smart home, whoever installed it — one number, one bill.',
             "features": [
                 'Everything in Professional',
                 ("We'll take a look at any smart-home product in the house, whoever installed it — Lutron, Ring, Nest, Hue, legacy integrations. Diagnose, advise and escalate to the manufacturer; we don't "
@@ -204,7 +204,7 @@ CARE_PLAN_AUDIENCES = {
             'price_suffix': '/user/mo +VAT',
             'annual_price': '£1,190',
             'annual_suffix': '/user/yr',
-            'tagline': 'The whole office, whoever installed it — one engineer, one number, one bill.',
+            'tagline': 'The whole office, whoever installed it — one number, one bill.',
             "features": [
                 'Everything in Professional',
                 ("We'll take a look at any networked product on the premises, whoever installed it — printers, NAS, VOIP, point-of-sale, legacy kit from a previous IT company. Diagnose, advise and escalate to the "
@@ -590,8 +590,8 @@ FAQS_GENERAL = [
         "a": (
             "No. Every install comes with 30 days of post-install support "
             "as standard. Care plans are optional from there — they're for "
-            "clients who want monitoring, faster response, and one engineer "
-            "who knows the system on call. From £75/month + VAT for homes "
+            "clients who want monitoring, faster response, and someone who "
+            "knows the system on call. From £75/month + VAT for homes "
             "or £25/user/month for small businesses."
         ),
     },
@@ -824,6 +824,18 @@ FAQS_AUTOMATION = [
             "No. A single thermostat, one room of lighting, or a doorbell "
             "that won't pair is a perfectly good reason to call. Small "
             "jobs are quoted as small jobs."
+        ),
+    },
+    {
+        "q": "Do you design bespoke, whole-house home automation systems?",
+        "a": (
+            "Yes. For larger homes, renovations and new builds we design "
+            "the whole system from the wiring up — heating zones, lighting "
+            "scenes, blinds, gates, cameras and voice control on one local "
+            "dashboard — and install it in stages that fit the build "
+            "programme, each at a fixed price. Because it runs in your "
+            "house rather than on a vendor's cloud it stays fast and "
+            "private, and it never acquires a monthly fee."
         ),
     },
 ]
@@ -1100,13 +1112,13 @@ SERVICE_PAGES = {
         "page_title": "Mobile App & Website Development | Luma Tech",
         "page_description": (
             "Custom websites, web apps and iOS/Android apps built and "
-            "supported by one engineer in Marlow, Buckinghamshire."
+            "supported in-house from Marlow, Buckinghamshire."
         ),
         "service_name": "App & Web Development",
         "service_type": "Software Development",
         "service_description": (
             "Custom websites, web applications and mobile apps built and "
-            "supported by an engineer in Marlow, Buckinghamshire."
+            "supported in-house from Marlow, Buckinghamshire."
         ),
         "area_anchor": "Website and app development in {town}",
     },
@@ -1119,19 +1131,24 @@ SERVICE_PAGES = {
         # Was "Smart Home Installer — Marlow, Henley, Maidenhead": that title
         # put this page at position 44 for "smart home company henley on
         # thames" while /areas/henley/ sat at 15.8 for the same query.
-        "page_title": "Smart Home Installation, Setup & Repair | Luma Tech",
+        # Search Console (Sep 2026): this page draws the most impressions on
+        # the site but sat at position ~70, matched to "home automation
+        # installation services" and similar. The title now carries that
+        # head term. Still no town names — see the search-intent rule above.
+        "page_title": "Home Automation & Smart Home Installation, Setup & Repair | Luma Tech",
         "page_description": (
-            "Smart home help across the Thames Valley: new local-first "
-            "systems, thermostat and underfloor heating setup, fixing what's "
-            "stopped working, and taking over the kit the last owners left."
+            "Home automation installation in the Thames Valley: bespoke "
+            "whole-house systems, heating and lighting setup, and repair or "
+            "takeover of what's already installed."
         ),
-        "service_name": "Smart Home Installation & Support",
-        "service_type": "Smart Home Installation",
+        "service_name": "Home Automation & Smart Home Installation",
+        "service_type": "Home Automation Installation",
         "service_description": (
-            "Smart home installation, setup and repair for homes across the "
-            "Thames Valley — new local-first systems built around Home "
-            "Assistant, plus setup, troubleshooting and takeover of any "
-            "existing thermostats, heating controls, lighting and hubs."
+            "Home automation and smart home installation, setup and repair "
+            "for homes across the Thames Valley — bespoke local-first "
+            "systems built around Home Assistant, plus setup, "
+            "troubleshooting and takeover of any existing thermostats, "
+            "heating controls, lighting and hubs."
         ),
         "area_anchor": "Smart home installation in {town}",
         "faqs": FAQS_AUTOMATION,
@@ -1354,18 +1371,18 @@ AREA_PAGES = {
         "also_serving_tail": "Cookham, Bourne End.",
         "schema_name": "Wi-Fi, CCTV and Smart Home Installation in Henley-on-Thames",
         "schema_description": (
-            "Wi-Fi, CCTV and smart-home design for period homes and riverside "
-            "properties across Henley-on-Thames, Remenham, Hambleden and "
-            "Mill End."
+            "Wi-Fi, CCTV, access control and smart-home design for period "
+            "homes and riverside properties across Henley-on-Thames, "
+            "Remenham, Hambleden and Mill End."
         ),
         "town": "Henley-on-Thames",
         "page_title": (
             "Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech"
         ),
         "page_description": (
-            "UniFi Wi-Fi, CCTV and smart-home installation for period homes "
-            "and riverside properties in Henley-on-Thames, Remenham, "
-            "Hambleden and Mill End. Local Marlow engineer."
+            "Wi-Fi, CCTV, access control and smart home installation for "
+            "period and riverside homes in Henley-on-Thames. Fixed-price "
+            "quotes, site survey within the week."
         ),
         "h1_lead": "Wi-Fi, CCTV and smart home installation in",
         "local_areas": [
@@ -1386,7 +1403,11 @@ AREA_PAGES = {
         "service_emphasis": (
             "Period-property Wi-Fi where mounts and cable runs have to stay "
             "discreet on the façade — typically four to ten access points, "
-            "often including a boathouse or garden office."
+            "often including a boathouse or garden office. The larger "
+            "houses out toward Remenham, Hambleden and Bix increasingly "
+            "want the whole house on one system — heating zones, lighting, "
+            "blinds and gates — built local-first so it keeps working when "
+            "the broadband doesn't."
         ),
         "example_jobs": [
             "TODO: describe a real Henley job — property type, what was "
@@ -1600,14 +1621,14 @@ PAGE_LASTMOD = {
     "service_access_control": "2026-08-15",
     "service_alarms": "2026-08-15",
     "service_networking": "2026-08-15",
-    "service_automation": "2026-09-09",
+    "service_automation": "2026-09-19",
     "service_ai_cameras": "2026-08-15",
     "service_support": "2026-09-09",
     "service_development": "2026-08-15",
     "areas": "2026-08-15",
     "area_marlow": "2026-09-09",
     "area_maidenhead": "2026-09-09",
-    "area_henley": "2026-09-09",
+    "area_henley": "2026-09-19",
     "area_beaconsfield": "2026-09-09",
     "area_high_wycombe": "2026-09-09",
 }

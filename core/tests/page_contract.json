@@ -41,7 +41,7 @@
         "/areas/henley/"
       ]
     ],
-    "page_description": "UniFi Wi-Fi, CCTV and smart-home installation for period homes and riverside properties in Henley-on-Thames, Remenham, Hambleden and Mill End. Local Marlow engineer.",
+    "page_description": "Wi-Fi, CCTV, access control and smart home installation for period and riverside homes in Henley-on-Thames. Fixed-price quotes, site survey within the week.",
     "page_title": "Wi-Fi, CCTV & Smart Home Installation in Henley-on-Thames | Luma Tech",
     "template": "areas/henley.html"
   },
@@ -377,13 +377,14 @@
       "Do you only work with Home Assistant?",
       "Can you set up smart thermostats and underfloor heating controls?",
       "Something that used to work has stopped. Is that the kind of thing you fix?",
-      "Do I need a full smart home to use you?"
+      "Do I need a full smart home to use you?",
+      "Do you design bespoke, whole-house home automation systems?"
     ],
-    "page_description": "Smart home help across the Thames Valley: new local-first systems, thermostat and underfloor heating setup, fixing what's stopped working, and taking over the kit the last owners left.",
-    "page_title": "Smart Home Installation, Setup & Repair | Luma Tech",
-    "service_description": "Smart home installation, setup and repair for homes across the Thames Valley \u2014 new local-first systems built around Home Assistant, plus setup, troubleshooting and takeover of any existing thermostats, heating controls, lighting and hubs.",
-    "service_name": "Smart Home Installation & Support",
-    "service_type": "Smart Home Installation",
+    "page_description": "Home automation installation in the Thames Valley: bespoke whole-house systems, heating and lighting setup, and repair or takeover of what's already installed.",
+    "page_title": "Home Automation & Smart Home Installation, Setup & Repair | Luma Tech",
+    "service_description": "Home automation and smart home installation, setup and repair for homes across the Thames Valley \u2014 bespoke local-first systems built around Home Assistant, plus setup, troubleshooting and takeover of any existing thermostats, heating controls, lighting and hubs.",
+    "service_name": "Home Automation & Smart Home Installation",
+    "service_type": "Home Automation Installation",
     "service_url": "/services/automation/",
     "template": "services/automation.html"
   },
@@ -436,9 +437,9 @@
         "/services/development/"
       ]
     ],
-    "page_description": "Custom websites, web apps and iOS/Android apps built and supported by one engineer in Marlow, Buckinghamshire.",
+    "page_description": "Custom websites, web apps and iOS/Android apps built and supported in-house from Marlow, Buckinghamshire.",
     "page_title": "Mobile App & Website Development | Luma Tech",
-    "service_description": "Custom websites, web applications and mobile apps built and supported by an engineer in Marlow, Buckinghamshire.",
+    "service_description": "Custom websites, web applications and mobile apps built and supported in-house from Marlow, Buckinghamshire.",
     "service_name": "App & Web Development",
     "service_type": "Software Development",
     "service_url": "/services/development/",
