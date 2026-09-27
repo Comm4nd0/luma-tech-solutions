@@ -490,6 +490,66 @@ CASE_STUDIES = [
             ),
         ],
     },
+    {
+        "slug": "global-news-map",
+        "title": "Global News Map — live map of wars and conflicts in the news",
+        "tag": "Web app · AI",
+        "illustration": "development",
+        "live_url": "https://globalnewsmap.org/",
+        "summary": (
+            "A public 3D globe tracking armed conflicts worldwide, refreshed "
+            "every 30 minutes. A self-hosted AI model turns reporting from "
+            "established news outlets into conflicts, parties, developments "
+            "and attacks, and every item is checked against the article it "
+            "cites before it goes on the map."
+        ),
+        "stack": [
+            "Python + uvicorn",
+            "Self-hosted LLM (gpt-oss-120b)",
+            "MapLibre GL globe",
+            "SQLite",
+            "Docker + Caddy on Hetzner",
+        ],
+        "outcome": (
+            "Live at globalnewsmap.org, updating itself every 30 minutes "
+            "with no one at the keyboard, on an open-source codebase."
+        ),
+        "featured": False,
+        "detail": [
+            (
+                "Global News Map answers a simple question — where is fighting "
+                "happening right now, and what changed today? — on a spinning "
+                "globe. Each conflict has a status (escalating, active, easing, "
+                "ceasefire or frozen), a short summary, its latest "
+                "developments and a page of its own, and every item shows how "
+                "many independent outlets reported it."
+            ),
+            (
+                "Every half hour the pipeline reads a set of established news "
+                "outlets and passes the articles to a large language model "
+                "running on our own hardware, not a paid cloud API. The model "
+                "pulls out conflicts, parties, developments and attacks. Then "
+                "each new item is re-read against the full text of the "
+                "article it cites and dropped if the article doesn't say it. "
+                "That check is what keeps an AI news digest honest."
+            ),
+            (
+                "Around the core map sit data layers from public sources: "
+                "GDELT actor links, occupied territory in Ukraine, military "
+                "aircraft and ships (deliberately delayed), travel-advice "
+                "shading, and separate cyber and weather modes. The basemap, "
+                "relief tiles and fonts are all served locally."
+            ),
+            (
+                "The heavy lifting runs on a GPU machine that pushes a "
+                "database snapshot after each refresh; the public server "
+                "only serves the map, in Docker behind Caddy on a Hetzner "
+                "host. Every page is server-rendered with its own Open Graph "
+                "tags, structured data and sitemap entry, so individual "
+                "conflicts can be found in search."
+            ),
+        ],
+    },
 ]
 
 
@@ -1631,6 +1691,7 @@ PAGE_LASTMOD = {
     "area_henley": "2026-09-19",
     "area_beaconsfield": "2026-09-09",
     "area_high_wycombe": "2026-09-09",
+    "portfolio": "2026-09-28",
 }
 
 

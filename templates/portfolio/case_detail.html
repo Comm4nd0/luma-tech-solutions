@@ -48,6 +48,9 @@
         <ul class="bullets" style="margin-top:.5rem;">
           {% for tech in case.stack %}<li>{{ tech }}</li>{% endfor %}
         </ul>
+        {% if case.live_url %}
+        <p class="mt-3"><a href="{{ case.live_url }}" rel="noopener" target="_blank">Visit the live site ↗</a></p>
+        {% endif %}
         <a href="{% url 'quote' %}?source=case-{{ case.slug }}" class="btn btn-primary btn-sm" style="margin-top:1rem;">Quote a similar project</a>
       </aside>
     </div>
