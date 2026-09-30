@@ -90,19 +90,23 @@
   // Where focus was before the banner opened, so it can be handed back.
   var lastFocused = null;
 
-  function showBanner(banner, stage) {
+  function showBanner(banner, stage, moveFocus) {
+    if (banner.hidden || !banner.contains(document.activeElement)) lastFocused = document.activeElement;
     setStage(banner, stage || 'notice');
     banner.hidden = false;
-    lastFocused = document.activeElement;
-    // Move focus in, otherwise a keyboard user activating "Cookie
-    // preferences" gets no indication anything happened.
-    var target = banner.querySelector('[data-consent-action]');
-    if (target) target.focus();
+    // Initial notices must not steal focus. User-opened panels focus a
+    // visible control, while keeping the original opener across stages.
+    if (moveFocus !== false) {
+      var panel = banner.querySelector('[data-consent-stage]:not([hidden])');
+      var target = panel.querySelector('input, [data-consent-action]');
+      if (target) target.focus();
+    }
   }
 
   function hideBanner(banner) {
+    var focusWasInside = banner.contains(document.activeElement);
     banner.hidden = true;
-    if (lastFocused && document.contains(lastFocused)) lastFocused.focus();
+    if (focusWasInside && lastFocused && document.contains(lastFocused)) lastFocused.focus();
     lastFocused = null;
   }
 
@@ -114,7 +118,7 @@
     if (existing) {
       applyConsent(existing.consent);
     } else {
-      showBanner(banner, 'notice');
+      showBanner(banner, 'notice', false);
     }
 
     banner.addEventListener('click', function (event) {
@@ -161,6 +165,9 @@
         event.preventDefault();
         syncToggles(banner);
         showBanner(banner, 'preferences');
+        // Pointer activation does not focus buttons in every browser.
+        // The explicit preferences trigger is still the correct return target.
+        lastFocused = el;
       });
     });
   }

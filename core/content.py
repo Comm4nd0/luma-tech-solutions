@@ -258,6 +258,7 @@ def care_plans(audience):
 CASE_STUDIES = [
     {
         "slug": "chiltern-view",
+        "portfolio_group": "home",
         "title": "Chiltern View — full smart home and UniFi network",
         "tag": "Smart home + networking",
         "illustration": "automation",
@@ -273,6 +274,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "for-sale-by-owner",
+        "portfolio_group": "software",
         "title": "For Sale By Owner — property listings mobile app",
         "tag": "Mobile app",
         "illustration": "development",
@@ -287,6 +289,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "chiltern-yard-anpr",
+        "portfolio_group": "business",
         "title": "Chiltern Yard, Maidenhead — ANPR & site CCTV",
         "tag": "Construction · ANPR",
         "illustration": "security",
@@ -358,6 +361,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "littlewick-house",
+        "portfolio_group": "home",
         "title": "LittleWick House — whole-property UniFi network",
         "tag": "Networking",
         "illustration": "networking",
@@ -403,6 +407,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "paws-4-thought-dogs",
+        "portfolio_group": "software",
         "title": "Paws 4 Thought Dogs — small business website",
         "tag": "Marketing site",
         "illustration": "development",
@@ -416,6 +421,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "paws-4-thought-dogs-app",
+        "portfolio_group": "software",
         "title": "Paws 4 Thought Dogs — mobile app",
         "tag": "Mobile app",
         "illustration": "development",
@@ -439,6 +445,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "mojo-and-co",
+        "portfolio_group": "software",
         "title": "Mojo and Co — dog grooming business app",
         "tag": "Mobile app",
         "illustration": "development",
@@ -514,6 +521,7 @@ CASE_STUDIES = [
     },
     {
         "slug": "global-news-map",
+        "portfolio_group": "software",
         "title": "Global News Map — live map of wars and conflicts in the news",
         "tag": "Web app · AI",
         "illustration": "development",
@@ -1704,7 +1712,7 @@ PAGE_LASTMOD = {
     "service_automation": "2026-09-30",
     "service_ai_cameras": "2026-09-30",
     "service_support": "2026-09-30",
-    "service_development": "2026-08-15",
+    "service_development": "2026-09-30",
     "areas": "2026-08-15",
     "area_marlow": "2026-09-30",
     "area_maidenhead": "2026-09-30",

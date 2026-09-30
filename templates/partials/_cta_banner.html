@@ -5,22 +5,23 @@ Optional overrides via include with-args:
   cta_title, cta_copy, cta_primary, cta_primary_url,
   cta_secondary, cta_secondary_url, cta_source, cta_service
 
-`cta_primary_url` defaults to the dedicated quote page — every CTA is now
-funnelled through structured-quote-first; the secondary "Or just send a
-message" is the soft escape for tyre-kickers.
+`cta_primary_url` defaults to the enquiry page. Business and diagnostic
+journeys can supply their own primary action; installation journeys use
+the free-survey action and explain its scope alongside it.
 {% endcomment %}
 <section class="tight">
   <div class="container">
     <div class="cta-banner fade-in">
       <div>
-        <h2>{{ cta_title|default:"Ready to get a real quote?" }}</h2>
-        <p>{{ cta_copy|default:"Tell us about your property and what you're trying to fix. We'll come and look — usually within the week — and reply with a fixed-price quote on one page. No callbacks from sales people. Marco replies, same day where possible." }}</p>
+        <h2>{{ cta_title|default:"What would you like to work better?" }}</h2>
+        <p>{{ cta_copy|default:"Tell Marco about your property and what you need. We'll reply within one working day to discuss the right next step, then agree the scope and price before any work begins." }}</p>
+        {% if not cta_primary %}<p class="field-help">Free surveys are for installation quotations. Diagnostic visits and standalone reports are separately priced, with the fee agreed before booking.</p>{% endif %}
         <p class="cta-trust mt-2">
           <span class="cta-trust-item">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
-            Free quotation survey
+            {% if cta_primary %}Marco replies directly{% else %}Free quotation survey{% endif %}
           </span>
           <span class="cta-trust-item">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -37,7 +38,7 @@ message" is the soft escape for tyre-kickers.
         </p>
       </div>
       <div class="actions">
-        <a href="{% url cta_primary_url|default:'quote' %}?source={{ cta_source|default:'page-cta' }}{% if cta_service %}&amp;service={{ cta_service }}{% endif %}" class="btn btn-primary plausible-event-name=CTA+Banner+Quote">{{ cta_primary|default:"Get my quote" }} {% include 'partials/_icons.html' with name='arrow' %}</a>
+        <a href="{% url cta_primary_url|default:'quote' %}?source={{ cta_source|default:'page-cta' }}{% if cta_service %}&amp;service={{ cta_service }}{% endif %}" class="btn btn-primary plausible-event-name=CTA+Banner+Quote">{{ cta_primary|default:"Request a free survey" }}</a>
         <a href="{% url cta_secondary_url|default:'contact' %}{% if cta_service %}?service={{ cta_service }}{% endif %}" class="btn btn-ghost btn-sm">{{ cta_secondary|default:"Or just send a message" }}</a>
       </div>
     </div>

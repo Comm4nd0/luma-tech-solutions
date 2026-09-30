@@ -1,9 +1,10 @@
 {% load static %}
-<div class="card fade-in">
-  {% if SITE_FOUNDER_PHOTO %}<img class="founder-photo" src="{% static SITE_FOUNDER_PHOTO %}" alt="{{ SITE_FOUNDER }}, your Luma engineer" width="160" height="160" loading="lazy" />{% endif %}
-  <span class="eyebrow">Meet your engineer</span>
+<div class="engineer-introduction{% if SITE_FOUNDER_PHOTO %} has-portrait{% endif %}">
+  {% if SITE_FOUNDER_PHOTO %}<img class="engineer-portrait" src="{% static SITE_FOUNDER_PHOTO %}" alt="{{ SITE_FOUNDER }}, your Luma engineer" width="400" height="500" loading="lazy" />{% endif %}
+  <div>
   <h2>Hi, I'm Marco.</h2>
   <p>I founded Luma after serving in the Royal Marines Information Systems branch. I bring that experience in networks and communications to homes across {{ SITE_REGION }}.</p>
   <p>I'll talk through the problem, design the installation and explain how to use it. You have a familiar person to come back to for support.</p>
   <a href="{% url 'about' %}">More about Marco and Luma →</a>
+  </div>
 </div>

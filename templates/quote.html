@@ -7,7 +7,7 @@
 <section class="service-hero"><div class="container">
   {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
   <span class="eyebrow"><span class="dot"></span>Let's start with the problem</span>
-  <h1>What would you like to <span class="gradient">work better?</span></h1>
+  <h1>What would you like to work better?</h1>
   <p class="lede">Tell Marco what you need and where you are. We'll reply within one working day to discuss the next step. Installation quotation surveys are free; any diagnostic visit is priced and agreed before booking.</p>
   {% include 'partials/_trust_strip.html' %}
 </div></section>
@@ -18,7 +18,7 @@
       {% for hidden in form.hidden_fields %}{{ hidden }}{% if hidden.errors %}<div class="alert" role="alert">{{ hidden.errors }}</div>{% endif %}{% endfor %}
       <input type="hidden" name="g-recaptcha-response" value="">
       {% if form.non_field_errors %}<div class="alert" role="alert">{{ form.non_field_errors }}</div>{% endif %}
-      <fieldset class="field-group">
+      <fieldset class="field-group" id="service-choices" data-service-choices{% if form.services.errors %} aria-invalid="true" aria-describedby="services-errors"{% endif %}>
         <legend>What can we help with? <span class="muted">Pick all that apply.</span></legend>
         <div class="checkbox-grid">
           {% for cb in form.services %}{% if cb.data.value == 'networking' or cb.data.value == 'security' or cb.data.value == 'automation' %}

@@ -76,10 +76,10 @@ class ContactForm(AccessibleErrorsMixin, forms.ModelForm):
                 attrs={"placeholder": "Your name", "autocomplete": "name"}
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": "you@example.com", "autocomplete": "email"}
+                attrs={"placeholder": "you@example.com", "autocomplete": "email", "spellcheck": "false", "autocapitalize": "none"}
             ),
             "phone": forms.TextInput(
-                attrs={"placeholder": "Optional", "autocomplete": "tel"}
+                attrs={"placeholder": "Optional", "autocomplete": "tel", "type": "tel", "inputmode": "tel"}
             ),
             "audience": forms.RadioSelect,
             "message": forms.Textarea(
@@ -114,10 +114,10 @@ class JobApplicationForm(AccessibleErrorsMixin, forms.ModelForm):
                 attrs={"placeholder": "Your name", "autocomplete": "name"}
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": "you@example.com", "autocomplete": "email"}
+                attrs={"placeholder": "you@example.com", "autocomplete": "email", "spellcheck": "false", "autocapitalize": "none"}
             ),
             "phone": forms.TextInput(
-                attrs={"placeholder": "Optional", "autocomplete": "tel"}
+                attrs={"placeholder": "Optional", "autocomplete": "tel", "type": "tel", "inputmode": "tel"}
             ),
             "cover_note": forms.Textarea(
                 attrs={
@@ -244,10 +244,10 @@ class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
                 attrs={"placeholder": "Your name", "autocomplete": "name"}
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": "you@example.com", "autocomplete": "email"}
+                attrs={"placeholder": "you@example.com", "autocomplete": "email", "spellcheck": "false", "autocapitalize": "none"}
             ),
             "phone": forms.TextInput(
-                attrs={"placeholder": "07… (optional)", "autocomplete": "tel"}
+                attrs={"placeholder": "07… (optional)", "autocomplete": "tel", "type": "tel", "inputmode": "tel"}
             ),
             "postcode": forms.TextInput(
                 attrs={

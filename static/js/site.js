@@ -1,218 +1,184 @@
-// Respect the user's reduced-motion preference for JS-driven animation.
+// Respect reduced motion when moving focus after form validation.
 function prefersReducedMotion() {
-  return !!(window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 }
 
-// Theme toggle (light / dark). Light is the default; dark is opt-in via
-// [data-theme="dark"] on <html>, persisted in localStorage as 'luma-theme'.
 (function () {
   var btn = document.querySelector('[data-theme-toggle]');
   if (!btn) return;
-  var SWEEP_MS = 600;
-  var sweeping = false;
   function apply(theme) {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
     btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme === 'dark' ? '#0f172a' : '#f7f9fc';
   }
-  // Initialise aria-pressed from whatever the inline head script applied.
   apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
-  function buttonCircleCoords() {
-    var rect = btn.getBoundingClientRect();
-    var x = rect.left + rect.width / 2;
-    var y = rect.top + rect.height / 2;
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    return { x: x, y: y, maxR: Math.hypot(Math.max(x, w - x), Math.max(y, h - y)) };
-  }
-
   btn.addEventListener('click', function () {
-    if (sweeping) return;
-    var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    var next = current === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('luma-theme', next); } catch (e) {}
-    // Reduced motion: swap instantly, skip the radial-reveal animation.
-    if (prefersReducedMotion()) { apply(next); return; }
-    // Radial reveal: a circle of the destination colour grows from the toggle
-    // button's centre out to the farthest viewport corner. When it covers the
-    // viewport, swap the theme attribute and remove the overlay — the colour
-    // beneath now matches what was visible.
-    sweeping = true;
-    var c = buttonCircleCoords();
-    var overlay = document.createElement('div');
-    overlay.className = 'theme-sweep theme-sweep--to-' + next;
-    overlay.style.clipPath = 'circle(0px at ' + c.x + 'px ' + c.y + 'px)';
-    overlay.style.transition = 'clip-path ' + SWEEP_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
-    document.body.appendChild(overlay);
-    void overlay.offsetHeight;
-    overlay.style.clipPath = 'circle(' + c.maxR + 'px at ' + c.x + 'px ' + c.y + 'px)';
-    setTimeout(function () {
-      apply(next);
-      overlay.remove();
-      sweeping = false;
-    }, SWEEP_MS);
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('luma-theme', next); } catch (_) {}
+    apply(next);
   });
 })();
 
-// Mobile nav toggle
+// Enhance an otherwise fully visible navigation. Hidden removes closed links
+// from both the tab order and accessibility tree; desktop always restores them.
 (function () {
   var toggle = document.querySelector('[data-nav-toggle]');
   var links = document.querySelector('[data-nav-links]');
-  if (toggle && links) {
-    var setOpen = function (open, returnFocus) {
-      links.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) {
-        var first = links.querySelector('a');
-        if (first) first.focus();
-      } else if (returnFocus) {
-        toggle.focus();
-      }
-    };
-
-    toggle.addEventListener('click', function () {
-      setOpen(!links.classList.contains('open'), true);
-    });
-
-    // closest('a'), not e.target.tagName: the phone link wraps an <svg> and a
-    // <span>, so a tap lands on the child and the menu never closed.
-    links.addEventListener('click', function (e) {
-      if (e.target.closest('a')) setOpen(false, false);
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && links.classList.contains('open')) {
-        setOpen(false, true);
-      }
-    });
-
-    // Tabbing out of the open menu should close it rather than leaving an
-    // open panel over content the user is now focused on.
-    document.addEventListener('focusin', function (e) {
-      if (!links.classList.contains('open')) return;
-      if (!links.contains(e.target) && e.target !== toggle) setOpen(false, false);
-    });
+  if (!toggle || !links || !window.matchMedia) return;
+  var mobile = window.matchMedia('(max-width: 1040px)');
+  var open = false;
+  function setOpen(value, returnFocus) {
+    open = mobile.matches && value;
+    if (returnFocus) toggle.focus();
+    links.hidden = mobile.matches && !open;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      var first = links.querySelector('a');
+      if (first) first.focus();
+    }
   }
-
-  // Reveal on scroll
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.fade-in').forEach(function (el) { io.observe(el); });
-  } else {
-    document.querySelectorAll('.fade-in').forEach(function (el) { el.classList.add('visible'); });
-  }
-
-  // Footer year
-  var y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
-
-  // reCAPTCHA v3: fetch a token on submit, inject into hidden input, then submit.
-  // Falls through silently if grecaptcha didn't load — server treats missing
-  // token as a fail, which is the correct behaviour in production. In dev with
-  // no secret configured, the server skips verification anyway.
-  var contactForm = document.querySelector('[data-contact-form]');
-  if (contactForm) {
-    var recaptchaKey = contactForm.dataset.recaptchaKey;
-    var tokenInput = contactForm.querySelector('input[name="g-recaptcha-response"]');
-    var submitted = false;
-    contactForm.addEventListener('submit', function (e) {
-      if (submitted) return; // already got a token, let it through
-      if (!recaptchaKey || typeof grecaptcha === 'undefined' || !grecaptcha.execute) return;
-      e.preventDefault();
-      grecaptcha.ready(function () {
-        grecaptcha.execute(recaptchaKey, { action: 'contact' }).then(function (token) {
-          if (tokenInput) tokenInput.value = token;
-          submitted = true;
-          contactForm.submit();
-        }).catch(function () {
-          // If reCAPTCHA fails for any reason, submit without a token; server
-          // will reject in prod (where the secret is set) and the user sees
-          // the "couldn't verify" error.
-          submitted = true;
-          contactForm.submit();
-        });
-      });
-    });
-  }
+  toggle.closest('nav').classList.add('nav-enhanced');
+  setOpen(false, false);
+  toggle.addEventListener('click', function () { setOpen(!open, false); });
+  links.addEventListener('click', function (event) {
+    if (event.target.closest('a')) setOpen(false, false);
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && open) { event.preventDefault(); setOpen(false, true); }
+  });
+  document.addEventListener('focusin', function (event) {
+    if (open && !links.contains(event.target) && event.target !== toggle) setOpen(false, false);
+  });
+  function resize() { setOpen(false, mobile.matches && links.contains(document.activeElement)); }
+  if (mobile.addEventListener) mobile.addEventListener('change', resize);
+  else mobile.addListener(resize);
 })();
 
-// Inline form validation: highlight required fields that are empty/invalid on
-// submit, and clear the highlight as soon as the user fixes them. Native
-// validation messages are suppressed by `novalidate`; this restores a visible
-// cue without blocking the reCAPTCHA submit flow.
+(function () {
+  var year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+})();
+
+// Accessible validation and a single, recoverable submission attempt.
 (function () {
   var form = document.querySelector('[data-contact-form]');
   if (!form) return;
+  var fields = Array.prototype.slice.call(form.querySelectorAll('input[required], textarea[required], select[required]'));
+  var serviceGroup = form.querySelector('[data-service-choices]');
+  var submit = form.querySelector('button[type="submit"]');
+  var originalButton = submit ? submit.innerHTML : '';
+  var status = document.createElement('p');
+  status.className = 'form-status field-help';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  form.insertAdjacentElement('afterend', status);
+  var pending = false;
+  var attempt = 0;
+  var timer;
 
-  function fieldWrap(el) { return el.closest('div') || el; }
-
-  var errorSeq = 0;
-
-  function setError(el, on) {
-    el.classList.toggle('field-error', on);
-    var wrap = fieldWrap(el);
-    var msg = wrap.querySelector('.field-error-msg');
-    if (on && !msg) {
-      if (!el.id) el.id = 'field-' + (++errorSeq);
-      msg = document.createElement('p');
-      msg.className = 'field-error-msg';
-      msg.id = el.id + '-error';
-      // role=alert so screen readers announce it; without this the message is
-      // visible to sighted users only.
-      msg.setAttribute('role', 'alert');
-      msg.textContent = el.type === 'email'
-        ? 'Please enter a valid email address.'
-        : 'Please fill in this field.';
-      wrap.appendChild(msg);
+  function setError(el, message) {
+    var id = el.id + '-client-error';
+    var msg = document.getElementById(id);
+    // Only own our client-error token. Keep help text and server errors intact.
+    var descriptions = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (token) { return token && token !== id; });
+    el.classList.toggle('field-error', !!message);
+    if (message) {
+      if (!msg) {
+        msg = document.createElement('p');
+        msg.id = id;
+        msg.className = 'field-error-msg';
+        msg.setAttribute('role', 'alert');
+        (el.tagName === 'FIELDSET' ? el : el.closest('div')).appendChild(msg);
+      }
+      msg.textContent = message;
+      descriptions.push(id);
       el.setAttribute('aria-invalid', 'true');
-      el.setAttribute('aria-describedby', msg.id);
-    } else if (!on && msg) {
-      msg.remove();
-      el.removeAttribute('aria-invalid');
-      el.removeAttribute('aria-describedby');
+    } else {
+      if (msg) msg.remove();
+      var hasServerError = descriptions.some(function (token) {
+        var target = document.getElementById(token);
+        return target && target.classList.contains('errorlist');
+      });
+      if (!hasServerError) el.removeAttribute('aria-invalid');
     }
+    if (descriptions.length) el.setAttribute('aria-describedby', descriptions.join(' '));
+    else el.removeAttribute('aria-describedby');
   }
 
   function validate(el) {
-    var bad = !el.checkValidity();
-    setError(el, bad);
-    return !bad;
+    var valid = el.checkValidity();
+    setError(el, valid ? '' : (el.type === 'email' ? 'Please enter a valid email address.' : 'Please fill in this field.'));
+    return valid;
   }
-
-  var fields = Array.prototype.slice.call(
-    form.querySelectorAll('input[required], textarea[required], select[required]')
-  );
+  function validateServices() {
+    if (!serviceGroup) return true;
+    var valid = !!serviceGroup.querySelector('input:checked');
+    setError(serviceGroup, valid ? '' : 'Pick at least one service so we know what to quote.');
+    return valid;
+  }
   fields.forEach(function (el) {
     el.addEventListener('input', function () { if (el.classList.contains('field-error')) validate(el); });
     el.addEventListener('blur', function () { if (el.value !== '') validate(el); });
   });
+  if (serviceGroup) serviceGroup.addEventListener('change', function () {
+    if (serviceGroup.classList.contains('field-error')) validateServices();
+  });
 
-  form.addEventListener('submit', function (e) {
-    var firstBad = null;
-    fields.forEach(function (el) {
-      if (!validate(el) && !firstBad) firstBad = el;
-    });
+  function reset(message) {
+    pending = false;
+    attempt += 1;
+    clearTimeout(timer);
+    form.removeAttribute('aria-busy');
+    if (submit) { submit.disabled = false; submit.innerHTML = originalButton; }
+    status.textContent = message || '';
+  }
+  // The back/forward cache may restore the button in its sending state.
+  window.addEventListener('pageshow', function () { reset(); });
+
+  form.addEventListener('submit', function (event) {
+    if (pending) { event.preventDefault(); return; }
+    var firstBad = validateServices() ? null : serviceGroup.querySelector('input');
+    fields.forEach(function (el) { if (!validate(el) && !firstBad) firstBad = el; });
     if (firstBad) {
-      e.preventDefault();
-      e.stopImmediatePropagation(); // don't run the reCAPTCHA submit handler
+      event.preventDefault();
+      var details = firstBad.closest('details');
+      if (details) details.open = true;
       firstBad.focus();
-      firstBad.scrollIntoView({
-        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-        block: 'center'
-      });
+      firstBad.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
+      return;
     }
-  }, true); // capture so this runs before the reCAPTCHA handler
+    pending = true;
+    form.setAttribute('aria-busy', 'true');
+    if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
+    status.textContent = 'Sending your details…';
+    var key = form.dataset.recaptchaKey;
+    var tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
+    // Preserve the server fallback when the API is unavailable. The server
+    // still enforces verification whenever a production secret is configured.
+    if (!key || typeof grecaptcha === 'undefined' || !grecaptcha.execute) return;
+    event.preventDefault();
+    var currentAttempt = ++attempt;
+    function failed() {
+      if (currentAttempt !== attempt) return;
+      reset('The security check did not complete. Please try again, or use the contact details on this page.');
+    }
+    timer = setTimeout(failed, 12000);
+    try {
+      grecaptcha.ready(function () {
+        if (currentAttempt !== attempt) return;
+        try {
+          grecaptcha.execute(key, { action: 'contact' }).then(function (token) {
+            if (currentAttempt !== attempt) return;
+            clearTimeout(timer);
+            if (tokenInput) tokenInput.value = token;
+            form.submit();
+          }).catch(failed);
+        } catch (_) { failed(); }
+      });
+    } catch (_) { failed(); }
+  });
 })();
 
 // Keep explicitly supplied campaign tags on internal navigation. No cookies,

@@ -5,29 +5,38 @@
 <section class="hero">
   <div class="container hero-content">
     <span class="eyebrow"><span class="dot"></span>Selected work</span>
-    <h1>Things we've built. <span class="gradient">Things we still maintain.</span></h1>
+    <h1>Our work, from first survey to ongoing support.</h1>
     <p class="lede">
       A handful of selected case studies. Each one is still running and
       supported today — and every one is something we're happy to talk
       through if you'd like to know more. Recent projects across Maidenhead,
       Marlow and the Thames Valley.
     </p>
+    <nav class="portfolio-jumps" aria-label="Types of work">
+      {% for group in case_groups %}{% if group.cases %}<a href="#{{ group.id }}">{{ group.title }}</a>{% endif %}{% endfor %}
+      <a href="#website-demos">Website demos</a>
+    </nav>
   </div>
 </section>
 
-<section class="tight" id="home-projects">
+{% for group in case_groups %}{% if group.cases %}
+<section class="tight" id="{{ group.id }}" aria-labelledby="{{ group.id }}-title">
   <div class="container">
+    <div class="section-head"><h2 id="{{ group.id }}-title">{{ group.title }}</h2><p class="lede">{{ group.description }}</p></div>
     <div class="grid grid-2">
-      {% for case in case_studies %}
+      {% for case in group.cases %}
         <article class="case-card {% if case.photo %}has-img{% endif %} fade-in">
           {% if case.photo %}<div class="case-card-img"><img src="{% static case.photo %}" alt="{{ case.photo_alt }}" loading="lazy" width="1200" height="800"></div>{% endif %}
           <span class="case-tag">{{ case.tag }}</span>
           <h3>{{ case.title }}</h3>
           <p>{{ case.summary }}</p>
+          <div class="outcome"><strong>Outcome:</strong> {{ case.outcome }}</div>
+          <details class="project-equipment">
+            <summary>{% if group.id == 'software-projects' %}Technology used{% else %}Equipment used{% endif %}</summary>
           <div class="stack-row">
             {% for tech in case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
           </div>
-          <div class="outcome"><strong>Outcome —</strong>{{ case.outcome }}</div>
+          </details>
           <div class="row-actions mt-3">
             <a href="{% url 'case_study' case.slug %}" class="btn btn-ghost btn-sm">Read the full case study &rarr;</a>
           </div>
@@ -36,17 +45,18 @@
     </div>
   </div>
 </section>
+{% endif %}{% endfor %}
 
 <section id="website-demos" class="tight">
   <div class="container">
     <div class="section-head fade-in">
       <span class="eyebrow"><span class="dot"></span>Live website demos</span>
-      <h2>Click through to a real one.</h2>
+      <h2>Explore our website demos.</h2>
       <p class="lede">
         Wondering what a site from us actually looks like? These are five
         complete, one-page demo websites we've built for fictional local
-        businesses — each with its own look and feel. Open any of them in a new
-        tab and explore it exactly as your customers would.
+        businesses — each with its own look and feel. Open any of them in your
+        browser and explore it exactly as your customers would.
       </p>
     </div>
     <div class="grid grid-2">
@@ -63,5 +73,5 @@
   </div>
 </section>
 
-{% include 'partials/_cta_banner.html' with cta_title='Got a project of your own in mind?' cta_copy='Whether it is a network, an app, or a smart home — tell us what you are trying to achieve and we will tell you how we would approach it.' %}
+{% include 'partials/_cta_banner.html' with cta_title='Got a project of your own in mind?' cta_copy='Whether it is a network, an app, or a smart home — tell us what you are trying to achieve and we will tell you how we would approach it.' cta_primary='Discuss your project' %}
 {% endblock %}

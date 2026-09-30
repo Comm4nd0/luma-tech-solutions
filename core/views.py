@@ -563,7 +563,17 @@ def portfolio(request):
                 "Recent work: a whole-property UniFi network in Maidenhead, "
                 "smart-home builds, mobile apps and small-business websites."
             ),
-            case_studies=sorted(CASE_STUDIES, key=lambda case: case["illustration"] not in ("networking", "automation")),
+            case_groups=[
+                {"id": "home-projects", "title": "Home installations",
+                 "description": "Wi-Fi and smart-home systems designed around the property and the people living there.",
+                 "cases": [case for case in CASE_STUDIES if case["portfolio_group"] == "home"]},
+                {"id": "business-installations", "title": "Business and site installations",
+                 "description": "Connected security for working sites and business premises.",
+                 "cases": [case for case in CASE_STUDIES if case["portfolio_group"] == "business"]},
+                {"id": "software-projects", "title": "Websites & apps",
+                 "description": "Software built for real organisations, with ongoing support from the engineer who built it.",
+                 "cases": [case for case in CASE_STUDIES if case["portfolio_group"] == "software"]},
+            ],
             website_demos=WEBSITE_DEMOS,
         ),
     )

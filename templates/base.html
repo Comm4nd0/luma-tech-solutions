@@ -205,21 +205,11 @@
       </button>
 
       <ul class="nav-links" id="nav-links" data-nav-links>
-        <li><a href="{% url 'services' %}" class="{% if active_nav == 'services' %}active{% endif %}"{% if active_nav == 'services' %} aria-current="page"{% endif %}>Services</a></li>
-        <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}"{% if active_nav == 'security' %} aria-current="page"{% endif %}>Physical Security</a></li>
+        <li><a href="{% url 'service_networking' %}"{% if request.resolver_match.url_name == 'service_networking' %} class="active" aria-current="page"{% endif %}>Wi-Fi</a></li>
+        <li><a href="{% url 'service_security' %}" class="{% if active_nav == 'security' %}active{% endif %}"{% if active_nav == 'security' %} aria-current="{% if request.resolver_match.url_name == 'service_security' %}page{% else %}true{% endif %}"{% endif %}>CCTV &amp; Security</a></li>
         <li><a href="{% url 'service_automation' %}" class="{% if active_nav == 'automation' %}active{% endif %}"{% if active_nav == 'automation' %} aria-current="page"{% endif %}>Smart Home</a></li>
-        <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}"{% if active_nav == 'portfolio' %} aria-current="page"{% endif %}>Portfolio</a></li>
+        <li><a href="{% url 'portfolio' %}" class="{% if active_nav == 'portfolio' %}active{% endif %}"{% if active_nav == 'portfolio' %} aria-current="{% if request.resolver_match.url_name == 'portfolio' %}page{% else %}true{% endif %}"{% endif %}>Our Work</a></li>
         <li><a href="{% url 'about' %}" class="{% if active_nav == 'about' %}active{% endif %}"{% if active_nav == 'about' %} aria-current="page"{% endif %}>About</a></li>
-        <li><a href="{% url 'blog' %}" class="{% if active_nav == 'blog' %}active{% endif %}"{% if active_nav == 'blog' %} aria-current="page"{% endif %}>Blog</a></li>
-        <li><a href="{% url 'contact' %}" class="nav-secondary {% if active_nav == 'contact' %}active{% endif %}"{% if active_nav == 'contact' %} aria-current="page"{% endif %}>Contact</a></li>
-        {% if SITE_PHONE %}
-        <li class="nav-phone">
-          <a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Nav+Call+Click" aria-label="Call us on {{ SITE_PHONE }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-            <span>{{ SITE_PHONE }}</span>
-          </a>
-        </li>
-        {% endif %}
         <li class="nav-theme-toggle">
           <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle light/dark theme">
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -231,12 +221,12 @@
             </svg>
           </button>
         </li>
-        <li class="nav-cta"><a href="{% url 'quote' %}" class="btn btn-primary btn-sm plausible-event-name=Nav+Quote+Click">Get a quote</a></li>
+        <li class="nav-cta"><a href="{% url 'quote' %}" class="btn btn-primary btn-sm plausible-event-name=Nav+Quote+Click">Request a free survey</a></li>
       </ul>
     </div>
   </nav>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     {% block content %}{% endblock %}
   </main>
 
@@ -254,8 +244,9 @@
           </p>
         </div>
         <div>
-          <h5>Services</h5>
+          <h2>Services</h2>
           <ul>
+            <li><a href="{% url 'services' %}"{% if request.resolver_match.url_name == 'services' %} aria-current="page"{% endif %}>All services</a></li>
             <li><a href="{% url 'service_networking' %}">Wi-Fi & Networking</a></li>
             <li><a href="{% url 'service_security' %}">Physical Security</a></li>
             <li><a href="{% url 'service_cctv' %}">CCTV Installation</a></li>
@@ -266,7 +257,7 @@
             <li><a href="{% url 'service_development' %}">App & Web Development</a></li>
             <li><a href="{% url 'service_automation' %}">Smart Home</a></li>
             <li><a href="{% url 'service_support' %}">Support & Maintenance</a></li>
-            <li><a href="{% url 'quote' %}"><strong>Get a quote →</strong></a></li>
+            <li><a href="{% url 'quote' %}"><strong>Request a free survey</strong></a></li>
           </ul>
         </div>
         <div>
@@ -275,7 +266,7 @@
           had four inbound links in total and could not rank for queries it
           was the best page on the site to answer.
           {% endcomment %}
-          <h5>Areas we cover</h5>
+          <h2>Areas we cover</h2>
           <ul>
             {% for area in SITE_AREA_LINKS %}
             <li><a href="{{ area.url }}">Wi-Fi &amp; CCTV in {{ area.town }}</a></li>
@@ -284,23 +275,23 @@
           </ul>
         </div>
         <div>
-          <h5>Company</h5>
+          <h2>Company</h2>
           <ul>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'partners' %}">Referral partners</a></li>
             <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
             <li><a href="{% url 'portfolio' %}#website-demos">Website demos</a></li>
-            <li><a href="{% url 'blog' %}">Blog</a></li>
+            <li><a href="{% url 'blog' %}"{% if request.resolver_match.url_name == 'blog' %} aria-current="page"{% endif %}>Blog</a></li>
             <li><a href="{% url 'careers' %}">Careers</a></li>
             <li><a href="https://support.lumatechsolutions.co.uk/" target="_blank" rel="noopener">Client portal ↗</a></li>
           </ul>
         </div>
         <div>
-          <h5>Contact</h5>
+          <h2>Contact</h2>
           <ul>
             <li><a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a></li>
             {% if SITE_PHONE %}<li><a href="tel:{{ SITE_PHONE_E164 }}">{{ SITE_PHONE }}</a></li>{% endif %}
-            <li><a href="{% url 'contact' %}">Send a message</a></li>
+            <li><a href="{% url 'contact' %}"{% if request.resolver_match.url_name == 'contact' %} aria-current="page"{% endif %}>Send a message</a></li>
             <li><a class="footer-social" href="https://www.facebook.com/profile.php?id=61560720497065" target="_blank" rel="noopener" aria-label="Luma Tech on Facebook">{% include 'partials/_icons.html' with name='facebook' %} Facebook</a></li>
             <li><a class="footer-social" href="https://www.instagram.com/luma_tech_solutions/" target="_blank" rel="noopener" aria-label="Luma Tech on Instagram">{% include 'partials/_icons.html' with name='instagram' %} Instagram</a></li>
             {% if SITE_LINKEDIN %}<li><a class="footer-social" href="{{ SITE_LINKEDIN }}" target="_blank" rel="noopener" aria-label="Luma Tech on LinkedIn">{% include 'partials/_icons.html' with name='linkedin' %} LinkedIn</a></li>{% endif %}
@@ -309,7 +300,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; <span id="year"></span> {{ SITE_NAME }} Ltd · Marlow, Buckinghamshire</span>
+        <span>&copy; <span id="year">{% now "Y" %}</span> {{ SITE_NAME }} Ltd · Marlow, Buckinghamshire</span>
         <span class="veteran" aria-label="Veteran-owned business">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 22s7-3.5 7-10V5l-7-3-7 3v7c0 6.5 7 10 7 10Z"/>
@@ -321,7 +312,7 @@
           <span class="sep" style="opacity:.4;">·</span>
           <a href="{% url 'privacy' %}">Privacy</a>
           <span class="sep" style="opacity:.4;">·</span>
-          <a href="#" data-cookie-prefs-trigger>Cookie preferences</a>
+          <button type="button" class="text-button" data-cookie-prefs-trigger>Cookie preferences</button>
           <span class="sep" style="opacity:.4;">·</span>
           <a href="{% url 'robots' %}">robots.txt</a>
           <span class="sep" style="opacity:.4;">·</span>
@@ -335,8 +326,8 @@
 
   {% with url_name=request.resolver_match.url_name %}
   {% if url_name != 'quote' and url_name != 'quote_thanks' and url_name != 'contact_thanks' and url_name != 'careers_thanks' %}
-  <div class="sticky-cta" role="group" aria-label="Get a quote or call us">
-    <a href="{% url 'quote' %}?source=sticky-bar" class="btn btn-primary plausible-event-name=Sticky+Quote+Click">Get a fixed-price quote {% include 'partials/_icons.html' with name='arrow' %}</a>
+  <div class="sticky-cta" role="group" aria-label="Request a survey or call us">
+    <a href="{% url 'quote' %}?source=sticky-bar" class="btn btn-primary plausible-event-name=Sticky+Quote+Click">Request a free survey</a>
     {% if SITE_PHONE %}
     <a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click" aria-label="Call us on {{ SITE_PHONE }}">{% include 'partials/_icons.html' with name='phone' %} Call</a>
     {% endif %}

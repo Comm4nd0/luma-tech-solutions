@@ -10,7 +10,7 @@
       <div>
         {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
         <span class="eyebrow"><span class="dot"></span>Smart home help, whatever's installed</span>
-        <h1>Home automation installation, setup <span class="gradient">and fixing what's already there.</span></h1>
+        <h1>Home automation installation, setup and fixing what's already there.</h1>
         <p class="lede">
           Thermostats that won't pair, underfloor heating with no controller,
           lights that stopped listening, a hub the last owners took with them
@@ -165,7 +165,7 @@
       <aside class="sidebar fade-in">
         <h4>How to start</h4>
         <p>Tell us what's in the house and what's annoying you. Small fixes get a small quote; bigger projects get a short visit and a fixed price covering hardware, install and setup. No day rates, no scope creep.</p>
-        <a href="{% url 'quote' %}?service=automation&amp;source=automation-sidebar" class="btn btn-primary">Book a chat</a>
+        <a href="{% url 'quote' %}?service=automation&amp;source=automation-sidebar" class="btn btn-primary">Discuss your smart home</a>
         <h4 style="margin-top:1.5rem;">Always included</h4>
         <ul class="bullets" style="margin-top:.5rem;">
           <li>Existing equipment assessed before we recommend a fix</li>
@@ -183,5 +183,5 @@
 
 {% include 'partials/_areas_served.html' %}
 
-{% include 'partials/_cta_banner.html' with cta_title='Got smart kit that needs sorting?' cta_service='automation' cta_copy='Tell us what is installed and what it is not doing. Often a 30-minute call is enough to know exactly what would help, and what to leave alone.' %}
+{% include 'partials/_cta_banner.html' with cta_title='Got smart kit that needs sorting?' cta_service='automation' cta_copy='Tell us what is installed and what it is not doing. Often a 30-minute call is enough to know exactly what would help, and what to leave alone.' cta_primary='Discuss your smart home' %}
 {% endblock %}

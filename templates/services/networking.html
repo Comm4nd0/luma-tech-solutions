@@ -2,7 +2,7 @@
 {% block jsonld %}{{ block.super }}{% include 'partials/_service_schema.html' %}{% endblock %}
 {% block content %}
 <section class="service-hero"><div class="container service-hero-inner">
-  <div>{% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}<span class="eyebrow"><span class="dot"></span>UniFi, designed around your home</span><h1>Wi-Fi &amp; Networking, <span class="gradient">done right.</span></h1><p class="lede">Reliable connections where you work, relax and spend time. We survey your property, plan the access points and cable routes, then install and support the network.</p><a href="{% url 'quote' %}?service=networking&amp;source=networking-hero" class="btn btn-primary">Request a free quotation survey</a></div>
+  <div>{% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}<span class="eyebrow"><span class="dot"></span>UniFi, designed around your home</span><h1>Wi-Fi &amp; Networking, done right.</h1><p class="lede">Reliable connections where you work, relax and spend time. We survey your property, plan the access points and cable routes, then install and support the network.</p><a href="{% url 'quote' %}?service=networking&amp;source=networking-hero" class="btn btn-primary">Request a free survey</a></div>
   <div class="hero-illustration">{% include 'partials/_illustrations.html' with name='networking' %}</div>
 </div></section>
 <section class="tight"><div class="container">{% include 'partials/_survey_offer.html' %}</div></section>
@@ -21,7 +21,7 @@
   <h3 class="mt-4">A tidy finish and a usable handover</h3>
   <p>We discuss equipment locations and cable routes with you, label the installation and provide your admin access and a network diagram. Where a standard bracket doesn't fit, we can design and 3D print a suitable mount.</p>
   <p>Every installation includes 30 days of post-install support. We can also include an <a href="{% url 'service_support' %}">optional home care plan</a> in the proposal.</p>
-</div><aside class="sidebar"><h2>What your quote covers</h2><ul class="bullets"><li>Access points and network equipment.</li><li>Cable runs and the agreed installation work.</li><li>Configuration, testing and handover.</li><li>Labour and VAT, clearly shown.</li><li>30 days of post-install support.</li></ul><p class="mt-3">The price depends on the access points needed and the work to connect them. We confirm it after the survey.</p><a href="{% url 'quote' %}?service=networking&amp;source=networking-sidebar" class="btn btn-primary">Discuss my Wi-Fi</a></aside></div></section>
+</div><aside class="sidebar"><h2>What your quote covers</h2><ul class="bullets"><li>Access points and network equipment.</li><li>Cable runs and the agreed installation work.</li><li>Configuration, testing and handover.</li><li>Labour and VAT, clearly shown.</li><li>30 days of post-install support.</li></ul><p class="mt-3">The price depends on the access points needed and the work to connect them. We confirm it after the survey.</p><a href="{% url 'quote' %}?service=networking&amp;source=networking-sidebar" class="btn btn-primary">Request a free survey</a></aside></div></section>
 {% include 'partials/_areas_served.html' %}
 {% include 'partials/_faqs.html' with faqs=faqs %}
 {% include 'partials/_cta_banner.html' with cta_title='Where does your Wi-Fi let you down?' cta_copy='Tell us which rooms or buildings need a better connection. We will survey the property and quote the equipment and installation work.' cta_source='service-networking-bottom' cta_service='networking' %}

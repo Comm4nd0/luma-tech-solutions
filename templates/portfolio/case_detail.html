@@ -10,9 +10,7 @@
         <span class="eyebrow"><span class="dot"></span>{{ case.tag }}</span>
         <h1>{{ case.title }}</h1>
         <p class="lede">{{ case.summary }}</p>
-        <div class="stack-row mt-3">
-          {% for tech in case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
-        </div>
+        <p class="project-result"><strong>Outcome:</strong> {{ case.outcome }}</p>
       </div>
       <div class="hero-illustration">
         {% if case.photo %}<img class="project-photo" src="{% static case.photo %}" alt="{{ case.photo_alt }}" width="1200" height="800" />
@@ -81,5 +79,5 @@
 </section>
 {% endif %}
 
-{% include 'partials/_cta_banner.html' with cta_title='Got a similar project?' cta_copy='Tell us what you are trying to achieve and we will tell you exactly how we would approach it — fixed price, on one page.' cta_source='case-study-bottom' %}
+{% include 'partials/_cta_banner.html' with cta_title='Got a similar project?' cta_copy='Tell us what you are trying to achieve and we will tell you exactly how we would approach it — fixed price, on one page.' cta_source='case-study-bottom' cta_primary='Discuss your project' %}
 {% endblock %}

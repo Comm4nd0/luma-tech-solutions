@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
-{% load static pillar_media %}
+{% load static %}
 {% block content %}
 <section class="hero">
   <div class="container hero-content">
     <div class="hero-split">
       <div>
-        <span class="eyebrow"><span class="dot"></span>Home technology · Thames Valley</span>
-        <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
+        <p class="eyebrow">Home technology in the Thames Valley</p>
+        <h1>Wi-Fi that actually reaches every room.</h1>
         <p class="lede">Reliable Wi-Fi, carefully placed CCTV and smart-home systems you can use with confidence. Surveyed, installed and supported by Marco, your local engineer based in {{ SITE_BASE_TOWN }}.</p>
         <div class="cta-row">
-          <a href="{% url 'quote' %}?source=home-hero" class="btn btn-primary plausible-event-name=Home+Survey+Click">Request a free quotation survey {% include 'partials/_icons.html' with name='arrow' %}</a>
+          <a href="{% url 'quote' %}?source=home-hero" class="btn btn-primary plausible-event-name=Home+Survey+Click">Request a free survey</a>
           {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click">{% include 'partials/_icons.html' with name='phone' %} Call Marco</a>{% endif %}
         </div>
         {% include 'partials/_trust_strip.html' %}
+        <p class="field-help muted">Free surveys are for new installations. Diagnostic visits are separately priced, with the fee agreed before booking.</p>
         <p class="muted">Already have a system that needs fixing? <a href="{% url 'service_automation' %}">Smart-home setup and troubleshooting</a>.</p>
       </div>
       <div class="hero-illustration">
@@ -26,7 +27,6 @@
 <section class="tight" id="home-services">
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>What would make home work better?</span>
       <h2>Three ways we can help.</h2>
       <p class="lede">A room with no signal, a driveway you want to keep an eye on, or heating controls nobody explained. Start with the problem and we'll work out the right solution.</p>
     </div>
@@ -43,34 +43,24 @@
   </div>
 </section>
 
-<section class="section-orb">
+<section class="installation-section">
   <div class="container">
-    <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>Designed around your property</span>
-      <h2>Coverage starts with a proper look around.</h2>
-      <p class="lede">Thick walls, awkward layouts and outbuildings can leave wireless mesh struggling. We survey your property and design coverage around the rooms you actually use.</p>
-    </div>
-    <div class="grid grid-3">
-      <div class="card fade-in"><h3>Measure before recommending</h3><p>We check the problem areas, existing equipment and cable routes. The number of access points comes from your home and its layout.</p></div>
-      <div class="card fade-in"><h3>Agree the installation</h3><p>Camera positions, cable routes and equipment locations are discussed before work starts. Your fixed quote explains the equipment and labour involved.</p></div>
-      <div class="card fade-in"><h3>Leave you in control</h3><p>A clear handover, your admin access and plain-English documentation. Every installation includes 30 days of post-install support.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head fade-in"><span class="eyebrow"><span class="dot"></span>A residential project</span><h2>From the main house to the annex.</h2></div>
-    <article class="featured-case fade-in">
-      <div>
+    <div class="section-head"><p class="eyebrow">An installation in Maidenhead</p><h2>From the main house to the annex.</h2></div>
+    <article class="installation-story">
+      <figure class="installation-media">
+        {% if featured_case.photo %}
+          <img class="project-photo" src="{% static featured_case.photo %}" alt="{{ featured_case.photo_alt }}" width="1200" height="800" loading="lazy" />
+        {% else %}
+          {% include 'partials/_illustrations.html' with name='networking' %}
+          <figcaption>Illustration of a wired network connecting rooms and devices.</figcaption>
+        {% endif %}
+      </figure>
+      <div class="installation-copy">
         <h3>{{ featured_case.title }}</h3>
-        <p>A Maidenhead property across four floors, a cellar, garage and separate annex needed one reliable network. The design connected wired access points across the buildings, with separate home, guest and smart-device networks.</p>
+        <p><strong>The problem:</strong> A property across four floors, a cellar, garage and separate annex needed one reliable network.</p>
+        <p><strong>The work:</strong> Planned wired connections between access points and switches, with separate networks for home, guest and smart-device traffic.</p>
         <p><strong>The result:</strong> {{ featured_case.outcome }}</p>
         <div class="row-actions mt-3"><a href="{% url 'case_study' featured_case.slug %}" class="btn btn-primary btn-sm">Read the installation story</a><a href="{% url 'portfolio' %}#home-projects" class="btn btn-ghost btn-sm">More residential work</a></div>
-      </div>
-      <div class="panel">
-        {% if featured_case.photo %}<img class="project-photo" src="{% static featured_case.photo %}" alt="{{ featured_case.photo_alt }}" width="1200" height="800" loading="lazy" />
-        {% else %}<h4>What the work involved</h4><ul class="bullets"><li>Surveying coverage across the whole property.</li><li>Planning wired connections between access points and switches.</li><li>Separating home, guest and smart-device traffic.</li><li>One system to manage and support afterwards.</li></ul>{% endif %}
       </div>
     </article>
   </div>
@@ -78,10 +68,10 @@
 
 <section class="tight">
   <div class="container">
-    <div class="grid grid-2">
+    <div class="engineer-and-review">
       {% include 'partials/_founder.html' %}
-      <div class="card testimonial fade-in">
-        <span class="eyebrow">A homeowner's experience</span>
+      <div class="testimonial homeowner-review">
+        <h2>A homeowner's experience</h2>
         {% for t in testimonials %}<blockquote>{{ t.quote }}</blockquote><cite><strong>{{ t.name }}</strong> {{ t.role }}</cite>{% endfor %}
         <p class="mt-3"><a href="{{ SITE_GOOGLE_BUSINESS_URL }}" target="_blank" rel="noopener" class="plausible-event-name=Google+Reviews+Read">Read our reviews on Google →</a></p>
       </div>
@@ -91,14 +81,14 @@
 
 <section>
   <div class="container">
-    <div class="section-head fade-in"><span class="eyebrow"><span class="dot"></span>A clear next step</span><h2>From a first conversation to a working home.</h2></div>
+    <div class="section-head"><h2>From a first conversation to a working home.</h2><p class="lede">We measure before recommending, agree the installation with you and leave you in control of the system.</p></div>
     {% include 'partials/_process_steps.html' %}
-    <div class="card mt-3 fade-in"><h3>Support after installation</h3><p>We explain the system at handover and include 30 days of post-install support. If you'd like ongoing monitoring and help from someone who knows your setup, we can include an optional care plan in your proposal.</p><a href="{% url 'service_support' %}">Compare home care plans →</a></div>
+    <div class="aftercare-note"><h3>Support after installation</h3><p>We explain the system at handover and include 30 days of post-install support. If you'd like ongoing monitoring and help from someone who knows your setup, we can include an optional care plan in your proposal. <a href="{% url 'service_support' %}">Compare home care plans</a>.</p></div>
     <p class="muted mt-3">Free surveys are for installation quotations. Troubleshooting, diagnostic visits and standalone written reports are separately priced, with the fee agreed before booking.</p>
   </div>
 </section>
 
-{% include 'partials/_areas_served.html' %}
+<section class="tight"><div class="container coverage-note"><h2>Your local engineer</h2><p>Based in {{ SITE_BASE_TOWN }}, covering {{ SITE_TOWNS_DISPLAY }} and the wider Thames Valley by arrangement. <a href="{% url 'areas' %}">See where we work</a>.</p></div></section>
 {% include 'partials/_faqs.html' with faqs=faqs faq_eyebrow='Before you get in touch' faq_title='Your questions, answered.' %}
 {% include 'partials/_cta_banner.html' with cta_title='Tell us what needs to work better.' cta_source='home-bottom' %}
 <section class="tight"><div class="container"><p class="muted">For businesses and the trade: <a href="{% url 'service_development' %}">websites and apps</a> · <a href="{% url 'service_support' %}">IT support</a> · <a href="{% url 'construction' %}">construction sites and pre-wire</a> · <a href="{% url 'partners' %}">local referral partners</a>.</p></div></section>
