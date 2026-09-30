@@ -1,268 +1,105 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load optional_static %}
-{% load pillar_media %}
-
+{% load static pillar_media %}
 {% block content %}
-
 <section class="hero">
   <div class="container hero-content">
     <div class="hero-split">
       <div>
-        <span class="eyebrow"><span class="dot"></span>Marlow · Maidenhead · Thames Valley</span>
+        <span class="eyebrow"><span class="dot"></span>Home technology · Thames Valley</span>
         <h1>Wi-Fi that actually<br/><span class="gradient">reaches every room.</span></h1>
-        <p class="lede">
-          Business-grade UniFi networks, CCTV and smart homes for larger
-          properties where the mesh kit didn't fix it<span class="lede-extra"> — engineered from a
-          real site survey, installed properly, and supported by the same
-          engineer afterwards</span>. Based in Marlow, covering the Thames Valley.
-        </p>
+        <p class="lede">Reliable Wi-Fi, carefully placed CCTV and smart-home systems you can use with confidence. Surveyed, installed and supported by Marco, your local engineer based in {{ SITE_BASE_TOWN }}.</p>
         <div class="cta-row">
-          <a href="{% url 'quote' %}?source=home-hero" class="btn btn-primary">Get a fixed-price quote {% include 'partials/_icons.html' with name='arrow' %}</a>
-          {% if SITE_PHONE %}
-          <a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click">{% include 'partials/_icons.html' with name='phone' %} {{ SITE_PHONE }}</a>
-          {% endif %}
+          <a href="{% url 'quote' %}?source=home-hero" class="btn btn-primary plausible-event-name=Home+Survey+Click">Request a free quotation survey {% include 'partials/_icons.html' with name='arrow' %}</a>
+          {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}" class="btn btn-ghost plausible-event-name=Call+Click">{% include 'partials/_icons.html' with name='phone' %} Call Marco</a>{% endif %}
         </div>
         {% include 'partials/_trust_strip.html' %}
-        <div class="hero-service-links">
-          <span class="hero-service-links-label">Also here for:</span>
-          <a href="{% url 'service_security' %}">CCTV &amp; alarms</a>
-          <a href="{% url 'service_automation' %}">Smart home</a>
-          <a href="{% url 'service_development' %}">Apps &amp; websites</a>
-          <a href="{% url 'service_support' %}">IT support</a>
-        </div>
+        <p class="muted">Already have a system that needs fixing? <a href="{% url 'service_automation' %}">Smart-home setup and troubleshooting</a>.</p>
       </div>
       <div class="hero-illustration">
-        <div class="hero-photo" style="background-image:url('{% pillar_photo 'hero' 900 %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="Working comfortably on fast Wi-Fi at home"></div>
+        {% if SITE_FOUNDER_PHOTO %}<img class="project-photo" src="{% static SITE_FOUNDER_PHOTO %}" alt="{{ SITE_FOUNDER }}, founder and engineer at Luma Tech Solutions" width="800" height="900" fetchpriority="high" />
+        {% else %}{% include 'partials/_illustrations.html' with name='house-coverage' %}{% endif %}
       </div>
-    </div>
-
-    <div class="stat-row">
-      <div class="stat"><div class="num">10+</div><div class="label">Years engineering experience</div></div>
-      <div class="stat"><div class="num">1 day</div><div class="label">Max wait for a reply — usually faster</div></div>
-      <div class="stat"><div class="num">Fixed</div><div class="label">Price agreed before we start</div></div>
-      <div class="stat"><div class="num">100%</div><div class="label">UK-based & local</div></div>
     </div>
   </div>
 </section>
 
-<section class="dot-grid">
+<section class="tight" id="home-services">
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>What we do</span>
-      <h2>Everything you need, one phone call.</h2>
-      <p class="lede">
-        From the cabling in your loft to the app on your customers' phones,
-        you've got one team to call — and we stay committed to providing full customer care after all installations.
-      </p>
+      <span class="eyebrow"><span class="dot"></span>What would make home work better?</span>
+      <h2>Three ways we can help.</h2>
+      <p class="lede">A room with no signal, a driveway you want to keep an eye on, or heating controls nobody explained. Start with the problem and we'll work out the right solution.</p>
     </div>
-
-    {% include 'partials/_pillars_visual.html' %}
-
-    <p class="muted mt-4" style="text-align:center;font-size:.95rem;">
-      Based in Marlow. We cover {{ SITE_TOWNS_DISPLAY }} — and the rest of the Thames Valley by arrangement.
-      <a href="{% url 'areas' %}">See where we work</a>.
-    </p>
+    <div class="grid grid-3">
+      {% for offer in home_services %}
+      <article class="card residential-offer fade-in">
+        <h3><a href="{% url offer.url_name %}">{{ offer.title }}</a></h3>
+        <p>{{ offer.copy }}</p>
+        <p class="muted">{{ offer.price_note }}</p>
+        <a href="{% url 'quote' %}?service={{ offer.key }}&amp;source=home-{{ offer.key }}" class="btn btn-ghost btn-sm">Tell us what you need {% include 'partials/_icons.html' with name='arrow' %}</a>
+      </article>
+      {% endfor %}
+    </div>
   </div>
 </section>
 
 <section class="section-orb">
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>Live in a large or older house?</span>
-      <h2>The mesh network never quite worked, did it?</h2>
-      <p class="lede">
-        Mesh and powerline kit are designed for small flats with thin walls.
-        Once you add a second storey, thick masonry, a loft, or 200 m² of
-        floorspace, the laws of physics catch up — and rebooting the router
-        for the third time this week isn't going to fix it.
-      </p>
+      <span class="eyebrow"><span class="dot"></span>Designed around your property</span>
+      <h2>Coverage starts with a proper look around.</h2>
+      <p class="lede">Thick walls, awkward layouts and outbuildings can leave wireless mesh struggling. We survey your property and design coverage around the rooms you actually use.</p>
     </div>
-
-    <div class="diagnostic-illustration fade-in" aria-hidden="true">
-      {% include 'partials/_illustrations.html' with name='house-coverage' %}
-    </div>
-
-    <div class="feature-grid fade-in">
-      <div class="feature">
-        <h4>Half the bandwidth, every hop</h4>
-        <p>Wireless mesh nodes share the same airtime they serve clients with, so each "hop" between nodes costs you ~50% throughput. By the third hop you're back on dial-up.</p>
-      </div>
-      <div class="feature">
-        <h4>Walls stop signal. Period.</h4>
-        <p>Lath-and-plaster, brick chimneys, foil-backed insulation, copper pipes — every house has them, and no consumer access point is going to punch through them. The only fix is more APs in the right places, fed by cable.</p>
-      </div>
-      <div class="feature">
-        <h4>"Set-and-forget" isn't a feature</h4>
-        <p>The pretty app says everything's fine while the back bedroom can't load a video. Without a real dashboard you can't see why — so you reboot the router again and hope.</p>
-      </div>
-    </div>
-
-    <div class="featured-case fade-in mt-4">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Real example</span>
-        <h3>LittleWick House — 4 floors + cellar + annex</h3>
-        <p class="muted">
-          Eleven access points, three distribution switches, a Dream Machine
-          Pro at the core, and three VLANs separating home, IoT and guest
-          traffic. Rock-solid Wi-Fi from loft to cellar to annex, with no
-          dead-spots and room to grow.
-        </p>
-        <div class="stack-row">
-          <span class="chip">UniFi Dream Machine Pro</span>
-          <span class="chip">11× U7-Pro APs</span>
-          <span class="chip">3× PoE Switches</span>
-          <span class="chip">VLAN segmentation</span>
-        </div>
-        <div class="row-actions mt-3">
-          <a href="{% url 'contact' %}?source=home-wifi-section" class="btn btn-primary btn-sm">Book a site survey {% include 'partials/_icons.html' with name='arrow' %}</a>
-          <a href="{% url 'service_networking' %}" class="btn btn-ghost btn-sm">How we do networking</a>
-        </div>
-      </div>
-      <div class="panel">
-        <h4>What real coverage looks like</h4>
-        <p>Multiple wired access points, sized and sited from a real survey of <em>your</em> property — not guessed at from the size of the box. PoE down the same Cat6 cable, so no plug socket needed at every mount. One managed dashboard. No cloud lock-in. No mesh.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="tight">
-  <div class="container">
-    <hr class="accent-line">
-    <p class="tech-strip-label mt-2">Technologies we trust</p>
-    <div class="tech-strip fade-in">
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='ubiquiti' %}<span>UniFi</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='home-assistant' %}<span>Home Assistant</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='react' %}<span>React Native</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='django' %}<span>Django</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='python' %}<span>Python</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='docker' %}<span>Docker</span></span>
-      <span class="tech-strip-item">{% include 'partials/_tech_logos.html' with name='zigbee' %}<span>Zigbee</span></span>
-    </div>
-  </div>
-</section>
-
-<section class="tight">
-  <div class="container">
-    <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>AI, where it earns its keep</span>
-      <h2>The smart bits that <span class="gradient">actually do something useful.</span></h2>
-      <p class="lede">
-        We've been threading AI through every install for a couple of years
-        now — not because it's on the marketing brochure, but because it
-        works. On-device camera detection, anomaly alerts on the network,
-        a voice assistant that runs locally and doesn't phone home.
-      </p>
-    </div>
-
-    <div class="feature-grid fade-in">
-      <div class="feature">
-        <h4>Cameras that know what they're looking at</h4>
-        <p>UniFi's AI cameras tell person from vehicle from package on the camera itself — and (optionally) recognise faces and number plates. Your phone only buzzes for things that matter, and the footage never leaves your house for an AI to "look at it".</p>
-      </div>
-      <div class="feature">
-        <h4>A network that flags its own problems</h4>
-        <p>UniFi's traffic intelligence picks out the smart bulb that's started phoning home to a server in another country, or the camera that suddenly tripled its bandwidth — long before you'd notice manually.</p>
-      </div>
-      <div class="feature">
-        <h4>Talk to your house, privately</h4>
-        <p>Home Assistant's voice assistant runs speech recognition, language understanding and the response on the box in your house. "Turn off everything upstairs", "are the lights off downstairs?" — answered locally. No Amazon, no Google, no recordings going anywhere.</p>
-      </div>
-      <div class="feature">
-        <h4>AI features in the software we build</h4>
-        <p>For clients who want it, we build Claude, OpenAI or local-LLM features into their own apps — document summarisation, smart intake forms, RAG over their own data. With cost, privacy and accuracy as design constraints, not afterthoughts.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>Featured project</span>
-      <h2>What a complete rebuild looks like.</h2>
-    </div>
-
-    <div class="featured-case fade-in">
-      <div>
-        <div class="featured-case-img mb-2" style="background-image:url('{% static 'img/services/networking.jpg' %}'),radial-gradient(ellipse at 30% 40%, rgba(20,184,166,0.1), transparent 60%),radial-gradient(ellipse at 80% 70%, rgba(14,165,233,0.08), transparent 60%);background-size:cover;background-position:center;" role="img" aria-label="Large home with a whole-property UniFi network, like LittleWick House"></div>
-        <h3>{{ featured_case.title }}</h3>
-        <p class="muted">{{ featured_case.summary }}</p>
-        <div class="stack-row">
-          {% for tech in featured_case.stack %}<span class="chip">{{ tech }}</span>{% endfor %}
-        </div>
-        <div class="row-actions mt-3">
-          <a href="{% url 'portfolio' %}" class="btn btn-ghost btn-sm">See full portfolio</a>
-          <a href="{% url 'service_networking' %}" class="btn btn-ghost btn-sm">How we do networking</a>
-        </div>
-      </div>
-      <div class="panel">
-        <h4>Outcome</h4>
-        <p>{{ featured_case.outcome }}</p>
-        <h4 class="mt-3">What's running</h4>
-        <p>Eleven access points feeding wired backhaul, three PoE switches and a Dream Machine Pro at the core. Three VLANs for home, IoT and guest traffic — all on a single managed dashboard. No mesh, no boosters, no compromises.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="tight">
-  <div class="container">
-    <div class="featured-case fade-in">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Builders, developers &amp; site managers</span>
-        <h3>On a building site, not a sofa?</h3>
-        <p class="muted">
-          Gate ANPR and site CCTV for the duration of your build — one fixed
-          monthly price, moved to your next compound when you're done. Plus
-          new-build pre-wire packages priced per plot, with RAMS, DPIA and
-          signage handled.
-        </p>
-        <div class="row-actions mt-3">
-          <a href="{% url 'construction' %}" class="btn btn-primary btn-sm plausible-event-name=Home+Construction+Click">Site security &amp; pre-wire {% include 'partials/_icons.html' with name='arrow' %}</a>
-          <a href="{% url 'case_study' 'chiltern-yard-anpr' %}" class="btn btn-ghost btn-sm">Read a site case study</a>
-        </div>
-      </div>
-      <div class="panel">
-        <h4>Chiltern Yard, Maidenhead</h4>
-        <p>A working builder's compound: two ANPR cameras on the gate, yard and perimeter covered, recording in a lockable site cabinet. Billing disputes with two subbies resolved in an afternoon from timestamped footage.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head fade-in">
-      <span class="eyebrow"><span class="dot"></span>Clients</span>
-      <h2>What people say.</h2>
-    </div>
-
     <div class="grid grid-3">
-      {% for t in testimonials %}
-      <div class="card testimonial fade-in">
-        <span class="stars" aria-label="{{ t.rating }} out of 5 stars">
-          {% include 'partials/_icons.html' with name='star' %}
-          {% include 'partials/_icons.html' with name='star' %}
-          {% include 'partials/_icons.html' with name='star' %}
-          {% include 'partials/_icons.html' with name='star' %}
-          {% include 'partials/_icons.html' with name='star' %}
-        </span>
-        <blockquote>{{ t.quote }}</blockquote>
-        <cite><strong>{{ t.name }}</strong>{{ t.role }}</cite>
-      </div>
-      {% endfor %}
+      <div class="card fade-in"><h3>Measure before recommending</h3><p>We check the problem areas, existing equipment and cable routes. The number of access points comes from your home and its layout.</p></div>
+      <div class="card fade-in"><h3>Agree the installation</h3><p>Camera positions, cable routes and equipment locations are discussed before work starts. Your fixed quote explains the equipment and labour involved.</p></div>
+      <div class="card fade-in"><h3>Leave you in control</h3><p>A clear handover, your admin access and plain-English documentation. Every installation includes 30 days of post-install support.</p></div>
     </div>
-
-    <p class="mt-3" style="text-align:center;">
-      <a href="https://g.page/r/CVzZIQHfjwivEAI/review" target="_blank" rel="noopener" class="plausible-event-name=Google+Review+Click">Read our reviews on Google →</a>
-    </p>
   </div>
 </section>
 
-{% include 'partials/_faqs.html' with faqs=faqs faq_eyebrow='Common questions' faq_title='Things people ask before getting in touch' %}
+<section>
+  <div class="container">
+    <div class="section-head fade-in"><span class="eyebrow"><span class="dot"></span>A residential project</span><h2>From the main house to the annex.</h2></div>
+    <article class="featured-case fade-in">
+      <div>
+        <h3>{{ featured_case.title }}</h3>
+        <p>A Maidenhead property across four floors, a cellar, garage and separate annex needed one reliable network. The design connected wired access points across the buildings, with separate home, guest and smart-device networks.</p>
+        <p><strong>The result:</strong> {{ featured_case.outcome }}</p>
+        <div class="row-actions mt-3"><a href="{% url 'case_study' featured_case.slug %}" class="btn btn-primary btn-sm">Read the installation story</a><a href="{% url 'portfolio' %}#home-projects" class="btn btn-ghost btn-sm">More residential work</a></div>
+      </div>
+      <div class="panel">
+        {% if featured_case.photo %}<img class="project-photo" src="{% static featured_case.photo %}" alt="{{ featured_case.photo_alt }}" width="1200" height="800" loading="lazy" />
+        {% else %}<h4>What the work involved</h4><ul class="bullets"><li>Surveying coverage across the whole property.</li><li>Planning wired connections between access points and switches.</li><li>Separating home, guest and smart-device traffic.</li><li>One system to manage and support afterwards.</li></ul>{% endif %}
+      </div>
+    </article>
+  </div>
+</section>
 
-{% include 'partials/_cta_banner.html' with cta_source='home-bottom' %}
+<section class="tight">
+  <div class="container">
+    <div class="grid grid-2">
+      {% include 'partials/_founder.html' %}
+      <div class="card testimonial fade-in">
+        <span class="eyebrow">A homeowner's experience</span>
+        {% for t in testimonials %}<blockquote>{{ t.quote }}</blockquote><cite><strong>{{ t.name }}</strong> {{ t.role }}</cite>{% endfor %}
+        <p class="mt-3"><a href="{{ SITE_GOOGLE_BUSINESS_URL }}" target="_blank" rel="noopener" class="plausible-event-name=Google+Reviews+Read">Read our reviews on Google →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section>
+  <div class="container">
+    <div class="section-head fade-in"><span class="eyebrow"><span class="dot"></span>A clear next step</span><h2>From a first conversation to a working home.</h2></div>
+    {% include 'partials/_process_steps.html' %}
+    <div class="card mt-3 fade-in"><h3>Support after installation</h3><p>We explain the system at handover and include 30 days of post-install support. If you'd like ongoing monitoring and help from someone who knows your setup, we can include an optional care plan in your proposal.</p><a href="{% url 'service_support' %}">Compare home care plans →</a></div>
+    <p class="muted mt-3">Free surveys are for installation quotations. Troubleshooting, diagnostic visits and standalone written reports are separately priced, with the fee agreed before booking.</p>
+  </div>
+</section>
+
+{% include 'partials/_areas_served.html' %}
+{% include 'partials/_faqs.html' with faqs=faqs faq_eyebrow='Before you get in touch' faq_title='Your questions, answered.' %}
+{% include 'partials/_cta_banner.html' with cta_title='Tell us what needs to work better.' cta_source='home-bottom' %}
+<section class="tight"><div class="container"><p class="muted">For businesses and the trade: <a href="{% url 'service_development' %}">websites and apps</a> · <a href="{% url 'service_support' %}">IT support</a> · <a href="{% url 'construction' %}">construction sites and pre-wire</a> · <a href="{% url 'partners' %}">local referral partners</a>.</p></div></section>
 {% endblock %}

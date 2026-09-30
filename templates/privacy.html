@@ -6,7 +6,7 @@
     {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
     <span class="eyebrow"><span class="dot"></span>Legal</span>
     <h1>Privacy Policy</h1>
-    <p class="lede">Last updated: 4 May 2026</p>
+    <p class="lede">Last updated: 30 September 2026</p>
   </div>
 </section>
 
@@ -34,20 +34,22 @@
       </p>
       <p>
         <strong>Contact:</strong>
-        <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
       </p>
 
       <h2>2. What information we collect</h2>
       <p>We collect personal data in three places:</p>
       <ul>
         <li>
-          <strong>The contact form.</strong> When you fill in the form on
-          <a href="{% url 'contact' %}">our contact page</a>, we collect:
-          your name, your email address, your phone number (if you provide
-          one), the service you're interested in, the message you send us,
-          and an internal "source" tag identifying which page or call-to-action
-          your enquiry came from. We also record the date and time of
-          submission.
+          <strong>Contact and quote forms.</strong> We collect your name, email,
+          optional phone number, requested service and message. Quote requests also
+          include a property postcode and any property, timing or budget details
+          you choose to provide. We record when the enquiry arrives, its page or
+          call-to-action source, any campaign source/medium/name in the link,
+          and any answer you give about how you heard about us. We keep internal
+          records of enquiry progress, follow-up dates, project costs, care plans
+          and review requests to manage our work and understand which enquiries
+          lead to completed projects.
         </li>
         <li>
           <strong>Server logs.</strong> Our hosting provider's web server
@@ -58,11 +60,10 @@
           debugging and abuse prevention.
         </li>
         <li>
-          <strong>Cookies.</strong> We only set strictly-necessary cookies —
-          see <a href="#cookies">section 8</a> below for the specifics. We
-          do <em>not</em> use any analytics, advertising or social-media
-          tracking cookies, which is why you don't see a cookie consent
-          banner on this site.
+          <strong>Cookies and analytics.</strong> Essential cookies support our
+          forms and security. Plausible provides cookieless traffic statistics.
+          Google Ads tracking is loaded only after you choose marketing consent.
+          See <a href="#cookies">section 8</a> for details and how to change your choice.
         </li>
       </ul>
       <p>
@@ -75,7 +76,8 @@
       <p>We use your personal data to:</p>
       <ul>
         <li>Reply to your enquiry and discuss whether we can help.</li>
-        <li>Provide quotes, scheduling and any subsequent services if you choose to engage us.</li>
+        <li>Provide quotes, scheduling, service follow-ups and any subsequent services if you choose to engage us.</li>
+        <li>Understand which enquiry sources lead to work, using campaign tags and internal project records.</li>
         <li>Keep records of our work, invoices and correspondence to the extent we are legally required to (UK tax and accounting law).</li>
         <li>Keep the site available, secure, and free of abuse.</li>
         <li>Respond to lawful requests from regulators, courts or law enforcement where required.</li>
@@ -90,6 +92,7 @@
       <h2>4. Legal basis for processing</h2>
       <p>We rely on the following legal bases under UK GDPR:</p>
       <ul>
+        <li><strong>Consent</strong> — for optional Google Ads tracking, which you can withdraw through Cookie preferences.</li>
         <li><strong>Contract / pre-contract steps</strong> (Article 6(1)(b)) — when you ask us about a service, we process the data you give us so we can respond and, if it goes ahead, deliver the work.</li>
         <li><strong>Legal obligation</strong> (Article 6(1)(c)) — record-keeping for tax and accounting purposes (HMRC requires us to keep business records for at least six years).</li>
         <li><strong>Legitimate interests</strong> (Article 6(1)(f)) — we run the website and keep server logs to operate the service securely and prevent abuse. We've considered your interests and rights, and we believe these uses don't override them. If you disagree, please get in touch (see <a href="#rights">section 9</a>).</li>
@@ -113,6 +116,8 @@
         <li><strong>Zoho Mail</strong> — handles inbound and outbound email for our <em>@lumatechsolutions.co.uk</em> address. Your enquiry message is delivered through their servers.</li>
         <li><strong>Hetzner Online GmbH</strong> — hosts the website and database. The contact-form database lives on a server at their facility in Germany.</li>
         <li><strong>Google (reCAPTCHA)</strong> — when you submit the contact form, your browser sends a verification request to Google's reCAPTCHA service to confirm you're not a bot. Google receives your IP address and limited usage data; we receive only a pass/fail score. See Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> for details.</li>
+        <li><strong>Plausible Analytics</strong> — processes website traffic and events such as enquiry starts and successful submissions. We do not send it your form answers. See <a href="https://plausible.io/data-policy" target="_blank" rel="noopener">Plausible's data policy</a>.</li>
+        <li><strong>Google Ads</strong> — receives advertising conversion information only when marketing consent has been granted. Our conversion events do not include your name, email, phone number or enquiry text.</li>
         <li><strong>Our accountant</strong>, where the data is necessary for our statutory accounts.</li>
       </ul>
       <p>
@@ -151,29 +156,20 @@
       </p>
       <ul>
         <li><strong>csrftoken</strong> — set by Django to protect the contact form against cross-site request forgery (a security attack). Lasts for one year.</li>
-        <li><strong>sessionid</strong> — set when needed to remember a session across the contact-form flow. Cleared when you close your browser.</li>
+        <li><strong>sessionid</strong> — set when needed to remember a session across the contact-form flow. Normally expires after two weeks.</li>
         <li><strong>lt_consent</strong> — remembers your cookie preferences so we don't ask you again on every visit. Lasts for one year.</li>
         <li><strong>Google reCAPTCHA cookies</strong> (<code>_GRECAPTCHA</code>) — set on Google's domain when you load the contact page, so Google can decide whether you're a bot before you submit the form. We treat this as strictly-necessary because without it the contact form is open to spam abuse.</li>
       </ul>
-      <h3>Analytics (off by default)</h3>
-      <p>
-        Helps us understand which pages are useful and where people get
-        stuck — aggregate, never identifying. We are <strong>not currently
-        running any analytics tools</strong>; this category exists so that
-        if we ever add a privacy-friendly tool (such as Plausible) it will
-        respect your choice.
-      </p>
+      <h3>Cookieless analytics</h3>
+      <p>We use Plausible to measure visits, referral sources and actions such as
+        starting or successfully submitting an enquiry. It does not set analytics
+        cookies. We send the form type with these events, not your answers.</p>
+      <p>Campaign tags can be carried between pages in the URL and saved with an
+        enquiry you submit. This does not use additional cookies or local storage.</p>
       <h3>Marketing (off by default)</h3>
-      <p>
-        Reserved for any future advertising or remarketing. We do not
-        currently use any tools in this category and have no plans to.
-      </p>
-      <p>
-        We do not use Google Analytics, Facebook Pixel, or any other
-        third-party tracking today. The consent banner is in place so that
-        when (if) we add such tools, you'll have already chosen whether
-        they are allowed to run.
-      </p>
+      <p>With your marketing consent, Google Ads measures which advertisements lead
+        to enquiries. Its script and advertising cookies are blocked until you opt
+        in. You can change your choice using Cookie preferences in the footer.</p>
 
       <h2 id="rights">9. Your rights under UK GDPR</h2>
       <p>You have the following rights in respect of your personal data:</p>
@@ -184,13 +180,13 @@
         <li><strong>Right to restrict processing</strong> — ask us to pause our use of your data while we sort out a query you have raised.</li>
         <li><strong>Right to data portability</strong> — ask for a machine-readable copy of the data you provided to us.</li>
         <li><strong>Right to object</strong> — object to our processing where we rely on legitimate interests.</li>
-        <li><strong>Right to withdraw consent</strong> — where we rely on consent (we don't currently, but if that changes you can withdraw it at any time).</li>
+        <li><strong>Right to withdraw consent</strong> — where we rely on consent, you can withdraw it at any time through Cookie preferences or by contacting us.</li>
       </ul>
 
       <h2>10. How to exercise your rights</h2>
       <p>
         Email us at
-        <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
         with a brief description of what you'd like us to do. We aim to
         respond within five working days and to fulfil straightforward
         requests within one calendar month, as required by UK GDPR. We may
@@ -233,7 +229,7 @@
       <p>
         <strong>Luma Tech Solutions</strong><br/>
         Marlow, Buckinghamshire, United Kingdom<br/>
-        Email: <a href="mailto:hello@lumatechsolutions.co.uk">hello@lumatechsolutions.co.uk</a>
+        Email: <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
       </p>
     </div>
   </div>

@@ -29,10 +29,12 @@
           {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
         {% endif %}
 
-        <form method="post" class="form fade-in" data-contact-form data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
+        <form method="post" class="form fade-in" data-contact-form data-lead-form="contact" data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
           {% csrf_token %}
           {{ form.website }}
           {{ form.source }}
+          {{ form.utm_source }}{{ form.utm_medium }}{{ form.utm_campaign }}
+          {% for hidden in form.hidden_fields %}{% if hidden.errors %}<div class="alert" role="alert">{{ hidden.errors }}</div>{% endif %}{% endfor %}
           <input type="hidden" name="g-recaptcha-response" value="">
 
           {% if form.non_field_errors %}<div class="alert" role="alert">{{ form.non_field_errors }}</div>{% endif %}
@@ -80,6 +82,7 @@
             {% include 'partials/_field_errors.html' with field=form.message %}
           </div>
 
+          <div><label for="{{ form.referral.id_for_label }}">How did you hear about us? (optional)</label>{{ form.referral }}<p id="{{ form.referral.auto_id }}_helptext" class="muted field-help">{{ form.referral.help_text }}</p>{% include 'partials/_field_errors.html' with field=form.referral %}</div>
           <div class="row-actions">
             <button type="submit" class="btn btn-primary plausible-event-name=Contact+Submit">Send enquiry {% include 'partials/_icons.html' with name='arrow' %}</button>
             <a href="mailto:{{ SITE_EMAIL }}" class="btn btn-ghost">Or email us directly</a>

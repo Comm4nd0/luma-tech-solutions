@@ -30,4 +30,5 @@ part of the internal-linking mesh and changes for different reasons than this.
   <li>{{ job }}</li>
   {% endfor %}
 </ul>
+{% if featured_case %}<p><a href="{% url 'case_study' featured_case.slug %}">Read the {{ featured_case.title }} case study →</a></p>{% endif %}
 {% endif %}

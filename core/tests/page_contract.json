@@ -119,7 +119,7 @@
       ]
     ],
     "page_description": "Where we work: Marlow, Maidenhead, Henley-on-Thames, Beaconsfield, Bourne End, Cookham and High Wycombe.",
-    "page_title": "Areas Covered \u2014 Marlow, Maidenhead, Henley & Bucks | Luma Tech",
+    "page_title": "Areas Covered — Marlow, Maidenhead, Henley & Bucks | Luma Tech",
     "template": "areas/index.html"
   },
   "blog": {
@@ -140,7 +140,7 @@
         "/our-approach-to-camera-privacy/"
       ]
     ],
-    "page_description": "How Luma Tech installs CCTV and AI cameras: on-site recording, on-device AI, scheduled & geofenced arming, privacy masks, per-user 2FA access, DPIA and signage. The full write-up \u2014 useful before you commission us, and as a DPIA artefact.",
+    "page_description": "How Luma Tech installs CCTV and AI cameras: on-site recording, on-device AI, scheduled & geofenced arming, privacy masks, per-user 2FA access, DPIA and signage. The full write-up — useful before you commission us, and as a DPIA artefact.",
     "page_title": "Our Approach to Camera Privacy | Luma Tech",
     "template": "camera_privacy.html"
   },
@@ -157,13 +157,13 @@
       ]
     ],
     "page_description": "We're hiring a UniFi Network Engineer and an Infrastructure Engineer (cable installations) to join Luma Tech in Marlow.",
-    "page_title": "Careers \u2014 Network & Infrastructure Engineers | Luma Tech",
+    "page_title": "Careers — Network & Infrastructure Engineers | Luma Tech",
     "template": "careers.html"
   },
   "careers_thanks": {
     "active_nav": "careers",
     "page_description": "Your job application has been received. We'll be in touch shortly.",
-    "page_title": "Application received \u2014 thanks | Luma Tech",
+    "page_title": "Application received — thanks | Luma Tech",
     "template": "careers_thanks.html"
   },
   "construction": {
@@ -194,18 +194,18 @@
     "service_type": "Security System Installation",
     "service_url": "/construction/",
     "template": "construction.html",
-    "whatsapp_prefill": "Hi, I'm a builder/site manager \u2014 I'd like to talk about site security or pre-wire for a project."
+    "whatsapp_prefill": "Hi, I'm a builder/site manager — I'd like to talk about site security or pre-wire for a project."
   },
   "contact": {
     "active_nav": "contact",
     "page_description": "Talk to Marco about Wi-Fi, CCTV, smart-home or IT support across Marlow, Maidenhead, Henley and the Thames Valley.",
-    "page_title": "Contact Luma Tech \u2014 Marlow, Maidenhead & Henley Engineer",
+    "page_title": "Contact Luma Tech — Marlow, Maidenhead & Henley Engineer",
     "template": "contact.html"
   },
   "contact_thanks": {
     "active_nav": "contact",
     "page_description": "Your enquiry has been received. We reply within one working day.",
-    "page_title": "Thanks \u2014 we'll be in touch | Luma Tech",
+    "page_title": "Thanks — we'll be in touch | Luma Tech",
     "template": "contact_thanks.html"
   },
   "home": {
@@ -219,14 +219,14 @@
       "Will my CCTV footage be stored in the cloud?"
     ],
     "featured_case": "littlewick-house",
-    "page_description": "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and smart-home installation across Marlow, Maidenhead, Henley and the Thames Valley. Fixed-price quotes, no mesh.",
-    "page_title": "Luma Tech Solutions \u2014 Wi-Fi, CCTV & Smart Homes, Thames Valley",
+    "page_description": "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and smart-home installation across Marlow, Maidenhead, Henley and the Thames Valley. Free quotation surveys and fixed-price installation.",
+    "page_title": "Luma Tech Solutions — Wi-Fi, CCTV & Smart Homes, Thames Valley",
     "template": "home.html"
   },
   "portfolio": {
     "active_nav": "portfolio",
     "page_description": "Recent work: a whole-property UniFi network in Maidenhead, smart-home builds, mobile apps and small-business websites.",
-    "page_title": "Case Studies \u2014 Wi-Fi, CCTV, Smart Home | Luma Tech",
+    "page_title": "Case Studies — Wi-Fi, CCTV, Smart Home | Luma Tech",
     "template": "portfolio.html"
   },
   "privacy": {
@@ -241,7 +241,7 @@
         "/privacy/"
       ]
     ],
-    "page_description": "How Luma Tech Solutions collects, uses and protects your personal data \u2014 UK GDPR-compliant.",
+    "page_description": "How Luma Tech Solutions collects, uses and protects your personal data — UK GDPR-compliant.",
     "page_title": "Privacy Policy | Luma Tech",
     "template": "privacy.html"
   },
@@ -258,13 +258,13 @@
       ]
     ],
     "page_description": "Tell us about your property and we'll come back with a fixed-price quote. Marlow-based engineer, covering the Thames Valley. Most surveys booked within the week.",
-    "page_title": "Get a Quote \u2014 Wi-Fi, CCTV & Smart Home | Luma Tech",
+    "page_title": "Get a Quote — Wi-Fi, CCTV & Smart Home | Luma Tech",
     "template": "quote.html"
   },
   "quote_thanks": {
     "active_nav": "quote",
-    "page_description": "Your quote request has been received. We'll be in touch within one working day to book your free site survey.",
-    "page_title": "Quote request received \u2014 thanks | Luma Tech",
+    "page_description": "Your enquiry has been received. Marco will be in touch within one working day to discuss the next step.",
+    "page_title": "Quote request received — thanks | Luma Tech",
     "template": "quote_thanks.html"
   },
   "service_access_control": {
@@ -288,7 +288,7 @@
       ]
     ],
     "page_description": "Commercial-grade access control across the Thames Valley: door readers, phone-based unlocks, gate intercoms and visitor codes, on the same dashboard as your network and CCTV.",
-    "page_title": "Access Control Installation \u2014 Door Entry & Gates | Luma Tech",
+    "page_title": "Access Control Installation — Door Entry & Gates | Luma Tech",
     "service_description": "Door entry, gate intercoms, phone-based unlocks and visitor management for businesses and shared sites across the Thames Valley, integrated with the network and CCTV.",
     "service_name": "Access Control",
     "service_type": "Access Control Installation",
@@ -321,8 +321,8 @@
       "Can you do fall detection or medical alerts?"
     ],
     "page_description": "AI cameras done right across the Thames Valley. ANPR for construction sites, smart home & family monitoring, scheduled and geofenced recording. Footage stays on your kit.",
-    "page_title": "AI Camera Systems \u2014 ANPR, Smart CCTV, Privacy-First | Luma Tech",
-    "service_description": "AI camera systems with on-device person, vehicle, package, animal and number-plate recognition. Designed for construction sites, homes and small businesses across the Thames Valley. Scheduled recording, geofenced arming, on-site storage \u2014 no third-party cloud.",
+    "page_title": "AI Camera Systems — ANPR, Smart CCTV, Privacy-First | Luma Tech",
+    "service_description": "AI camera systems with on-device person, vehicle, package, animal and number-plate recognition. Designed for construction sites, homes and small businesses across the Thames Valley. Scheduled recording, geofenced arming, on-site storage — no third-party cloud.",
     "service_name": "AI Camera Systems",
     "service_type": "AI Camera & ANPR Installation",
     "service_url": "/services/ai-cameras/",
@@ -348,7 +348,7 @@
         "/services/alarms/"
       ]
     ],
-    "page_description": "Intruder alarm installation across the Thames Valley \u2014 door and window contacts, motion and glass-break sensors, auto-arming, camera snapshots on alarm and cellular backup.",
+    "page_description": "Intruder alarm installation across the Thames Valley — door and window contacts, motion and glass-break sensors, auto-arming, camera snapshots on alarm and cellular backup.",
     "page_title": "Intruder Alarm Installation & Monitoring | Luma Tech",
     "service_description": "Intruder alarm design, installation and monitoring for homes and businesses across the Thames Valley, integrated with the same dashboard as the CCTV and network.",
     "service_name": "Intruder Alarms",
@@ -382,7 +382,7 @@
     ],
     "page_description": "Home automation installation in the Thames Valley: bespoke whole-house systems, heating and lighting setup, and repair or takeover of what's already installed.",
     "page_title": "Home Automation & Smart Home Installation, Setup & Repair | Luma Tech",
-    "service_description": "Home automation and smart home installation, setup and repair for homes across the Thames Valley \u2014 bespoke local-first systems built around Home Assistant, plus setup, troubleshooting and takeover of any existing thermostats, heating controls, lighting and hubs.",
+    "service_description": "Home automation and smart home installation, setup and repair for homes across the Thames Valley — bespoke local-first systems built around Home Assistant, plus setup, troubleshooting and takeover of any existing thermostats, heating controls, lighting and hubs.",
     "service_name": "Home Automation & Smart Home Installation",
     "service_type": "Home Automation Installation",
     "service_url": "/services/automation/",
@@ -414,7 +414,7 @@
       "Can I view it on my phone?"
     ],
     "page_description": "UniFi Protect CCTV installation for homes and businesses across the Thames Valley. Footage records to your property, on-device smart detection, no monthly cloud subscription.",
-    "page_title": "CCTV Installation \u2014 UniFi Protect, No Cloud Fees | Luma Tech",
+    "page_title": "CCTV Installation — UniFi Protect, No Cloud Fees | Luma Tech",
     "service_description": "UniFi Protect CCTV design and installation with local recording and on-device person, vehicle and package detection, for homes and businesses across the Thames Valley.",
     "service_name": "CCTV Installation",
     "service_type": "CCTV Installation",
@@ -466,7 +466,7 @@
       "Do I need to run cables everywhere?",
       "Can you cover the garden and outbuildings?"
     ],
-    "page_description": "Professionally engineered UniFi Wi-Fi for large and period homes across the Thames Valley. Wired access points, fixed-price quotes, no mesh.",
+    "page_description": "Professionally engineered UniFi Wi-Fi for large and period homes across the Thames Valley. Wired access points, fixed-price quotes based on your property and cable routes.",
     "page_title": "UniFi Wi-Fi Installation for Large Homes | Luma Tech",
     "service_description": "UniFi Wi-Fi and network design, installation and management for homes and small businesses across Marlow, Maidenhead, Henley-on-Thames and the wider Thames Valley.",
     "service_name": "Wi-Fi & Networking",
@@ -490,7 +490,7 @@
         "/services/security/"
       ]
     ],
-    "page_description": "UniFi Protect CCTV, access control and intruder alarms for homes and businesses across the Thames Valley. Footage stays on your kit \u2014 no cloud subscription required.",
+    "page_description": "UniFi Protect CCTV, access control and intruder alarms for homes and businesses across the Thames Valley. Footage stays on your kit — no cloud subscription required.",
     "page_title": "CCTV, Access Control & Alarm Installation | Luma Tech",
     "service_description": "UniFi Protect CCTV, access control, intruder alarms and network hardening for homes and businesses across the Thames Valley.",
     "service_name": "Physical Security",
@@ -514,7 +514,7 @@
         "/services/support/"
       ]
     ],
-    "page_description": "Three care-plan tiers with monitoring, response SLAs and a real human. Serving homes and businesses across the Thames Valley.",
+    "page_description": "Three care-plan tiers with monitoring, response targets and a real human. Serving homes and businesses across the Thames Valley.",
     "page_title": "IT Support & Care Plans, Bucks & Berks | Luma Tech",
     "plan_grids": [
       {
@@ -571,5 +571,21 @@
     "page_description": "Website terms and conditions for Luma Tech Solutions.",
     "page_title": "Terms and Conditions | Luma Tech",
     "template": "terms.html"
+  },
+  "partners": {
+    "template": "partners.html",
+    "active_nav": null,
+    "page_title": "Local Referral Partners | Luma Tech Solutions",
+    "page_description": "Work with a local engineer for home Wi-Fi, CCTV and smart-home projects. Introductions from electricians, builders and estate agents across the Thames Valley.",
+    "breadcrumbs": [
+      [
+        "Home",
+        "/"
+      ],
+      [
+        "Referral partners",
+        "/partners/"
+      ]
+    ]
   }
 }

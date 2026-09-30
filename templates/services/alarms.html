@@ -78,8 +78,8 @@ moved verbatim; the surrounding framing is new.
 
       <aside class="sidebar fade-in">
         <h4>Start here</h4>
-        <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
-        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+        <p>Installation quotation surveys are free. Diagnostic visits and standalone assessment reports are separately priced, with the fee agreed before booking.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Discuss your security project</a>
 
         <h4 style="margin-top:1.5rem;">Always included</h4>
         <ul class="bullets" style="margin-top:.5rem;">
@@ -103,5 +103,5 @@ moved verbatim; the surrounding framing is new.
 
 {% include 'partials/_areas_served.html' %}
 
-{% include 'partials/_cta_banner.html' with cta_title='Alarm going off for no reason?' cta_copy='Tell us what you have and what keeps triggering it. We will look at placement, pair it with the cameras and quote the fix fixed-price.' cta_source='service-alarms-bottom' %}
+{% include 'partials/_cta_banner.html' with cta_title='Alarm going off for no reason?' cta_copy='Tell us what you have and what keeps triggering it. We will look at placement, pair it with the cameras and quote the fix fixed-price.' cta_source='service-alarms-bottom' cta_service='security' %}
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'admin/change_list.html' %}
+{% block content %}
+{% if lead_summary %}
+<div class="module">
+  <h2>Enquiry progress — current filters</h2>
+  <p>{{ lead_summary.enquiries }} enquiries · {{ lead_summary.accepted }} accepted projects · {{ lead_summary.installed }} installations completed · {{ lead_summary.care_plans }} accepted projects with a care plan.</p>
+  <p>Recorded accepted revenue (ex VAT): £{{ lead_summary.revenue|default_if_none:'0'|floatformat:2 }}. Estimated delivery margin: £{{ lead_summary.margin|default_if_none:'0'|floatformat:2 }} across {{ lead_summary.margin_records }} projects with both revenue and costs recorded.</p>
+  <p>{% for row in lead_summary.stages %}{{ row.label }}: {{ row.total }}{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+  <p>These are current stages, not historical funnel conversion rates. Contact and quote requests are counted separately; close duplicate enquiries before using the totals. Use the date, service and source filters to compare results. Existing records start as new until reviewed.</p>
+  {% if lead_summary.sources %}
+  <details><summary>Compare enquiry sources and services (up to 30 groups)</summary>
+  <table><thead><tr><th>Page / CTA</th><th>Campaign source</th><th>Service</th><th>Enquiries</th><th>Accepted</th><th>Recorded revenue, ex VAT</th></tr></thead><tbody>
+  {% for row in lead_summary.sources %}<tr><td>{{ row.source|default:'Unrecorded' }}</td><td>{{ row.utm_source|default:'—' }}</td><td>{{ row.service_label|default:'—' }}</td><td>{{ row.total }}</td><td>{{ row.accepted }}</td><td>£{{ row.revenue|default_if_none:'0'|floatformat:2 }}</td></tr>{% endfor %}
+  </tbody></table></details>{% endif %}
+</div>
+{% endif %}
+{{ block.super }}
+{% endblock %}

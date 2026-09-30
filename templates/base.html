@@ -287,6 +287,7 @@
           <h5>Company</h5>
           <ul>
             <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'partners' %}">Referral partners</a></li>
             <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
             <li><a href="{% url 'portfolio' %}#website-demos">Website demos</a></li>
             <li><a href="{% url 'blog' %}">Blog</a></li>
@@ -303,7 +304,7 @@
             <li><a class="footer-social" href="https://www.facebook.com/profile.php?id=61560720497065" target="_blank" rel="noopener" aria-label="Luma Tech on Facebook">{% include 'partials/_icons.html' with name='facebook' %} Facebook</a></li>
             <li><a class="footer-social" href="https://www.instagram.com/luma_tech_solutions/" target="_blank" rel="noopener" aria-label="Luma Tech on Instagram">{% include 'partials/_icons.html' with name='instagram' %} Instagram</a></li>
             {% if SITE_LINKEDIN %}<li><a class="footer-social" href="{{ SITE_LINKEDIN }}" target="_blank" rel="noopener" aria-label="Luma Tech on LinkedIn">{% include 'partials/_icons.html' with name='linkedin' %} LinkedIn</a></li>{% endif %}
-            <li><a class="footer-social" href="https://g.page/r/CVzZIQHfjwivEAI/review" target="_blank" rel="noopener" aria-label="Leave a Google review for Luma Tech">{% include 'partials/_icons.html' with name='star' %} Review us on Google</a></li>
+            <li><a class="footer-social" href="{{ SITE_GOOGLE_REVIEW_URL }}" target="_blank" rel="noopener" aria-label="Leave a Google review for Luma Tech">{% include 'partials/_icons.html' with name='star' %} Review us on Google</a></li>
           </ul>
         </div>
       </div>

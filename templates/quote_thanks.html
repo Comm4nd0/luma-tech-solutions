@@ -1,17 +1,7 @@
 {% extends 'base.html' %}
 {% block robots %}<meta name="robots" content="noindex, nofollow" />{% endblock %}
 
-{% block head_extra %}
-<!-- Conversion event. Queues into the dataLayer immediately; it only reaches
-     Google once the visitor grants marketing consent and gtag.js loads. -->
-<script nonce="{{ request.csp_nonce }}">
-  gtag('event', 'conversion', {
-    'send_to': 'AW-1069099855/SY-FCMGLsLMcEM_W5P0D',
-    'value': 1.0,
-    'currency': 'GBP'
-  });
-</script>
-{% endblock %}
+{% block head_extra %}{% include 'partials/_lead_conversion.html' %}{% endblock %}
 
 {% block content %}
 <section class="hero">
@@ -20,9 +10,8 @@
     <h1>Thanks — Marco will be <span class="gradient">in touch shortly.</span></h1>
     <p class="lede" style="margin-left:auto;margin-right:auto;">
       Your quote request has reached us. We aim to reply within one
-      working day to confirm survey availability — usually faster. We'll
-      come and look, then send a fixed-price quote on one page. No
-      obligation, no sales chase.
+      working day to discuss the right next step. Installation quotation surveys
+      are free; any diagnostic visit is separately priced and agreed before booking.
     </p>
     <div class="cta-row" style="justify-content:center;">
       <a href="{% url 'home' %}" class="btn btn-ghost">Back to homepage</a>

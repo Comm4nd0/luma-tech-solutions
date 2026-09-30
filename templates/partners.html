@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero"><div class="container hero-content">
+  {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+  <span class="eyebrow"><span class="dot"></span>Local referral partners</span>
+  <h1>A technology engineer <span class="gradient">you can introduce with confidence.</span></h1>
+  <p class="lede">For electricians, builders, renovation teams and estate agents across the Thames Valley. Give your clients a direct introduction to Marco for home Wi-Fi, CCTV and smart-home help.</p>
+  <a class="btn btn-primary" href="{% url 'contact' %}?audience=trade&amp;source=partners-hero">Talk about working together</a>
+</div></section>
+<section class="tight"><div class="container grid grid-3">
+  <div class="card"><h2>Electricians and builders</h2><p>Bring us in while cable routes are accessible. We can plan access-point and camera positions, structured cabling and the network equipment, with responsibilities agreed before work starts.</p><a href="{% url 'construction' %}">Pre-wire and construction services →</a></div>
+  <div class="card"><h2>Estate agents</h2><p>Help a buyer settle into a house with unfamiliar thermostats, lighting controls or hubs. We can identify what's installed, explain the next steps and quote for getting it under the new owner's control.</p><a href="{% url 'service_automation' %}">Smart-home takeovers →</a></div>
+  <div class="card"><h2>Renovation teams</h2><p>Coordinate technology with the finish: agree cable routes, cabinet space and device positions before decorating. The homeowner receives a clear handover and documentation.</p><a href="{% url 'service_networking' %}">Wi-Fi and network installation →</a></div>
+</div></section>
+<section><div class="container service-grid"><div>
+  <h2>A straightforward introduction</h2>
+  <ol class="bullets"><li>Share our contact details with your client, or ask their permission for an introduction.</li><li>We discuss the property and arrange a free installation quotation survey or an agreed-price diagnostic visit.</li><li>We clarify the scope, responsibilities and timing with everyone involved before work begins.</li><li>The client gets their documentation, a handover and 30 days of post-install support.</li></ol>
+  <p class="mt-3">You can see examples of our work in the <a href="{% url 'portfolio' %}#home-projects">residential portfolio</a>. For site projects, our <a href="{% url 'capability_statement' %}">capability statement</a> is available to share.</p>
+</div>{% include 'partials/_founder.html' %}</div></section>
+{% include 'partials/_cta_banner.html' with cta_title='Have a client or project in mind?' cta_copy='Tell Marco what you do and where you work. We can discuss how introductions and joint projects would fit.' cta_primary='Introduce yourself' cta_primary_url='contact' cta_source='partners-bottom' %}
+{% endblock %}

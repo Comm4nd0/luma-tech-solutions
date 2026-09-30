@@ -3,7 +3,7 @@ Bottom-of-page CTA banner.
 
 Optional overrides via include with-args:
   cta_title, cta_copy, cta_primary, cta_primary_url,
-  cta_secondary, cta_secondary_url, cta_source
+  cta_secondary, cta_secondary_url, cta_source, cta_service
 
 `cta_primary_url` defaults to the dedicated quote page — every CTA is now
 funnelled through structured-quote-first; the secondary "Or just send a
@@ -20,7 +20,7 @@ message" is the soft escape for tyre-kickers.
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
-            Free site survey
+            Free quotation survey
           </span>
           <span class="cta-trust-item">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -37,8 +37,8 @@ message" is the soft escape for tyre-kickers.
         </p>
       </div>
       <div class="actions">
-        <a href="{% url cta_primary_url|default:'quote' %}{% if cta_source %}?source={{ cta_source }}{% endif %}" class="btn btn-primary plausible-event-name=CTA+Banner+Quote">{{ cta_primary|default:"Get my quote" }} {% include 'partials/_icons.html' with name='arrow' %}</a>
-        <a href="{% url cta_secondary_url|default:'contact' %}" class="btn btn-ghost btn-sm">{{ cta_secondary|default:"Or just send a message" }}</a>
+        <a href="{% url cta_primary_url|default:'quote' %}?source={{ cta_source|default:'page-cta' }}{% if cta_service %}&amp;service={{ cta_service }}{% endif %}" class="btn btn-primary plausible-event-name=CTA+Banner+Quote">{{ cta_primary|default:"Get my quote" }} {% include 'partials/_icons.html' with name='arrow' %}</a>
+        <a href="{% url cta_secondary_url|default:'contact' %}{% if cta_service %}?service={{ cta_service }}{% endif %}" class="btn btn-ghost btn-sm">{{ cta_secondary|default:"Or just send a message" }}</a>
       </div>
     </div>
   </div>

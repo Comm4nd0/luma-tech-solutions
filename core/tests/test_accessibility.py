@@ -78,5 +78,5 @@ class FormErrorTests(TestCase):
         self.assertNotIn("<label>For your home or business?</label>", contact)
 
         quote = self.client.get(reverse("quote")).content.decode()
-        self.assertIn("<legend>What do you need?", quote)
+        self.assertIn("<legend>What can we help with?", quote)
         self.assertNotIn("<label>What do you need?", quote)

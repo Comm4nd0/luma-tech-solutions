@@ -30,6 +30,7 @@ urlpatterns = [
         name="capability_statement",
     ),
     path("about/", views.about, name="about"),
+    path("partners/", views.partners, name="partners"),
     path("portfolio/", views.portfolio, name="portfolio"),
     path("portfolio/<slug:slug>/", views.case_study, name="case_study"),
     path("showcase/<slug:slug>/", views.showcase_demo, name="showcase_demo"),

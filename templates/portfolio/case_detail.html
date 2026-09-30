@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load pillar_media %}
+{% load static %}
 
 {% block content %}
 <section class="service-hero">
@@ -15,7 +15,8 @@
         </div>
       </div>
       <div class="hero-illustration">
-        <div class="hero-photo" style="background-image:url('{% pillar_photo case.illustration 900 %}'),linear-gradient(160deg,#0d9488,#155e63);" role="img" aria-label="{{ case.title }}"></div>
+        {% if case.photo %}<img class="project-photo" src="{% static case.photo %}" alt="{{ case.photo_alt }}" width="1200" height="800" />
+        {% else %}{% include 'partials/_illustrations.html' with name=case.illustration %}{% endif %}
       </div>
     </div>
   </div>
@@ -25,6 +26,7 @@
   <div class="container">
     <div class="service-grid">
       <div>
+        {% if case.photos %}<h2>Inside the installation</h2><div class="project-gallery">{% for photo in case.photos %}<figure><img class="project-photo" src="{% static photo.path %}" alt="{{ photo.alt }}" width="1200" height="800" loading="lazy" />{% if photo.caption %}<figcaption>{{ photo.caption }}</figcaption>{% endif %}</figure>{% endfor %}</div>{% endif %}
         {% if case.detail %}
           <h2>The full story</h2>
           {% for para in case.detail %}

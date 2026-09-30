@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load pillar_media %}
+{% load static %}
 
 {% block content %}
 <section class="hero">
@@ -15,14 +15,12 @@
   </div>
 </section>
 
-<section class="tight">
+<section class="tight" id="home-projects">
   <div class="container">
     <div class="grid grid-2">
       {% for case in case_studies %}
-        <article class="case-card has-img fade-in">
-          <div class="case-card-img">
-            <img src="{% pillar_photo case.illustration 800 %}" alt="{{ case.title }}" loading="lazy" width="1600" height="1067">
-          </div>
+        <article class="case-card {% if case.photo %}has-img{% endif %} fade-in">
+          {% if case.photo %}<div class="case-card-img"><img src="{% static case.photo %}" alt="{{ case.photo_alt }}" loading="lazy" width="1200" height="800"></div>{% endif %}
           <span class="case-tag">{{ case.tag }}</span>
           <h3>{{ case.title }}</h3>
           <p>{{ case.summary }}</p>

@@ -1,0 +1,11 @@
+{% if lead_receipt %}
+<script nonce="{{ request.csp_nonce }}">
+  // Emitted only after a saved enquiry; direct visits and refreshes don't count.
+  window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+  window.plausible('Enquiry received', {props: {form: '{{ lead_kind|escapejs }}'}});
+  gtag('event', 'conversion', {
+    'send_to': 'AW-1069099855/SY-FCMGLsLMcEM_W5P0D',
+    'transaction_id': '{{ lead_receipt|escapejs }}'
+  });
+</script>
+{% endif %}

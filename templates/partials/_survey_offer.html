@@ -1,0 +1,9 @@
+{% if home_offer %}
+<div class="card mt-3 survey-offer">
+  <h2>How we price your project</h2>
+  <p>{{ home_offer.price_note }}</p>
+  <p>For a new installation, request a free quotation survey. We check what is needed and send a fixed quote covering equipment, cabling and labour, with VAT clearly shown.</p>
+  <p class="muted">Troubleshooting, diagnostic visits and standalone written reports are separate paid services. We agree the fee before booking and explain what it covers.</p>
+  <a href="{% url 'quote' %}?service={{ home_offer.key }}&amp;source=service-{{ home_offer.key }}-pricing" class="btn btn-primary btn-sm">Discuss my project</a>
+</div>
+{% endif %}

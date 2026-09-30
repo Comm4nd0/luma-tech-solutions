@@ -57,7 +57,7 @@ _SAFE_FILENAME_RE = re.compile(r"[^\w\s\-\.]", re.ASCII)
 class ContactForm(AccessibleErrorsMixin, forms.ModelForm):
     # Honeypot — bots fill it, humans don't see it.
     website = forms.CharField(required=False, widget=forms.HiddenInput)
-    source = forms.CharField(required=False, widget=forms.HiddenInput)
+    source = forms.CharField(max_length=64, required=False, widget=forms.HiddenInput)
 
     audience = forms.ChoiceField(
         choices=AUDIENCE_CHOICES,
@@ -67,8 +67,11 @@ class ContactForm(AccessibleErrorsMixin, forms.ModelForm):
 
     class Meta:
         model = ContactSubmission
-        fields = ["name", "email", "phone", "audience", "service", "message", "source"]
+        fields = ["name", "email", "phone", "audience", "service", "message", "source", "referral", "utm_source", "utm_medium", "utm_campaign"]
         widgets = {
+            "utm_source": forms.HiddenInput,
+            "utm_medium": forms.HiddenInput,
+            "utm_campaign": forms.HiddenInput,
             "name": forms.TextInput(
                 attrs={"placeholder": "Your name", "autocomplete": "name"}
             ),
@@ -206,7 +209,7 @@ class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
 
     # Honeypot — bots fill it, humans don't see it.
     website = forms.CharField(required=False, widget=forms.HiddenInput)
-    source = forms.CharField(required=False, widget=forms.HiddenInput)
+    source = forms.CharField(max_length=64, required=False, widget=forms.HiddenInput)
 
     services = forms.MultipleChoiceField(
         choices=QUOTE_SERVICE_CHOICES,
@@ -228,8 +231,15 @@ class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
             "budget",
             "notes",
             "source",
+            "referral",
+            "utm_source",
+            "utm_medium",
+            "utm_campaign",
         ]
         widgets = {
+            "utm_source": forms.HiddenInput,
+            "utm_medium": forms.HiddenInput,
+            "utm_campaign": forms.HiddenInput,
             "name": forms.TextInput(
                 attrs={"placeholder": "Your name", "autocomplete": "name"}
             ),
@@ -251,8 +261,8 @@ class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
             ),
             "notes": forms.Textarea(
                 attrs={
-                    "rows": 5,
-                    "placeholder": "Anything we should know? Floor plan, problem areas, deadlines, listed-building constraints, etc.",
+                    "rows": 3,
+                    "placeholder": "For example: Wi-Fi drops upstairs, cameras for the driveway, or heating controls we can't get working.",
                 }
             ),
         }
@@ -262,6 +272,11 @@ class QuoteRequestForm(AccessibleErrorsMixin, forms.ModelForm):
         # Budget renders as a Select from the model choices, so there is no
         # widgets entry to hang this on.
         self.fields["budget"].widget.attrs["aria-describedby"] = "budget-help"
+        self.fields["property_type"].required = False
+        self.fields["property_type"].initial = "home_unsure"
+
+    def clean_property_type(self):
+        return self.cleaned_data.get("property_type") or "home_unsure"
 
     def clean_website(self):
         if self.cleaned_data.get("website"):

@@ -37,6 +37,10 @@ class ConsentGatingTests(TestCase):
         self.assertIn("window.LUMA_ADS_ID", body)
 
     def test_thanks_page_queues_conversion_without_loading_library(self):
+        self.client.post(reverse("contact"), {
+            "name": "Test", "email": "test@example.com", "service": "networking",
+            "message": "Please help with Wi-Fi.",
+        })
         body = self.client.get(reverse("contact_thanks")).content.decode()
         self.assertIn("'conversion'", body)
         self.assertNotIn("googletagmanager.com/gtag/js", body)

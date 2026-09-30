@@ -1,5 +1,6 @@
 import json
 import logging
+import uuid
 import urllib.parse
 import urllib.request
 
@@ -25,6 +26,7 @@ from .content import (
     FAQS_NETWORKING,
     FAQS_SECURITY,
     JOB_ROLES,
+    HOME_SERVICES,
     PILLARS,
     SERVICE_PAGES,
     TESTIMONIALS,
@@ -200,6 +202,19 @@ def _featured_case(slug=None):
     return next((c for c in CASE_STUDIES if c["slug"] == slug), None)
 
 
+def _enquiry_initial(request):
+    # Only explicit campaign tags, never the full referring URL or personal data.
+    return {
+        key: request.GET.get(key, "").strip()[:limit]
+        for key, limit in (("source", 64), ("utm_source", 100),
+                           ("utm_medium", 100), ("utm_campaign", 100))
+    }
+
+
+def _record_lead_receipt(request, kind):
+    request.session["lead_receipt_" + kind] = uuid.uuid4().hex
+
+
 def _area_links(anchor):
     """One link per town for a service page's "areas we cover" block.
 
@@ -263,6 +278,7 @@ def _render_service_page(request, key, **extra):
     )
     if page.get("faqs"):
         ctx["faqs"] = page["faqs"]
+    ctx["home_offer"] = next((offer for offer in HOME_SERVICES if offer["url_name"] == page["url_name"]), None)
     return render(request, page["template"], ctx)
 
 
@@ -308,7 +324,7 @@ def _render_area_page(request, key):
     return render(request, page["template"], ctx)
 
 
-def _render_thanks_page(request, key):
+def _render_thanks_page(request, key, **extra):
     """Render one of the THANKS_PAGES entries."""
     page = THANKS_PAGES[key]
     return render(
@@ -318,6 +334,7 @@ def _render_thanks_page(request, key):
             active=page["active"],
             page_title=page["page_title"],
             page_description=page["page_description"],
+            **extra,
         ),
     )
 
@@ -339,9 +356,10 @@ def home(request):
             page_description=(
                 "Marlow-based engineer for business-grade UniFi Wi-Fi, CCTV and "
                 "smart-home installation across Marlow, Maidenhead, Henley "
-                "and the Thames Valley. Fixed-price quotes, no mesh."
+                "and the Thames Valley. Free quotation surveys and fixed-price installation."
             ),
-            testimonials=TESTIMONIALS,
+            testimonials=TESTIMONIALS[:1],
+            home_services=HOME_SERVICES,
             featured_case=featured,
             faqs=FAQS_GENERAL,
         ),
@@ -545,7 +563,7 @@ def portfolio(request):
                 "Recent work: a whole-property UniFi network in Maidenhead, "
                 "smart-home builds, mobile apps and small-business websites."
             ),
-            case_studies=CASE_STUDIES,
+            case_studies=sorted(CASE_STUDIES, key=lambda case: case["illustration"] not in ("networking", "automation")),
             website_demos=WEBSITE_DEMOS,
         ),
     )
@@ -581,6 +599,9 @@ def contact(request):
                     f"Phone:    {submission.phone or '—'}\n"
                     f"Audience: {submission.get_audience_display() or '—'}\n"
                     f"Service:  {submission.get_service_display()}\n"
+                    f"Source:   {submission.source or '—'}\n"
+                    f"Referral: {submission.referral or '—'}\n"
+                    f"Campaign: {submission.utm_source} / {submission.utm_medium} / {submission.utm_campaign}\n"
                     f"\n"
                     f"{submission.message}\n"
                 ),
@@ -590,9 +611,10 @@ def contact(request):
                 submission.notified = True
                 submission.save(update_fields=["notified"])
             messages.success(request, "Thanks — we'll be in touch shortly.")
+            _record_lead_receipt(request, "contact")
             return redirect(reverse("contact_thanks"))
     else:
-        initial = {"source": request.GET.get("source", "")}
+        initial = _enquiry_initial(request)
 
         # ?service=support → preselect the "Interested in" dropdown.
         # Validate against SERVICE_CHOICES so a bad URL doesn't drop a missing
@@ -643,7 +665,7 @@ def contact(request):
 
 
 def contact_thanks(request):
-    return _render_thanks_page(request, "contact_thanks")
+    return _render_thanks_page(request, "contact_thanks", lead_receipt=request.session.pop("lead_receipt_contact", ""), lead_kind="contact")
 
 
 @require_http_methods(["GET", "POST"])
@@ -891,6 +913,8 @@ def quote(request):
                     f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
                     f"Budget:    {quote_req.get_budget_display() or '—'}\n"
                     f"Source:    {quote_req.source or '—'}\n"
+                    f"Referral:  {quote_req.referral or '—'}\n"
+                    f"Campaign:  {quote_req.utm_source} / {quote_req.utm_medium} / {quote_req.utm_campaign}\n"
                     f"\n"
                     f"Notes:\n{quote_req.notes or '—'}\n"
                 ),
@@ -900,9 +924,10 @@ def quote(request):
                 quote_req.notified = True
                 quote_req.save(update_fields=["notified"])
             messages.success(request, "Thanks — we'll be in touch shortly.")
+            _record_lead_receipt(request, "quote")
             return redirect(reverse("quote_thanks"))
     else:
-        initial = {"source": request.GET.get("source", "")}
+        initial = _enquiry_initial(request)
 
         # ?service=networking → preselect that service in the multi-select.
         # Accept multiple comma-separated keys: ?service=networking,security
@@ -910,7 +935,7 @@ def quote(request):
         if service_param:
             valid_keys = {k for k, _ in QUOTE_SERVICE_CHOICES}
             selected = [
-                s for s in service_param.split(",") if s.strip() in valid_keys
+                s.strip() for s in service_param.split(",") if s.strip() in valid_keys
             ]
             if selected:
                 initial["services"] = selected
@@ -939,12 +964,23 @@ def quote(request):
                 ("Get a quote", "quote"),
             ),
             form=form,
+            show_other_services=form.is_bound or any(value not in ("networking", "security", "automation") for value in form.initial.get("services", [])),
+            show_project_details=form.is_bound or "property_type" in form.initial,
         ),
     )
 
 
 def quote_thanks(request):
-    return _render_thanks_page(request, "quote_thanks")
+    return _render_thanks_page(request, "quote_thanks", lead_receipt=request.session.pop("lead_receipt_quote", ""), lead_kind="quote")
+
+
+def partners(request):
+    return render(request, "partners.html", _base_context(
+        active=None,
+        page_title="Local Referral Partners | Luma Tech Solutions",
+        page_description="Work with a local engineer for home Wi-Fi, CCTV and smart-home projects. Introductions from electricians, builders and estate agents across the Thames Valley.",
+        breadcrumbs=_crumbs(("Home", "home"), ("Referral partners", "partners")),
+    ))
 
 
 def healthz(request):

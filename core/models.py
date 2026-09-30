@@ -3,6 +3,7 @@ import uuid
 
 import nh3
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
@@ -19,6 +20,7 @@ def cv_upload_to(instance, filename):
 
 SERVICE_CHOICES = [
     ("networking", "Wi-Fi & Networking"),
+    ("security", "CCTV & Security"),
     ("development", "App & Web Development"),
     ("automation", "Smart Home (install, setup or fix)"),
     ("support", "Support & Maintenance"),
@@ -53,6 +55,7 @@ PILLAR_CHOICES = [
 # Property / premises types — covers both residential and commercial so a
 # single quote form can serve homes and businesses.
 PROPERTY_TYPE_CHOICES = [
+    ("home_unsure", "Home — not sure of the size"),
     ("home_small", "Home — under 150 m²"),
     ("home_medium", "Home — 150–300 m²"),
     ("home_large", "Home — 300 m² or larger"),
@@ -102,7 +105,53 @@ BUDGET_CHOICES = [
 ]
 
 
-class ContactSubmission(models.Model):
+class EnquiryTracking(models.Model):
+    """Private sales workflow shared by messages and quote requests."""
+
+    STAGES = [
+        ("new", "New enquiry"), ("qualified", "Qualified"),
+        ("survey_booked", "Survey booked"), ("survey_done", "Survey completed"),
+        ("quoted", "Quote sent"), ("won", "Quote accepted"),
+        ("installed", "Installation completed"), ("lost", "Closed / not proceeding"),
+    ]
+    stage = models.CharField(max_length=20, choices=STAGES, default="new", db_default="new")
+    follow_up_on = models.DateField(null=True, blank=True)
+    installed_on = models.DateField(null=True, blank=True)
+    project_value = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True,
+        validators=[MinValueValidator(0)], help_text="Agreed project revenue, excluding VAT.",
+    )
+    direct_cost = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True,
+        validators=[MinValueValidator(0)],
+        help_text="Direct delivery cost on the same VAT basis, including your labour allowance.",
+    )
+    care_plan = models.CharField(max_length=16, blank=True, default="", db_default="", choices=[
+        ("", "None / not decided"), ("essential", "Essential"),
+        ("professional", "Professional"), ("concierge", "Concierge"),
+    ])
+    review_requested_on = models.DateField(null=True, blank=True)
+    referral = models.CharField(
+        max_length=120, blank=True, db_default="",
+        verbose_name="How did you hear about us?",
+        help_text="Optional: Google, a neighbour, an electrician, an estate agent…",
+    )
+    utm_source = models.CharField(max_length=100, blank=True, db_default="")
+    utm_medium = models.CharField(max_length=100, blank=True, db_default="")
+    utm_campaign = models.CharField(max_length=100, blank=True, db_default="")
+    internal_notes = models.TextField(blank=True, db_default="")
+
+    class Meta:
+        abstract = True
+
+    @property
+    def estimated_margin(self):
+        if self.project_value is None or self.direct_cost is None:
+            return None
+        return self.project_value - self.direct_cost
+
+
+class ContactSubmission(EnquiryTracking):
     name = models.CharField(max_length=120)
     email = models.EmailField()
     phone = models.CharField(max_length=40, blank=True)
@@ -146,7 +195,7 @@ class JobApplication(models.Model):
         return f"{self.name} <{self.email}> — {self.get_role_display()}"
 
 
-class QuoteRequest(models.Model):
+class QuoteRequest(EnquiryTracking):
     """A structured quote enquiry — more qualifying detail than the generic
     contact form. Routed to the same inbox by default, but stored separately
     so we can see and report on the dedicated funnel.

@@ -1,17 +1,7 @@
 {% extends 'base.html' %}
 {% block robots %}<meta name="robots" content="noindex, nofollow" />{% endblock %}
 
-{% block head_extra %}
-<!-- Conversion event. Queues into the dataLayer immediately; it only reaches
-     Google once the visitor grants marketing consent and gtag.js loads. -->
-<script nonce="{{ request.csp_nonce }}">
-  gtag('event', 'conversion', {
-    'send_to': 'AW-1069099855/SY-FCMGLsLMcEM_W5P0D',
-    'value': 1.0,
-    'currency': 'GBP'
-  });
-</script>
-{% endblock %}
+{% block head_extra %}{% include 'partials/_lead_conversion.html' %}{% endblock %}
 
 {% block content %}
 <section class="hero">

@@ -130,3 +130,77 @@ docker exec caddy-caddy-1 caddy reload --config /etc/caddy/Caddyfile
 ## Health
 
 `GET /healthz` → `200 ok`. Wired up to both the Docker healthcheck and the gunicorn check.
+
+## Residential enquiries and follow-up
+
+The homepage focuses on home Wi-Fi, CCTV and smart-home help. Installation
+prices are assessed from the equipment, access points and cable runs required;
+there is no advertised minimum installation price. Installation quotation
+surveys are free. Diagnostic visits and standalone reports are separately
+priced and agreed before booking. Care-plan prices remain in `CARE_PLAN_AUDIENCES`.
+
+Both **Contact submissions** and **Quote requests** in `/admin/` now include:
+
+- Progress: new → qualified → survey booked → survey completed → quote sent →
+  accepted → installed, or closed/not proceeding.
+- A follow-up date, installation date, optional care-plan selection and review
+  request date. Marking a project installed sets a 14-day follow-up unless a
+  different date is supplied in the same edit. No scheduled job or email is sent.
+- Project revenue and direct delivery cost excluding VAT; margin is shown only
+  where both have been recorded. Include a labour allowance in direct costs.
+- Page/CTA source, optional referral answer and explicit campaign tags.
+
+Use the **Due today or overdue** filter to work through follow-ups. Discuss care
+plans when quoting and at handover; check in during the included support period,
+then ask every customer for honest feedback. Each enquiry's edit screen has
+check-in, review-request and partner-introduction drafts to personalise and send.
+There are no incentives or automated outreach messages.
+
+The list summary respects filters and groups sources/services. It shows current
+stages, not historical funnel conversion rates. Review old records (which begin
+as “new”) and close duplicate enquiries before interpreting totals. Compare a
+consistent date window and service, and record accepted work rather than judging
+performance from clicks alone. Contact and quote totals are separate.
+
+The public `/partners/` page explains introductions for electricians, builders,
+renovation teams and estate agents. Actual introductions, Business Profile photo
+updates and review requests are manual business tasks.
+
+### Analytics
+
+Plausible receives `Enquiry started` once per form page interaction and
+`Enquiry received` only after a valid submission has been saved. Add these exact
+custom-event goals in the Plausible dashboard and compare them by the `form`
+property (`contact` / `quote`). Existing click events remain separate from success.
+Google Ads conversion events stay marketing-consent gated; successful submissions
+have a random transaction ID, and refreshes/direct thank-you-page visits do not
+emit another conversion. No form answers are sent to analytics.
+
+Optional `utm_source`, `utm_medium` and `utm_campaign` URL tags are carried along
+internal links in memory (no attribution cookie/localStorage), prefilled into the
+forms and saved with the enquiry. Existing `source` tags identify the final CTA.
+Use campaign tags without personal information. The public privacy page describes
+this processing. There is no new third-party analytics service.
+
+### Adding real photographs later
+
+Until photos are supplied, the pages render without empty photo slots. Portfolio
+cards no longer use generic stock images labelled as photographs of a client job.
+
+- Put a portrait under `static/img/`, then set `SITE_FOUNDER_PHOTO` to its static
+  path (for example `img/marco.jpg`) in the deployment environment. It appears on
+  the homepage, About page and engineer introduction cards.
+- Add optional `photo` and `photo_alt` keys to a case in `core/content.py`, with
+  a self-hosted path and a description of the actual installation.
+- An optional `photos` list adds a case-study gallery. Each entry has `path`,
+  `alt` and optional `caption` keys. Record only real project details; add measured
+  before/after results and duration when available, without inventing figures.
+- `AREA_PAGES[...]['example_jobs']` remains the source for real town-specific jobs.
+  Existing TODOs stay hidden until genuine details are available. Maidenhead links
+  to its existing LittleWick case study. Keep town terms on town pages.
+- Bump `PAGE_LASTMOD` for the affected page and `case_study:<slug>` when adding
+  photographs or substantive project details. Rebuild to collect static files.
+
+The read-reviews link uses `SITE_GOOGLE_BUSINESS_URL`; the review-request draft
+uses `SITE_GOOGLE_REVIEW_URL`. The production Compose defaults now retain the
+public phone and WhatsApp numbers rather than replacing them with blank values.

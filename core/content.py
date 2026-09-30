@@ -49,6 +49,28 @@ PILLARS = [
 ]
 
 
+HOME_SERVICES = [
+    {
+        "title": "Reliable Wi-Fi throughout your home",
+        "copy": "Video calls upstairs, streaming in the sitting room and a connection in the garden office. We plan coverage around how you use your home.",
+        "url_name": "service_networking", "key": "networking", "icon": "wifi",
+        "price_note": "Priced for the access points you need and the cable runs to reach them. Layout, access and the installation work all affect the quote.",
+    },
+    {
+        "title": "CCTV that covers what matters",
+        "copy": "Keep an eye on the driveway, entrances and garden from your phone, with recordings stored at home and camera positions planned on site.",
+        "url_name": "service_cctv", "key": "security", "icon": "lock",
+        "price_note": "Priced around the coverage you need, camera specification, recording capacity and cable routes.",
+    },
+    {
+        "title": "Smart-home setup, repairs and takeovers",
+        "copy": "Get the heating and lights working together, understand what the previous owners left behind, or plan a new system with a clear handover.",
+        "url_name": "service_automation", "key": "automation", "icon": "home",
+        "price_note": "New installations start with a free quotation survey. Diagnostic visits and written reports are priced separately and agreed before booking.",
+    },
+]
+
+
 TESTIMONIALS = [
     {
         "name": "Helen R.",
@@ -627,12 +649,11 @@ FAQS_GENERAL = [
     {
         "q": "How much does a Wi-Fi installation cost?",
         "a": (
-            "Every property is different — the honest answer is we'll quote "
-            "after a site survey. A typical large-home UniFi install (4–6 "
-            "access points, switching, cabling) runs from around £3,000; "
-            "bigger properties with 8+ APs, multiple VLANs and CCTV usually "
-            "fall between £8,000 and £20,000. Every quote is fixed-price and "
-            "written down — no day rates, no surprise add-ons."
+            "The cost depends on how many access points your home needs, "
+            "the cable runs to reach them and the installation work involved. "
+            "We check the layout and cable routes at a free quotation survey, "
+            "then give you a fixed written price covering equipment, cabling "
+            "and labour, with VAT clearly shown."
         ),
     },
     {
@@ -658,12 +679,11 @@ FAQS_GENERAL = [
     {
         "q": "Why UniFi instead of consumer mesh kit?",
         "a": (
-            "Consumer mesh and powerline kit are designed for small flats "
-            "with thin walls. Once you add a second storey, thick masonry, "
-            "or 200+ m² of floorspace, the physics catch up. UniFi gives "
-            "you wired access points (no halving bandwidth every hop), "
-            "real diagnostics, and one dashboard for Wi-Fi, switching and "
-            "CCTV — the same kit that runs in offices and hotels."
+            "Mesh can work well in the right layout. Thick walls, awkward "
+            "cable routes and outbuildings need a considered design, though. "
+            "We survey the property and use wired access points where practical "
+            "for consistent coverage, with UniFi diagnostics to help maintain "
+            "it. We recommend the equipment your home needs."
         ),
     },
     {
@@ -728,18 +748,18 @@ FAQS_SECURITY = [
     {
         "q": "Do the cameras work in the dark?",
         "a": (
-            "Yes. The cameras we install have high-quality infrared night vision "
-            "and (on most models) low-light colour modes. On-device AI "
-            "tells person from vehicle from package, so your phone only "
-            "buzzes for things that matter."
+            "We choose cameras for the available light and the detail you need "
+            "to see. Infrared and low-light colour capabilities vary by model; "
+            "your quote specifies the equipment and detection features."
         ),
     },
     {
         "q": "Can I view it on my phone?",
         "a": (
             "Yes — secure remote viewing through the UniFi Protect app on "
-            "iOS and Android. Two-factor authentication, end-to-end "
-            "encrypted, and no public ports opened on your router."
+            "iOS and Android. We configure account access and two-factor "
+            "authentication and explain how remote viewing works. An internet "
+            "connection is needed for viewing away from home."
         ),
     },
 ]
@@ -1058,7 +1078,7 @@ SERVICE_PAGES = {
         "page_description": (
             "Professionally engineered UniFi Wi-Fi for large and period homes "
             "across the Thames Valley. Wired access points, fixed-price "
-            "quotes, no mesh."
+            "quotes based on your property and cable routes."
         ),
         "service_name": "Wi-Fi & Networking",
         "service_type": "Wi-Fi Installation",
@@ -1243,7 +1263,7 @@ SERVICE_PAGES = {
         "crumb": "Support & Maintenance",
         "page_title": "IT Support & Care Plans, Bucks & Berks | Luma Tech",
         "page_description": (
-            "Three care-plan tiers with monitoring, response SLAs and a "
+            "Three care-plan tiers with monitoring, response targets and a "
             "real human. Serving homes and businesses across the Thames Valley."
         ),
         "service_name": "Support & Maintenance",
@@ -1388,9 +1408,9 @@ AREA_PAGES = {
         "housing_stock": (
             "A lot of larger detached properties across Furze Platt, Boyn "
             "Hill, Cox Green, Bray and Holyport, plus a stock of period stone "
-            "and brick around the High Street. Both punish consumer mesh kit "
-            "for different reasons — floor area in one case, wall fabric in "
-            "the other."
+            "and brick around the High Street. Wide floorplans and thick walls "
+            "can both leave rooms beyond the reliable range of an existing "
+            "wireless network."
         ),
         "service_emphasis": (
             "Whole-property networks for large floorplans — the biggest "
@@ -1675,23 +1695,36 @@ def area_is_draft(page):
 # worthless — Google learns the field carries no information and ignores it.
 PAGE_LASTMOD = {
     # Local-SEO overhaul: retitled, relinked, security hub split out.
-    "home": "2026-09-09",
-    "service_security": "2026-08-15",
-    "service_cctv": "2026-08-15",
-    "service_access_control": "2026-08-15",
-    "service_alarms": "2026-08-15",
-    "service_networking": "2026-08-15",
-    "service_automation": "2026-09-19",
-    "service_ai_cameras": "2026-08-15",
-    "service_support": "2026-09-09",
+    "home": "2026-09-30",
+    "service_security": "2026-09-30",
+    "service_cctv": "2026-09-30",
+    "service_access_control": "2026-09-30",
+    "service_alarms": "2026-09-30",
+    "service_networking": "2026-09-30",
+    "service_automation": "2026-09-30",
+    "service_ai_cameras": "2026-09-30",
+    "service_support": "2026-09-30",
     "service_development": "2026-08-15",
     "areas": "2026-08-15",
-    "area_marlow": "2026-09-09",
-    "area_maidenhead": "2026-09-09",
-    "area_henley": "2026-09-19",
-    "area_beaconsfield": "2026-09-09",
-    "area_high_wycombe": "2026-09-09",
-    "portfolio": "2026-09-28",
+    "area_marlow": "2026-09-30",
+    "area_maidenhead": "2026-09-30",
+    "area_henley": "2026-09-30",
+    "area_beaconsfield": "2026-09-30",
+    "area_high_wycombe": "2026-09-30",
+    "portfolio": "2026-09-30",
+    "quote": "2026-09-30",
+    "contact": "2026-09-30",
+    "about": "2026-09-30",
+    "partners": "2026-09-30",
+    "privacy": "2026-09-30",
+    "case_study:chiltern-view": "2026-09-30",
+    "case_study:for-sale-by-owner": "2026-09-30",
+    "case_study:chiltern-yard-anpr": "2026-09-30",
+    "case_study:littlewick-house": "2026-09-30",
+    "case_study:paws-4-thought-dogs": "2026-09-30",
+    "case_study:paws-4-thought-dogs-app": "2026-09-30",
+    "case_study:mojo-and-co": "2026-09-30",
+    "case_study:global-news-map": "2026-09-30",
 }
 
 
@@ -1707,7 +1740,7 @@ THANKS_PAGES = {
         "template": "quote_thanks.html",
         "active": "quote",
         "page_title": 'Quote request received — thanks | Luma Tech',
-        "page_description": "Your quote request has been received. We'll be in touch within one working day to book your free site survey.",
+        "page_description": "Your enquiry has been received. Marco will be in touch within one working day to discuss the next step.",
     },
     "careers_thanks": {
         "template": "careers_thanks.html",

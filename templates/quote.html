@@ -1,185 +1,74 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block head_extra %}
-<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" nonce="{{ request.csp_nonce }}" async defer></script>
-{% endblock %}
-
+{% block head_extra %}<script src="https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_SITE_KEY }}" nonce="{{ request.csp_nonce }}" async defer></script>{% endblock %}
 {% block jsonld %}{{ block.super }}
-<script type="application/ld+json" nonce="{{ request.csp_nonce }}">
-{
-  "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Get a quote — Luma Tech Solutions",
-  "url": "{{ SITE_URL }}{% url 'quote' %}",
-  "about": { "@id": "{{ SITE_URL }}#business" },
-  "potentialAction": {
-    "@type": "ReserveAction",
-    "name": "Book a site survey",
-    "target": "{{ SITE_URL }}{% url 'quote' %}"
-  }
-}
-</script>
+<script type="application/ld+json" nonce="{{ request.csp_nonce }}">{"@context":"https://schema.org","@type":"ContactPage","name":"Get a quote — Luma Tech Solutions","url":"{{ SITE_URL }}{% url 'quote' %}","about":{"@id":"{{ SITE_URL }}#business"}}</script>
 {% endblock %}
-
 {% block content %}
-<section class="service-hero">
-  <div class="container">
-    <div class="service-hero-inner">
-      <div>
-        {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
-        <span class="eyebrow"><span class="dot"></span>Get a quote</span>
-        <h1>Tell us about your <span class="gradient">property or site.</span></h1>
-        <p class="lede">
-          A few quick details so we can come back with something useful —
-          not just a generic reply. We aim to confirm survey availability
-          within one working day. Free site survey, fixed-price quote on
-          one page, no obligation.
-        </p>
-        {% include 'partials/_trust_strip.html' %}
+<section class="service-hero"><div class="container">
+  {% include 'partials/_breadcrumbs.html' with crumbs=breadcrumbs %}
+  <span class="eyebrow"><span class="dot"></span>Let's start with the problem</span>
+  <h1>What would you like to <span class="gradient">work better?</span></h1>
+  <p class="lede">Tell Marco what you need and where you are. We'll reply within one working day to discuss the next step. Installation quotation surveys are free; any diagnostic visit is priced and agreed before booking.</p>
+  {% include 'partials/_trust_strip.html' %}
+</div></section>
+<section class="tight"><div class="container contact-grid">
+  <div>
+    <form method="post" class="form" data-contact-form data-lead-form="quote" data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}{{ hidden }}{% if hidden.errors %}<div class="alert" role="alert">{{ hidden.errors }}</div>{% endif %}{% endfor %}
+      <input type="hidden" name="g-recaptcha-response" value="">
+      {% if form.non_field_errors %}<div class="alert" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+      <fieldset class="field-group">
+        <legend>What can we help with? <span class="muted">Pick all that apply.</span></legend>
+        <div class="checkbox-grid">
+          {% for cb in form.services %}{% if cb.data.value == 'networking' or cb.data.value == 'security' or cb.data.value == 'automation' %}
+          <label class="checkbox-card">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>
+          {% endif %}{% endfor %}
+        </div>
+        <details class="form-details" {% if show_other_services %}open{% endif %}>
+          <summary>Other services, business or construction project</summary>
+          <div class="checkbox-grid mt-2">
+            {% for cb in form.services %}{% if cb.data.value != 'networking' and cb.data.value != 'security' and cb.data.value != 'automation' %}
+            <label class="checkbox-card">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>
+            {% endif %}{% endfor %}
+          </div>
+        </details>
+        {% include 'partials/_field_errors.html' with field=form.services %}
+      </fieldset>
+      <div><label for="{{ form.notes.id_for_label }}">A little about the problem or project <span class="muted">(optional)</span></label>{{ form.notes }}{% include 'partials/_field_errors.html' with field=form.notes %}</div>
+      <div class="row two">
+        <div><label for="{{ form.postcode.id_for_label }}">Property postcode</label>{{ form.postcode }}<p class="muted field-help" id="postcode-help">So we can check our coverage.</p>{% include 'partials/_field_errors.html' with field=form.postcode %}</div>
+        <div><label for="{{ form.name.id_for_label }}">Your name</label>{{ form.name }}{% include 'partials/_field_errors.html' with field=form.name %}</div>
       </div>
-      <div class="hero-illustration">
-        {% include 'partials/_illustrations.html' with name='networking' %}
+      <div class="row two">
+        <div><label for="{{ form.email.id_for_label }}">Email</label>{{ form.email }}{% include 'partials/_field_errors.html' with field=form.email %}</div>
+        <div><label for="{{ form.phone.id_for_label }}">Phone <span class="muted">(optional)</span></label>{{ form.phone }}{% include 'partials/_field_errors.html' with field=form.phone %}</div>
       </div>
-    </div>
+      <details class="form-details" {% if show_project_details %}open{% endif %}>
+        <summary>Add property details, timing or budget (optional)</summary>
+        <div class="mt-2"><label for="{{ form.property_type.id_for_label }}">Property type — it's fine to be unsure</label>{{ form.property_type }}{% include 'partials/_field_errors.html' with field=form.property_type %}</div>
+        <div class="row two">
+          <div><label for="{{ form.timeline.id_for_label }}">When are you thinking?</label>{{ form.timeline }}{% include 'partials/_field_errors.html' with field=form.timeline %}</div>
+          <div><label for="{{ form.budget.id_for_label }}">Do you have a budget in mind?</label>{{ form.budget }}<p class="muted field-help" id="budget-help">Leave blank if you're unsure. We price the work after discussing what is needed.</p>{% include 'partials/_field_errors.html' with field=form.budget %}</div>
+        </div>
+      </details>
+      <div><label for="{{ form.referral.id_for_label }}">How did you hear about us? <span class="muted">(optional)</span></label>{{ form.referral }}<p id="{{ form.referral.auto_id }}_helptext" class="muted field-help">{{ form.referral.help_text }}</p>{% include 'partials/_field_errors.html' with field=form.referral %}</div>
+      <button type="submit" class="btn btn-primary plausible-event-name=Quote+Submit">Send my enquiry {% include 'partials/_icons.html' with name='arrow' %}</button>
+      <p class="muted field-help">Marco replies directly. Your details are used to respond to this enquiry; see our <a href="{% url 'privacy' %}">privacy policy</a>.</p>
+      <p class="muted field-help">Protected by Google reCAPTCHA. Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    </form>
   </div>
-</section>
-
-<section class="tight">
-  <div class="container">
-    {% include 'partials/_process_steps.html' %}
-  </div>
-</section>
-
-<section class="tight">
-  <div class="container">
-    <div class="contact-grid">
-      <div>
-        {% if messages %}
-          {% for m in messages %}<div class="alert {% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</div>{% endfor %}
-        {% endif %}
-
-        <form method="post" class="form fade-in" data-contact-form data-recaptcha-key="{{ RECAPTCHA_SITE_KEY }}" novalidate>
-          {% csrf_token %}
-          {{ form.website }}
-          {{ form.source }}
-          <input type="hidden" name="g-recaptcha-response" value="">
-
-          {% if form.non_field_errors %}<div class="alert" role="alert">{{ form.non_field_errors }}</div>{% endif %}
-
-          <div class="row two">
-            <div>
-              <label for="{{ form.name.id_for_label }}">Your name</label>
-              {{ form.name }}
-              {% include 'partials/_field_errors.html' with field=form.name %}
-            </div>
-            <div>
-              <label for="{{ form.email.id_for_label }}">Email</label>
-              {{ form.email }}
-              {% include 'partials/_field_errors.html' with field=form.email %}
-            </div>
-          </div>
-
-          <div class="row two">
-            <div>
-              <label for="{{ form.phone.id_for_label }}">Phone (optional)</label>
-              {{ form.phone }}
-              {% include 'partials/_field_errors.html' with field=form.phone %}
-            </div>
-            <div>
-              <label for="{{ form.postcode.id_for_label }}">Property postcode</label>
-              {{ form.postcode }}
-              <p class="muted" id="postcode-help" style="font-size:.78rem;margin:.3rem 0 0;">So we can confirm you're in our coverage area.</p>
-              {% include 'partials/_field_errors.html' with field=form.postcode %}
-            </div>
-          </div>
-
-          <div>
-            <label for="{{ form.property_type.id_for_label }}">What's the property or site?</label>
-            {{ form.property_type }}
-            {% include 'partials/_field_errors.html' with field=form.property_type %}
-          </div>
-
-          <fieldset class="field-group">
-            <legend>What do you need? <span class="muted" style="font-weight:400;">(pick all that apply)</span></legend>
-            <div class="checkbox-grid">
-              {% for cb in form.services %}
-              <label class="checkbox-card">
-                {{ cb.tag }}
-                <span>{{ cb.choice_label }}</span>
-              </label>
-              {% endfor %}
-            </div>
-            {% include 'partials/_field_errors.html' with field=form.services %}
-          </fieldset>
-
-          <div class="row two">
-            <div>
-              <label for="{{ form.timeline.id_for_label }}">When do you want this done?</label>
-              {{ form.timeline }}
-              {% include 'partials/_field_errors.html' with field=form.timeline %}
-            </div>
-            <div>
-              <label for="{{ form.budget.id_for_label }}">Rough budget <span class="muted" style="font-weight:400;">(optional)</span></label>
-              {{ form.budget }}
-              <p class="muted" id="budget-help" style="font-size:.78rem;margin:.3rem 0 0;">Helps us scope the right solution. Never shared.</p>
-              {% include 'partials/_field_errors.html' with field=form.budget %}
-            </div>
-          </div>
-
-          <div>
-            <label for="{{ form.notes.id_for_label }}">Anything else we should know?</label>
-            {{ form.notes }}
-            {% include 'partials/_field_errors.html' with field=form.notes %}
-          </div>
-
-          <div class="row-actions">
-            <button type="submit" class="btn btn-primary plausible-event-name=Quote+Submit">Send my quote request {% include 'partials/_icons.html' with name='arrow' %}</button>
-            <a href="{% url 'contact' %}" class="btn btn-ghost">Or just send a message</a>
-          </div>
-
-          <p class="muted" style="font-size:.85rem;margin-top:1rem;">
-            <strong>Marco replies directly</strong> — no call centre, no
-            sales chase, no upsell. If we're not the right fit, we'll tell
-            you and point you somewhere better.
-          </p>
-
-          <p class="muted" style="font-size:.78rem;margin-top:.75rem;">
-            This form is protected by Google reCAPTCHA — the
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
-            and
-            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a>
-            apply.
-          </p>
-        </form>
-      </div>
-
-      <aside class="contact-info fade-in">
-        <h2 style="font-size:1.25rem;">What happens next</h2>
-
-        <span class="label">1. We reply</span>
-        <p style="margin:0;">Within one working day. Usually faster.</p>
-
-        <span class="label">2. Free site survey</span>
-        <p style="margin:0;">We walk the property, listen, measure. No pressure, no obligation.</p>
-
-        <span class="label">3. Fixed-price quote</span>
-        <p style="margin:0;">One page. Hardware, cabling, labour, timeline. No day rates, no scope creep.</p>
-
-        <span class="label" style="margin-top:1.5rem;">Coverage</span>
-        {% include 'partials/_coverage_map.html' %}
-        <p class="muted" style="font-size:.78rem;margin:.35rem 0 0;">{{ SITE_TOWNS_DISPLAY }}</p>
-
-        <span class="label" style="margin-top:1.5rem;">Or reach us directly</span>
-        {% if SITE_WHATSAPP_E164 %}
-        <a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I%27d%20like%20a%20quote..."
-           target="_blank" rel="noopener"
-           class="plausible-event-name=WhatsApp+Click">WhatsApp us — fastest reply</a>
-        {% endif %}
-        {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Call+Click">{{ SITE_PHONE }}</a>{% endif %}
-        <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
-      </aside>
-    </div>
-  </div>
-</section>
+  <aside class="contact-info">
+    <h2>What happens next</h2>
+    <h3>1. A conversation with Marco</h3><p>We'll reply within one working day and clarify what you'd like to achieve.</p>
+    <h3>2. The right visit</h3><p>A free quotation survey for an installation, or a separately priced diagnostic visit for an existing problem. Any fee is agreed before booking.</p>
+    <h3>3. A clear price</h3><p>Equipment, cable runs and labour, with VAT clearly shown. You decide whether to go ahead.</p>
+    <h3>Prefer to talk?</h3>
+    {% if SITE_PHONE %}<a href="tel:{{ SITE_PHONE_E164 }}" class="plausible-event-name=Call+Click">Call Marco: {{ SITE_PHONE }}</a>{% endif %}
+    {% if SITE_WHATSAPP_E164 %}<a href="https://wa.me/{{ SITE_WHATSAPP_E164|cut:'+' }}?text=Hi%2C%20I'd%20like%20help%20with%20my%20home..." target="_blank" rel="noopener" class="plausible-event-name=WhatsApp+Click">Message Marco on WhatsApp</a>{% endif %}
+    <a href="mailto:{{ SITE_EMAIL }}">{{ SITE_EMAIL }}</a>
+    <h3>Based in {{ SITE_BASE_TOWN }}</h3><p>{{ SITE_TOWNS_DISPLAY }}, and the wider Thames Valley by arrangement.</p>
+    <p>Every installation includes 30 days of post-install support. <a href="{% url 'service_support' %}">Ongoing care plans</a> are optional.</p>
+  </aside>
+</div></section>
 {% endblock %}

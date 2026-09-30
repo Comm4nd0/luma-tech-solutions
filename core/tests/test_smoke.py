@@ -15,7 +15,7 @@ from core.models import BlogPost
 
 # Routes that take no arguments and render HTML.
 SIMPLE_ROUTES = [
-    "home", "services", "service_networking", "service_security",
+    "home", "partners", "services", "service_networking", "service_security",
     "service_ai_cameras", "camera_privacy", "service_development",
     "service_automation", "service_support", "construction",
     "capability_statement", "about", "portfolio", "areas", "area_marlow",

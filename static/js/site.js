@@ -214,3 +214,39 @@ function prefersReducedMotion() {
     }
   }, true); // capture so this runs before the reCAPTCHA handler
 })();
+
+// Keep explicitly supplied campaign tags on internal navigation. No cookies,
+// localStorage, full referrer URLs or personal information are collected here.
+(function () {
+  var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
+  var current = new URL(window.location.href);
+  var tags = {};
+  keys.forEach(function (key) {
+    var value = current.searchParams.get(key);
+    if (value) tags[key] = value.trim().slice(0, 100);
+  });
+  if (Object.keys(tags).length) {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      var raw = link.getAttribute('href');
+      if (!raw || raw.charAt(0) === '#') return;
+      var target;
+      try { target = new URL(raw, window.location.href); } catch (_) { return; }
+      if (target.origin !== current.origin || !/^https?:$/.test(target.protocol)) return;
+      if (/^\/(admin|api|static|media)(\/|$)/.test(target.pathname)) return;
+      if (/\.(xml|txt|pdf)$/.test(target.pathname)) return;
+      Object.keys(tags).forEach(function (key) {
+        if (!target.searchParams.has(key)) target.searchParams.set(key, tags[key]);
+      });
+      link.href = target.href;
+    });
+  }
+  var form = document.querySelector('[data-lead-form]');
+  if (!form) return;
+  var started = false;
+  form.addEventListener('input', function () {
+    if (started) return;
+    started = true;
+    window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+    window.plausible('Enquiry started', {props: {form: form.dataset.leadForm}});
+  });
+})();

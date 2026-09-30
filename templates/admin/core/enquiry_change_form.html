@@ -1,0 +1,12 @@
+{% extends 'admin/change_form.html' %}
+{% block after_related_objects %}
+{{ block.super }}
+{% if original %}
+<fieldset class="module aligned"><h2>Follow-up notes and message drafts</h2>
+  <div class="form-row"><p>Move the enquiry through qualification, survey, quote and installation as the work progresses. Record a next follow-up date. Marking an installation complete proposes a check-in 14 days after installation unless you set another date in the same edit. No messages are sent automatically.</p><p>Discuss the optional care plan in the proposal and at handover. Check the system during the included 30-day support period, then request an honest review. Set the next date after completing each follow-up.</p></div>
+  <div class="form-row"><label for="checkin-draft">Installation check-in — edit before sending</label><textarea id="checkin-draft" rows="5" cols="80" readonly>Hi {{ original.name }}, how is everything working since the installation? Is there anything you'd like me to explain or adjust? Your installation includes 30 days of post-install support. If you'd like help beyond that, I'm happy to talk through the optional care plans. Thanks, Marco.</textarea></div>
+  <div class="form-row"><label for="review-draft">Honest review request — edit before sending</label><textarea id="review-draft" rows="4" cols="80" readonly>Hi {{ original.name }}, thank you for choosing Luma. If you'd like to share your experience, you can leave an honest Google review here: {{ review_url }}. Feedback helps other local homeowners understand our work. Thanks, Marco.</textarea><p>Record the date in “Review requested on” once sent. Ask consistently, without incentives or selecting only happy customers.</p></div>
+  <div class="form-row"><label for="partner-draft">Local partner introduction — personalise before sending</label><textarea id="partner-draft" rows="5" cols="80" readonly>Hi, I'm Marco at Luma Tech Solutions in Marlow. I help homeowners with Wi-Fi, CCTV and smart-home installations, including getting unfamiliar systems working after a house move. If that comes up with your clients, I'd be happy to discuss how we could work together: {{ partner_url }}. You can reach me at {{ site_email }}{% if site_phone %} or {{ site_phone }}{% endif %}.</textarea></div>
+</fieldset>
+{% endif %}
+{% endblock %}

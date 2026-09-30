@@ -13,8 +13,10 @@ services:
       DJANGO_ALLOWED_HOSTS: "${DJANGO_ALLOWED_HOSTS:-lumatechsolutions.co.uk,www.lumatechsolutions.co.uk,localhost,127.0.0.1}"
       DJANGO_CSRF_TRUSTED_ORIGINS: "${DJANGO_CSRF_TRUSTED_ORIGINS:-https://lumatechsolutions.co.uk,https://www.lumatechsolutions.co.uk}"
       SITE_URL: "${SITE_URL:-https://lumatechsolutions.co.uk}"
+      SITE_FOUNDER_PHOTO: "${SITE_FOUNDER_PHOTO:-}"
       SITE_EMAIL: "${SITE_EMAIL:-hello@lumatechsolutions.co.uk}"
-      SITE_PHONE: "${SITE_PHONE:-}"
+      SITE_PHONE: "${SITE_PHONE:-07500 776311}"
+      SITE_PHONE_E164: "${SITE_PHONE_E164:-+447500776311}"
       # Left unset on purpose: settings.py picks SMTP when DEBUG is off. Pinning
       # the console backend here would silently discard every lead in production.
       DJANGO_EMAIL_BACKEND: "${DJANGO_EMAIL_BACKEND:-}"
@@ -35,7 +37,7 @@ services:
       RECAPTCHA_SITE_KEY: "${RECAPTCHA_SITE_KEY:-6Leel9wsAAAAAOCRw7b0t5Gj939fy8fy25ZFRXnU}"
       RECAPTCHA_SECRET_KEY: "${RECAPTCHA_SECRET_KEY:-}"
       RECAPTCHA_MIN_SCORE: "${RECAPTCHA_MIN_SCORE:-0.5}"
-      SITE_WHATSAPP_E164: "${SITE_WHATSAPP_E164:-}"
+      SITE_WHATSAPP_E164: "${SITE_WHATSAPP_E164:-+447500776311}"
       PLAUSIBLE_DOMAIN: "${PLAUSIBLE_DOMAIN:-}"
       PLAUSIBLE_SCRIPT_SRC: "${PLAUSIBLE_SCRIPT_SRC:-https://plausible.io/js/script.tagged-events.js}"
     volumes:

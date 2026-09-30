@@ -128,8 +128,8 @@ together.
 
       <aside class="sidebar fade-in">
         <h4>Start here</h4>
-        <p>A 90-minute on-site security assessment with a written report and prioritised recommendations. Credited against any subsequent install.</p>
-        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Book a security assessment</a>
+        <p>Installation quotation surveys are free. Diagnostic visits and standalone assessment reports are separately priced, with the fee agreed before booking.</p>
+        <a href="{% url 'contact' %}?service=security" class="btn btn-primary">Discuss your security project</a>
 
         <h4 style="margin-top:1.5rem;">Always included</h4>
         <ul class="bullets" style="margin-top:.5rem;">
@@ -149,5 +149,5 @@ together.
 
 {% include 'partials/_areas_served.html' %}
 
-{% include 'partials/_cta_banner.html' with cta_title='Worried about a specific risk?' cta_copy='Tell us what you are trying to protect — a property, a business, a server room. We will tell you, honestly, what is worth doing and what is theatre. Free site survey, fixed-price quote.' cta_source='service-security-bottom' %}
+{% include 'partials/_cta_banner.html' with cta_title='Worried about a specific risk?' cta_copy='Tell us what you are trying to protect — a property, a business, a server room. We will tell you, honestly, what is worth doing and what is theatre. Free site survey, fixed-price quote.' cta_source='service-security-bottom' cta_service='security' %}
 {% endblock %}

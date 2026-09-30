@@ -277,6 +277,11 @@ SITE_GOOGLE_BUSINESS_URL = os.environ.get(
     "SITE_GOOGLE_BUSINESS_URL",
     "https://maps.google.com/?cid=12612488944410548572",
 )
+SITE_GOOGLE_REVIEW_URL = os.environ.get(
+    "SITE_GOOGLE_REVIEW_URL", "https://g.page/r/CVzZIQHfjwivEAI/review"
+)
+# Optional self-hosted portrait. Leave empty until Marco supplies a photograph.
+SITE_FOUNDER_PHOTO = os.environ.get("SITE_FOUNDER_PHOTO", "")
 
 # Other profiles that prove the entity, comma-separated to override.
 # Companies House is the strongest: a UK company number is unambiguous proof

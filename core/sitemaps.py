@@ -66,6 +66,7 @@ class StaticViewSitemap(Sitemap):
             ("area_beaconsfield", 0.85),
             ("area_high_wycombe", 0.85),
             ("about", 0.7),
+            ("partners", 0.6),
             ("portfolio", 0.8),
             ("contact", 0.7),
             ("careers", 0.6),
@@ -99,7 +100,7 @@ class CaseStudySitemap(Sitemap):
         return reverse("case_study", args=[slug])
 
     def lastmod(self, slug):
-        return _static_lastmod()
+        return _static_lastmod("case_study:" + slug)
 
 
 class BlogPostSitemap(Sitemap):
