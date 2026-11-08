@@ -31,7 +31,7 @@ class FollowUpFilter(admin.SimpleListFilter):
 class EnquiryAdmin(admin.ModelAdmin):
     change_list_template = "admin/core/enquiry_change_list.html"
     change_form_template = "admin/core/enquiry_change_form.html"
-    readonly_fields = ("created_at", "estimated_margin")
+    readonly_fields = ("created_at", "estimated_margin", "spam_reason")
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     workflow_fields = ("stage", "follow_up_on", "installed_on", "project_value", "direct_cost", "estimated_margin", "care_plan", "review_requested_on", "internal_notes")
@@ -55,7 +55,8 @@ class EnquiryAdmin(admin.ModelAdmin):
         response = super().changelist_view(request, extra_context=extra_context)
         if not getattr(response, "context_data", None) or "cl" not in response.context_data:
             return response
-        qs = response.context_data["cl"].queryset
+        changelist_qs = response.context_data["cl"].queryset
+        qs = changelist_qs.exclude(suspected_spam=True)
         accepted = Q(stage__in=("won", "installed"))
         known_margin = accepted & Q(project_value__isnull=False, direct_cost__isnull=False)
         totals = qs.aggregate(
@@ -77,17 +78,21 @@ class EnquiryAdmin(admin.ModelAdmin):
         ).order_by("-total", "source", "utm_source", service_field)[:30])
         for row in totals["sources"]:
             row["service_label"] = row[service_field]
+        totals["possible_spam"] = changelist_qs.filter(suspected_spam=True).count()
         response.context_data["lead_summary"] = totals
+        response.context_data["undelivered_enquiries"] = self.model.objects.filter(
+            notified=False, stage="new",
+        ).count()
         return response
 
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(EnquiryAdmin):
-    list_display = ("name", "service", "stage", "follow_up_on", "source", "referral", "care_plan", "created_at", "notified")
-    list_filter = (FollowUpFilter, "stage", "service", "source", "utm_source", "care_plan", "notified", "created_at")
+    list_display = ("name", "service", "stage", "follow_up_on", "source", "referral", "care_plan", "created_at", "notified", "suspected_spam")
+    list_filter = (FollowUpFilter, "suspected_spam", "stage", "service", "source", "utm_source", "care_plan", "notified", "created_at")
     search_fields = ("name", "email", "phone", "message", "source", "referral", "internal_notes")
     fieldsets = (
-        ("Enquiry", {"fields": ("name", "email", "phone", "audience", "service", "message", "created_at", "notified")}),
+        ("Enquiry", {"fields": ("name", "email", "phone", "audience", "service", "message", "created_at", "notified", "suspected_spam", "spam_reason")}),
         ("Progress and follow-up", {"fields": EnquiryAdmin.workflow_fields}),
         ("Source", {"fields": EnquiryAdmin.attribution_fields}),
     )
@@ -110,11 +115,11 @@ class QuoteServiceFilter(admin.SimpleListFilter):
 
 @admin.register(QuoteRequest)
 class QuoteRequestAdmin(EnquiryAdmin):
-    list_display = ("name", "postcode", "services_display", "stage", "follow_up_on", "source", "care_plan", "created_at", "notified")
-    list_filter = (FollowUpFilter, QuoteServiceFilter, "stage", "property_type", "source", "utm_source", "care_plan", "notified", "created_at")
+    list_display = ("name", "postcode", "services_display", "stage", "follow_up_on", "source", "care_plan", "created_at", "notified", "suspected_spam")
+    list_filter = (FollowUpFilter, "suspected_spam", QuoteServiceFilter, "stage", "property_type", "source", "utm_source", "care_plan", "notified", "created_at")
     search_fields = ("name", "email", "phone", "postcode", "notes", "source", "referral", "internal_notes")
     fieldsets = (
-        ("Enquiry", {"fields": ("name", "email", "phone", "postcode", "property_type", "services", "timeline", "budget", "notes", "created_at", "notified")}),
+        ("Enquiry", {"fields": ("name", "email", "phone", "postcode", "property_type", "services", "timeline", "budget", "notes", "created_at", "notified", "suspected_spam", "spam_reason")}),
         ("Progress and follow-up", {"fields": EnquiryAdmin.workflow_fields}),
         ("Source", {"fields": EnquiryAdmin.attribution_fields}),
     )

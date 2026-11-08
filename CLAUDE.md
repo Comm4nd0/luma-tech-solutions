@@ -131,6 +131,11 @@ Entity disambiguation is carried by `sameAs` instead, which matters because
 for its own brand. `SITE_GOOGLE_BUSINESS_URL` and a Companies House URL in
 `SITE_EXTRA_SAME_AS` are the two highest-value entries.
 
+The footer is a separate matter: UK company law requires the registered name,
+number, place of registration and registered office on the website, so
+`SITE_REGISTERED_OFFICE` is shown as plain text. It is the accountant's address,
+and it stays out of the JSON-LD. `SITE_VAT_NUMBER` appears there once set.
+
 ### Sitemap lastmod
 
 `PAGE_LASTMOD` in `core/content.py` carries a per-URL-name date; anything
@@ -149,11 +154,19 @@ with one shared date is what teaches Google the field carries no information.
   enumerating Google hosts. `500.html` is the exception — it renders without a
   request context, so keep it script-free. Set `DJANGO_CSP_REPORT_ONLY=1` while
   trialling a new third-party script.
-- **All public forms (contact, quote, careers) are protected by reCAPTCHA v3**
-  — see `_verify_recaptcha` / `_passes_recaptcha` in `core/views.py`. When
-  `RECAPTCHA_SECRET_KEY` is empty (local dev), verification is skipped and the
-  forms behave as if reCAPTCHA wasn't there. Submissions below
-  `RECAPTCHA_MIN_SCORE` get a generic "couldn't verify" form error.
+- **All public forms (contact, quote, careers) use reCAPTCHA v3** — see
+  `_verify_recaptcha` in `core/views.py`. When `RECAPTCHA_SECRET_KEY` is empty
+  (local dev), verification is skipped. **Contact and quote enquiries are never
+  rejected by it**: a low score, missing token or Google outage saves the row
+  with `suspected_spam=True`, still emails it tagged `[Possible spam]`, and
+  records no conversion. Don't restore rejection: an ad blocker or outage would
+  silently lose a real lead. The honeypot and rate limit still block outright.
+  Careers does reject, via `_passes_recaptcha`, with a "couldn't verify" error.
+- **Failed lead emails are retried.** The `notifier` service in
+  `docker-compose.yml` runs `manage.py retry_lead_notifications` every 15
+  minutes for contact and quote rows with `notified=False`, between 5 minutes
+  and 7 days old. The enquiry admin warns about undelivered new enquiries. Job
+  applications aren't retried; use the admin `notified` filter for those.
 - **Blog HTML is sanitised with nh3** in `BlogPost.save()`
   (`core.models.sanitize_blog_html`). Tags/attributes outside the allowlist are
   stripped, so `{{ post.content|safe }}` is safe. Widen `ALLOWED_HTML_TAGS` /

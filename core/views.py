@@ -131,6 +131,22 @@ def _rate_limited(request, form, *, bucket):
     return False
 
 
+def _spam_reason(request, *, label):
+    """Why an enquiry looks automated, or "" if it passed.
+
+    Contact and quote enquiries are never rejected on this: a missing token
+    (ad blocker), a Google outage or a low score can all be a real customer,
+    and a discarded lead leaves no trace. The honeypot and rate limit still
+    block outright; anything else is saved, flagged and emailed.
+    """
+    token = request.POST.get("g-recaptcha-response", "")
+    passed, score, reason = _verify_recaptcha(token, _client_ip(request))
+    if passed:
+        return ""
+    log.info("reCAPTCHA flagged %s form: score=%.2f reason=%s", label, score, reason)
+    return reason[:120]
+
+
 def _passes_recaptcha(request, form, *, label):
     """Verify reCAPTCHA for a POSTed form. On failure, attach a generic
     non-field error to ``form`` and return False. Run before form.is_valid()
@@ -179,6 +195,98 @@ def _notify(subject, body, *, recipient=None, reply_to=None, attachments=None):
     except Exception:
         log.exception("Failed to send notification email: %s", subject)
         return False
+
+
+def _subject_prefix(enquiry, *, delayed):
+    tags = ["[Luma Tech]"]
+    if enquiry.suspected_spam:
+        tags.append("[Possible spam]")
+    if delayed:
+        tags.append("[Delayed]")
+    return " ".join(tags)
+
+
+def _review_note(enquiry):
+    if not enquiry.suspected_spam:
+        return ""
+    return (
+        f"Spam check: {enquiry.spam_reason}. This may still be a real "
+        "enquiry, so check it before ignoring it.\n\n"
+    )
+
+
+def send_contact_notification(submission, *, delayed=False):
+    """Email a contact enquiry and record delivery. Returns True if sent."""
+    sent = _notify(
+        subject=(
+            f"{_subject_prefix(submission, delayed=delayed)} "
+            f"New enquiry from {submission.name}"
+        ),
+        body=(
+            f"{_review_note(submission)}"
+            f"Name:     {submission.name}\n"
+            f"Email:    {submission.email}\n"
+            f"Phone:    {submission.phone or '—'}\n"
+            f"Audience: {submission.get_audience_display() or '—'}\n"
+            f"Service:  {submission.get_service_display()}\n"
+            f"Source:   {submission.source or '—'}\n"
+            f"Referral: {submission.referral or '—'}\n"
+            f"Campaign: {submission.utm_source} / {submission.utm_medium} / {submission.utm_campaign}\n"
+            f"\n"
+            f"{submission.message}\n"
+        ),
+        reply_to=[submission.email],
+    )
+    if sent:
+        submission.notified = True
+        submission.save(update_fields=["notified"])
+    return sent
+
+
+def send_quote_notification(quote_req, *, delayed=False):
+    """Email a quote request and record delivery. Returns True if sent."""
+    sent = _notify(
+        subject=(
+            f"{_subject_prefix(quote_req, delayed=delayed)} "
+            f"Quote request from {quote_req.name} ({quote_req.postcode})"
+        ),
+        body=(
+            f"{_review_note(quote_req)}"
+            f"Name:      {quote_req.name}\n"
+            f"Email:     {quote_req.email}\n"
+            f"Phone:     {quote_req.phone or '—'}\n"
+            f"Postcode:  {quote_req.postcode}\n"
+            f"Property:  {quote_req.get_property_type_display()}\n"
+            f"Services:  {quote_req.services_display() or '—'}\n"
+            f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
+            f"Budget:    {quote_req.get_budget_display() or '—'}\n"
+            f"Source:    {quote_req.source or '—'}\n"
+            f"Referral:  {quote_req.referral or '—'}\n"
+            f"Campaign:  {quote_req.utm_source} / {quote_req.utm_medium} / {quote_req.utm_campaign}\n"
+            f"\n"
+            f"Notes:\n{quote_req.notes or '—'}\n"
+        ),
+        reply_to=[quote_req.email],
+    )
+    if sent:
+        quote_req.notified = True
+        quote_req.save(update_fields=["notified"])
+    return sent
+
+
+def _save_enquiry(request, form, *, label):
+    """Save a valid enquiry, flagged if it failed the spam check.
+
+    Only unflagged enquiries get a lead receipt, so a suspected bot can't
+    count as a conversion in Plausible or Google Ads.
+    """
+    enquiry = form.save(commit=False)
+    enquiry.spam_reason = _spam_reason(request, label=label)
+    enquiry.suspected_spam = bool(enquiry.spam_reason)
+    enquiry.save()
+    if not enquiry.suspected_spam:
+        _record_lead_receipt(request, label)
+    return enquiry
 
 
 def _base_context(active=None, **extra):
@@ -595,33 +703,9 @@ def showcase_demo(request, slug):
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
-        if (
-            not _rate_limited(request, form, bucket="contact")
-            and _passes_recaptcha(request, form, label="contact")
-            and form.is_valid()
-        ):
-            submission = form.save()
-            sent = _notify(
-                subject=f"[Luma Tech] New enquiry from {submission.name}",
-                body=(
-                    f"Name:     {submission.name}\n"
-                    f"Email:    {submission.email}\n"
-                    f"Phone:    {submission.phone or '—'}\n"
-                    f"Audience: {submission.get_audience_display() or '—'}\n"
-                    f"Service:  {submission.get_service_display()}\n"
-                    f"Source:   {submission.source or '—'}\n"
-                    f"Referral: {submission.referral or '—'}\n"
-                    f"Campaign: {submission.utm_source} / {submission.utm_medium} / {submission.utm_campaign}\n"
-                    f"\n"
-                    f"{submission.message}\n"
-                ),
-                reply_to=[submission.email],
-            )
-            if sent:
-                submission.notified = True
-                submission.save(update_fields=["notified"])
+        if not _rate_limited(request, form, bucket="contact") and form.is_valid():
+            send_contact_notification(_save_enquiry(request, form, label="contact"))
             messages.success(request, "Thanks — we'll be in touch shortly.")
-            _record_lead_receipt(request, "contact")
             return redirect(reverse("contact_thanks"))
     else:
         initial = _enquiry_initial(request)
@@ -902,39 +986,9 @@ def quote(request):
     """
     if request.method == "POST":
         form = QuoteRequestForm(request.POST)
-        if (
-            not _rate_limited(request, form, bucket="quote")
-            and _passes_recaptcha(request, form, label="quote")
-            and form.is_valid()
-        ):
-            quote_req = form.save()
-            sent = _notify(
-                subject=(
-                    f"[Luma Tech] Quote request from {quote_req.name} "
-                    f"({quote_req.postcode})"
-                ),
-                body=(
-                    f"Name:      {quote_req.name}\n"
-                    f"Email:     {quote_req.email}\n"
-                    f"Phone:     {quote_req.phone or '—'}\n"
-                    f"Postcode:  {quote_req.postcode}\n"
-                    f"Property:  {quote_req.get_property_type_display()}\n"
-                    f"Services:  {quote_req.services_display() or '—'}\n"
-                    f"Timeline:  {quote_req.get_timeline_display() or '—'}\n"
-                    f"Budget:    {quote_req.get_budget_display() or '—'}\n"
-                    f"Source:    {quote_req.source or '—'}\n"
-                    f"Referral:  {quote_req.referral or '—'}\n"
-                    f"Campaign:  {quote_req.utm_source} / {quote_req.utm_medium} / {quote_req.utm_campaign}\n"
-                    f"\n"
-                    f"Notes:\n{quote_req.notes or '—'}\n"
-                ),
-                reply_to=[quote_req.email],
-            )
-            if sent:
-                quote_req.notified = True
-                quote_req.save(update_fields=["notified"])
+        if not _rate_limited(request, form, bucket="quote") and form.is_valid():
+            send_quote_notification(_save_enquiry(request, form, label="quote"))
             messages.success(request, "Thanks — we'll be in touch shortly.")
-            _record_lead_receipt(request, "quote")
             return redirect(reverse("quote_thanks"))
     else:
         initial = _enquiry_initial(request)

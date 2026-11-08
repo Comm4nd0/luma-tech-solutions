@@ -44,6 +44,8 @@ def site(request):
         "SITE_EXTRA_SAME_AS": settings.SITE_EXTRA_SAME_AS,
         "SITE_LEGAL_NAME": settings.SITE_LEGAL_NAME,
         "SITE_COMPANY_NUMBER": settings.SITE_COMPANY_NUMBER,
+        "SITE_REGISTERED_OFFICE": settings.SITE_REGISTERED_OFFICE,
+        "SITE_VAT_NUMBER": settings.SITE_VAT_NUMBER,
         "SITE_AREA_LINKS": _area_links(),
         "SITE_BOOKING_URL": settings.SITE_BOOKING_URL,
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,

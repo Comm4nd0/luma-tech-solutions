@@ -140,6 +140,11 @@ class EnquiryTracking(models.Model):
     utm_medium = models.CharField(max_length=100, blank=True, db_default="")
     utm_campaign = models.CharField(max_length=100, blank=True, db_default="")
     internal_notes = models.TextField(blank=True, db_default="")
+    suspected_spam = models.BooleanField(
+        default=False, db_default=False,
+        help_text="Failed the automatic reCAPTCHA check. Saved for review, not rejected. Untick if genuine.",
+    )
+    spam_reason = models.CharField(max_length=120, blank=True, db_default="")
 
     class Meta:
         abstract = True

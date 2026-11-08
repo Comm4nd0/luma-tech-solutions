@@ -165,7 +165,7 @@ from django.test import TransactionTestCase
 class EnquiryMigrationTests(TransactionTestCase):
     def test_existing_leads_survive_and_previous_app_can_still_insert(self):
         before = [('core', '0018_retitle_construction_posts')]
-        after = [('core', '0019_residential_enquiry_workflow')]
+        after = [('core', '0020_enquiry_spam_review')]
         executor = MigrationExecutor(connection)
         try:
             executor.migrate(before)

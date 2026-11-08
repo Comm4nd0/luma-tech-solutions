@@ -155,14 +155,18 @@ function prefersReducedMotion() {
     status.textContent = 'Sending your details…';
     var key = form.dataset.recaptchaKey;
     var tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
-    // Preserve the server fallback when the API is unavailable. The server
-    // still enforces verification whenever a production secret is configured.
+    // Never let a failed check stop a real enquiry. Without a token the server
+    // saves contact and quote enquiries flagged for review; careers still
+    // requires verification and shows its own error.
     if (!key || typeof grecaptcha === 'undefined' || !grecaptcha.execute) return;
     event.preventDefault();
     var currentAttempt = ++attempt;
     function failed() {
       if (currentAttempt !== attempt) return;
-      reset('The security check did not complete. Please try again, or use the contact details on this page.');
+      attempt += 1;
+      clearTimeout(timer);
+      if (tokenInput) tokenInput.value = '';
+      form.submit();
     }
     timer = setTimeout(failed, 12000);
     try {

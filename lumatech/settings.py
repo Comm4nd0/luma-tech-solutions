@@ -302,6 +302,16 @@ SITE_EXTRA_SAME_AS = [
 # both explicitly is what lets a crawler tie the site to the filing.
 SITE_LEGAL_NAME = "Luma Tech Solutions Ltd"
 SITE_COMPANY_NUMBER = os.environ.get("SITE_COMPANY_NUMBER", "12644409")
+# Statutory trading disclosures, shown as text in the footer. This is the
+# accountant's address on the Companies House record, not a place clients
+# visit, so it must stay out of the JSON-LD (see "We are a service-area
+# business" in CLAUDE.md).
+SITE_REGISTERED_OFFICE = os.environ.get(
+    "SITE_REGISTERED_OFFICE",
+    "C/O Eleveneleven Business Management Ltd, Eventus, Sunderland Road, "
+    "Market Deeping, England, PE6 8FD",
+)
+SITE_VAT_NUMBER = os.environ.get("SITE_VAT_NUMBER", "")
 SITE_TOWNS = [
     "Marlow",
     "Maidenhead",

@@ -45,14 +45,13 @@ class ContactViewTests(TestCase):
 
     @override_settings(RECAPTCHA_SECRET_KEY="x")
     @mock.patch("core.views._verify_recaptcha", return_value=(False, 0.1, "low"))
-    def test_recaptcha_failure_blocks(self, _m):
+    def test_recaptcha_failure_is_flagged_not_rejected(self, _m):
         resp = self.client.post(reverse("contact"), {
             "name": "Jo", "email": "jo@example.com", "service": "networking",
             "message": "Hello",
         })
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(ContactSubmission.objects.count(), 0)
-        self.assertContains(resp, "couldn&#x27;t verify", status_code=200)
+        self.assertRedirects(resp, reverse("contact_thanks"))
+        self.assertTrue(ContactSubmission.objects.get().suspected_spam)
 
 
 class QuoteViewTests(TestCase):
